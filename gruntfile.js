@@ -1,4 +1,5 @@
-var util = require('./gruntutils.js');
+"use strict";
+var util = require('./lib/gruntutils.js');
 var Config = require('./_config.json');
 var esurl = 'http://localhost:9200';
 
@@ -17,13 +18,13 @@ module.exports = function (grunt) {
         url: esurl + "/ziax",
         ignoreErrors: true,
         method: 'PUT',
-        json: grunt.file.readJSON('setup.json')
+        json: grunt.file.readJSON('es/setup.json')
       },
       local_dummy: {
         url: esurl + "/_bulk",
         ignoreErrors: true,
         method: 'POST',
-        body: grunt.file.read('data.json')
+        body: grunt.file.read('es/data.json')
       }
     },
 
@@ -38,6 +39,7 @@ module.exports = function (grunt) {
         files: [
           { src: ['src/**/*'], dest: '/' },
           { src: ['server.js'], dest: '/' },
+          { src: ['_config.json'], dest: '/' },
           { src: ['package.json'], dest: '/' }
         ]
       }
