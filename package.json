@@ -1,0 +1,24 @@
+{
+  "name": "ziax-dash",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~3.4.3",
+    "elasticsearch": "~0.3.12",
+    "promise": "~3.2.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-http": "~0.1.0",
+    "grunt-contrib-compress": "~0.5.2",
+    "grunt-ftp-deploy": "0.0.10",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-express-server": "~0.4.5"
+  }
+}

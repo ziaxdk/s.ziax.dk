@@ -1,0 +1,29 @@
+{
+	"settings": {
+
+	},
+
+  "mappings": {
+    "drive": {
+      "dynamic": "false",
+      "properties": {
+        
+        "header": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "clicks": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

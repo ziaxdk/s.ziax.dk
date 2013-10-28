@@ -1,0 +1,25 @@
+<div class="col-md-12">
+  
+  <ul class="list-group facets clearfix">
+    <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms">
+      <a href="#">{{hit.term}} <span class="badge">{{hit.count}}</span></a>
+    </li>
+  </ul>
+
+  <hr>
+
+  <section ng-click="ResultCtrl.show('{{hit._id}}')" ng-repeat="hit in ResultCtrl.result.hits.hits" class="hit">
+    <header>
+      <b>{{hit._source.header}}</b><small class="pull-right">{{hit._source.createdutc|date:'medium'}} ({{hit._source.clicks}})</small>
+    </header>
+    <div class="body">
+      {{hit._source.content}}
+    </div>
+    <footer>
+      <hr>
+    </footer>
+  </section>
+
+  <small>Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</small>
+
+</div>
