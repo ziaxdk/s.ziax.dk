@@ -1,8 +1,0 @@
-{
-  "agent" : false,
-  "auth" : "es_user:0xziax!tre",
-  "host" : "localhost",
-  "port" : 9200,
-  "rejectUnauthorized" : false,
-  "secure" : false
-}
