@@ -46,9 +46,9 @@ module.exports = function (grunt) {
     },
     'ftp-deploy': {
       build: {
-        auth: Config.ftp,
+        auth: Config.ftp.auth,
         src: 'zip',
-        dest: '/public_html/_ziax-dash/'
+        dest: Config.ftp.dest
       }
     },
 
