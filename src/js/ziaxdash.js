@@ -1,5 +1,5 @@
 ;(function () {
-	var module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngProgress']);
+	var module = angular.module('ziaxdash', ['ngRoute', 'ngResource']);
   
   // Config
   module.config(['$routeProvider', function ($routeProvider) {
@@ -41,7 +41,7 @@
 
   // Controllers
 
-  module.controller('MainController', ['$rootScope', '$location', 'ngProgress', 'RestDrive', function ($rootScope, $location, ngProgress, RestDrive) {
+  module.controller('MainController', ['$rootScope', '$location', 'RestDrive', function ($rootScope, $location, RestDrive) {
     var _t = this;
     _t.hits = "na";
     _t.form = { };
@@ -61,13 +61,13 @@
     });
 
     $rootScope.$on('$routeChangeStart', function () {
-      ngProgress.start();
+      // ngProgress.start();
     });
     $rootScope.$on('$routeChangeSuccess', function () {
-      ngProgress.complete();
+      // ngProgress.complete();
     });
     $rootScope.$on('$routeChangeError', function () {
-      ngProgress.complete();
+      // ngProgress.complete();
     });
   }]);
 

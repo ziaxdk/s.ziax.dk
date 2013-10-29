@@ -2,6 +2,7 @@
 var express = require('express')
     , http = require('http')
     , elasticsearch = require('elasticsearch')
+    , passport = require('passport')
     , Config = require('./_config.json')
     , Promise = require('promise')
     , es = null
@@ -14,8 +15,11 @@ var ngSafe = function (val) {
 var app = module.exports = express();
 var theServer = http.createServer(app);
 
-
+app.use(express.cookieParser());
 app.use(express.bodyParser());
+app.use(express.session({ secret: 'keyboard like ziax dash' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Drive
 /*var promise = new Promise(function (resolve, reject) {
