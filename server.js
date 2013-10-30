@@ -3,6 +3,7 @@ var express = require('express')
     , http = require('http')
     , elasticsearch = require('elasticsearch')
     , passport = require('passport')
+    , GoogleStrategy = require('passport-google').Strategy
     , Config = require('./_config.json')
     , Promise = require('promise')
     , es = null
@@ -20,6 +21,50 @@ app.use(express.bodyParser());
 app.use(express.session({ secret: 'keyboard like ziax dash' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.configure('development', function () {
+    console.log("configure development");
+    Config.me = 'http://localhost:8080/';
+    es = elasticsearch.createClient(Config.es.development);
+});
+
+app.configure('production', function () {
+    console.log("configure production");
+    Config.me = 'http://dash.ziax.dk/'
+    es = elasticsearch.createClient(Config.es.production);
+});
+
+app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) { res.redirect('/'); });
+
+passport.use(new GoogleStrategy(
+  {
+    returnURL: Config.me +'auth/google/callback',
+    realm: Config.me
+  },
+  function(identifier, profile, done) {
+    if (profile.emails[0].value !== Config.whoami) return done(null, false, { message: 'No can do' });
+    console.log('user auth ok');
+    return done(null , { id: identifier, name: profile.displayName })
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, JSON.stringify(user));
+});
+passport.deserializeUser(function(user, done) {
+  done(null, JSON.parse(user));
+});
+
+var ensureAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+};
+
+app.get('/debug', function (req, res) {
+  console.log(req.user);
+  res.send("ok");
+});
 
 // Drive
 /*var promise = new Promise(function (resolve, reject) {
@@ -44,11 +89,12 @@ app.get('/drive', function (req, res) {
   });
 });
 
-app.post('/drive', function (req, res) {
-  if (req.body.code !== Config.code) {
-    res.send(ngSafe({err: "code"}));
-    return;
-  }
+app.post('/drive', ensureAuthenticated, function (req, res) {
+  // if (req.body.code !== Config.code) {
+  //   res.send(ngSafe({err: "code"}));
+  //   return;
+  // }
+  req.body.clicks = 0;
   es.index({ _index: INDEX, _type: "drive"}, req.body, function (res2) {
     res.send(ngSafe(res2));
   });
@@ -122,16 +168,6 @@ app.post('/suggest', function (req, res) {
     }
     res.send(ngSafe(data));
   });
-});
-
-app.configure('development', function () {
-    console.log("configure development");
-    es = elasticsearch.createClient(Config.es.development);
-});
-
-app.configure('production', function () {
-    console.log("configure production");
-    es = elasticsearch.createClient(Config.es.production);
 });
 
 

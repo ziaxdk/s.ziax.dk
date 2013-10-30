@@ -84,8 +84,7 @@
         header: _t.form.header,
         content: _t.form.content,
         tags: _t.form.tags ? _t.form.tags.split(' ') : [],
-        createdutc: moment.utc().format(),
-        code: _t.form.code
+        createdutc: moment.utc().format()
       };
 
       RestDrive.save(obj);
