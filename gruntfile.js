@@ -31,32 +31,45 @@ module.exports = function (grunt) {
 
     // Build
     clean: {
-      build: ["build/*"]
+      build: ["build/*"],
+      deploy: ["zip/*"]
     },
     uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-        report: 'min'
-      },
       build: {
         files: {
-          'src/js/ziaxdash.min.js': [ 'src/js/ziaxdash.js' ]
+          'src/js/dash.ziax.min.js': [ 'src/js/dash.ziax.js' ]
         }
       }
     },
     concat: {
+      build_js: {
+        files: {
+          'build/src/js/dash.ziax.dk.all.min.js': [
+            'build/src/js/jquery-2.0.3.min.js',
+            'build/src/js/angular.min.js',
+            'build/src/js/angular-route.min.js',
+            'build/src/js/angular-resource.min.js',
+            'build/src/js/angular-animate.min.js',
+            'build/src/js/textile.min.js',
+            'build/src/js/moment.min.js',
+            'build/src/js/dash.ziax.min.js'
+          ]
+        }
+      },
+      build_css: {
+        /*files: {
+          'build/src/js/dash.ziax.dk.all.min.css': [
+            'build/src/css/bs3/css/bootstrap.min.css',
+            'build/src/css/dash.ziax.dk.min.css'
+          ]
+        }*/
+      }
+    },
+    cssmin: {
       build: {
         files: {
-          'build/js/dash.ziax.dk.min.js': [
-            'src/js/jquery-2.0.3.min.js',
-            'src/js/angular.min.js',
-            'src/js/angular-route.min.js',
-            'src/js/angular-resource.min.js',
-            'src/js/angular-animate.min.js',
-            'src/js/textile.min.js',
-            'src/js/moment.min.js',
-            //'src/js/ngProgress.min.js',
-            'src/js/ziaxdash.min.js'
+          'build/src/css/dash.ziax.dk.min.css': [
+            'build/src/css/dash.ziax.css'
           ]
         }
       }
@@ -64,9 +77,9 @@ module.exports = function (grunt) {
     htmlrefs: {
       build: {
         /** @required  - string including grunt glob variables */
-        src: 'src/index.html',
+        src: 'build/src/index.html',
         /** @optional  - string directory name*/
-        dest: 'build/',
+        //dest: 'build/src',
         /** @optional  - references external files to be included */
         /*includes: {
           analytics: './ga.inc' // in this case it's google analytics (see sample below)
@@ -77,6 +90,25 @@ module.exports = function (grunt) {
         }
       }
     },
+    copy: {
+      build: {
+        // files: {
+        //   'build/': [ 'server.js', '_config.json', 'package.json' ]
+        // }
+        files: [
+          {
+            expand: true,
+            src: ['src/**/*'],
+            dest: 'build/'
+          },
+          {
+            src: [ 'server.js', '_config.json', 'package.json' ],
+            dest: 'build/'
+          }
+        ]
+      }
+
+    },
 
     // deploy to www.ziax.dk
     compress: {
@@ -84,12 +116,9 @@ module.exports = function (grunt) {
         options: {
           archive: 'zip/ziaxdash.tgz'
         },
-        files: [
-          { src: ['build/**/*'], dest: '/' },
-          { src: ['server.js'], dest: '/' },
-          { src: ['_config.json'], dest: '/' },
-          { src: ['package.json'], dest: '/' }
-        ]
+        expand: true,
+        cwd: 'build/',
+        src: [ '**/*']
       }
     },
     'ftp-deploy': {
@@ -108,6 +137,11 @@ module.exports = function (grunt) {
       dev: {
         options: {
           script: 'server.js'
+        }
+      },
+      prod: {
+        options: {
+          script: 'build/server.js'
         }
       }
     },
@@ -128,6 +162,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-ftp-deploy');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
@@ -135,10 +171,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', []);
   grunt.registerTask('setup_es_local', ['http:local_delete', 'http:local_setup', 'http:local_dummy']);
-  grunt.registerTask('deploy', ['compress', 'ftp-deploy']);
-  grunt.registerTask('build', ['clean:build', 'uglify:build', 'concat:build', 'htmlrefs:build']);
+
+  grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress']);
+  grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'cssmin:build', 'concat:build_css', 'htmlrefs:build' ]);
 
   grunt.registerTask('dev', ['express:dev', 'watch']);
+  grunt.registerTask('prod', ['express:prod', 'watch']);
 
 
 };

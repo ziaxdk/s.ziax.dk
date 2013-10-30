@@ -1,0 +1,12 @@
+.facets {
+  list-style: none;
+}
+.facets li {
+  float: left;
+  padding: 0 4px;
+}
+
+.hit:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}

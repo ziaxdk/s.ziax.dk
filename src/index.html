@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ziax Dash</title>
 
-  <!-- ref:js js/dash.ziax.dk.min.js -->
+  <!-- ref:js js/dash.ziax.dk.all.min.js -->
   <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
   <script type="text/javascript" src="js/angular.js"></script>
   <script type="text/javascript" src="js/angular-route.js"></script>
@@ -14,55 +14,16 @@
 
   <script type="text/javascript" src="js/textile.min.js"></script>
   <script type="text/javascript" src="js/moment.min.js"></script>
-  <script type="text/javascript" src="js/ziaxdash.js"></script>
+  <script type="text/javascript" src="js/dash.ziax.js"></script>
   <!-- endref -->
 
+  <!-- ref:css css/bs3/css/bootstrap.min.css -->
+  <link rel="stylesheet" href="css/bs3/css/bootstrap.css">
+  <!-- endref -->
+  <!-- ref:css css/dash.ziax.dk.min.css -->
+  <link rel="stylesheet" href="css/dash.ziax.css">
+  <!-- endref -->
 
-
-  <link rel="stylesheet" href="bs3/css/bootstrap.css">
-  <style type="text/css">
-    .facets {
-      list-style: none;
-    }
-    .facets li {
-      float: left;
-      padding: 0 4px;
-    }
-
-    .hit:hover {
-      background-color: #f2f2f2;
-      cursor: pointer;
-    }
-
-    /* Styling for the ngProgress itself */
-    #ngProgress {
-        margin: 0;
-        padding: 0;
-        z-index: 99998;
-        background-color: green;
-        color: green;
-        box-shadow: 0 0 10px 0; /* Inherits the font color */
-        height: 2px;
-        opacity: 0;
-
-        /* Add CSS3 styles for transition smoothing */
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
-    }
-
-    /* Styling for the ngProgress-container */
-    #ngProgress-container {
-        position: fixed;
-        margin: 0;
-        padding: 0;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 99999;
-    }
-  </style>
 </head>
 <body ng-controller="MainController as MainCtrl" style="margin-bottom: 20px">
   <header style="background-color: #005577; padding: 4px 0">
