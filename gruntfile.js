@@ -107,7 +107,22 @@ module.exports = function (grunt) {
           }
         ]
       }
-
+    },
+    htmlmin: {
+      build: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'build/',
+            src: ['**/*.html'],
+            dest: 'build/'
+          }
+        ]
+      }
     },
 
     // deploy to www.ziax.dk
@@ -157,13 +172,14 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.loadNpmTasks('grunt-http');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-http');
   grunt.loadNpmTasks('grunt-ftp-deploy');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
@@ -172,8 +188,8 @@ module.exports = function (grunt) {
   grunt.registerTask('default', []);
   grunt.registerTask('setup_es_local', ['http:local_delete', 'http:local_setup', 'http:local_dummy']);
 
-  grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress']);
-  grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'cssmin:build', 'concat:build_css', 'htmlrefs:build' ]);
+  grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
+  grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'cssmin:build', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
 
   grunt.registerTask('dev', ['express:dev', 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);
