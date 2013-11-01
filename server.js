@@ -4,6 +4,7 @@ var express = require('express')
     , elasticsearch = require('elasticsearch')
     , passport = require('passport')
     , GoogleStrategy = require('passport-google').Strategy
+    , GitHubStrategy = require('passport-github').Strategy
     , Config = require('./_config.json')
     , Promise = require('promise')
     , es = null
@@ -30,24 +31,40 @@ app.configure('development', function () {
 
 app.configure('production', function () {
     console.log("configure production");
-    Config.me = 'http://dash.ziax.dk/'
+    Config.me = 'http://dash.ziax.dk/';
     es = elasticsearch.createClient(Config.es.production);
 });
-
-app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) { res.redirect('/'); });
 
 passport.use(new GoogleStrategy(
   {
     returnURL: Config.me +'auth/google/callback',
-    realm: Config.me
+    realm: Config.me,
+    stateless: true
   },
   function(identifier, profile, done) {
-    if (profile.emails[0].value !== Config.whoami) return done(null, false, { message: 'No can do' });
+    if (profile.emails[0].value !== Config.whoami) return done(null, false, { message: 'No can do. Only ziax can do' });
     console.log('user auth ok');
-    return done(null , { id: identifier, name: profile.displayName })
+    return done(null , { id: identifier, name: profile.displayName });
   }
 ));
+
+app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) { res.redirect('/'); });
+
+passport.use(new GitHubStrategy({
+    clientID: '70311a09df9ecf648bd7',
+    clientSecret: '0cc0ccbe2c7bc3ea217b70604da1e5935ec5e5a7',
+    callbackURL: "http://localhost:8080/auth/github/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+
+app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) { res.redirect('/'); });
 
 passport.serializeUser(function(user, done) {
   done(null, JSON.stringify(user));
@@ -58,7 +75,7 @@ passport.deserializeUser(function(user, done) {
 
 var ensureAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
+  res.redirect('/loginerr');
 };
 
 app.get('/debug', function (req, res) {
@@ -73,6 +90,12 @@ app.get('/debug', function (req, res) {
     else resolve(res);
   });
 });*/
+
+// Me
+app.get('/me', ensureAuthenticated, function (req, res) {
+  res.send(ngSafe(req.user));
+});
+
 
 app.get('/drive', function (req, res) {
   es.search({_index: INDEX}, {
