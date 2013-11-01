@@ -5,8 +5,21 @@
   float: left;
   padding: 0 4px;
 }
-
 .hit:hover {
   background-color: #f2f2f2;
   cursor: pointer;
+}
+.typeahead {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 1000;
+}
+.typeahead ul {
+  padding: 0;
+  margin: 0;
+}
+.typeahead ul li {
+  list-style: none;
 }

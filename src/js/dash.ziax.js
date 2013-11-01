@@ -77,7 +77,7 @@
 
   module.controller('NewController', ['$scope', '$http', 'RestDrive', function ($scope, $http, RestDrive) {
     var _t = this;
-    _t.form = {};
+    _t.form = { };
     _t.submit = function () {
       if ($scope.theForm.$invalid) return;
       var obj = {
@@ -111,6 +111,52 @@
   module.filter('textile', ['$sce', function ($sce) {
     return function (val) {
       return !val ? "" : $sce.trustAsHtml(textile.parse(val));
+    };
+  }]);
+
+  module.directive('typeahead', ['$http', '$q', '$parse', function ($http, $q, $parse) {
+    return {
+      restrict: 'A',
+      replace: true,
+      transclude: true,
+      template: '<div class="typeahead"><div ng-transclude></div></div>',
+      link: function (scope, element, attrs) {
+        var promise,
+          canceler = false
+          ;
+        scope.hits = [];
+
+        console.log(scope, attrs)
+
+        scope.$watch(function () { return $parse(attrs.typeahead)(scope); }, function (n, o) {
+          if (n===o) return;
+          fetchData(n);
+        });
+
+        var fetchData = function (value) {
+          if (angular.isUndefined(value) || !value) return;
+
+          if (canceler) {
+            promise.resolve();
+          }
+          canceler = true;
+          promise = $q.defer();
+          $http({ url: '/suggest', method: 'GET', params: { q: value }, timeout: promise.promise }).success(function (data, status) {
+            if (!data.suggest_term[0]) return;
+            // console.log(data.suggest_term[0].options)
+            scope.hits = [];
+            angular.forEach(data.suggest_term[0]["options"], function (d) {
+              // console.log(d);
+              scope.hits.push(d.text);
+            });
+          })["finally"](function () {
+            canceler = false;
+          });
+          return value;
+        };
+
+
+      }
     };
   }]);
 

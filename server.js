@@ -83,6 +83,24 @@ app.get('/debug', function (req, res) {
   res.send("ok");
 });
 
+app.get('/suggest', function (req, res) {
+  es.suggest({_index: INDEX}, {
+    text: req.query.q,
+    "suggest_term": {
+      term: {
+        field: "header"
+      }
+    }
+  }, function (err, data) {
+    if (err) {
+      console.log(err);
+      res.send(ngSafe("err"));
+      return;
+    }
+    res.send(ngSafe(data));
+  });
+});
+
 // Drive
 /*var promise = new Promise(function (resolve, reject) {
   get('http://www.google.com', function (err, res) {

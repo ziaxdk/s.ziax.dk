@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/dash.ziax.css">
   <!-- endref -->
 
+
 </head>
 <body ng-controller="MainController as MainCtrl" style="margin-bottom: 20px">
   <header style="background-color: #005577; padding: 4px 0">
@@ -32,6 +33,11 @@
         <form class="form-inline" role="form" ng-submit="MainCtrl.search()">
           <div class="col-md-6">
             <input type="text" placeholder="Search..." ng-model="MainCtrl.form.q" class="form-control">
+            <div typeahead="MainCtrl.form.q">
+              <ul>
+                <li ng-repeat="hit in hits">{{hit}}</li>
+              </ul>
+            </div>
           </div>
           <div class="col-md-6">
             <button type="submit" class="btn btn-default">Search <span class="glyphicon glyphicon-search"></span></button>

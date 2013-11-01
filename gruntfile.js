@@ -34,6 +34,25 @@ module.exports = function (grunt) {
       build: ["build/*"],
       deploy: ["zip/*"]
     },
+    less: {
+      development: {
+        options: {
+          path: ['src/css']
+        },
+        files: {
+          "src/css/dash.ziax.css": "src/css/dash.ziax.less"
+        }
+      },
+      production: {
+        options: {
+          path: ['src/css'],
+          cleancss: true
+        },
+        files: {
+          "src/css/dash.ziax.min.css": "src/css/dash.ziax.less"
+        }
+      }
+    },
     uglify: {
       build: {
         files: {
@@ -65,15 +84,15 @@ module.exports = function (grunt) {
         }*/
       }
     },
-    cssmin: {
-      build: {
-        files: {
-          'build/src/css/dash.ziax.dk.min.css': [
-            'build/src/css/dash.ziax.css'
-          ]
-        }
-      }
-    },
+    // cssmin: {
+    //   build: {
+    //     files: {
+    //       'build/src/css/dash.ziax.dk.min.css': [
+    //         'build/src/css/dash.ziax.css'
+    //       ]
+    //     }
+    //   }
+    // },
     htmlrefs: {
       build: {
         /** @required  - string including grunt glob variables */
@@ -167,6 +186,10 @@ module.exports = function (grunt) {
         options: {
           nospawn: true //Without this option specified express won't be reloaded
         }
+      },
+      less: {
+        files: [ 'src/css/dash.ziax.less' ],
+        tasks: [ 'less:development' ]
       }
     }
 
@@ -179,6 +202,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-http');
   grunt.loadNpmTasks('grunt-ftp-deploy');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -189,7 +213,7 @@ module.exports = function (grunt) {
   grunt.registerTask('setup_es_local', ['http:local_delete', 'http:local_setup', 'http:local_dummy']);
 
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
-  grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'cssmin:build', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
+  grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'less:production', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
 
   grunt.registerTask('dev', ['express:dev', 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);
