@@ -5,23 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ziax Dash</title>
 
-  <!-- ref:js js/dash.ziax.dk.all.min.js -->
-  <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-  <script type="text/javascript" src="js/angular.js"></script>
-  <script type="text/javascript" src="js/angular-route.js"></script>
-  <script type="text/javascript" src="js/angular-resource.js"></script>
-  <script type="text/javascript" src="js/angular-animate.js"></script>
+  <!-- ref:js js/ziaxdash.all.min.js -->
+  <script type="text/javascript" src="js/lib/angular.js"></script>
+  <script type="text/javascript" src="js/lib/angular-route.js"></script>
+  <script type="text/javascript" src="js/lib/angular-resource.js"></script>
+  <script type="text/javascript" src="js/lib/angular-animate.js"></script>
 
-  <script type="text/javascript" src="js/textile.min.js"></script>
-  <script type="text/javascript" src="js/moment.min.js"></script>
-  <script type="text/javascript" src="js/dash.ziax.js"></script>
+  <script type="text/javascript" src="js/lib/textile.min.js"></script>
+  <script type="text/javascript" src="js/lib/moment.min.js"></script>
+  <script type="text/javascript" src="js/ziaxdash.js"></script>
   <!-- endref -->
 
   <!-- ref:css css/bs3/css/bootstrap.min.css -->
   <link rel="stylesheet" href="css/bs3/css/bootstrap.css">
   <!-- endref -->
-  <!-- ref:css css/dash.ziax.dk.min.css -->
-  <link rel="stylesheet" href="css/dash.ziax.css">
+  <!-- ref:css css/ziaxdash.all.min.css -->
+  <link rel="stylesheet" href="css/ziaxdash.css">
   <!-- endref -->
 
 
@@ -53,7 +52,7 @@
   </div>
   <div style="position: fixed; bottom: 0; left: 0; right: 0; padding: 2px; background-color: #005577; color: #fff">
     <span>Total: {{MainCtrl.hits}}</span>
-    <span class="pull-right"><a href="/auth/github"><span class="glyphicon glyphicon-link"></span></a></span>
+    <span class="pull-right"><a href="/auth/google" ng-hide="MainCtrl.me.isAuth"><span class="glyphicon glyphicon-link"></span></a><span ng-show="MainCtrl.me.isAuth">{{MainCtrl.me.name}}</span> </span>
   </div>
 </body>
 </html>

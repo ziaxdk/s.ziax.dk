@@ -19,7 +19,7 @@ var theServer = http.createServer(app);
 
 app.use(express.cookieParser());
 app.use(express.bodyParser());
-app.use(express.session({ secret: 'keyboard like ziax dash' }));
+app.use(express.session({ secret: 'keyboard like ziax dash', key: 'dash.ziax.dk' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -42,8 +42,8 @@ passport.use(new GoogleStrategy(
     stateless: true
   },
   function(identifier, profile, done) {
-    if (profile.emails[0].value !== Config.whoami) return done(null, false, { message: 'No can do. Only ziax can do' });
-    console.log('user auth ok');
+    if (profile.emails[0].value !== Config.whoami) return done(null, false);
+    console.log(profile);
     return done(null , { id: identifier, name: profile.displayName });
   }
 ));
@@ -51,20 +51,23 @@ passport.use(new GoogleStrategy(
 app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) { res.redirect('/'); });
 
-passport.use(new GitHubStrategy({
-    clientID: '70311a09df9ecf648bd7',
-    clientSecret: '0cc0ccbe2c7bc3ea217b70604da1e5935ec5e5a7',
-    callbackURL: "http://localhost:8080/auth/github/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ githubId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
+// passport.use(new GitHubStrategy({
+//     clientID: '70311a09df9ecf648bd7',
+//     clientSecret: '0cc0ccbe2c7bc3ea217b70604da1e5935ec5e5a7',
+//     callbackURL: "http://localhost:8080/auth/github/callback",
+//     scope: ['user', 'user:email']
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     // User.findOrCreate({ githubId: profile.id }, function (err, user) {
+//     //   return done(err, user);
+//     // });
+//     console.log(profile)
+//     return done(null, { id: 1});
+//   }
+// ));
 
-app.get('/auth/github', passport.authenticate('github'));
-app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) { res.redirect('/'); });
+// app.get('/auth/github', passport.authenticate('github'));
+// app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) { res.redirect('/'); });
 
 passport.serializeUser(function(user, done) {
   done(null, JSON.stringify(user));
@@ -209,6 +212,11 @@ app.post('/suggest', function (req, res) {
     }
     res.send(ngSafe(data));
   });
+});
+
+app.put('/history', function (req, res) {
+  console.log(req.body.q);
+  res.send(ngSafe("ok"))
 });
 
 

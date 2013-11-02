@@ -32,6 +32,7 @@ module.exports = function (grunt) {
     // Build
     clean: {
       build: ["build/*"],
+      build_post: [ 'build/src/js/lib/**/*' ],
       deploy: ["zip/*"]
     },
     less: {
@@ -39,49 +40,59 @@ module.exports = function (grunt) {
         options: {
           path: ['src/css']
         },
-        files: {
-          "src/css/dash.ziax.css": "src/css/dash.ziax.less"
-        }
+        files: [
+          {
+            expand: true,
+            src: ['src/css/*.less'],
+            ext: '.css'
+          }
+        ]
       },
-      production: {
+      build: {
         options: {
-          path: ['src/css'],
+          path: ['build/src/css'],
           cleancss: true
         },
-        files: {
-          "src/css/dash.ziax.min.css": "src/css/dash.ziax.less"
-        }
+        files: [
+          {
+            expand: true,
+            src: ['build/src/css/*.less'],
+            ext: '.min.css'
+          }
+        ]
       }
     },
     uglify: {
       build: {
-        files: {
-          'src/js/dash.ziax.min.js': [ 'src/js/dash.ziax.js' ]
-        }
+        files: [
+          {
+            expand: true,
+            src: ['build/src/js/*.js'],
+            ext: '.min.js'
+          }
+        ]
       }
     },
     concat: {
       build_js: {
         files: {
-          'build/src/js/dash.ziax.dk.all.min.js': [
-            'build/src/js/jquery-2.0.3.min.js',
-            'build/src/js/angular.min.js',
-            'build/src/js/angular-route.min.js',
-            'build/src/js/angular-resource.min.js',
-            'build/src/js/angular-animate.min.js',
-            'build/src/js/textile.min.js',
-            'build/src/js/moment.min.js',
-            'build/src/js/dash.ziax.min.js'
+          'build/src/js/ziaxdash.all.min.js': [
+            'build/src/js/lib/angular.min.js',
+            'build/src/js/lib/angular-route.min.js',
+            'build/src/js/lib/angular-resource.min.js',
+            'build/src/js/lib/angular-animate.min.js',
+            'build/src/js/lib/textile.min.js',
+            'build/src/js/lib/moment.min.js',
+            'build/src/js/ziaxdash.min.js'
           ]
         }
       },
       build_css: {
-        /*files: {
-          'build/src/js/dash.ziax.dk.all.min.css': [
-            'build/src/css/bs3/css/bootstrap.min.css',
-            'build/src/css/dash.ziax.dk.min.css'
+        files: {
+          'build/src/css/ziaxdash.all.min.css': [
+            'build/src/css/ziaxdash.min.css'
           ]
-        }*/
+        }
       }
     },
     // cssmin: {
@@ -111,9 +122,6 @@ module.exports = function (grunt) {
     },
     copy: {
       build: {
-        // files: {
-        //   'build/': [ 'server.js', '_config.json', 'package.json' ]
-        // }
         files: [
           {
             expand: true,
@@ -136,9 +144,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'build/',
-            src: ['**/*.html'],
-            dest: 'build/'
+            src: ['build/src/*.html']
           }
         ]
       }
@@ -188,7 +194,7 @@ module.exports = function (grunt) {
         }
       },
       less: {
-        files: [ 'src/css/dash.ziax.less' ],
+        files: [ 'src/css/*.less' ],
         tasks: [ 'less:development' ]
       }
     }
@@ -212,8 +218,14 @@ module.exports = function (grunt) {
   grunt.registerTask('default', []);
   grunt.registerTask('setup_es_local', ['http:local_delete', 'http:local_setup', 'http:local_dummy']);
 
+  // grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'less:production', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
+  // grunt.registerTask('build', ['clean:build', 'uglify:build', 'concat:build_js', 'copy:build_js', 'less:production', 'concat:build_css', 'copy:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
+
+  grunt.registerTask('build_css', [ 'less:build', 'concat:build_css' ]);
+  grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
+  grunt.registerTask('build', ['clean:build', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', 'clean:build_post' ]);
+
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
-  grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'less:production', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
 
   grunt.registerTask('dev', ['express:dev', 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);

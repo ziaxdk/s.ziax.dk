@@ -28,6 +28,21 @@
     });
   }]);
 
+  // Run
+  module.run(['$http', function($http) {
+  }]);
+
+  // Services
+  module.service('UserService', ['$http', function ($http) {
+    var me = { isAuth: false };
+    $http.get('/me').success(function (data) {
+      angular.extend(me, data, { isAuth: true });
+    });
+    return {
+      me: me
+    }
+  }]);
+
   // Factory
   module.factory('RestDrive', ['$resource', function ($resource) {
     return $resource('drive', {}, { 'query':  { method:'GET', isArray: false }});
@@ -41,9 +56,10 @@
 
   // Controllers
 
-  module.controller('MainController', ['$rootScope', '$location', 'RestDrive', function ($rootScope, $location, RestDrive) {
+  module.controller('MainController', ['$rootScope', '$location', 'UserService', 'RestDrive', function ($rootScope, $location, UserService, RestDrive) {
     var _t = this;
     _t.hits = "na";
+    _t.me = UserService.me;
     _t.form = { };
 
     _t.search = function () {
@@ -97,9 +113,10 @@
     $http.put('/q', { id: Drive.id });
   }]);
 
-  module.controller('ResultController', ['Drives', '$http', '$location', function (Drives, $http, $location) {
+  module.controller('ResultController', ['Drives', '$http', '$location', '$route', function (Drives, $http, $location, $route) {
     var _t = this;
     _t.result = Drives;
+     $http.put('/history', { q: $route.current.params.q });
     _t.show = function (id) {
       $location.path('/show/' + encodeURIComponent(id));
     }
