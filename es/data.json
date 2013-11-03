@@ -1,8 +1,10 @@
-{ "index" : { "_index" : "ziax", "_type" : "drive" } }
-{ "header": "angular", "content": "contains some _pretty_ basic angular stuff", "tags": ["angular", "javascript"], "createdutc": "2013-10-26T18:21:05+02:00", "clicks": 0 }
-{ "index" : { "_index" : "ziax", "_type" : "drive" } }
-{ "header": "node", "content": "Node is quite funny to work with", "tags": ["node", "javascript"], "createdutc": "2013-10-26T18:23:05+02:00", "clicks": 0 }
-{ "index" : { "_index" : "ziax", "_type" : "drive" } }
-{ "header": "node rocks", "content": "Node can be used for anything", "tags": ["node", "javascript"], "createdutc": "2013-10-27T18:23:05+02:00", "clicks": 0 }
-{ "index" : { "_index" : "ziax", "_type" : "drive" } }
-{ "header": "zlapser", "content": "zlapser is a thingy running on the PI", "tags": ["pi", "dyi"], "createdutc": "2013-10-27T18:23:05+02:00", "clicks": 0 }
+[
+  { "index" : { "_index" : "ziax", "_type" : "drive" } },
+  { "header": "angular", "content": "contains some _pretty_ basic angular stuff", "tags": ["angular", "javascript"], "createdutc": "2013-10-26T18:21:05+02:00", "clicks": 0 },
+  { "index" : { "_index" : "ziax", "_type" : "drive" } },
+  { "header": "node", "content": "Node is quite funny to work with", "tags": ["node", "javascript"], "createdutc": "2013-10-26T18:23:05+02:00", "clicks": 0 },
+  { "index" : { "_index" : "ziax", "_type" : "drive" } },
+  { "header": "node rocks", "content": "Node can be used for anything", "tags": ["node", "javascript"], "createdutc": "2013-10-27T18:23:05+02:00", "clicks": 0 },
+  { "index" : { "_index" : "ziax", "_type" : "drive" } },
+  { "header": "zlapser", "content": "zlapser is a thingy running on the PI", "tags": ["pi", "dyi"], "createdutc": "2013-10-27T18:23:05+02:00", "clicks": 0 }
+]

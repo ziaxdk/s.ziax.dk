@@ -197,8 +197,29 @@ module.exports = function (grunt) {
         files: [ 'src/css/*.less' ],
         tasks: [ 'less:development' ]
       }
-    }
+    },
 
+    // https://github.com/ncb000gt/node-es/blob/master/lib/core.js
+    elasticsearch: {
+      local: {
+        ignoreErrors: true,
+        config: Config.es.development,
+        tasks: [
+          { 'indices.deleteIndex': { _index: 'ziax'} },
+          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
+          { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+        ]
+      },
+      azure: {
+        ignoreErrors: true,
+        config: Config.es.deploy,
+        tasks: [
+          { 'indices.deleteIndex': { _index: 'ziax'} },
+          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
+          { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+        ]
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -214,9 +235,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-htmlrefs');
+  // grunt.loadTasks('lib/tasks/grunt-elasticsearch.js');
+  grunt.loadTasks('lib/tasks');
 
   grunt.registerTask('default', []);
-  grunt.registerTask('setup_es_local', ['http:local_delete', 'http:local_setup', 'http:local_dummy']);
+  // grunt.registerTask('setup_es_local', ['http:local_delete', 'http:local_setup', 'http:local_dummy']);
 
   // grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'less:production', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
   // grunt.registerTask('build', ['clean:build', 'uglify:build', 'concat:build_js', 'copy:build_js', 'less:production', 'concat:build_css', 'copy:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
@@ -229,6 +252,4 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dev', ['express:dev', 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);
-
-
 };
