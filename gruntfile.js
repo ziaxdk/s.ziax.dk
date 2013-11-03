@@ -50,8 +50,8 @@ module.exports = function (grunt) {
       },
       build: {
         options: {
-          path: ['build/src/css'],
-          cleancss: true
+          path: ['build/src/css']
+          // cleancss: true
         },
         files: [
           {
@@ -90,20 +90,23 @@ module.exports = function (grunt) {
       build_css: {
         files: {
           'build/src/css/ziaxdash.all.min.css': [
-            'build/src/css/ziaxdash.min.css'
+            'build/src/css/ziaxdash.min.css',
+            'build/src/css/ng-trans.min.css'
           ]
         }
       }
     },
-    // cssmin: {
-    //   build: {
-    //     files: {
-    //       'build/src/css/dash.ziax.dk.min.css': [
-    //         'build/src/css/dash.ziax.css'
-    //       ]
-    //     }
-    //   }
-    // },
+    cssmin: {
+      build: {
+        files: [
+          {
+            expand: true,
+            src: ['build/src/css/*.css'],
+            ext: '.min.css'
+          }
+        ]
+      }
+    },
     htmlrefs: {
       build: {
         /** @required  - string including grunt glob variables */
@@ -244,7 +247,7 @@ module.exports = function (grunt) {
   // grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'less:production', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
   // grunt.registerTask('build', ['clean:build', 'uglify:build', 'concat:build_js', 'copy:build_js', 'less:production', 'concat:build_css', 'copy:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
 
-  grunt.registerTask('build_css', [ 'less:build', 'concat:build_css' ]);
+  grunt.registerTask('build_css', [ 'less:build', 'cssmin:build', 'concat:build_css' ]);
   grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
   grunt.registerTask('build', ['clean:build', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', 'clean:build_post' ]);
 

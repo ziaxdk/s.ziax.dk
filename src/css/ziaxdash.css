@@ -1,3 +1,9 @@
+body {
+  padding-top: 70px;
+}
+.navbar.zdnavbar {
+  background-color: #005577;
+}
 .facets {
   list-style: none;
 }

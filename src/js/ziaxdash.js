@@ -1,5 +1,5 @@
 ;(function () {
-	var module = angular.module('ziaxdash', ['ngRoute', 'ngResource']);
+	var module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);
   
   // Config
   module.config(['$routeProvider', function ($routeProvider) {
@@ -159,7 +159,7 @@
           canceler = true;
           promise = $q.defer();
           $http({ url: '/suggest', method: 'GET', params: { q: value }, timeout: promise.promise }).success(function (data, status) {
-            if (!data.suggest_term[0]) return;
+            if (!data.suggest || !data.suggest_term[0]) return;
             // console.log(data.suggest_term[0].options)
             scope.hits = [];
             angular.forEach(data.suggest_term[0]["options"], function (d) {
