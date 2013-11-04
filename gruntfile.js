@@ -90,8 +90,9 @@ module.exports = function (grunt) {
       build_css: {
         files: {
           'build/src/css/ziaxdash.all.min.css': [
-            'build/src/css/ziaxdash.min.css',
-            'build/src/css/ng-trans.min.css'
+            'build/src/css/animate.min.css',
+            'build/src/css/ziaxdash.min.css'
+            // 'build/src/css/ng-trans.min.css'
           ]
         }
       }

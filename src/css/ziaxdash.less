@@ -14,7 +14,7 @@ body { padding-top: 70px; }
   padding: 0 4px;
 }
 .hit:hover {
-  background-color: #f2f2f2;
+  background-color: #f4f2f2;
   cursor: pointer;
 }
 .typeahead {
@@ -30,4 +30,16 @@ body { padding-top: 70px; }
 }
 .typeahead ul li {
   list-style: none;
+}
+
+.zdview {
+  &.ng-enter {
+    animation: fadeInRight 200ms;
+    -webkit-animation: fadeInRight 200ms;
+  }
+
+  &.ng-leave {
+    animation: slideOutUp 1000ms;
+    -webkit-animation: slideOutUp 1000ms;
+  }
 }

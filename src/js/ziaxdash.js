@@ -70,6 +70,9 @@
     _t.new = function () {
       $location.path('/new');
     };
+    _t.oth = function () {
+      $location.path('/show/3fnjqyrOS96yxqmqBqOjRQ');
+    }
 
 
     RestDrive.query(null, function (res) {
@@ -106,6 +109,8 @@
       RestDrive.save(obj);
 
     };
+
+    console.log($scope)
   }]);
 
   module.controller('ShowController', ['Drive', '$http', function (Drive, $http) {

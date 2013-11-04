@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="css/bs3/css/bootstrap.css">
   <!-- endref -->
   <!-- ref:css css/ziaxdash.all.min.css -->
+  <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/ziaxdash.css">
-  <link rel="stylesheet" href="css/ng-trans.css">
   <!-- endref -->
 </head>
 <body ng-controller="MainController as MainCtrl">
@@ -29,14 +29,13 @@
               </form>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="" ng-click="MainCtrl.new()"><span class="glyphicon glyphicon-plus"></span></a></li>
+                <li><a href="" ng-click="MainCtrl.oth()"><span class="glyphicon glyphicon-minus"></span></a></li>
               </ul>
           </div>
         </div>
       </div>
     </div>
   </nav>
-
-
         <!--
         <form class="form-inline" role="form" ng-submit="MainCtrl.search()">
           <div class="col-md-6">
@@ -53,8 +52,9 @@
           </div>
         </form>-->
 
-  <div class="container">
-    <div class="row ng-trans ng-trans-fade" ng-view></div>	
+  <div class="container" style="position: relative">
+    <!-- <div class="row ng-trans ng-trans-scale-up" ng-view style="position: absolute; left: 0; right: 0; padding-bottom: 20px"></div>	 -->
+    <div class="row zdview" ng-view style="position: absolute; left: 0; right: 0; padding-bottom: 20px"></div>  
   </div>
   <div style="position: fixed; bottom: 0; left: 0; right: 0; padding: 2px; background-color: #005577; color: #fff">
     <span>Total: {{MainCtrl.hits}}</span>
