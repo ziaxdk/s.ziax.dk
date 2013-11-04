@@ -190,6 +190,37 @@ app.put('/q', function (req, res) {
   });
 });
 
+// Facets
+app.post('/xq', function (req, res) {
+  es.search({_index: INDEX}, {
+    query : {
+      term: {
+        header: req.body.q
+      }
+    },
+    filter: {
+      term: {
+        tags: req.body.facets.tags
+      }
+    },
+    facets: {
+      tags: {
+        terms: {
+          field: "tags"
+        }
+      }
+    }
+  }, function (err, data) {
+    if (err) {
+      console.log(err);
+      res.send(ngSafe("err"));
+      return;
+    }
+    console.log(data);
+    res.send(ngSafe(data));
+  });
+});
+
 // Suggest
 
 app.post('/suggest', function (req, res) {

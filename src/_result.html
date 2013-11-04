@@ -2,7 +2,7 @@
   
   <ul class="list-group facets clearfix">
     <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms">
-      <a href="#">{{hit.term}} <span class="badge">{{hit.count}}</span></a>
+      <button class="btn" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-click="hit.selected = !hit.selected">{{hit.term}} <span class="badge">{{hit.count}}</span></button>
     </li>
   </ul>
 

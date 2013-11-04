@@ -1,0 +1,13 @@
+{
+    "query" : {
+        "term" : { "header" : "node" }
+    },
+    "filter" : {
+        "term" : { "tags" : ["node", "javascript"] }
+    },
+    "facets" : {
+        "tag" : {
+            "terms" : { "field" : "tags" }
+        }
+    }
+}

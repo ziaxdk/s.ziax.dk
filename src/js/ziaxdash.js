@@ -44,11 +44,26 @@
   }]);
 
   // Factory
+  module.factory('Delayer', ['$timeout', function ($timeout) {
+    var delayer = function (delayInMs) {
+      var canceler;
+      return {
+        run: function (actionToExecute) {
+          if (canceler) $timeout.cancel(canceler);
+          canceler = $timeout(actionToExecute, delayInMs);
+        }
+      };
+    };
+    return delayer;
+  }]);
   module.factory('RestDrive', ['$resource', function ($resource) {
     return $resource('drive', {}, { 'query':  { method:'GET', isArray: false }});
   }]);
   module.factory('RestQ', ['$resource', function ($resource) {
     return $resource('q');
+  }]);
+  module.factory('RestXQ', ['$resource', function ($resource) {
+    return $resource('xq');
   }]);
   module.factory('RestClick', ['$resource', function ($resource) {
     return $resource('click/:id', {id: '@id'});
@@ -119,13 +134,30 @@
     $http.put('/q', { id: Drive.id });
   }]);
 
-  module.controller('ResultController', ['Drives', '$http', '$location', '$route', function (Drives, $http, $location, $route) {
-    var _t = this;
-    _t.result = Drives;
-     $http.put('/history', { q: $route.current.params.q });
+  module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route',
+    function (Drives, RestXQ, Delayer, $scope, $http, $location, $route) {
+    var _t = this, facetSearch = Delayer(1000);
+    // TODO: Consider moving to routeProvider
+    $http.put('/history', { q: $route.current.params.q });
     _t.show = function (id) {
       $location.path('/show/' + encodeURIComponent(id));
     };
+
+    _t.result = Drives;
+
+    $scope.$watch(function () { return _t.result.facets.tags.terms; }, function (terms) {
+      facetSearch.run(function () {
+        var tags = [];
+        angular.forEach(terms, function (val) {
+          if (val.selected) tags.push(val.term);
+        });
+        // if (tags.length === 0) return;
+        RestXQ.save({ q: $route.current.params.q, facets: { tags: [tags] } }).$promise.then(function(data) {
+          _t.result.hits = data.hits;
+        });
+      });
+    }, true);
+
   }]);
 
   // Directives
