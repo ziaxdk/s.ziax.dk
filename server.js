@@ -119,6 +119,7 @@ app.get('/me', ensureAuthenticated, function (req, res) {
 
 
 app.get('/drive', function (req, res) {
+  // TODO: If user is authenticated, include onlyAuth also
   es.search({_index: INDEX}, {
     query : {
       match_all: {}
@@ -134,10 +135,6 @@ app.get('/drive', function (req, res) {
 });
 
 app.post('/drive', ensureAuthenticated, function (req, res) {
-  // if (req.body.code !== Config.code) {
-  //   res.send(ngSafe({err: "code"}));
-  //   return;
-  // }
   req.body.clicks = 0;
   es.index({ _index: INDEX, _type: "drive"}, req.body, function (res2) {
     res.send(ngSafe(res2));

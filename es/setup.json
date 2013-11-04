@@ -22,6 +22,9 @@
         },
         "clicks": {
           "type": "integer"
+        },
+        "onlyAuth": {
+          "type": "boolean"
         }
       }
     }

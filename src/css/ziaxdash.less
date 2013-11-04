@@ -1,23 +1,34 @@
-body { padding-top: 70px; }
+body { 
+  padding-top: 70px; 
+}
 
 .navbar {
-  &.zdnavbar {
+  &.zdnavbartop {
     //margin-bottom: 0;
     background-color: #005577;
   }
+
+  &.zdnavbarbottom {
+    padding: 2px;
+    background-color: #005577;
+    min-height: inherit;
+    color: #fff;
+  }
 }
+
+
+
+
 .facets {
   list-style: none;
+  
+  li {
+    float: left;
+    padding: 0 4px;
+  }
 }
-.facets li {
-  float: left;
-  padding: 0 4px;
-}
-.hit:hover {
-  background-color: #f4f2f2;
-  cursor: pointer;
-}
-.typeahead {
+
+/*.typeahead {
   position: absolute;
   left: 0;
   right: 0;
@@ -30,8 +41,9 @@ body { padding-top: 70px; }
 }
 .typeahead ul li {
   list-style: none;
-}
+}*/
 
+// Animations
 .zdview {
   &.ng-enter {
     animation: fadeInRight 200ms;
@@ -39,7 +51,15 @@ body { padding-top: 70px; }
   }
 
   &.ng-leave {
-    animation: slideOutUp 1000ms;
-    -webkit-animation: slideOutUp 1000ms;
+    animation: slideOutUp 1s;
+    -webkit-animation: slideOutUp 1s;
   }
 }
+.zdfade {
+  &.ng-hide {
+    display: inline !important;
+    animation: fadeIn 3s;
+    -webkit-animation: fadeIn 3s;
+  }
+}
+

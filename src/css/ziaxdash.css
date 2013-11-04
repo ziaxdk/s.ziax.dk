@@ -1,8 +1,14 @@
 body {
   padding-top: 70px;
 }
-.navbar.zdnavbar {
+.navbar.zdnavbartop {
   background-color: #005577;
+}
+.navbar.zdnavbarbottom {
+  padding: 2px;
+  background-color: #005577;
+  min-height: inherit;
+  color: #fff;
 }
 .facets {
   list-style: none;
@@ -11,11 +17,7 @@ body {
   float: left;
   padding: 0 4px;
 }
-.hit:hover {
-  background-color: #f4f2f2;
-  cursor: pointer;
-}
-.typeahead {
+/*.typeahead {
   position: absolute;
   left: 0;
   right: 0;
@@ -28,12 +30,17 @@ body {
 }
 .typeahead ul li {
   list-style: none;
-}
+}*/
 .zdview.ng-enter {
   animation: fadeInRight 200ms;
   -webkit-animation: fadeInRight 200ms;
 }
 .zdview.ng-leave {
-  animation: slideOutUp 1000ms;
-  -webkit-animation: slideOutUp 1000ms;
+  animation: slideOutUp 1s;
+  -webkit-animation: slideOutUp 1s;
+}
+.zdfade.ng-hide {
+  display: inline !important;
+  animation: fadeIn 3s;
+  -webkit-animation: fadeIn 3s;
 }

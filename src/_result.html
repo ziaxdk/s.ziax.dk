@@ -6,19 +6,13 @@
     </li>
   </ul>
 
-  <hr>
-
-  <section ng-click="ResultCtrl.show('{{hit._id}}')" ng-repeat="hit in ResultCtrl.result.hits.hits" class="hit">
-    <header>
-      <b>{{hit._source.header}}</b><small class="pull-right">{{hit._source.createdutc|date:'medium'}} ({{hit._source.clicks}})</small>
-    </header>
-    <div class="body">
-      {{hit._source.content}}
-    </div>
-    <footer>
-      <hr>
-    </footer>
-  </section>
+  <div class="list-group">
+    <a class="list-group-item" ng-click="ResultCtrl.show('{{hit._id}}')" ng-repeat="hit in ResultCtrl.result.hits.hits">
+      <small class="pull-right">{{hit._source.createdutc|date:'medium'}} ({{hit._source.clicks}})</small>
+      <h4 class="list-group-item-heading">{{hit._source.header}}</h4>
+      <p class="list-group-item-text">{{hit._source.content}}</p>
+    </a>
+  </div>
 
   <small>Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</small>
 
