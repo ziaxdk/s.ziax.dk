@@ -1,13 +1,15 @@
 <div class="col-md-12">
   
+  
   <ul class="list-group facets clearfix">
-    <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms">
-      <button class="btn" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-click="hit.selected = !hit.selected">{{hit.term}} <span class="badge">{{hit.count}}</span></button>
+    <li><button class="btn btn-danger" ng-click="ResultCtrl.facetClear()"><i class="glyphicon glyphicon-ban-circle"></i></button></li>
+    <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms track by hit.term">
+      <button class="btn" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-click="ResultCtrl.facet(this)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
     </li>
   </ul>
 
   <div class="list-group">
-    <a class="list-group-item" ng-click="ResultCtrl.show('{{hit._id}}')" ng-repeat="hit in ResultCtrl.result.hits.hits">
+    <a class="list-group-item hit" ng-click="ResultCtrl.show('{{hit._id}}')" ng-repeat="hit in ResultCtrl.result.hits.hits">
       <small class="pull-right">{{hit._source.createdutc|date:'medium'}} ({{hit._source.clicks}})</small>
       <h4 class="list-group-item-heading">{{hit._source.header}}</h4>
       <p class="list-group-item-text">{{hit._source.content}}</p>

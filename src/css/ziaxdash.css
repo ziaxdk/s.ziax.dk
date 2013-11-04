@@ -44,3 +44,11 @@ body {
   animation: fadeIn 3s;
   -webkit-animation: fadeIn 3s;
 }
+.hit.ng-enter {
+  animation: fadeIn 3s;
+  -webkit-animation: fadeIn 3s;
+}
+.hit.ng-leave {
+  animation: fadeOut 3s;
+  -webkit-animation: fadeOut 3s;
+}

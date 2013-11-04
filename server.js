@@ -14,6 +14,13 @@ var express = require('express')
 var ngSafe = function (val) {
   return ")]}',\n" + JSON.stringify(val);
 };
+
+var extend = function (a, b) {
+  for(var key in b)
+    if(b.hasOwnProperty(key)) a[key] = b[key];
+  return a;
+};
+
 var app = module.exports = express();
 var theServer = http.createServer(app);
 
@@ -192,15 +199,10 @@ app.put('/q', function (req, res) {
 
 // Facets
 app.post('/xq', function (req, res) {
-  es.search({_index: INDEX}, {
-    query : {
+  var xq = {
+    query: {
       term: {
         header: req.body.q
-      }
-    },
-    filter: {
-      term: {
-        tags: req.body.facets.tags
       }
     },
     facets: {
@@ -210,13 +212,24 @@ app.post('/xq', function (req, res) {
         }
       }
     }
-  }, function (err, data) {
+  };
+
+  if (req.body.facets.tags.length !== 0) {
+    xq = extend(xq, {
+      filter: {
+        term: {
+          tags: req.body.facets.tags
+        }
+      }
+    });
+  }
+
+  es.search({_index: INDEX}, xq, function (err, data) {
     if (err) {
       console.log(err);
       res.send(ngSafe("err"));
       return;
     }
-    console.log(data);
     res.send(ngSafe(data));
   });
 });
