@@ -32,7 +32,7 @@ module.exports = function (grunt) {
     // Build
     clean: {
       build: ["build/*"],
-      build_post: [ 'build/src/js/lib/**/*' ],
+      build_post: [ 'build/src/js/lib/**/*', 'build/src/js/app/**/*' ],
       deploy: ["zip/*"]
     },
     less: {
@@ -94,6 +94,21 @@ module.exports = function (grunt) {
             'build/src/css/ziaxdash.min.css'
             // 'build/src/css/ng-trans.min.css'
           ]
+        }
+      },
+      build_dev: {
+        options: {
+          banner: "(function () {\r\nvar module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);\r\n",
+          footer: '}());',
+          // process: function (src, filePath) {
+          //   var elements = src.split('\n');
+          //   var finals = elements.splice(4, elements.length - 5);
+          //   return finals.join('\n');
+          //   //return src;
+          // }
+        },
+        files: {
+          'src/js/ziaxdash.js':  [ 'src/js/app/**/*.js' ]
         }
       }
     },
@@ -200,6 +215,10 @@ module.exports = function (grunt) {
       less: {
         files: [ 'src/css/*.less' ],
         tasks: [ 'less:development' ]
+      },
+      js: {
+        files: [ 'src/js/app/**/*.js' ],
+        tasks: [ 'concat:build_dev' ]
       }
     },
 

@@ -5,6 +5,7 @@ var express = require('express')
     , passport = require('passport')
     , GoogleStrategy = require('passport-google').Strategy
     , GitHubStrategy = require('passport-github').Strategy
+    , _ = require('underscore')
     , Config = require('./_config.json')
     , Promise = require('promise')
     , es = null
@@ -185,15 +186,8 @@ app.post('/q', function (req, res) {
     }
     res.send(ngSafe(data));
   });
-})
-app.put('/q', function (req, res) {
   es.update({ _index: INDEX, _type: "drive", _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) {
-    if (err) {
-      console.log(err);
-      res.send(ngSafe("err"));
-      return;
-    }
-    res.send(ngSafe(data));
+    console.log (err ? err : data);
   });
 });
 
