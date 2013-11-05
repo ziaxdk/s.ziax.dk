@@ -9,7 +9,7 @@
   </ul>
 
   <div class="list-group">
-    <a class="list-group-item hit" ng-click="ResultCtrl.show('{{hit._id}}')" ng-repeat="hit in ResultCtrl.result.hits.hits">
+    <a class="list-group-item hit" ng-click="ResultCtrl.show('{{hit._id}}')" ng-repeat="hit in ResultCtrl.result.hits.hits track by hit._id">
       <small class="pull-right">{{hit._source.createdutc|date:'medium'}} ({{hit._source.clicks}})</small>
       <h4 class="list-group-item-heading">{{hit._source.header}}</h4>
       <p class="list-group-item-text">{{hit._source.content}}</p>

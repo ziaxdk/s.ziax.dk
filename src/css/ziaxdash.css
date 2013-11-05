@@ -45,10 +45,10 @@ body {
   -webkit-animation: fadeIn 3s;
 }
 .hit.ng-enter {
-  animation: fadeIn 3s;
-  -webkit-animation: fadeIn 3s;
+  animation: bounceIn 300ms;
+  -webkit-animation: bounceIn 300ms;
 }
 .hit.ng-leave {
-  animation: fadeOut 3s;
-  -webkit-animation: fadeOut 3s;
+  animation: bounceOut 300ms;
+  -webkit-animation: bounceOut 300ms;
 }
