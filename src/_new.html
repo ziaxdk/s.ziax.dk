@@ -22,7 +22,7 @@
     <div class="form-group">
       <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid||!MainCtrl.me.isAuth">Save <span class="glyphicon glyphicon-plus"></span></button>
     </div>
-    <div class="panel panel-danger zddanger" ng-show="theForm.$valid" style="position: absolute">
+    <div class="panel panel-danger zddanger" ng-show="theForm.$valid&&!MainCtrl.me.isAuth" style="position: absolute">
       <div class="panel-heading">
         <h3 class="panel-title">Message for you, sir!</h3>
       </div>

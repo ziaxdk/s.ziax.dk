@@ -95,7 +95,7 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
 
   $timeout(function () {
     _t.showHits = true;
-  }, 1000);
+  }, 300);
 
   _t.result = Drives;
   // _t.result = {

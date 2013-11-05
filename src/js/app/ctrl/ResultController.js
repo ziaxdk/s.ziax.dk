@@ -1,6 +1,6 @@
 module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
   function (Drives, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
-  var _t = this, facetSearch = Delayer(1000), first = true;
+  var _t = this, facetSearch = Delayer(500), first = true;
   // TODO: Consider moving to routeProvider
   $http.put('/history', { q: $route.current.params.q });
   _t.show = function (id) {
@@ -9,7 +9,7 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
 
   $timeout(function () {
     _t.showHits = true;
-  }, 1000);
+  }, 300);
 
   _t.result = Drives;
   // _t.result = {
