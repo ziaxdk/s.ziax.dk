@@ -52,3 +52,9 @@ body {
   animation: bounceOut 300ms;
   -webkit-animation: bounceOut 300ms;
 }
+.zddanger.ng-hide-add,
+.zddanger.ng-hide-remove {
+  display: block !important;
+  animation: pulse 300ms;
+  -webkit-animation: pulse 300ms;
+}
