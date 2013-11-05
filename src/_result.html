@@ -16,6 +16,6 @@
     </a>
   </div>
 
-  <small>Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</small>
+  <div class="well well-sm hitsinfo" ng-show="ResultCtrl.showHits">Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</div>
 
 </div>

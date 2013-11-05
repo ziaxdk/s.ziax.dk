@@ -84,14 +84,18 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', function ($s
   };
 }]);
 
-module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route',
-  function (Drives, RestXQ, Delayer, $scope, $http, $location, $route) {
+module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
+  function (Drives, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
   var _t = this, facetSearch = Delayer(1000), first = true;
   // TODO: Consider moving to routeProvider
   $http.put('/history', { q: $route.current.params.q });
   _t.show = function (id) {
     $location.path('/show/' + encodeURIComponent(id));
   };
+
+  $timeout(function () {
+    _t.showHits = true;
+  }, 1000);
 
   _t.result = Drives;
   // _t.result = {

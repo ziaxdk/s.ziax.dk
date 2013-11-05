@@ -58,3 +58,9 @@ body {
   animation: pulse 300ms;
   -webkit-animation: pulse 300ms;
 }
+.hitsinfo.ng-hide-add,
+.hitsinfo.ng-hide-remove {
+  display: block !important;
+  animation: bounceInDown 1000ms;
+  -webkit-animation: bounceInDown 1000ms;
+}
