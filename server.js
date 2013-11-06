@@ -26,7 +26,9 @@ var app = module.exports = express();
 var theServer = http.createServer(app);
 
 app.use(express.cookieParser());
-app.use(express.bodyParser());
+// app.use(express.bodyParser()); deprecated
+app.use(express.urlencoded());
+app.use(express.json());
 app.use(express.session({ secret: 'keyboard like ziax dash', key: 'dash.ziax.dk' }));
 app.use(passport.initialize());
 app.use(passport.session());
