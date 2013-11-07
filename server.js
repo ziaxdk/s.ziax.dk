@@ -177,6 +177,9 @@ app.get('/q', function (req, res) {
     }
     res.send(ngSafe(data));
   });
+  es.index({ _index: INDEX, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) {
+    console.log('his', err, data);
+  });
 });
 
 app.post('/q', function (req, res) {
@@ -251,10 +254,31 @@ app.post('/suggest', function (req, res) {
   });
 });
 
-app.put('/history', function (req, res) {
-  console.log(req.body.q);
-  res.send(ngSafe("ok"))
-});
+// app.put('/history', function (req, res) {
+//   console.log(req.body.q);
+//   res.send(ngSafe("ok"))
+// });
+
+
+app.get('/history', function (req, res) {
+  es.search({_index: INDEX}, {
+    facets: {
+      history: {
+        terms: {
+          field: "q2.facet"
+        }
+      }
+    },
+    size: 0
+  }, function (err, data) {
+    if (err) {
+      console.log(err);
+      res.send(ngSafe("err"));
+      return;
+    }
+    res.send(ngSafe(data));
+  });
+})
 
 
 app.use(express.static(__dirname + "/src"));

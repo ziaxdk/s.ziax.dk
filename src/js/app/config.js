@@ -2,6 +2,7 @@
 module.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', {
       templateUrl: "_index.html",
+      resolve: { History: ['$http', function($http) { return $http.get('/history'); }] },
       controller: "IndexController",
       controllerAs: "IndexCtrl"
   });

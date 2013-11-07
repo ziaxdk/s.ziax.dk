@@ -8,7 +8,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    http: {
+    /*http: {
       local_delete: {
         url: esurl + "/ziax",
         ignoreErrors: true,
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         method: 'POST',
         body: grunt.file.read('es/data.json')
       }
-    },
+    },*/
 
 
     // Build
@@ -99,7 +99,7 @@ module.exports = function (grunt) {
       build_dev: {
         options: {
           banner: "(function () {\r\nvar module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);\r\n",
-          footer: '}());',
+          footer: '}());'
           // process: function (src, filePath) {
           //   var elements = src.split('\n');
           //   var finals = elements.splice(4, elements.length - 5);

@@ -4,6 +4,7 @@ var module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);
 module.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', {
       templateUrl: "_index.html",
+      resolve: { History: ['$http', function($http) { return $http.get('/history'); }] },
       controller: "IndexController",
       controllerAs: "IndexCtrl"
   });
@@ -25,6 +26,17 @@ module.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.otherwise({
       redirectTo: "/"
   });
+}]);
+
+module.controller('IndexController', ['History', '$location',
+  function (History, $location) {
+  var _t = this;
+  _t.history = History.data.facets.history.terms;
+  
+
+  _t.search = function (q) {
+    $location.path('res/' +  encodeURIComponent(q));
+  };
 }]);
 
 module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', 'UserService', 'RestDrive', 
@@ -86,9 +98,9 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', function ($s
 
 module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
   function (Drives, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
-  var _t = this, facetSearch = Delayer(1000), first = true;
+  var _t = this, facetSearch = Delayer(500), first = true;
   // TODO: Consider moving to routeProvider
-  $http.put('/history', { q: $route.current.params.q });
+  // $http.put('/history', { q: $route.current.params.q });
   _t.show = function (id) {
     $location.path('/show/' + encodeURIComponent(id));
   };

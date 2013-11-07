@@ -2,7 +2,7 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
   function (Drives, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
   var _t = this, facetSearch = Delayer(500), first = true;
   // TODO: Consider moving to routeProvider
-  $http.put('/history', { q: $route.current.params.q });
+  // $http.put('/history', { q: $route.current.params.q });
   _t.show = function (id) {
     $location.path('/show/' + encodeURIComponent(id));
   };

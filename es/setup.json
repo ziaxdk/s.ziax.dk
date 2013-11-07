@@ -1,13 +1,26 @@
 {
-	"settings": {
+  "settings": {
+    "index" : {
+      "analysis" : {
+        "analyzer" : {
+          "lcasekeywordanalyser": {
+            "type": "custom",
+            "tokenizer": "keyword",
+            "filter": [ "lowercase" ]
+          }
+        }
 
-	},
+      }
+    }
+
+  },
+
 
   "mappings": {
     "drive": {
-      "dynamic": "false",
+      "dynamic": "strict",
+
       "properties": {
-        
         "header": {
           "type": "string"
         },
@@ -25,6 +38,31 @@
         },
         "onlyAuth": {
           "type": "boolean"
+        }
+      }
+    },
+
+
+    "history": {
+      "_all": {
+        "enabled": "false"
+        },
+      "dynamic": "strict",
+      "properties": {
+        "q": {
+          "type": "string",
+          "index_analyzer": "keyword",
+          "search_analyzer": "lcasekeywordanalyser"
+        },
+        "q2": {
+          "type": "multi_field",
+          "fields": {
+            "value": { "type": "string", "analyzer": "lcasekeywordanalyser" },
+            "facet": { "type": "string", "index": "not_analyzed" }
+          }
+        },
+        "createdutc": {
+          "type": "date"
         }
       }
     }

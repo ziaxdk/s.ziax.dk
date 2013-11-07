@@ -8,5 +8,24 @@
   { "index" : { "_index" : "ziax", "_type" : "drive" } },
   { "header": "zlapser", "content": "zlapser is a thingy running on the PI", "tags": ["pi", "dyi"], "createdutc": "2013-10-27T18:23:05+02:00", "clicks": 0, "onlyAuth": false },
   { "index" : { "_index" : "ziax", "_type" : "drive" } },
-  { "header": "secret", "content": "Only auth users should see this", "tags": ["secret", "auth"], "createdutc": "2013-04-11T12:40:05+02:00", "clicks": 0, "onlyAuth": true }
+  { "header": "secret", "content": "Only auth users should see this", "tags": ["secret", "auth"], "createdutc": "2013-04-11T12:40:05+02:00", "clicks": 0, "onlyAuth": true },
+
+
+  { "index" : { "_index" : "ziax", "_type" : "history" } },
+  { "q": "angular", "createdutc": "2013-10-26T18:21:05+02:00" },
+  { "index" : { "_index" : "ziax", "_type" : "history" } },
+  { "q": "angular", "createdutc": "2013-10-26T18:23:05+02:00" },
+  { "index" : { "_index" : "ziax", "_type" : "history" } },
+  { "q": "angular", "createdutc": "2013-10-26T18:25:05+02:00" },
+
+  { "index" : { "_index" : "ziax", "_type" : "history" } },
+  { "q": "node", "createdutc": "2013-10-26T18:01:05+02:00" },
+  { "index" : { "_index" : "ziax", "_type" : "history" } },
+  { "q": "node", "createdutc": "2013-10-26T18:11:05+02:00" },
+
+  { "index" : { "_index" : "ziax", "_type" : "history" } },
+  { "q": ".net", "createdutc": "2013-10-26T15:21:05+02:00" },
+
+  { "index" : { "_index" : "ziax", "_type" : "history" } },
+  { "q": "DO IT", "q2": "DO IT", "createdutc": "2013-10-26T15:21:05+02:00" }
 ]
