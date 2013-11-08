@@ -4,12 +4,12 @@ var express = require('express')
     , elasticsearch = require('elasticsearch')
     , passport = require('passport')
     , GoogleStrategy = require('passport-google').Strategy
-    , GitHubStrategy = require('passport-github').Strategy
     , _ = require('underscore')
     , Config = require('./_config.json')
     , Promise = require('promise')
     , es = null
     , INDEX = "ziax"
+    , core
     ;
 
 var ngSafe = function (val) {
@@ -37,12 +37,14 @@ app.configure('development', function () {
     console.log("configure development");
     Config.me = 'http://localhost:8080/';
     es = elasticsearch.createClient(Config.es.development);
+    core = require('./server/server-core.js')(es, app);
 });
 
 app.configure('production', function () {
     console.log("configure production");
     Config.me = 'http://dash.ziax.dk/';
     es = elasticsearch.createClient(Config.es.production);
+    core = require('./server/server-core.js')(es, app);
 });
 
 passport.use(new GoogleStrategy(
@@ -61,24 +63,6 @@ passport.use(new GoogleStrategy(
 app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) { res.redirect('/'); });
 
-// passport.use(new GitHubStrategy({
-//     clientID: '70311a09df9ecf648bd7',
-//     clientSecret: '0cc0ccbe2c7bc3ea217b70604da1e5935ec5e5a7',
-//     callbackURL: "http://localhost:8080/auth/github/callback",
-//     scope: ['user', 'user:email']
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     // User.findOrCreate({ githubId: profile.id }, function (err, user) {
-//     //   return done(err, user);
-//     // });
-//     console.log(profile)
-//     return done(null, { id: 1});
-//   }
-// ));
-
-// app.get('/auth/github', passport.authenticate('github'));
-// app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) { res.redirect('/'); });
-
 passport.serializeUser(function(user, done) {
   done(null, JSON.stringify(user));
 });
@@ -90,11 +74,6 @@ var ensureAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/loginerr');
 };
-
-app.get('/debug', function (req, res) {
-  console.log(req.user);
-  res.send("ok");
-});
 
 app.get('/suggest', function (req, res) {
   es.suggest({_index: INDEX}, {
@@ -123,115 +102,115 @@ app.get('/suggest', function (req, res) {
 });*/
 
 // Me
-app.get('/me', ensureAuthenticated, function (req, res) {
-  res.send(ngSafe(req.user));
-});
+// app.get('/me', ensureAuthenticated, function (req, res) {
+//   res.send(ngSafe(req.user));
+// });
 
 
-app.get('/drive', function (req, res) {
-  // TODO: If user is authenticated, include onlyAuth also
-  es.search({_index: INDEX}, {
-    query : {
-      match_all: {}
-    }
-  }, function (err, data) {
-    if (err) {
-      console.log(err);
-      res.send(ngSafe("err"));
-      return;
-    }
-    res.send(ngSafe(data));
-  });
-});
+// app.get('/drive', function (req, res) {
+//   // TODO: If user is authenticated, include onlyAuth also
+//   es.search({_index: INDEX}, {
+//     query : {
+//       match_all: {}
+//     }
+//   }, function (err, data) {
+//     if (err) {
+//       console.log(err);
+//       res.send(ngSafe("err"));
+//       return;
+//     }
+//     res.send(ngSafe(data));
+//   });
+// });
 
-app.post('/drive', ensureAuthenticated, function (req, res) {
-  req.body.clicks = 0;
-  es.index({ _index: INDEX, _type: "drive"}, req.body, function (res2) {
-    res.send(ngSafe(res2));
-  });
-});
+// app.post('/drive', ensureAuthenticated, function (req, res) {
+//   req.body.clicks = 0;
+//   es.index({ _index: INDEX, _type: "drive"}, req.body, function (res2) {
+//     res.send(ngSafe(res2));
+//   });
+// });
 
 
 
 // Q
 
-app.get('/q', function (req, res) {
-  es.search({_index: INDEX}, {
-    query : {
-      term: {
-        header: req.query.q
-      }
-    },
-    facets: {
-      tags: {
-        terms: {
-          field: "tags"
-        }
-      }
-    }
-  }, function (err, data) {
-    if (err) {
-      console.log(err);
-      res.send(ngSafe("err"));
-      return;
-    }
-    res.send(ngSafe(data));
-  });
-  es.index({ _index: INDEX, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) {
-    console.log('his', err, data);
-  });
-});
+// app.get('/q', function (req, res) {
+//   es.search({_index: INDEX}, {
+//     query : {
+//       term: {
+//         header: req.query.q
+//       }
+//     },
+//     facets: {
+//       tags: {
+//         terms: {
+//           field: "tags"
+//         }
+//       }
+//     }
+//   }, function (err, data) {
+//     if (err) {
+//       console.log(err);
+//       res.send(ngSafe("err"));
+//       return;
+//     }
+//     res.send(ngSafe(data));
+//   });
+//   es.index({ _index: INDEX, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) {
+//     console.log('his', err, data);
+//   });
+// });
 
-app.post('/q', function (req, res) {
-  es.get({ _index: INDEX, _type: "drive", _id: req.body.id }, function (err, data) {
-    if (err) {
-      console.log(err);
-      res.send(ngSafe("err"));
-      return;
-    }
-    res.send(ngSafe(data));
-  });
-  es.update({ _index: INDEX, _type: "drive", _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) {
-    console.log (err ? err : data);
-  });
-});
+// app.post('/q', function (req, res) {
+//   es.get({ _index: INDEX, _type: "drive", _id: req.body.id }, function (err, data) {
+//     if (err) {
+//       console.log(err);
+//       res.send(ngSafe("err"));
+//       return;
+//     }
+//     res.send(ngSafe(data));
+//   });
+//   es.update({ _index: INDEX, _type: "drive", _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) {
+//     console.log (err ? err : data);
+//   });
+// });
 
-// Facets
-app.post('/xq', function (req, res) {
-  var xq = {
-    query: {
-      term: {
-        header: req.body.q
-      }
-    },
-    facets: {
-      tags: {
-        terms: {
-          field: "tags"
-        }
-      }
-    }
-  };
+// // Facets
+// app.post('/xq', function (req, res) {
+//   var xq = {
+//     query: {
+//       term: {
+//         header: req.body.q
+//       }
+//     },
+//     facets: {
+//       tags: {
+//         terms: {
+//           field: "tags"
+//         }
+//       }
+//     }
+//   };
 
-  if (req.body.facets.tags.length !== 0) {
-    xq = extend(xq, {
-      filter: {
-        term: {
-          tags: req.body.facets.tags
-        }
-      }
-    });
-  }
+//   if (req.body.facets.tags.length !== 0) {
+//     xq = extend(xq, {
+//       filter: {
+//         term: {
+//           tags: req.body.facets.tags
+//         }
+//       }
+//     });
+//   }
 
-  es.search({_index: INDEX}, xq, function (err, data) {
-    if (err) {
-      console.log(err);
-      res.send(ngSafe("err"));
-      return;
-    }
-    res.send(ngSafe(data));
-  });
-});
+//   es.search({_index: INDEX}, xq, function (err, data) {
+//     if (err) {
+//       console.log(err);
+//       res.send(ngSafe("err"));
+//       return;
+//     }
+//     res.send(ngSafe(data));
+//   });
+// });
 
 // Suggest
 

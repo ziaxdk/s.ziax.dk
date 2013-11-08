@@ -164,16 +164,16 @@ module.factory('Delayer', ['$timeout', function ($timeout) {
 }]);
 
 module.factory('RestDrive', ['$resource', function ($resource) {
-  return $resource('drive', {}, { 'query':  { method:'GET', isArray: false }});
+  return $resource('api/drive', {}, { 'query':  { method:'GET', isArray: false }});
 }]);
 module.factory('RestQ', ['$resource', function ($resource) {
-  return $resource('q');
+  return $resource('api/q');
 }]);
 module.factory('RestXQ', ['$resource', function ($resource) {
-  return $resource('xq');
+  return $resource('api/xq');
 }]);
 module.factory('RestClick', ['$resource', function ($resource) {
-  return $resource('click/:id', {id: '@id'});
+  return $resource('api/click/:id', {id: '@id'});
 }]);
 
 module.filter('textile', ['$sce', function ($sce) {
@@ -184,7 +184,7 @@ module.filter('textile', ['$sce', function ($sce) {
 
 module.service('UserService', ['$http', function ($http) {
   var me = { isAuth: false };
-  $http.get('/me').success(function (data) {
+  $http.get('/api/me').success(function (data) {
     angular.extend(me, data, { isAuth: true });
   });
   return {

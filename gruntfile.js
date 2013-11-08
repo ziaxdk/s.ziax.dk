@@ -148,7 +148,7 @@ module.exports = function (grunt) {
             dest: 'build/'
           },
           {
-            src: [ 'server.js', '_config.json', 'package.json' ],
+            src: [ 'server.js', '_config.json', 'package.json', 'server/**/*.js' ],
             dest: 'build/'
           }
         ]
@@ -206,7 +206,7 @@ module.exports = function (grunt) {
     },
     watch: {
       express: {
-        files:  [ 'server.js' ],
+        files:  [ 'server.js', 'server/**/*.js' ],
         tasks:  [ 'express:dev' ],
         options: {
           nospawn: true //Without this option specified express won't be reloaded
