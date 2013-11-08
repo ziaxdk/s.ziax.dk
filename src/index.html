@@ -42,7 +42,7 @@
     <nav class="navbar navbar-fixed-bottom zdnavbarbottom">
       <div class="pull-left zdfade" ng-show="MainCtrl.hits">Total: {{MainCtrl.hits}} documents</div>
       <div class="pull-right">
-        <a href="/auth/google" ng-hide="MainCtrl.me.isAuth"><i class="glyphicon glyphicon-link"></i></a>
+        <a href="/api/auth/google" ng-hide="MainCtrl.me.isAuth"><i class="glyphicon glyphicon-link"></i></a>
         <span ng-show="MainCtrl.me.isAuth" class="zdfade">{{MainCtrl.me.name}}</span>
       </div>
     </nav>

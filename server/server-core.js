@@ -1,6 +1,9 @@
 module.exports = function (esClient, app) {
   var Drive = require('./server-api-drive.js'),
-      Q =  require('./server-api-q.js')
+      Q =  require('./server-api-q.js'),
+      exQ =  require('./server-api-exq.js'),
+      His =  require('./server-api-history.js'),
+      Suggest =  require('./server-api-suggest.js')
       ;
 
   // Locals
@@ -32,6 +35,9 @@ module.exports = function (esClient, app) {
 
   Drive(esClient, app, self);
   Q(esClient, app, self);
+  exQ(esClient, app, self);
+  His(esClient, app, self);
+  Suggest(esClient, app, self);
 
 
   // // Api

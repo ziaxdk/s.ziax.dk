@@ -4,7 +4,7 @@ var module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);
 module.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/', {
       templateUrl: "_index.html",
-      resolve: { History: ['$http', function($http) { return $http.get('/history'); }] },
+      resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
       controller: "IndexController",
       controllerAs: "IndexCtrl"
   });
