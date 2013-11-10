@@ -21,6 +21,9 @@ module.config(['$routeProvider', function ($routeProvider) {
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
+  $routeProvider.when('/404.html', {
+      templateUrl: "/html/_404.html"
+  });
   $routeProvider.otherwise({
       redirectTo: "/"
   });

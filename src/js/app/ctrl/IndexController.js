@@ -5,6 +5,6 @@ module.controller('IndexController', ['History', '$location',
   
 
   _t.search = function (q) {
-    $location.path('res/' +  encodeURIComponent(q));
+    $location.path('res/' +  encodeURIComponent(q.term));
   };
 }]);

@@ -34,6 +34,13 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
     doSearch();
   }
 
+  _t.id = function (obj) {
+    return obj._id;
+  }
+  _t.obj = function (obj, key) {
+    return obj[key];
+  }
+
   function doSearch () {
     facetSearch.run(function () {
       var tags = [];

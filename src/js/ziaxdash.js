@@ -23,6 +23,9 @@ module.config(['$routeProvider', function ($routeProvider) {
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
+  $routeProvider.when('/404.html', {
+      templateUrl: "/html/_404.html"
+  });
   $routeProvider.otherwise({
       redirectTo: "/"
   });
@@ -35,7 +38,7 @@ module.controller('IndexController', ['History', '$location',
   
 
   _t.search = function (q) {
-    $location.path('res/' +  encodeURIComponent(q));
+    $location.path('res/' +  encodeURIComponent(q.term));
   };
 }]);
 
@@ -130,6 +133,13 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
   _t.facet = function (me) {
     me.hit.selected = !me.hit.selected;
     doSearch();
+  }
+
+  _t.id = function (obj) {
+    return obj._id;
+  }
+  _t.obj = function (obj, key) {
+    return obj[key];
   }
 
   function doSearch () {
