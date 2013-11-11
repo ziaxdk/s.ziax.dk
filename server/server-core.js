@@ -3,7 +3,9 @@ module.exports = function (esClient, app) {
       Q =  require('./server-api-q.js'),
       exQ =  require('./server-api-exq.js'),
       His =  require('./server-api-history.js'),
-      Suggest =  require('./server-api-suggest.js')
+      Suggest =  require('./server-api-suggest.js'),
+
+      Utils = require('./server-utils')()
       ;
 
   // Locals
@@ -19,7 +21,8 @@ module.exports = function (esClient, app) {
   };
 
   function ngSafe (val) {
-    return ")]}',\n" + JSON.stringify(val);
+    return ")]}',\n" + JSON.stringify(Utils.ngPrivateRemover(val));
+    // return ")]}',\n" + JSON.stringify(val);
   }
 
   self.escallback = function (req, res) {

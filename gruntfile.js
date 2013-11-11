@@ -220,6 +220,11 @@ module.exports = function (grunt) {
         files: [ 'src/js/app/**/*.js' ],
         tasks: [ 'concat:build_dev' ]
       }
+      // ,
+      // karma: {
+      //   files: ['test/**/*.js'],
+      //   tasks: ['karma:unit:run'] //NOTE the :run flag
+      // }
     },
 
     // https://github.com/ncb000gt/node-es/blob/master/lib/core.js
@@ -243,6 +248,16 @@ module.exports = function (grunt) {
         ]
       }
     }
+    // ,
+    // karma: {
+    //   unit: {
+    //     configFile: 'test/karma.unit.conf.js',
+    //     background: true,
+    //     browsers: [ 'PhantomJS' ]
+    //   }
+    // }
+
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -258,6 +273,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-htmlrefs');
+  grunt.loadNpmTasks('grunt-karma');
   // grunt.loadTasks('lib/tasks/grunt-elasticsearch.js');
   grunt.loadTasks('lib/tasks');
 
@@ -273,6 +289,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
 
-  grunt.registerTask('dev', ['express:dev', 'watch']);
+  grunt.registerTask('dev', ['express:dev', /*'karma:unit:start',*/ 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);
 };

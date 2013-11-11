@@ -9,10 +9,10 @@
   </ul>
 
   <div class="list-group">
-    <a class="list-group-item hit" ng-click="ResultCtrl.show('{{ResultCtrl.id(hit)}}')" ng-repeat="hit in ResultCtrl.result.hits.hits track by ResultCtrl.id(hit)">
-      <!-- <small class="pull-right">{{hit._source.createdutc|date:'medium'}} ({{hit._source.clicks}})</small> -->
-      <!-- <h4 class="list-group-item-heading">{{hit._source.header}}</h4> -->
-      <p class="list-group-item-text">{{ResultCtrl.obj(hit, '_source').content}}</p>
+    <a class="list-group-item hit" ng-click="ResultCtrl.show(hit.id)" ng-repeat="hit in ResultCtrl.result.hits.hits track by hit.id">
+      <small class="pull-right">{{hit.source.createdutc|date:'medium'}} ({{hit.source.clicks}})</small>
+      <h4 class="list-group-item-heading">{{hit.source.header}}</h4>
+      <p class="list-group-item-text">{{hit.source.content}}</p>
     </a>
   </div>
 

@@ -7,9 +7,9 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
     $location.path('/show/' + encodeURIComponent(id));
   };
 
-  $timeout(function () {
+  // $timeout(function () {
     _t.showHits = true;
-  }, 300);
+  // }, 300);
 
   _t.result = Drives;
   // _t.result = {
@@ -32,14 +32,7 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
   _t.facet = function (me) {
     me.hit.selected = !me.hit.selected;
     doSearch();
-  }
-
-  _t.id = function (obj) {
-    return obj._id;
-  }
-  _t.obj = function (obj, key) {
-    return obj[key];
-  }
+  };
 
   function doSearch () {
     facetSearch.run(function () {
