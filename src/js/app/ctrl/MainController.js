@@ -15,6 +15,7 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   _t.new = function () {
     $location.path('/new');
   };
+
   // _t.oth = function () {
   //   $location.path('/show/3fnjqyrOS96yxqmqBqOjRQ');
   // };

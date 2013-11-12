@@ -23,7 +23,7 @@
             </ul>
             <form class="navbar-form navbar-left" role="search" name="searchForm" ng-submit="MainCtrl.search()">
               <div class="form-group">
-                <input type="text" name="q" class="form-control" placeholder="Search" autocomplete="off" ng-model="MainCtrl.form.q">
+                <input type="text" name="q" class="form-control" placeholder="Search" autocomplete="off" ng-model="MainCtrl.form.q" ng-focus-class="dummy">
               </div>
               <button type="submit" class="btn btn-default" ng-disabled="searchForm.q.$pristine">Search</button>
             </form>

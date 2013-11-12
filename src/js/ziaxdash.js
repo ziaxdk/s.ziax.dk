@@ -59,6 +59,7 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   _t.new = function () {
     $location.path('/new');
   };
+
   // _t.oth = function () {
   //   $location.path('/show/3fnjqyrOS96yxqmqBqOjRQ');
   // };
@@ -151,6 +152,12 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
 module.controller('ShowController', ['Drive', '$http', function (Drive, $http) {
   this.Drive = Drive;
   // $http.put('/q', { id: Drive.id });
+}]);
+
+module.directive('ngFocusClass', [function () {
+  return function(scope, element, attrs) {
+    
+  };
 }]);
 
 module.factory('Delayer', ['$timeout', function ($timeout) {

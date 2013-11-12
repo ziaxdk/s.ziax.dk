@@ -12,7 +12,7 @@ module.exports = function (esClient, app, core) {
     esClient.count({_index: core.INDEX}, {
       "term" : { "_type" : "drive" }
     }, core.escallback(req,res));
-  })
+  });
 
   app.post('/api/drive', core.ensureAuthenticated, function (req, res) {
     req.body.clicks = 0;
