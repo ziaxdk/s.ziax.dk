@@ -33,7 +33,7 @@ module.exports = function (esClient, app) {
         return;
       }
       res.send(ngSafe(data));
-    }
+    };
   };
 
   Drive(esClient, app, self);

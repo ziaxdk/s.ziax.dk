@@ -8,27 +8,6 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    /*http: {
-      local_delete: {
-        url: esurl + "/ziax",
-        ignoreErrors: true,
-        method: 'DELETE'
-      },
-      local_setup: {
-        url: esurl + "/ziax",
-        ignoreErrors: true,
-        method: 'PUT',
-        json: grunt.file.readJSON('es/setup.json')
-      },
-      local_dummy: {
-        url: esurl + "/_bulk",
-        ignoreErrors: true,
-        method: 'POST',
-        body: grunt.file.read('es/data.json')
-      }
-    },*/
-
-
     // Build
     clean: {
       build: ["build/*"],

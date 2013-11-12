@@ -9,7 +9,7 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['jasmine', 'commonjs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
@@ -23,9 +23,9 @@ module.exports = function(config) {
       
     ],
 
-    preprocessors: {
-      '**/*.unit.js': ['commonjs']
-    },
+    // preprocessors: {
+    //   '**/*.unit.js': ['commonjs']
+    // },
 
 
     // test results reporter to use

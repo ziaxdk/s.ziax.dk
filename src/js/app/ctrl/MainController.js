@@ -20,7 +20,7 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   // };
 
   RestDrive.query(null, function (res) {
-    _t.hits = res.hits.total;
+    _t.hits = res.count;
   });
 
   $rootScope.$on('$routeChangeStart', function () {
