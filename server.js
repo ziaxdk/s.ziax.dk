@@ -78,17 +78,6 @@ passport.deserializeUser(function(user, done) {
 //   });
 // });
 
-// Drive
-/*var promise = new Promise(function (resolve, reject) {
-  get('http://www.google.com', function (err, res) {
-    if (err) reject(err);
-    else resolve(res);
-  });
-});*/
-
-
-
-
 app.use(express.static(__dirname + "/src"));
 var port = process.env.PORT || 80;
 theServer.listen(port, function () {

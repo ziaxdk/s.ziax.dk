@@ -31,6 +31,9 @@ body {
 .typeahead ul li {
   list-style: none;
 }*/
+#q.qfocus {
+  width: 400px;
+}
 .zdview.ng-enter {
   animation: fadeInRight 200ms;
   -webkit-animation: fadeInRight 200ms;

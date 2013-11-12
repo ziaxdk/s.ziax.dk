@@ -4,6 +4,7 @@ module.exports = function (esClient, app) {
       exQ =  require('./server-api-exq.js'),
       His =  require('./server-api-history.js'),
       Suggest =  require('./server-api-suggest.js'),
+      Misc =  require('./server-api-misc.js'),
 
       Utils = require('./server-utils')()
       ;
@@ -41,6 +42,7 @@ module.exports = function (esClient, app) {
   exQ(esClient, app, self);
   His(esClient, app, self);
   Suggest(esClient, app, self);
+  Misc(esClient, app, self);
 
 
   // // Api

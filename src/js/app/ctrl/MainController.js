@@ -16,10 +16,6 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
     $location.path('/new');
   };
 
-  // _t.oth = function () {
-  //   $location.path('/show/3fnjqyrOS96yxqmqBqOjRQ');
-  // };
-
   RestDrive.query(null, function (res) {
     _t.hits = res.count;
   });

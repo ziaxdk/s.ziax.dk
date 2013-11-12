@@ -23,9 +23,6 @@ module.config(['$routeProvider', function ($routeProvider) {
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
-  $routeProvider.when('/404.html', {
-      templateUrl: "/html/_404.html"
-  });
   $routeProvider.otherwise({
       redirectTo: "/"
   });
@@ -59,10 +56,6 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   _t.new = function () {
     $location.path('/new');
   };
-
-  // _t.oth = function () {
-  //   $location.path('/show/3fnjqyrOS96yxqmqBqOjRQ');
-  // };
 
   RestDrive.query(null, function (res) {
     _t.hits = res.count;
@@ -154,9 +147,14 @@ module.controller('ShowController', ['Drive', '$http', function (Drive, $http) {
   // $http.put('/q', { id: Drive.id });
 }]);
 
-module.directive('ngFocusClass', [function () {
+module.directive('ngFocusBlurClass', [function () {
   return function(scope, element, attrs) {
-    
+    element.on('focus', function () {
+      element.addClass(attrs.ngFocusBlurClass || 'ngFocus');
+    })
+    element.on('blur', function () {
+      element.removeClass(attrs.ngFocusBlurClass || 'ngFocus');
+    })
   };
 }]);
 
