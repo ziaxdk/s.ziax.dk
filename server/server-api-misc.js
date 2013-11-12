@@ -1,5 +1,5 @@
 module.exports = function (esClient, app, core) {
-  var Promise = require('promise');
+  var Promise = require('promise'), Nodeio = require('node.io');
 
   app.get('/api/front', function (req, res) {
 
@@ -29,5 +29,26 @@ module.exports = function (esClient, app, core) {
     Promise.all(p1, p2).then(function (data) {
       res.send(data);
     })
+  });
+
+  app.get('/api/scrape', function (req, res) {
+
+
+    Nodeio.scrape(function() {
+        this.getHtml('http://www.reddit.com/', function(err, $) {
+            var stories = [];
+            $('a.title').each(function(title) {
+                stories.push(title.text);
+            });
+            // this.emit(stories);
+            console.log(stories);
+        });
+    });
+
+    res.send(core.ngSafe({
+      header: "just a dummy title",
+      content: "some silly content",
+      tags: ["tag1", "tag2", "tag3"]
+    }));
   });
 };

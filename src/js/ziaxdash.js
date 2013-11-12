@@ -73,11 +73,26 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['$scope', '$http', 'RestDrive', function ($scope, $http, RestDrive) {
-  var _t = this;
+module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', function ($scope, $http, RestDrive, Delayer) {
+  var _t = this, Delayer = new Delayer(3000);
   _t.form = {
     onlyAuth: false
   };
+  _t.findType = function (me) {
+
+  };
+
+  $scope.$watch(function () { return _t.form.header; }, function (n, o) {
+    if (n === o) return;
+     if (/^https?\:\/\//.test(n)) {
+      Delayer.run(function () {
+        $http.get('/api/scrape', { params: { header: n } }).success(function (data) {
+          _t.form.content = data.content;
+        });
+      });
+     }
+  });
+
   _t.submit = function () {
     // console.log(_t.form);
     // return;
@@ -156,6 +171,21 @@ module.directive('ngFocusBlurClass', [function () {
       element.removeClass(attrs.ngFocusBlurClass || 'ngFocus');
     })
   };
+}]);
+
+module.directive('dashAheadInput', [function () {
+  return function(scope, element, attrs) {
+    console.log('link');
+  };
+}]);
+
+module.directive('dashAhead', [function () {
+  return {
+    restrict: 'E',
+    link: function (scope, element, attrs, ctrl) {
+      console.log(arguments);
+    }
+  }
 }]);
 
 module.factory('Delayer', ['$timeout', function ($timeout) {

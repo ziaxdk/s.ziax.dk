@@ -78,6 +78,11 @@ passport.deserializeUser(function(user, done) {
 //   });
 // });
 
+// app.get('/api/debug', function (req, res) {
+//   console.log(req.headers);
+//   res.send("ok");
+// });
+
 app.use(express.static(__dirname + "/src"));
 var port = process.env.PORT || 80;
 theServer.listen(port, function () {

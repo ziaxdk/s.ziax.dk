@@ -21,7 +21,7 @@ module.exports = function (esClient, app) {
     res.redirect('/loginerr');
   };
 
-  function ngSafe (val) {
+  self.ngSafe = function (val) {
     return ")]}',\n" + JSON.stringify(Utils.ngPrivateRemover(val));
     // return ")]}',\n" + JSON.stringify(val);
   }
@@ -30,10 +30,10 @@ module.exports = function (esClient, app) {
     return function (err, data) {
       if (err) {
         console.log(err);
-        res.send(ngSafe("err"));
+        res.send(self.ngSafe("err"));
         return;
       }
-      res.send(ngSafe(data));
+      res.send(self.ngSafe(data));
     };
   };
 
@@ -51,7 +51,7 @@ module.exports = function (esClient, app) {
   // });
 
   app.get('/api/me', self.ensureAuthenticated, function (req, res) {
-    res.send(ngSafe(req.user));
+    res.send(self.ngSafe(req.user));
   });
 
 

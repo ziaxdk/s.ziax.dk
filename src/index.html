@@ -24,6 +24,7 @@
             <form class="navbar-form navbar-left" role="search" name="searchForm" ng-submit="MainCtrl.search()">
               <div class="form-group">
                 <input type="text" id="q" name="q" class="form-control" placeholder="Search" autocomplete="off" ng-model="MainCtrl.form.q" ng-focus-blur-class="qfocus">
+                <!-- <div style="position: absolute; background-color: #fff; width: 400px">123</div> -->
               </div>
               <button type="submit" class="btn btn-default" ng-disabled="searchForm.q.$pristine">Search</button>
             </form>
