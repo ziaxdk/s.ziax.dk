@@ -3,10 +3,9 @@ module.exports = function (esClient, app) {
       Q =  require('./server-api-q.js'),
       exQ =  require('./server-api-exq.js'),
       His =  require('./server-api-history.js'),
-      Suggest =  require('./server-api-suggest.js'),
-      Misc =  require('./server-api-misc.js'),
+      Suggest =  require('./server-api-suggest.js')
 
-      Utils = require('./server-utils')()
+      Utils = require('./utils')
       ;
 
   // Locals
@@ -22,7 +21,7 @@ module.exports = function (esClient, app) {
   };
 
   self.ngSafe = function (val) {
-    return ")]}',\n" + JSON.stringify(Utils.ngPrivateRemover(val)); // Angular 1.2.0
+    return ")]}',\n" + JSON.stringify(Utils.ngPrivate(val)); // Angular 1.2.0
     // return ")]}',\n" + JSON.stringify(val);
   }
 
@@ -42,7 +41,6 @@ module.exports = function (esClient, app) {
   exQ(esClient, app, self);
   His(esClient, app, self);
   Suggest(esClient, app, self);
-  Misc(esClient, app, self);
 
 
   // // Api

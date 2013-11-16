@@ -24,17 +24,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.configure('development', function () {
-    console.log("configure development");
-    Config.me = 'http://localhost:8080/';
-    es = elasticsearch.createClient(Config.es.development);
-    core = require('./server/server-core.js')(es, app);
+  var Scraper = require('./server/server-scrape-dev.js');
+  console.log("configure development");
+  Config.me = 'http://localhost:8080/';
+  es = elasticsearch.createClient(Config.es.development);
+  core = require('./server/server-core.js')(es, app);
+  app.get('/api/scrape', Scraper.scrape);
 });
 
 app.configure('production', function () {
-    console.log("configure production");
-    Config.me = 'http://dash.ziax.dk/';
-    es = elasticsearch.createClient(Config.es.production);
-    core = require('./server/server-core.js')(es, app);
+  var Scraper = require('./server/server-scrape-dev.js');
+  console.log("configure production");
+  Config.me = 'http://dash.ziax.dk/';
+  es = elasticsearch.createClient(Config.es.production);
+  core = require('./server/server-core.js')(es, app);
+  app.get('/api/scrape', Scraper.scrape);
 });
 
 passport.use(new GoogleStrategy(

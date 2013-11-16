@@ -11,7 +11,7 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', f
     if (n === o) return;
      if (/^https?\:\/\//.test(n)) {
       Delayer.run(function () {
-        $http.get('/api/scrape', { params: { header: n } }).success(function (data) {
+        $http.get('/api/scrape', { params: { q: n } }).success(function (data) {
           _t.form.content = data.content;
         });
       });
