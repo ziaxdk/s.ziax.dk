@@ -15,7 +15,7 @@ multiple views by adding routing.</p>
 and the same phone list appears in the browser. When you click on a phone link the stub of a phone
 detail page is displayed.</p>
 <p>The most important changes are listed below. You can see the full diff on <a href="https://github.com/angular/angular-phonecat/compare/step-6...step-7">GitHub</a>.</p>
-<h3 id="multiple-views-routing-and-layout-template" id="multiple-views,-routing-and-layout-template">Multiple Views, Routing and Layout Template</h3>
+<h3 id="multiple-views,-routing-and-layout-template">Multiple Views, Routing and Layout Template</h3>
 <p>Our app is slowly growing and becoming more complex. Before step 7, the app provided our users with
 a single view (the list of all phones), and all of the template code was located in the
 <code>index.html</code> file. The next step in building the app is to add a view that will show detailed
@@ -31,7 +31,7 @@ the current &quot;route&quot; — the view that is currently displayed to the us
 controllers, view templates, and the current
 URL location in the browser. Using this feature we can implement <a href="http://en.wikipedia.org/wiki/Deep_linking">deep linking</a>, which lets us utilize the browser&#39;s
 history (back and forward navigation) and bookmarks.</p>
-<h4 id="a-note-about-di-injector-and-providers" id="multiple-views,-routing-and-layout-template_a-note-about-di,-injector-and-providers">A Note About DI, Injector and Providers</h4>
+<h4 id="multiple-views,-routing-and-layout-template_a-note-about-di,-injector-and-providers">A Note About DI, Injector and Providers</h4>
 <p>As you <a href="tutorial/step_05">noticed</a>, <a href="guide/di">dependency injection</a> (DI) is at the core of
 AngularJS, so it&#39;s important for you to understand a thing or two about how it works.</p>
 <p>When the application bootstraps, Angular creates an injector that will be used for all DI stuff in
@@ -52,7 +52,7 @@ service, the <code>$routeProvider</code> exposes APIs that allow you to define r
 of configuring the injector. As opposed to AMD or require.js modules, Angular modules don&#39;t try to
 solve the problem of script load ordering or lazy script fetching. These goals are totally independent and
 both module systems can live side by side and fulfil their goals.</p>
-<h3 id="the-app-module" id="the-app-module">The App Module</h3>
+<h3 id="the-app-module">The App Module</h3>
 <p><strong><code>app/js/app.js</code>:</strong>
 <pre class="prettyprint linenums">
 var phonecatApp = angular.module('phonecatApp', [
@@ -113,13 +113,13 @@ directive:</p>
 &lt;html lang="en" ng-app="phonecatApp"&gt;
 ...
 </pre>
-<h3 id="controllers" id="controllers">Controllers</h3>
+<h3 id="controllers">Controllers</h3>
 <p><strong><code>app/js/controllers.js</code>:</strong>
 <pre class="prettyprint linenums">
 var phonecatControllers = angular.module('phonecatControllers', []);
 
 phonecatControllers.controller('PhoneListCtrl', ['$scope', '$http',
-  function PhoneListCtrl($scope, $http) {
+  function ($scope, $http) {
     $http.get('phones/phones.json').success(function(data) {
       $scope.phones = data;
     });
@@ -136,7 +136,7 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams',
 it&#39;s common to create just one module for all of your controllers if there are just a few. For larger apps,
 you will probably want to create separate modules for each major feature of your app.</p>
 <p>Because our example app is relatively small, we&#39;ll add all of our controllers to this module.</p>
-<h3 id="template" id="template">Template</h3>
+<h3 id="template">Template</h3>
 <p>The <code>$route</code> service is usually used in conjunction with the <a href="api/ngRoute.directive:ngView">ngView</a> directive. The role of the <code>ngView</code> directive is to include the view template for the current
 route into the layout template. This makes it a perfect fit for our <code>index.html</code> template.</p>
 <div class="alert alert-info">
@@ -207,7 +207,7 @@ TODO!
 TBD: detail view for {{phoneId}}
 </pre>
 <p>Note how we are using <code>phoneId</code> model defined in the <code>PhoneDetailCtrl</code> controller.</p>
-<h3 id="test" id="test">Test</h3>
+<h3 id="test">Test</h3>
 <p>To automatically verify that everything is wired properly, we wrote end-to-end tests that navigate
 to various URLs and verify that the correct view was rendered.</p>
 <pre class="prettyprint linenums">
@@ -232,7 +232,7 @@ to various URLs and verify that the correct view was rendered.</p>
 </pre>
 <p>You can now rerun <code>./scripts/e2e-test.sh</code> or refresh the browser tab with the end-to-end test
 runner to see the tests run, or you can see them running on <a href="http://angular.github.com/angular-phonecat/step-7/test/e2e/runner.html">Angular&#39;s server</a>.</p>
-<h2 id="experiments" id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h2>
 <ul>
 <li>Try to add an <code>{{orderProp}}</code> binding to <code>index.html</code>, and you&#39;ll see that nothing happens even
 when you are in the phone list view. This is because the <code>orderProp</code> model is visible only in the
@@ -248,6 +248,6 @@ inheritance and model property shadowing do some wonders.
 </div>
 
 
-<h2 id="summary" id="summary">Summary</h2>
+<h2 id="summary">Summary</h2>
 <p>With the routing set up and the phone list view implemented, we&#39;re ready to go to <a href="tutorial/step_08">step 8</a> to implement the phone details view.</p>
 <ul doc-tutorial-nav="7"></ul></div></div>

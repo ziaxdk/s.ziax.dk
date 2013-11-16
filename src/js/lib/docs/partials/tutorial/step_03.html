@@ -17,9 +17,9 @@ and quickly detects regressions.</p>
 user types into the search box.</p>
 <p>The most important differences between Steps 2 and 3 are listed below. You can see the full diff on
 <a href="https://github.com/angular/angular-phonecat/compare/step-2...step-3">GitHub</a>:</p>
-<h3 id="controller" id="controller">Controller</h3>
+<h3 id="controller">Controller</h3>
 <p>We made no changes to the controller.</p>
-<h3 id="template" id="template">Template</h3>
+<h3 id="template">Template</h3>
 <p><strong><code>app/index.html</code>:</strong>
 <pre class="prettyprint linenums">
   &lt;div class="container-fluid"&gt;
@@ -66,7 +66,7 @@ the DOM to reflect the current state of the model.</p>
 by the <code>filter</code> filter. The process is completely transparent to the developer.</p>
 </li>
 </ul>
-<h3 id="test" id="test">Test</h3>
+<h3 id="test">Test</h3>
 <p>In Step 2, we learned how to write and run unit tests. Unit tests are perfect for testing
 controllers and other components of our application written in JavaScript, but they can&#39;t easily
 test DOM manipulation or the wiring of our application. For these, an end-to-end test is a much
@@ -114,7 +114,7 @@ You can do this by issuing <code>npm install karma-ng-scenario</code> into your 
 <p>This test verifies that the search box and the repeater are correctly wired together. Notice how
 easy it is to write end-to-end tests in Angular. Although this example is for a simple test, it
 really is that easy to set up any functional, readable, end-to-end test.</p>
-<h2 id="experiments" id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h2>
 <ul>
 <li><p>Display the current value of the <code>query</code> model by adding a <code>{{query}}</code> binding into the
 <code>index.html</code> template, and see how it changes when you type in the input box.</p>
@@ -160,7 +160,7 @@ the browser. The app is live! You can change the search query to prove it. Notic
 is for troubleshooting end-to-end tests.</p>
 </li>
 </ul>
-<h2 id="summary" id="summary">Summary</h2>
+<h2 id="summary">Summary</h2>
 <p>We have now added full text search and included a test to verify that search works! Now let&#39;s go on
 to <a href="tutorial/step_04">step 4</a> to learn how to add sorting capability to the phone app.</p>
 <ul doc-tutorial-nav="3"></ul></div></div>

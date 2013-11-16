@@ -14,7 +14,7 @@
 images. It would be great if we could replace the large image with any of the thumbnails just by
 clicking on the desired thumbnail image. Let&#39;s have a look at how we can do this with Angular.</p>
 <p>The most important changes are listed below. You can see the full diff on <a href="https://github.com/angular/angular-phonecat/compare/step-9...step-10">GitHub</a>:</p>
-<h3 id="controller" id="controller">Controller</h3>
+<h3 id="controller">Controller</h3>
 <p><strong><code>app/js/controllers.js</code>:</strong>
 <pre class="prettyprint linenums">
 ...
@@ -35,7 +35,7 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', '$h
 <p>In the <code>PhoneDetailCtrl</code> controller, we created the <code>mainImageUrl</code> model property and set its
 default value to the first phone image URL.</p>
 <p>We also created a <code>setImage</code> event handler function that will change the value of <code>mainImageUrl</code>.</p>
-<h3 id="template" id="template">Template</h3>
+<h3 id="template">Template</h3>
 <p><strong><code>app/partials/phone-detail.html</code>:</strong>
 <pre class="prettyprint linenums">
 &lt;img ng-src="{{mainImageUrl}}" class="phone"&gt;
@@ -59,7 +59,7 @@ TODO!
 <img  class="diagram" src="img/tutorial/tutorial_10-11_final.png">
 </div>
 
-<h3 id="test" id="test">Test</h3>
+<h3 id="test">Test</h3>
 <p>To verify this new feature, we added two end-to-end tests. One verifies that the main image is set
 to the first phone image by default. The second test clicks on several thumbnail images and
 verifies that the main image changed appropriately.</p>
@@ -87,7 +87,7 @@ verifies that the main image changed appropriately.</p>
 </pre>
 <p>You can now rerun <code>./scripts/e2e-test.sh</code> or refresh the browser tab with the end-to-end test
 runner to see the tests run, or you can see them running on <a href="http://angular.github.com/angular-phonecat/step-10/test/e2e/runner.html">Angular&#39;s server</a>.</p>
-<h2 id="experiments" id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h2>
 <ul>
 <li><p>Let&#39;s add a new controller method to <code>PhoneDetailCtrl</code>:</p>
 <pre><code>    $scope.hello = function(name) {
@@ -109,7 +109,7 @@ template remains operational.
 </div>
 
 
-<h2 id="summary" id="summary">Summary</h2>
+<h2 id="summary">Summary</h2>
 <p>With the phone image swapper in place, we&#39;re ready for <a href="tutorial/step_11">step 11</a> to
 learn an even better way to fetch data.</p>
 <ul doc-tutorial-nav="10"></ul></div></div>

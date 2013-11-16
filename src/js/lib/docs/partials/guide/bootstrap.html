@@ -2,10 +2,10 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="developer-guide-page developer-guide-bootstrap-page"><h2 id="overview" id="overview">Overview</h2>
+<div><div class="developer-guide-page developer-guide-bootstrap-page"><h2 id="overview">Overview</h2>
 <p>This page explains the Angular initialization process and how you can manually initialize Angular
 if necessary.</p>
-<h3 id="angular-script-tag" id="overview_angular-tag">Angular <code>&lt;script&gt;</code> Tag</h3>
+<h3 id="overview_angular-tag">Angular <code>&lt;script&gt;</code> Tag</h3>
 <p>This example shows the recommended path for integrating Angular with what we call automatic
 initialization.</p>
 <pre class="prettyprint linenums">
@@ -42,7 +42,7 @@ to make IE happy. (This is here for historical reasons, and we no longer recomme
 <pre><code>&lt;html xmlns:ng=&quot;http://angularjs.org&quot;&gt;</code></pre>
 </li>
 </ul>
-<h3 id="automatic-initialization" id="overview_automatic-initialization">Automatic Initialization</h3>
+<h3 id="overview_automatic-initialization">Automatic Initialization</h3>
 <p><img class="pull-right" style="padding-left: 3em;" src="img/guide/concepts-startup.png"></p>
 <p>Angular initializes automatically upon <code>DOMContentLoaded</code> event or when the <code>angular.js</code> script is
 evaluated if at that time <code>document.readyState</code> is set to <code>&#39;complete&#39;</code>. At this point Angular looks
@@ -63,7 +63,7 @@ portion of the DOM as an Angular application.</li>
   &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-<h3 id="manual-initialization" id="overview_manual-initialization">Manual Initialization</h3>
+<h3 id="overview_manual-initialization">Manual Initialization</h3>
 <p>If you need to have more control over the initialization process, you can use a manual
 bootstrapping method instead. Examples of when you&#39;d need to do this include using script loaders
 or the need to perform an operation before Angular compiles a page.</p>
@@ -95,7 +95,7 @@ application, which is typically the root of the document.</p>
 executable, bi-directionally bound application.</p>
 </li>
 </ol>
-<h3 id="deferred-bootstrap" id="overview_deferred-bootstrap">Deferred Bootstrap</h3>
+<h3 id="overview_deferred-bootstrap">Deferred Bootstrap</h3>
 <p>This feature enables tools like Batarang and test runners to
 hook into angular&#39;s bootstrap process and sneak in more modules
 into the DI registry which can replace or augment DI services for

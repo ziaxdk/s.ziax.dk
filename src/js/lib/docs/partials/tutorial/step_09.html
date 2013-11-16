@@ -15,7 +15,7 @@
 certain phone features were present or not. We have used a custom filter to convert those text
 strings into glyphs: ✓ for &quot;true&quot;, and ✘ for &quot;false&quot;. Let&#39;s see what the filter code looks like.</p>
 <p>The most important changes are listed below. You can see the full diff on <a href="https://github.com/angular/angular-phonecat/compare/step-8...step-9">GitHub</a>:</p>
-<h3 id="custom-filter" id="custom-filter">Custom Filter</h3>
+<h3 id="custom-filter">Custom Filter</h3>
 <p>In order to create a new filter, you are going to create a <code>phonecatFilters</code> module and register
 your custom filter with this module:</p>
 <p><strong><code>app/js/filters.js</code>:</strong>
@@ -36,7 +36,7 @@ our main <code>phonecat</code> module.</p>
 angular.module('phonecatApp', ['phonecatFilters']).
 ...
 </pre>
-<h3 id="template" id="template">Template</h3>
+<h3 id="template">Template</h3>
 <p>Since the filter code lives in the <code>app/js/filters.js</code> file, we need to include this file in our
 layout template.</p>
 <p><strong><code>app/index.html</code>:</strong>
@@ -60,7 +60,7 @@ layout template.</p>
     &lt;/dl&gt;
 ...
 </pre>
-<h3 id="test" id="test">Test</h3>
+<h3 id="test">Test</h3>
 <p>Filters, like any other component, should be tested and these tests are very easy to write.</p>
 <p><strong><code>test/unit/filtersSpec.js</code>:</strong>
 <pre class="prettyprint linenums">
@@ -85,7 +85,7 @@ for this test run.</p>
 access to the filter that we want to test.  See <a href="api/angular.mock.inject"><code>angular.mock.inject()</code></a>.</p>
 <p>You should now see the following output in the Karma tab:</p>
 <pre><code>    Chrome 22.0: Executed 4 of 4 SUCCESS (0.034 secs / 0.012 secs)</code></pre>
-<h2 id="experiments" id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h2>
 <ul>
 <li><p>Let&#39;s experiment with some of the <a href="api/ng.$filterProvider"><code>built-in Angular filters</code></a> and add the
 following bindings to <code>index.html</code>:</p>
@@ -101,7 +101,7 @@ the following to index.html:</p>
 <pre><code> &lt;input ng-model=&quot;userInput&quot;&gt; Uppercased: {{ userInput | uppercase }}</code></pre>
 </li>
 </ul>
-<h2 id="summary" id="summary">Summary</h2>
+<h2 id="summary">Summary</h2>
 <p>Now that you have learned how to write and test a custom filter, go to <a href="tutorial/step_10">step 10</a> to
 learn how we can use Angular to enhance the phone details page further.</p>
 <ul doc-tutorial-nav="9"></ul></div></div>

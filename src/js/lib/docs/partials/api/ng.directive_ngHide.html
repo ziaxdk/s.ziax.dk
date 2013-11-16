@@ -1,4 +1,4 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.0-rc.3/src/ng/directive/ngShowHide.js#L152" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngShowHide.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">ngHide</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ng/directive/ngShowHide.js#L152" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngShowHide.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">ngHide</code>
 <div><span class="hint">directive in module <code ng:non-bindable="">ng</code>
 </span>
 </div>
@@ -19,7 +19,7 @@ For CSP mode please add <code>angular-csp.css</code> to your html file (see <a h
 <p>When the ngHide expression evaluates to true then the .ng-hide CSS class is added to the class attribute
 on the element causing it to become hidden. When false, the ng-hide CSS class is removed
 from the element causing the element not to appear hidden.</p>
-<h4 id="why-is-important-used-" id="description_why-is-important-used">Why is !important used?</h4>
+<h4 id="description_why-is-important-used">Why is !important used?</h4>
 <p>You may be wondering why !important is used for the .ng-hide CSS class. This is because the <code>.ng-hide</code> selector
 can be easily overridden by heavier selectors. For example, something as simple
 as changing the display style on a HTML list item would make hidden elements appear visible.
@@ -27,7 +27,7 @@ This also becomes a bigger issue when dealing with CSS frameworks.</p>
 <p>By using !important, the show and hide behavior will work as expected despite any clash between CSS selector
 specificity (when !important isn&#39;t used with any conflicting styles). If a developer chooses to override the
 styling to change how to hide an element then it is just a matter of using !important in their own CSS code.</p>
-<h5 id="overriding-ng-hide" id="description_why-is-important-used_overriding-ng-hide">Overriding .ng-hide</h5>
+<h5 id="description_why-is-important-used_overriding-ng-hide">Overriding .ng-hide</h5>
 <p>If you wish to change the hide behavior with ngShow/ngHide then this can be achieved by
 restating the styles for the .ng-hide class in CSS:
 <pre class="prettyprint linenums">
@@ -42,7 +42,7 @@ restating the styles for the .ng-hide class in CSS:
 }
 </pre>
 <p>Just remember to include the important flag so the CSS override will function.</p>
-<h4 id="a-note-about-animations-with-nghide" id="description_a-note-about-animations-with-nghide">A note about animations with ngHide</h4>
+<h4 id="description_a-note-about-animations-with-nghide">A note about animations with ngHide</h4>
 <p>Animations in ngShow/ngHide work with the show and hide events that are triggered when the directive expression
 is true and false. This system works like the animation system present with ngClass, except that
 you must also include the !important flag to override the display property so

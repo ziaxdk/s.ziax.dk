@@ -16,7 +16,7 @@ the repeater, and letting the data binding magic do the rest of the work.</p>
 users to control the order in which the phones are listed.</p>
 <p>The most important differences between Steps 3 and 4 are listed below. You can see the full diff on
 <a href="https://github.com/angular/angular-phonecat/compare/step-3...step-4">GitHub</a>:</p>
-<h3 id="template" id="template">Template</h3>
+<h3 id="template">Template</h3>
 <p><strong><code>app/index.html</code>:</strong>
 <pre class="prettyprint linenums">
   Search: &lt;input ng-model="query"&gt;
@@ -51,12 +51,12 @@ array, copies it and reorders the copy which is then returned.</li>
 changes (for example because a user changes the order with the select drop down menu), Angular&#39;s
 data-binding will cause the view to automatically update. No bloated DOM manipulation code is
 necessary!</p>
-<h3 id="controller" id="controller">Controller</h3>
+<h3 id="controller">Controller</h3>
 <p><strong><code>app/js/controllers.js</code>:</strong>
 <pre class="prettyprint linenums">
 var phonecatApp = angular.module('phonecatApp', []);
 
-phonecatApp.controller('PhoneListCtrl', function PhoneListCtrl($scope) {
+phonecatApp.controller('PhoneListCtrl', function ($scope) {
   $scope.phones = [
     {'name': 'Nexus S',
      'snippet': 'Fast just got faster with Nexus S.',
@@ -87,7 +87,7 @@ will be reordered. That is the data-binding doing its job in the opposite direct
 to the model.</p>
 </li>
 </ul>
-<h3 id="test" id="test">Test</h3>
+<h3 id="test">Test</h3>
 <p>The changes we made should be verified with both a unit test and an end-to-end test. Let&#39;s look at
 the unit test first.</p>
 <p><strong><code>test/unit/controllersSpec.js</code>:</strong>
@@ -143,7 +143,7 @@ shared by all tests in the parent <code>describe</code> block.</p>
 <p>The end-to-end test verifies that the ordering mechanism of the select box is working correctly.</p>
 <p>You can now rerun <code>./scripts/e2e-test.sh</code> or refresh the browser tab with the end-to-end test
 <code>runner.html</code> to see the tests run, or you can see them running on <a href="http://angular.github.com/angular-phonecat/step-4/test/e2e/runner.html">Angular&#39;s server</a>.</p>
-<h2 id="experiments" id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h2>
 <ul>
 <li><p>In the <code>PhoneListCtrl</code> controller, remove the statement that sets the <code>orderProp</code> value and
 you&#39;ll see that Angular will temporarily add a new &quot;unknown&quot; option to the drop-down list and the
@@ -155,7 +155,7 @@ text.</p>
 <li><p>Reverse the sort order by adding a <code>-</code> symbol before the sorting value: <code>&lt;option value=&quot;-age&quot;&gt;Oldest&lt;/option&gt;</code></p>
 </li>
 </ul>
-<h2 id="summary" id="summary">Summary</h2>
+<h2 id="summary">Summary</h2>
 <p>Now that you have added list sorting and tested the app, go to <a href="tutorial/step_05">step 5</a> to learn
 about Angular services and how Angular uses dependency injection.</p>
 <ul doc-tutorial-nav="4"></ul></div></div>

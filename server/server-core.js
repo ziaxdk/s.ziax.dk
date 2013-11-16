@@ -22,7 +22,7 @@ module.exports = function (esClient, app) {
   };
 
   self.ngSafe = function (val) {
-    return ")]}',\n" + JSON.stringify(Utils.ngPrivateRemover(val));
+    return ")]}',\n" + JSON.stringify(Utils.ngPrivateRemover(val)); // Angular 1.2.0
     // return ")]}',\n" + JSON.stringify(val);
   }
 

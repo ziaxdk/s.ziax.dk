@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2013-11-08T17:41:58.118Z
+# 2013-11-15T06:38:09.451Z
 
 # cache all of these
 CACHE:
@@ -289,13 +289,13 @@ partials/error/$location:isrcharg.html
 partials/error/$parse:isecdom.html
 partials/error/$parse:isecfld.html
 partials/error/$parse:isecfn.html
-partials/error/$parse:isecprv.html
 partials/error/$parse:isecwindow.html
 partials/error/$parse:lexerr.html
 partials/error/$parse:syntax.html
 partials/error/$parse:ueoe.html
 partials/error/$resource:badargs.html
 partials/error/$resource:badcfg.html
+partials/error/$resource:badmember.html
 partials/error/$resource:badname.html
 partials/error/$rootScope:infdig.html
 partials/error/$rootScope:inprog.html
@@ -348,6 +348,7 @@ partials/guide/i18n.html
 partials/guide/ie.html
 partials/guide/index.html
 partials/guide/introduction.html
+partials/guide/migration.html
 partials/guide/module.html
 partials/guide/providers.html
 partials/guide/scope.html

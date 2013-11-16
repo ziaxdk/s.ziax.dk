@@ -13,7 +13,7 @@ from our server using one of Angular&#39;s built-in <a href="guide/dev_guide.ser
 
 <p>You should now see a list of 20 phones.</p>
 <p>The most important changes are listed below. You can see the full diff on <a href="https://github.com/angular/angular-phonecat/compare/step-4...step-5">GitHub</a>:</p>
-<h3 id="data" id="data">Data</h3>
+<h3 id="data">Data</h3>
 <p>The <code>app/phones/phones.json</code> file in your project is a dataset that contains a larger list of phones
 stored in the JSON format.</p>
 <p>Following is a sample of the file:
@@ -29,7 +29,7 @@ stored in the JSON format.</p>
 ...
 ]
 </pre>
-<h3 id="controller" id="controller">Controller</h3>
+<h3 id="controller">Controller</h3>
 <p>We&#39;ll use Angular&#39;s <a href="api/ng.$http"><code>$http</code></a> service in our controller to make an HTTP
 request to your web server to fetch the data in the <code>app/phones/phones.json</code> file. <code>$http</code> is just
 one of several built-in <a href="guide/dev_guide.services">angular services</a> that handle common operations
@@ -42,7 +42,7 @@ components themselves, but by the DI subsystem).</p>
 <pre class="prettyprint linenums">
 var phonecatApp = angular.module('phonecatApp', []);
 
-phonecatApp.controller('PhoneListCtrl', function PhoneListCtrl($scope, $http) {
+phonecatApp.controller('PhoneListCtrl', function ($scope, $http) {
   $http.get('phones/phones.json').success(function(data) {
     $scope.phones = data;
   });
@@ -61,14 +61,14 @@ scope controlled by this controller, as a model called <code>phones</code>. Noti
 json response and parsed it for us!</p>
 <p>To use a service in angular, you simply declare the names of the dependencies you need as arguments
 to the controller&#39;s constructor function, as follows:</p>
-<pre><code>function PhoneListCtrl($scope, $http) {...}</code></pre>
+<pre><code>phonecatApp.controller(&#39;PhoneListCtrl&#39;, function ($scope, $http) {...}</code></pre>
 <p>Angular&#39;s dependency injector provides services to your controller when the controller is being
 constructed. The dependency injector also takes care of creating any transitive dependencies the
 service may have (services often depend upon other services).</p>
 <p>Note that the names of arguments are significant, because the injector uses these to look up the
 dependencies.</p>
 <p><img  class="diagram" src="img/tutorial/xhr_service_final.png"></p>
-<h4 id="-prefix-naming-convention" id="controller_-prefix-naming-convention"><code>$</code> Prefix Naming Convention</h4>
+<h4 id="controller_-prefix-naming-convention"><code>$</code> Prefix Naming Convention</h4>
 <p>You can create your own services, and in fact we will do exactly that in step 11. As a naming
 convention, angular&#39;s built-in services, Scope methods and a few other Angular APIs have a <code>$</code>
 prefix in front of the name.</p>
@@ -76,7 +76,7 @@ prefix in front of the name.</p>
 To prevent collisions it&#39;s best to avoid naming your services and models anything that begins with a <code>$</code>.</p>
 <p>If you inspect a Scope, you may also notice some properties that begin with <code>$$</code>. These
 properties are considered private, and should not be accessed or modified.</p>
-<h4 id="a-note-on-minification" id="controller_a-note-on-minification">A Note on Minification</h4>
+<h4 id="controller_a-note-on-minification">A Note on Minification</h4>
 <p>Since Angular infers the controller&#39;s dependencies from the names of arguments to the controller&#39;s
 constructor function, if you were to <a href="http://en.wikipedia.org/wiki/Minification_(programming)">minify</a> the JavaScript code for <code>PhoneListCtrl</code> controller, all of its function arguments would be
 minified as well, and the dependency injector would not be able to identify services correctly.</p>
@@ -111,7 +111,7 @@ let&#39;s add the annotations to our <code>PhoneListCtrl</code>:</p>
 var phonecatApp = angular.module('phonecatApp', []);
 
 phonecatApp.controller('PhoneListCtrl', ['$scope', '$http',
-  function PhoneListCtrl($scope, $http) {
+  function ($scope, $http) {
     $http.get('phones/phones.json').success(function(data) {
       $scope.phones = data;
     });
@@ -119,7 +119,7 @@ phonecatApp.controller('PhoneListCtrl', ['$scope', '$http',
     $scope.orderProp = 'age';
   }]);
 </pre>
-<h3 id="test" id="test">Test</h3>
+<h3 id="test">Test</h3>
 <p><strong><code>test/unit/controllersSpec.js</code>:</strong></p>
 <p>Because we started using dependency injection and our controller has dependencies, constructing the
 controller in our tests is a bit more complicated. We could use the <code>new</code> operator and provide the
@@ -203,7 +203,7 @@ promise returned by the <code>$http</code> service to be resolved with the train
 </pre>
 <p>You should now see the following output in the Karma tab:</p>
 <pre><code>   Chrome 22.0: Executed 2 of 2 SUCCESS (0.028 secs / 0.007 secs)</code></pre>
-<h2 id="experiments" id="experiments">Experiments</h2>
+<h2 id="experiments">Experiments</h2>
 <ul>
 <li><p>At the bottom of <code>index.html</code>, add a <code>{{phones | json}}</code> binding to see the list of phones
 displayed in json format.</p>
@@ -213,7 +213,7 @@ to the first 5 in the list. Use the following code in the <code>$http</code> cal
 <pre><code>   $scope.phones = data.splice(0, 5);</code></pre>
 </li>
 </ul>
-<h2 id="summary" id="summary">Summary</h2>
+<h2 id="summary">Summary</h2>
 <p>Now that you have learned how easy it is to use angular services (thanks to Angular&#39;s dependency
 injection), go to <a href="tutorial/step_06">step 6</a>, where you will add some
 thumbnail images of phones and some links.</p>

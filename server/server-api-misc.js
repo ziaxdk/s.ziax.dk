@@ -1,5 +1,5 @@
 module.exports = function (esClient, app, core) {
-  var Promise = require('promise'), Nodeio = require('node.io');
+  var Promise = require('promise');//, Nodeio = require('node.io');
 
   app.get('/api/front', function (req, res) {
 

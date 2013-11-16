@@ -1,4 +1,4 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.0-rc.3/src/ng/compile.js#L21" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/compile.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$compile</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ng/compile.js#L21" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/compile.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$compile</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ng</code>
 </span>
 </div>
@@ -14,7 +14,7 @@ For a gentle introduction to directives with examples of common use cases,
 see the <a href="guide/directive">directive guide</a>.
 </div>
 
-<h4 id="comprehensive-directive-api" id="description_comprehensive-directive-api">Comprehensive Directive API</h4>
+<h4 id="description_comprehensive-directive-api">Comprehensive Directive API</h4>
 <p>There are many different options for a directive.</p>
 <p>The difference resides in the return value of the factory function.
 You can either return a &quot;Directive Definition Object&quot; (see below) that defines the directive properties,
@@ -75,19 +75,20 @@ or just the <code>postLink</code> function (all other properties will have the d
     // return function postLink(scope, iElement, iAttrs) { ... }
   });
 </pre>
-<h5 id="directive-definition-object" id="description_comprehensive-directive-api_directive-definition-object">Directive Definition Object</h5>
+<h5 id="description_comprehensive-directive-api_directive-definition-object">Directive Definition Object</h5>
 <p>The directive definition object provides instructions to the <a href="api/ng.$compile"><code>compiler</code></a>. The attributes are:</p>
-<h6 id="-priority-" id="description_comprehensive-directive-api_directive-definition-object"><code>priority</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>priority</code></h6>
 <p>When there are multiple directives defined on a single DOM element, sometimes it
 is necessary to specify the order in which the directives are applied. The <code>priority</code> is used
 to sort the directives before their <code>compile</code> functions get called. Priority is defined as a
-number. Directives with greater numerical <code>priority</code> are compiled first. The order of directives with
-the same priority is undefined. The default priority is <code>0</code>.</p>
-<h6 id="-terminal-" id="description_comprehensive-directive-api_directive-definition-object"><code>terminal</code></h6>
+number. Directives with greater numerical <code>priority</code> are compiled first. Pre-link functions
+are also run in priority order, but post-link functions are run in reverse order. The order
+of directives with the same priority is undefined. The default priority is <code>0</code>.</p>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>terminal</code></h6>
 <p>If set to true then the current <code>priority</code> will be the last set of directives
 which will execute (any directives at the current priority will still execute
 as the order of execution on same <code>priority</code> is undefined).</p>
-<h6 id="-scope-" id="description_comprehensive-directive-api_directive-definition-object"><code>scope</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>scope</code></h6>
 <p><strong>If set to <code>true</code>,</strong> then a new scope will be created for this directive. If multiple directives on the
 same element request a new scope, only one new scope is created. The new scope rule does not
 apply for the root of the template since the root of the template always gets a new scope.</p>
@@ -129,7 +130,7 @@ For example, if the expression is <code>increment(amount)</code> then we can spe
 by calling the <code>localFn</code> as <code>localFn({amount: 22})</code>.</p>
 </li>
 </ul>
-<h6 id="-controller-" id="description_comprehensive-directive-api_directive-definition-object"><code>controller</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>controller</code></h6>
 <p>Controller constructor function. The controller is instantiated before the
 pre-linking phase and it is shared with other directives (see
 <code>require</code> attribute). This allows the directives to communicate with each other and augment
@@ -138,10 +139,11 @@ each other&#39;s behavior. The controller is injectable (and supports bracket no
 <li><code>$scope</code> - Current scope associated with the element</li>
 <li><code>$element</code> - Current element</li>
 <li><code>$attrs</code> - Current attributes object for the element</li>
-<li><code>$transclude</code> - A transclude linking function pre-bound to the correct transclusion scope:
-<code>function(cloneLinkingFn)</code>.</li>
+<li><code>$transclude</code> - A transclude linking function pre-bound to the correct transclusion scope.
+ The scope can be overridden by an optional first argument.
+<code>function([scope], cloneLinkingFn)</code>.</li>
 </ul>
-<h6 id="-require-" id="description_comprehensive-directive-api_directive-definition-object"><code>require</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>require</code></h6>
 <p>Require another directive and inject its controller as the fourth argument to the linking function. The
 <code>require</code> takes a string name (or array of strings) of the directive(s) to pass in. If an array is used, the
 injected argument will be an array in corresponding order. If no such directive can be
@@ -153,11 +155,11 @@ found, or if the directive does not have a controller, then an error is raised. 
 <li><code>?^</code> - Attempt to locate the required controller by searching the element&#39;s parentsor pass <code>null</code> to the
 <code>link</code> fn if not found.</li>
 </ul>
-<h6 id="-controlleras-" id="description_comprehensive-directive-api_directive-definition-object"><code>controllerAs</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>controllerAs</code></h6>
 <p>Controller alias at the directive scope. An alias for the controller so it
 can be referenced at the directive template. The directive needs to define a scope for this
 configuration to be used. Useful in the case when directive is used as component.</p>
-<h6 id="-restrict-" id="description_comprehensive-directive-api_directive-definition-object"><code>restrict</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>restrict</code></h6>
 <p>String of subset of <code>EACM</code> which restricts the directive to a specific directive
 declaration style. If omitted, the default (attributes only) is used.</p>
 <ul>
@@ -167,27 +169,27 @@ declaration style. If omitted, the default (attributes only) is used.</p>
 <li><code>C</code> - Class: <code>&lt;div class=&quot;my-directive: exp;&quot;&gt;&lt;/div&gt;</code></li>
 <li><code>M</code> - Comment: <code>&lt;!-- directive: my-directive exp --&gt;</code></li>
 </ul>
-<h6 id="-template-" id="description_comprehensive-directive-api_directive-definition-object"><code>template</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>template</code></h6>
 <p>replace the current element with the contents of the HTML. The replacement process
 migrates all of the attributes / classes from the old element to the new one. See the
 <a href="guide/directive#creating-custom-directives_creating-directives_template-expanding-directive">Directives Guide</a> for an example.</p>
 <p>You can specify <code>template</code> as a string representing the template or as a function which takes
 two arguments <code>tElement</code> and <code>tAttrs</code> (described in the <code>compile</code> function api below) and
 returns a string value representing the template.</p>
-<h6 id="-templateurl-" id="description_comprehensive-directive-api_directive-definition-object"><code>templateUrl</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>templateUrl</code></h6>
 <p>Same as <code>template</code> but the template is loaded from the specified URL. Because
 the template loading is asynchronous the compilation/linking is suspended until the template
 is loaded.</p>
 <p>You can specify <code>templateUrl</code> as a string representing the URL or as a function which takes two
 arguments <code>tElement</code> and <code>tAttrs</code> (described in the <code>compile</code> function api below) and returns
 a string value representing the url.  In either case, the template URL is passed through <a href="api/ng.$sce#methods_gettrustedresourceurl"><code>$sce.getTrustedResourceUrl</code></a>.</p>
-<h6 id="-replace-" id="description_comprehensive-directive-api_directive-definition-object"><code>replace</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>replace</code></h6>
 <p>specify where the template should be inserted. Defaults to <code>false</code>.</p>
 <ul>
 <li><code>true</code> - the template will replace the current element.</li>
 <li><code>false</code> - the template will replace the contents of the current element.</li>
 </ul>
-<h6 id="-transclude-" id="description_comprehensive-directive-api_directive-definition-object"><code>transclude</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>transclude</code></h6>
 <p>compile the content of the element and make it available to the directive.
 Typically used with <a href="api/ng.directive:ngTransclude"><code>ngTransclude</code></a>. The advantage of transclusion is that the linking function receives a
 transclusion function which is pre-bound to the correct scope. In a typical setup the widget
@@ -198,7 +200,7 @@ be bound to the parent (pre-<code>isolate</code>) scope.</p>
 <li><code>true</code> - transclude the content of the directive.</li>
 <li><code>&#39;element&#39;</code> - transclude the whole element including any directives defined at lower priority.</li>
 </ul>
-<h6 id="-compile-" id="description_comprehensive-directive-api_directive-definition-object"><code>compile</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>compile</code></h6>
 <pre class="prettyprint linenums">
   function compile(tElement, tAttrs, transclude) { ... }
 </pre>
@@ -214,7 +216,7 @@ safe to do template transformation on the element and child elements only.</p>
 <li><p><code>tAttrs</code> - template attributes - Normalized list of attributes declared on this element shared
 between all directive compile functions.</p>
 </li>
-<li><p><code>transclude</code> - A transclude linking function: <code>function(scope, cloneLinkingFn)</code>.</p>
+<li><p><code>transclude</code> -  [<em>DEPRECATED</em>!] A transclude linking function: <code>function(scope, cloneLinkingFn)</code></p>
 </li>
 </ul>
 <div class="alert alert-warning">
@@ -222,6 +224,12 @@ between all directive compile functions.</p>
 been cloned. For this reason it is <strong>not</strong> safe to do anything other than DOM transformations that
 apply to all cloned DOM nodes within the compile function. Specifically, DOM listener registration
 should be done in a linking function rather than in a compile function.
+</div>
+
+<div class="alert alert-error">
+<strong>Note:</strong> The <code>transclude</code> function that is passed to the compile function is deperecated, as it
+  e.g. does not know about the right outer scope. Please use the transclude function that is passed
+  to the link function instead.
 </div>
 
 <p>A compile function can have a return value which can be either a function or an object.</p>
@@ -234,10 +242,10 @@ control when a linking function should be called during the linking phase. See i
 pre-linking and post-linking functions below.</p>
 </li>
 </ul>
-<h6 id="-link-" id="description_comprehensive-directive-api_directive-definition-object"><code>link</code></h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object"><code>link</code></h6>
 <p>This property is used only if the <code>compile</code> property is not defined.</p>
 <pre class="prettyprint linenums">
-  function link(scope, iElement, iAttrs, controller) { ... }
+  function link(scope, iElement, iAttrs, controller, transcludeFn) { ... }
 </pre>
 <p>The link function is responsible for registering DOM listeners as well as updating the DOM. It is
 executed after the template has been cloned. This is where most of the directive logic will be
@@ -257,14 +265,19 @@ between all directive linking functions.</p>
 element defines a controller. The controller is shared among all the directives, which allows
 the directives to use the controllers as a communication channel.</p>
 </li>
+<li><p><code>transcludeFn</code> - A transclude linking function pre-bound to the correct transclusion scope.
+The scope can be overridden by an optional first argument. This is the same as the <code>$transclude</code>
+parameter of directive controllers.
+<code>function([scope], cloneLinkingFn)</code>.</p>
+</li>
 </ul>
-<h6 id="pre-linking-function" id="description_comprehensive-directive-api_directive-definition-object_pre-linking-function">Pre-linking function</h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object_pre-linking-function">Pre-linking function</h6>
 <p>Executed before the child elements are linked. Not safe to do DOM transformation since the
 compiler linking function will fail to locate the correct elements for linking.</p>
-<h6 id="post-linking-function" id="description_comprehensive-directive-api_directive-definition-object_post-linking-function">Post-linking function</h6>
+<h6 id="description_comprehensive-directive-api_directive-definition-object_post-linking-function">Post-linking function</h6>
 <p>Executed after the child elements are linked. It is safe to do DOM transformation in the post-linking function.</p>
 <p><a name="Attributes"></a></p>
-<h5 id="attributes" id="description_comprehensive-directive-api_attributes">Attributes</h5>
+<h5 id="description_comprehensive-directive-api_attributes">Attributes</h5>
 <p>The <a href="api/ng.$compile.directive.Attributes"><code>Attributes</code></a> object - passed as a parameter in the
 <code>link()</code> or <code>compile()</code> functions. It has a variety of uses.</p>
 <p>accessing <em>Normalized attribute names:</em>

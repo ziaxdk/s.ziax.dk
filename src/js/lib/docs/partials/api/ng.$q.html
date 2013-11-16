@@ -1,4 +1,4 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.0-rc.3/src/ng/q.js#L3" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/q.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$q</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ng/q.js#L3" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/q.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$q</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ng</code>
 </span>
 </div>
@@ -50,7 +50,7 @@ comes in the way of guarantees that promise and deferred APIs make, see
 traditional callback (<a href="http://en.wikipedia.org/wiki/Continuation-passing_style">CPS</a>) approach.
 For more on this please see the <a href="https://github.com/kriskowal/q">Q documentation</a> especially the
 section on serial or parallel joining of promises.</p>
-<h3 id="the-deferred-api" id="description_the-deferred-api">The Deferred API</h3>
+<h3 id="description_the-deferred-api">The Deferred API</h3>
 <p>A new instance of deferred is constructed by calling <code>$q.defer()</code>.</p>
 <p>The purpose of the deferred object is to expose the associated Promise instance as well as APIs
 that can be used for signaling the successful or unsuccessful completion, as well as the status
@@ -68,7 +68,7 @@ multiple times before the promise is either resolved or rejected.</li>
 <ul>
 <li>promise – <code>{Promise}</code> – promise object associated with this deferred.</li>
 </ul>
-<h3 id="the-promise-api" id="description_the-promise-api">The Promise API</h3>
+<h3 id="description_the-promise-api">The Promise API</h3>
 <p>A new promise instance is created when a deferred instance is created and can be retrieved by
 calling <code>deferred.promise</code>.</p>
 <p>The purpose of the promise object is to allow for interested parties to get access to the result
@@ -97,7 +97,7 @@ property names by ES3, you&#39;ll need to invoke the method like <code>promise[&
 make your code IE8 compatible.</p>
 </li>
 </ul>
-<h3 id="chaining-promises" id="description_chaining-promises">Chaining promises</h3>
+<h3 id="description_chaining-promises">Chaining promises</h3>
 <p>Because calling the <code>then</code> method of a promise returns a new derived promise, it is easily
 possible to create a chain of promises:</p>
 <pre class="prettyprint linenums">
@@ -112,7 +112,7 @@ possible to create a chain of promises:</p>
 promise (which will defer its resolution further), it is possible to pause/defer resolution of
 the promises at any point in the chain. This makes it possible to implement powerful APIs like
 $http&#39;s response interceptors.</p>
-<h3 id="differences-between-kris-kowal-s-q-and-q" id="description_differences-between-kris-kowals-q-and-$q">Differences between Kris Kowal&#39;s Q and $q</h3>
+<h3 id="description_differences-between-kris-kowals-q-and-$q">Differences between Kris Kowal&#39;s Q and $q</h3>
 <p> There are three main differences:</p>
 <ul>
 <li>$q is integrated with the <a href="api/ng.$rootScope.Scope"><code>ng.$rootScope.Scope</code></a> Scope model observation
@@ -120,7 +120,7 @@ mechanism in angular, which means faster propagation of resolution or rejection 
 models and avoiding unnecessary browser repaints, which would result in flickering UI.</li>
 <li><p>Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
 all the important functionality needed for common async tasks.</p>
-<h3 id="testing" id="description_testing">Testing</h3>
+<h3 id="description_testing">Testing</h3>
 <pre class="prettyprint linenums">
    it('should simulate promise', inject(function($q, $rootScope) {
      var deferred = $q.defer();
@@ -140,7 +140,7 @@ all the important functionality needed for common async tasks.</p>
      // Propagate promise resolution to 'then' functions using $apply().
      $rootScope.$apply();
      expect(resolvedValue).toEqual(123);
-   });
+   }));
  </pre>
 </li>
 </ul>

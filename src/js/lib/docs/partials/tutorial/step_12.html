@@ -20,10 +20,10 @@ then the animation will run in between the standard DOM operation that is being 
 the given time (e.g. inserting and removing nodes on ngRepeat or adding and removing classes on ngClass).</p>
 <p>The most important changes are listed below. You can see the full diff on
 <a href="https://github.com/angular/angular-phonecat/compare/step-11...step-12">GitHub</a>:</p>
-<h3 id="how-animations-work-with-nganimate-" id="how-animations-work-with">How Animations work with <code>ngAnimate</code></h3>
+<h3 id="how-animations-work-with">How Animations work with <code>ngAnimate</code></h3>
 <p>To get an idea of how animations work with AngularJS, please read the
 <a href="guide/animations">AngularJS Animation Guide</a> first.</p>
-<h3 id="template" id="template">Template</h3>
+<h3 id="template">Template</h3>
 <p>The changes required within the HTML template code is to link the asset files which define the animations as well
 as the <code>angular-animate.js</code> file. The animation module, known as <code>ngAnimate</code>, is defined within
 <code>angular-animate.js</code> and contains the code necessary to make your application become animation aware.</p>
@@ -47,7 +47,7 @@ as the <code>angular-animate.js</code> file. The animation module, known as <cod
 <p>Animations can now be created within the CSS code (<code>animations.css</code>) as well as the JavaScript code (<code>animations.js</code>).
 But before we start, let&#39;s create a new module which uses the ngAnimate module as a dependency just like we did before
 with <code>ngResource</code>.</p>
-<h3 id="module-animations" id="module-&amp;-animations">Module &amp; Animations</h3>
+<h3 id="module-&amp;-animations">Module &amp; Animations</h3>
 <p><strong><code>app/js/animations.js</code>.</strong>
 <pre class="prettyprint linenums">
 angular.module('phonecatAnimations', ['ngAnimate']).
@@ -70,7 +70,7 @@ angular.module('phonecat', [
 // ...
 </pre>
 <p>Now, the phonecat module is animation aware. Let&#39;s make some animations!</p>
-<h3 id="animating-ngrepeat-with-css-transition-animations" id="animating-ngrepeat-with-css-transition-animations">Animating ngRepeat with CSS Transition Animations</h3>
+<h3 id="animating-ngrepeat-with-css-transition-animations">Animating ngRepeat with CSS Transition Animations</h3>
 <p>We&#39;ll start off by adding CSS transition animations to our <code>ngRepeat</code> directive present on the <code>phone-list.html</code> page.
 First let&#39;s add an extra CSS class to our repeated element so that we can hook into it with our CSS animation code.</p>
 <p><strong><code>app/partials/phone-list.html</code>.</strong>
@@ -154,13 +154,13 @@ by the CSS transition declarations at the top of the example code above.</p>
 and <a href="http://caniuse.com/#feat=css-animation">CSS animations</a>, IE9 and earlier do not.
 If you want animations that are backwards-compatible with older browsers, consider using JavaScript-based animations,
 which are described in detail below.</p>
-<h3 id="animating-ngview-with-css-keyframe-animations" id="animating-with-css-keyframe-animations">Animating <code>ngView</code> with CSS Keyframe Animations</h3>
+<h3 id="animating-with-css-keyframe-animations">Animating <code>ngView</code> with CSS Keyframe Animations</h3>
 <p>Next let&#39;s add an animation for transitions between route changes in <code>ngView</code>.</p>
 <p>To start, let&#39;s add a new CSS class to our HTML like we did in the example above.
 This time, instead of the <code>ng-repeat</code> element, let&#39;s add it to the element containing the ng-view directive.
 In order to do this, we&#39;ll have to make some small changes to the HTML code so that we can have more control over our
 animations between view changes.</p>
-<p><strong><code>app/partials/phone-list.html</code>.</strong>
+<p><strong><code>app/index.html</code>.</strong>
 <pre class="prettyprint linenums">
 &lt;div class="view-container"&gt;
   &lt;div ng-view class="view-frame"&gt;&lt;/div&gt;
@@ -241,7 +241,7 @@ loaded the ng-view directive will create a copy of itself, download the template
 ensures that all views are contained within a single HTML element which allows for easy animation control.</p>
 <p>For more on CSS animations, see the
 <a href="http://docs.webplatform.org/wiki/css/properties/animations">Web Platform documentation</a>.</p>
-<h3 id="animating-ngclass-with-javascript" id="animating-with-javascript">Animating <code>ngClass</code> with JavaScript</h3>
+<h3 id="animating-with-javascript">Animating <code>ngClass</code> with JavaScript</h3>
 <p>Let&#39;s add another animation to our application. Switching to our <code>phone-detail.html</code> page,
 we see that we have a nice thumbnail swapper. By clicking on the thumbnails listed on the page,
 the profile phone image changes. But how can we change this around to add animations?</p>
@@ -352,6 +352,6 @@ called when the animation is cancelled (when another animation takes place on th
 as well as when the animation has completed. A boolean parameter is passed into the function which
 lets the developer know if the animation was cancelled or not. This function can be used to
 do any cleanup necessary for when the animation finishes.</p>
-<h2 id="summary" id="summary">Summary</h2>
+<h2 id="summary">Summary</h2>
 <p>There you have it!  We have created a web app in a relatively short amount of time. In the <a href="tutorial/the_end">closing notes</a> we&#39;ll cover where to go from here.</p>
 <ul doc-tutorial-nav="12"></ul></div></div>

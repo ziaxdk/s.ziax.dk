@@ -8,10 +8,10 @@ attach behavior to them. For example you can use the
 <a href="http://code.google.com/apis/buzz/v1/getting_started.html#background-operations|">Google Buzz API</a>
 to retrieve Buzz activity and comments.</p>
 <h3 id="source">Source</h3>
-<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-180" source-edit-css="" source-edit-js="script.js-179" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-181"></div>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-184" source-edit-css="" source-edit-js="script.js-183" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-185"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-180" ng-html-wrap=" angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-180">
+<pre class="prettyprint linenums" ng-set-text="index.html-184" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-184">
     
     <div ng-controller="BuzzController">
      <input ng-model="userId"/>
@@ -36,8 +36,8 @@ to retrieve Buzz activity and comments.</p>
  </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-179"></pre>
-<script type="text/ng-template" id="script.js-179">
+<pre class="prettyprint linenums" ng-set-text="script.js-183"></pre>
+<script type="text/ng-template" id="script.js-183">
     BuzzController.$inject = ['$scope', '$resource'];
     function BuzzController($scope, $resource) {
      $scope.userId = 'googlebuzz';
@@ -59,8 +59,8 @@ to retrieve Buzz activity and comments.</p>
     </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-181"></pre>
-<script type="text/ng-template" id="scenario.js-181">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-185"></pre>
+<script type="text/ng-template" id="scenario.js-185">
   xit('fetch buzz and expand', function() {
     element(':button:contains(fetch)').click();
     expect(repeater('div.buzz').count()).toBeGreaterThan(0);
@@ -70,5 +70,5 @@ to retrieve Buzz activity and comments.</p>
  </script>
 </div>
 </div><h3 id="-expand-replies-{{itemlinksreplies[0]count}}-_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-180" ng-eval-javascript="script.js-179"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-184" ng-eval-javascript="script.js-183"></div>
 </div></div>

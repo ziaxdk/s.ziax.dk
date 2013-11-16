@@ -1,4 +1,4 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.0-rc.3/src/ng/directive/input.js#L818" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/input.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">NgModelController</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ng/directive/input.js#L818" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/input.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">NgModelController</code>
 <div><span class="hint">type in module <code ng:non-bindable="">ng</code>
 </span>
 </div>
@@ -9,17 +9,17 @@ services for data-binding, validation, CSS updates, and value formatting and par
 purposefully does not contain any logic which deals with DOM rendering or listening to
 DOM events. Such DOM related logic should be provided by other directives which make use of
 <code>NgModelController</code> for data-binding.</p>
-<h4 id="custom-control-example" id="description_custom-control-example">Custom Control Example</h4>
+<h4 id="description_custom-control-example">Custom Control Example</h4>
 <p>This example shows how to use <code>NgModelController</code> with a custom control to achieve
 data-binding. Notice how different directives (<code>contenteditable</code>, <code>ng-model</code>, and <code>required</code>)
 collaborate together to achieve the desired result.</p>
 <p>Note that <code>contenteditable</code> is an HTML5 attribute, which tells the browser to let the element
 contents be edited in place by the user.  This will not work on older browsers.</p>
 <h4 id="description_source">Source</h4>
-<div source-edit="customControl" source-edit-deps="angular.js script.js" source-edit-html="index.html-49" source-edit-css="style.css-47" source-edit-js="script.js-48" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-50"></div>
+<div source-edit="customControl" source-edit-deps="angular.js script.js" source-edit-html="index.html-40" source-edit-css="style.css-38" source-edit-js="script.js-39" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-41"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-49" ng-html-wrap="customControl angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-49">
+<pre class="prettyprint linenums" ng-set-text="index.html-40" ng-html-wrap="customControl angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-40">
       <form name="myForm">
        <div contenteditable
             name="myWidget" ng-model="userContent"
@@ -32,8 +32,8 @@ contents be edited in place by the user.  This will not work on older browsers.<
     </script>
 </div>
 <div class="tab-pane" title="style.css">
-<pre class="prettyprint linenums" ng-set-text="style.css-47"></pre>
-<style type="text/css" id="style.css-47">
+<pre class="prettyprint linenums" ng-set-text="style.css-38"></pre>
+<style type="text/css" id="style.css-38">
       [contenteditable] {
         border: 1px solid black;
         background-color: white;
@@ -47,8 +47,8 @@ contents be edited in place by the user.  This will not work on older browsers.<
     </style>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-48"></pre>
-<script type="text/ng-template" id="script.js-48">
+<pre class="prettyprint linenums" ng-set-text="script.js-39"></pre>
+<script type="text/ng-template" id="script.js-39">
       angular.module('customControl', []).
         directive('contenteditable', function() {
           return {
@@ -84,8 +84,8 @@ contents be edited in place by the user.  This will not work on older browsers.<
     </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-50"></pre>
-<script type="text/ng-template" id="scenario.js-50">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-41"></pre>
+<script type="text/ng-template" id="scenario.js-41">
       it('should data-bind and become invalid', function() {
         var contentEditable = element('[contenteditable]');
 
@@ -97,8 +97,8 @@ contents be edited in place by the user.  This will not work on older browsers.<
     </script>
 </div>
 </div><h4 id="description_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="customControl" ng-set-html="index.html-49" ng-eval-javascript="script.js-48"></div>
-<h4 id="isolated-scope-pitfall" id="description_isolated-scope-pitfall">Isolated Scope Pitfall</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="customControl" ng-set-html="index.html-40" ng-eval-javascript="script.js-39"></div>
+<h4 id="description_isolated-scope-pitfall">Isolated Scope Pitfall</h4>
 <p>Note that if you have a directive with an isolated scope, you cannot require <code>ngModel</code>
 since the model value will be looked up on the isolated scope rather than the outer scope.
 When the directive updates the model value, calling <code>ngModel.$setViewValue()</code> the property
@@ -106,18 +106,18 @@ on the outer scope will not be updated. However you can get around this by using
 <p>Here is an example of this situation.  You&#39;ll notice that the first div is not updating the input.
 However the second div can update the input properly.</p>
 <h4 id="description_source">Source</h4>
-<div source-edit="badIsolatedDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-52" source-edit-css="" source-edit-js="script.js-51" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="badIsolatedDirective" source-edit-deps="angular.js script.js" source-edit-html="index.html-43" source-edit-css="" source-edit-js="script.js-42" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-52" ng-html-wrap="badIsolatedDirective angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-52">
+<pre class="prettyprint linenums" ng-set-text="index.html-43" ng-html-wrap="badIsolatedDirective angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-43">
         <input ng-model="someModel"/>
         <div isolate ng-model="someModel"></div>
         <div isolate ng-model="$parent.someModel"></div>
     </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-51"></pre>
-<script type="text/ng-template" id="script.js-51">
+<pre class="prettyprint linenums" ng-set-text="script.js-42"></pre>
+<script type="text/ng-template" id="script.js-42">
 		angular.module('badIsolatedDirective', []).directive('isolate', function() {
       return {
         require: 'ngModel',
@@ -134,7 +134,7 @@ However the second div can update the input properly.</p>
     </script>
 </div>
 </div><h4 id="description_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="badIsolatedDirective" ng-set-html="index.html-52" ng-eval-javascript="script.js-51"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="badIsolatedDirective" ng-set-html="index.html-43" ng-eval-javascript="script.js-42"></div>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
 <ul class="methods"><li><h3 id="methods_$render">$render()</h3>
@@ -161,12 +161,15 @@ class and can be bound to as  <code>{{someForm.someControl.$error.myError}}</cod
 </div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_$setviewvalue">$setViewValue(value)</h3>
-<div class="$setviewvalue"><div class="ng-directive-page ng-directive-ngmodel-ngmodelcontroller-setviewvalue-page"><p>Read a value from view.</p>
-<p>This method should be called from within a DOM event handler.
-For example <a href="api/ng.directive:input"><code>input</code></a> or
+<div class="$setviewvalue"><div class="ng-directive-page ng-directive-ngmodel-ngmodelcontroller-setviewvalue-page"><p>Update the view value.</p>
+<p>This method should be called when the view value changes, typically from within a DOM event handler.
+For example <a href="api/ng.directive:input"><code>input</code></a> and
 <a href="api/ng.directive:select"><code>select</code></a> directives call it.</p>
-<p>It internally calls all <code>$parsers</code> (including validators) and updates the <code>$modelValue</code> and the actual model path.
-Lastly it calls all registered change listeners.</p>
+<p>It will update the $viewValue, then pass this value through each of the functions in <code>$parsers</code>,
+which includes any validators. The value that comes out of this <code>$parsers</code> pipeline, be applied to
+<code>$modelValue</code> and the <strong>expression</strong> specified in the <code>ng-model</code> attribute.</p>
+<p>Lastly, all the registered change listeners, in the <code>$viewChangeListeners</code> list, are called.</p>
+<p>Note that calling this function does not trigger a <code>$digest</code>.</p>
 </div><h5 id="methods_$setviewvalue_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>value</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="ng-directive-page ng-directive-ngmodel-ngmodelcontroller-setviewvalue-page"><p>Value from the view.</p>
 </div></td></tr></tbody></table></div>
 </li>
@@ -211,6 +214,12 @@ if (value) {
 }
 ngModel.$formatters.push(formatter);
 </pre>
+</div></div>
+</li>
+<li><h3 id="properties_$viewchangelisteners">$viewChangeListeners</h3>
+<div class="$viewchangelisteners"><div class="ng-directive-page ng-directive-ngmodel-ngmodelcontroller-page"><p>Array of functions to execute whenever the
+view value has changed. It is called with no arguments, and its return value is ignored.
+This can be used in place of additional $watches against the model value.</p>
 </div></div>
 </li>
 <li><h3 id="properties_$error">$error</h3>

@@ -6,7 +6,7 @@
 bookmarked and the application can be restored from the URL to the same state.</p>
 <p>While Angular does not force you to deal with bookmarks in any particular way, it has services
 which make the common case described here very easy to implement.</p>
-<h2 id="assumptions" id="assumptions">Assumptions</h2>
+<h2 id="assumptions">Assumptions</h2>
 <p>Your application consists of a single HTML page which bootstraps the application. We will refer
 to this page as the chrome.
 Your application is divided into several screens (or views) which the user can visit. For example,
@@ -18,17 +18,17 @@ have multiple partials, but a single partial is the most common construct. This 
 partial boundary visible using a blue line.</p>
 <p>You can make a routing table which shows which URL maps to which partial view template and which
 controller.</p>
-<h2 id="example" id="example">Example</h2>
+<h2 id="example">Example</h2>
 <p>In this example we have a simple app which consist of two screens:</p>
 <ul>
 <li>Welcome: url <code>welcome</code> Show the user contact information.</li>
 <li>Settings: url <code>settings</code> Show an edit screen for user contact information.</li>
 </ul>
 <h3 id="example_source">Source</h3>
-<div source-edit="deepLinking" source-edit-deps="angular.js angular-route.js angular-sanitize.js script.js" source-edit-html="index.html-187 settings.html welcome.html" source-edit-css="style.css-186" source-edit-js="script.js-185" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-188"></div>
+<div source-edit="deepLinking" source-edit-deps="angular.js angular-route.js angular-sanitize.js script.js" source-edit-html="index.html-175 settings.html welcome.html" source-edit-css="style.css-174" source-edit-js="script.js-173" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-176"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-187" ng-html-wrap="deepLinking angular.js angular-route.js angular-sanitize.js script.js"></pre>
-<script type="text/ng-template" id="index.html-187">
+<pre class="prettyprint linenums" ng-set-text="index.html-175" ng-html-wrap="deepLinking angular.js angular-route.js angular-sanitize.js script.js"></pre>
+<script type="text/ng-template" id="index.html-175">
     <div ng-controller="AppCntl">
       <h2 id="your-app-chrome">Your App Chrome</h2>
       [ <a href="welcome">Welcome</a> | <a href="settings">Settings</a> ]
@@ -77,8 +77,8 @@ controller.</p>
  </script>
 </div>
 <div class="tab-pane" title="style.css">
-<pre class="prettyprint linenums" ng-set-text="style.css-186"></pre>
-<style type="text/css" id="style.css-186">
+<pre class="prettyprint linenums" ng-set-text="style.css-174"></pre>
+<style type="text/css" id="style.css-174">
    [ng-view] {
      border: 1px solid blue;
      margin: 0;
@@ -93,8 +93,8 @@ controller.</p>
  </style>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-185"></pre>
-<script type="text/ng-template" id="script.js-185">
+<pre class="prettyprint linenums" ng-set-text="script.js-173"></pre>
+<script type="text/ng-template" id="script.js-173">
    angular.module('deepLinking', ['ngRoute', 'ngSanitize'])
      .config(function($routeProvider) {
         $routeProvider.
@@ -134,8 +134,8 @@ controller.</p>
  </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-188"></pre>
-<script type="text/ng-template" id="scenario.js-188">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-176"></pre>
+<script type="text/ng-template" id="scenario.js-176">
    it('should navigate to URL', function() {
      element('a:contains(Welcome)').click();
      expect(element('[ng-view]').text()).toMatch(/Hello anonymous/);
@@ -148,8 +148,8 @@ controller.</p>
  </script>
 </div>
 </div><h3 id="your-app-chrome_demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="deepLinking" ng-set-html="index.html-187" ng-eval-javascript="script.js-185"></div>
-<h2 id="things-to-notice" id="things-to-notice">Things to notice</h2>
+<div class="well doc-example-live animate-container" ng-embed-app="deepLinking" ng-set-html="index.html-175" ng-eval-javascript="script.js-173"></div>
+<h2 id="things-to-notice">Things to notice</h2>
 <ul>
 <li>Routes are defined in the <code>AppCntl</code> class. The initialization of the controller causes the
 initialization of the <a href="api/ngRoute.$route">$route</a> service with the proper URL

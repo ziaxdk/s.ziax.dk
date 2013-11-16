@@ -1,11 +1,11 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.0-rc.3/src/ng/sce.js#L399" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/sce.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$sce</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ng/sce.js#L399" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/sce.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$sce</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ng</code>
 </span>
 </div>
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="ng-sce-page"><p><code>$sce</code> is a service that provides Strict Contextual Escaping services to AngularJS.</p>
-<h3 id="strict-contextual-escaping" id="description_strict-contextual-escaping">Strict Contextual Escaping</h3>
+<h3 id="description_strict-contextual-escaping">Strict Contextual Escaping</h3>
 <p>Strict Contextual Escaping (SCE) is a mode in which AngularJS requires bindings in certain
 contexts to result in a value that is marked as safe to use for that context.  One example of
 such a context is binding arbitrary html controlled by the user via <code>ng-bind-html</code>.  We refer
@@ -21,9 +21,9 @@ security vulnerabilities such as XSS, clickjacking, etc. a lot easier.</p>
 <p>Here&#39;s an example of a binding in a privileged context:</p>
 <pre class="prettyprint" class="prettyprint linenums">
     &lt;input ng-model="userHtml"&gt;
-    &lt;div ng-bind-html="{{userHtml}}"&gt;
+    &lt;div ng-bind-html="userHtml"&gt;
 </pre>
-<p>Notice that <code>ng-bind-html</code> is bound to <code>{{userHtml}}</code> controlled by the user.  With SCE
+<p>Notice that <code>ng-bind-html</code> is bound to <code>userHtml</code> controlled by the user.  With SCE
 disabled, this application allows the user to render arbitrary HTML into the DIV.
 In a more realistic example, one may be rendering user comments, blog articles, etc. via
 bindings.  (HTML is just one example of a context where rendering user controlled input creates
@@ -44,7 +44,7 @@ exposed by that code doesn&#39;t markup arbitrary values as safe then becomes a 
 <p>In the case of AngularJS&#39; SCE service, one uses <a href="api/ng.$sce#methods_trustas"><code>$sce.trustAs</code></a> 
 (and shorthand methods such as <a href="api/ng.$sce#methods_trustashtml"><code>$sce.trustAsHtml</code></a>, etc.) to
 obtain values that will be accepted by SCE / privileged contexts.</p>
-<h4 id="how-does-it-work-" id="description_strict-contextual-escaping_how-does-it-work">How does it work?</h4>
+<h4 id="description_strict-contextual-escaping_how-does-it-work">How does it work?</h4>
 <p>In privileged contexts, directives and code will bind to the result of <a href="api/ng.$sce#methods_gettrusted"><code>$sce.getTrusted(context, value)</code></a> rather than to the value directly.  Directives use <a href="api/ng.$sce#methods_parse"><code>$sce.parseAs</code></a> rather than <code>$parse</code> to watch attribute bindings, which performs the
 <a href="api/ng.$sce#methods_gettrusted"><code>$sce.getTrusted</code></a> behind the scenes on non-constant literals.</p>
 <p>As an example, <a href="api/ng.directive:ngBindHtml"><code>ngBindHtml</code></a> uses <a href="api/ng.$sce#methods_parseashtml"><code>$sce.parseAsHtml(binding expression)</code></a>.  Here&#39;s the actual code (slightly
@@ -58,7 +58,7 @@ simplified):</p>
     };
   }];
 </pre>
-<h4 id="impact-on-loading-templates" id="description_strict-contextual-escaping_impact-on-loading-templates">Impact on loading templates</h4>
+<h4 id="description_strict-contextual-escaping_impact-on-loading-templates">Impact on loading templates</h4>
 <p>This applies both to the <a href="api/ng.directive:ngInclude"><code><code>ng-include</code></code></a> directive as well as
 <code>templateUrl</code>&#39;s specified by <a href="guide/directive">directives</a>.</p>
 <p>By default, Angular only loads templates from the same domain and protocol as the application
@@ -71,7 +71,7 @@ policy apply in addition to this and may further restrict whether the template i
 loaded.  This means that without the right CORS policy, loading templates from a different domain
 won&#39;t work on all browsers.  Also, loading templates from <code>file://</code> URL does not work on some
 browsers.</p>
-<h4 id="this-feels-like-too-much-overhead-for-the-developer-" id="description_strict-contextual-escaping_this-feels-like-too-much-overhead-for-the-developer">This feels like too much overhead for the developer?</h4>
+<h4 id="description_strict-contextual-escaping_this-feels-like-too-much-overhead-for-the-developer">This feels like too much overhead for the developer?</h4>
 <p>It&#39;s important to remember that SCE only applies to interpolation expressions.</p>
 <p>If your expressions are constant literals, they&#39;re automatically trusted and you don&#39;t need to
 call <code>$sce.trustAs</code> on them.  (e.g.
@@ -86,7 +86,7 @@ served document.  You can change these by setting your own custom <a href="api/n
 application that&#39;s secure and can be audited to verify that with much more ease than bolting
 security onto an application later.</p>
 <p><a name="contexts"></a></p>
-<h4 id="what-trusted-context-types-are-supported-" id="description_strict-contextual-escaping_what-trusted-context-types-are-supported">What trusted context types are supported?</h4>
+<h4 id="description_strict-contextual-escaping_what-trusted-context-types-are-supported">What trusted context types are supported?</h4>
 <table>
 <thead>
 <tr>
@@ -117,7 +117,7 @@ security onto an application later.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="format-of-items-in-a-href-api-ng-scedelegateprovider-methods_resourceurlwhitelist-code-resourceurlwhitelist-code-a-a-href-api-ng-scedelegateprovider-methods_resourceurlblacklist-code-blacklist-code-a-a-name-resourceurlpatternitem-a-" id="description_strict-contextual-escaping_format-of-items-in">Format of items in <a href="api/ng.$sceDelegateProvider#methods_resourceurlwhitelist"><code>resourceUrlWhitelist</code></a>/<a href="api/ng.$sceDelegateProvider#methods_resourceurlblacklist"><code>Blacklist</code></a> <a name="resourceUrlPatternItem"></a></h4>
+<h4 id="description_strict-contextual-escaping_format-of-items-in">Format of items in <a href="api/ng.$sceDelegateProvider#methods_resourceurlwhitelist"><code>resourceUrlWhitelist</code></a>/<a href="api/ng.$sceDelegateProvider#methods_resourceurlblacklist"><code>Blacklist</code></a> <a name="resourceUrlPatternItem"></a></h4>
 <p> Each element in these arrays must be one of the following:</p>
 <ul>
 <li><strong>&#39;self&#39;</strong><ul>
@@ -167,7 +167,7 @@ Closure library&#39;s <a href="http://docs.closure-library.googlecode.com/git/cl
 </li>
 </ul>
 <p>Refer <a href="api/ng.$sceDelegateProvider"><code>$sceDelegateProvider</code></a> for an example.</p>
-<h4 id="show-me-an-example-using-sce-" id="description_strict-contextual-escaping_show-me-an-example-using-sce">Show me an example using SCE.</h4>
+<h4 id="description_strict-contextual-escaping_show-me-an-example-using-sce">Show me an example using SCE.</h4>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
 <ul class="methods"><li><h3 id="methods_gettrusted">getTrusted(type, maybeTrusted)</h3>
@@ -357,10 +357,10 @@ have to do it at module config time on <a href="api/ng.$sceProvider"><code>$sceP
 </div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="ng-sce-page"><h4 id="example_source">Source</h4>
-<div source-edit="mySceApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-150" source-edit-css="" source-edit-js="script.js-151" source-edit-json="test_data.json" source-edit-unit="" source-edit-scenario="scenario.js-152"></div>
+<div source-edit="mySceApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-147" source-edit-css="" source-edit-js="script.js-148" source-edit-json="test_data.json" source-edit-unit="" source-edit-scenario="scenario.js-149"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-150" ng-html-wrap="mySceApp angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-150">
+<pre class="prettyprint linenums" ng-set-text="index.html-147" ng-html-wrap="mySceApp angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-147">
   <div ng-controller="myAppController as myCtrl">
     <i ng-bind-html="myCtrl.explicitlyTrustedHtml" id="explicitlyTrustedHtml"></i><br><br>
     <b>User comments</b><br>
@@ -378,8 +378,8 @@ have to do it at module config time on <a href="api/ng.$sceProvider"><code>$sceP
 </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-151"></pre>
-<script type="text/ng-template" id="script.js-151">
+<pre class="prettyprint linenums" ng-set-text="script.js-148"></pre>
+<script type="text/ng-template" id="script.js-148">
   var mySceApp = angular.module('mySceApp', ['ngSanitize']);
 
   mySceApp.controller("myAppController", function myAppController($http, $templateCache, $sce) {
@@ -408,8 +408,8 @@ have to do it at module config time on <a href="api/ng.$sceProvider"><code>$sceP
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-152"></pre>
-<script type="text/ng-template" id="scenario.js-152">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-149"></pre>
+<script type="text/ng-template" id="scenario.js-149">
   describe('SCE doc demo', function() {
     it('should sanitize untrusted values', function() {
       expect(element('.htmlComment').html()).toBe('<span>Is <i>anyone</i> reading this?</span>');
@@ -423,8 +423,8 @@ have to do it at module config time on <a href="api/ng.$sceProvider"><code>$sceP
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="mySceApp" ng-set-html="index.html-150" ng-eval-javascript="script.js-151"></div>
-<h4 id="can-i-disable-sce-completely-" id="example_can-i-disable-sce-completely">Can I disable SCE completely?</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="mySceApp" ng-set-html="index.html-147" ng-eval-javascript="script.js-148"></div>
+<h4 id="example_can-i-disable-sce-completely">Can I disable SCE completely?</h4>
 <p>Yes, you can.  However, this is strongly discouraged.  SCE gives you a lot of security benefits
 for little coding overhead.  It will be much harder to take an SCE disabled application and
 either secure it on your own or enable SCE at a later stage.  It might make sense to disable SCE
