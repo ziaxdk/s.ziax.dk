@@ -33,7 +33,7 @@ app.configure('development', function () {
 });
 
 app.configure('production', function () {
-  var Scraper = require('./server/server-scrape-dev.js');
+  var Scraper = require('./server/server-scrape-prod.js');
   console.log("configure production");
   Config.me = 'http://dash.ziax.dk/';
   es = elasticsearch.createClient(Config.es.production);

@@ -12,7 +12,9 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', f
      if (/^https?\:\/\//.test(n)) {
       Delayer.run(function () {
         $http.get('/api/scrape', { params: { q: n } }).success(function (data) {
-          _t.form.content = data.content;
+          _t.form.url = _t.form.header;
+          _t.form.header = data.title1 || data.title2;
+          _t.form.content = data.desc1 || data.desc2;
         });
       });
      }
@@ -25,10 +27,12 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', f
     var obj = {
       header: _t.form.header,
       content: _t.form.content,
+      url: _t.form.url,
       tags: _t.form.tags ? _t.form.tags.split(' ') : [],
       createdutc: moment.utc().format()
     };
 
-    RestDrive.save(obj);
+    console.log(obj);
+    // RestDrive.save(obj);
   };
 }]);
