@@ -15,19 +15,14 @@
 
   },
 
-
   "mappings": {
-    "drive": {
+    "article": {
       "dynamic": "strict",
-
       "properties": {
         "header": {
           "type": "string"
         },
         "content": {
-          "type": "string"
-        },
-        "url": {
           "type": "string"
         },
         "tags": {
@@ -39,6 +34,98 @@
         "clicks": {
           "type": "integer"
         },
+        "ip": {
+          "type": "ip"
+          },
+        "onlyAuth": {
+          "type": "boolean"
+        }
+      }
+    },
+    "link": {
+      "dynamic": "strict",
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "url": {
+          "type": "string"
+        },
+        "clicks": {
+          "type": "integer"
+        },
+        "ip": {
+          "type": "ip"
+          },
+        "onlyAuth": {
+          "type": "boolean"
+        }
+      }
+    },
+    "place": {
+      "dynamic": "strict",
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "location": {
+          "type": "geo_point"
+        },
+        "clicks": {
+          "type": "integer"
+        },
+        "ip": {
+          "type": "ip"
+          },
+        "onlyAuth": {
+          "type": "boolean"
+        }
+      }
+    },
+
+    "drive": {
+      "dynamic": "strict",
+
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "clicks": {
+          "type": "integer"
+        },
+        "geo": {
+          "type": "geo_point"
+        },
+        "ip": {
+          "type": "ip"
+          },
         "onlyAuth": {
           "type": "boolean"
         }

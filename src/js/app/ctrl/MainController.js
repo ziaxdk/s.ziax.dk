@@ -16,6 +16,10 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
     $location.path('/new');
   };
 
+  _t.newLogin = function () {
+    _t.iframeUrl = "/api/auth/google"
+  };
+
   RestDrive.query(null, function (res) {
     _t.hits = res.count;
   });

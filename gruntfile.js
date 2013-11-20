@@ -213,8 +213,8 @@ module.exports = function (grunt) {
         config: Config.es.development,
         tasks: [
           { 'indices.deleteIndex': { _index: 'ziax'} },
-          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
-          { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] }
+          // { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
         ]
       },
       azure: {
@@ -222,8 +222,8 @@ module.exports = function (grunt) {
         config: Config.es.deploy,
         tasks: [
           { 'indices.deleteIndex': { _index: 'ziax'} },
-          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] }
-          // { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
+          { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
         ]
       }
     }

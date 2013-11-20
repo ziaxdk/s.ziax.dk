@@ -1,5 +1,5 @@
 // Config
-module.config(['$routeProvider', function ($routeProvider) {
+module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, $sceDelegateProvider) {
   $routeProvider.when('/', {
       templateUrl: "/html/_index.html",
       resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
@@ -24,4 +24,7 @@ module.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.otherwise({
       redirectTo: "/"
   });
+
+  $sceDelegateProvider.resourceUrlWhitelist([ 'self', 'http://www.ziax.dk/*']);
+
 }]);

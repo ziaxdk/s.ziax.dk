@@ -3,37 +3,64 @@
   <form role="form" ng-submit="NewCtrl.submit()" novalidate name="theForm">
     <div validation-summary></div>
     <div class="form-group" ng-class="{'has-error': theForm.header.$invalid }">
-      <label for="idHeader">Header</label>
-      <input type="text" name="header" class="form-control" id="idHeader" placeholder="Enter header..." ng-model="NewCtrl.form.header" ng-change="NewCtrl.findType(this)" required>
+      <label for="idHeader" ng-bind="NewCtrl.label('Header', 'Url')"></label>
+      <input type="text" name="header" class="form-control" id="idHeader" placeholder="Enter header..." ng-model="NewCtrl.form.header" required>
     </div>
 
     <div class="form-group" ng-show="NewCtrl.form.url">
-      <label for="idUrl">Url</label>
+      <label for="idUrl" ng-bind="NewCtrl.label('Url', 'Header')"></label>
       <input type="text" name="url" class="form-control" id="idUrl" ng-model="NewCtrl.form.url">
     </div>
 
-    <div class="form-group" ng-class="{'has-error': theForm.description.$invalid }">
-      <label for="idContent">Content</label>
-      <textarea name="description" class="form-control" id="idContent" placeholder="Enter content..." style="min-height: 200px" ng-model="NewCtrl.form.content" required></textarea>
+    <div class="row">
+      <div ng-class="{'col-md-12': NewCtrl.form.type != 'place', 'col-md-9': NewCtrl.form.type == 'place'}">
+        <div class="form-group" ng-class="{'has-error': theForm.description.$invalid }">
+          <label for="idContent">Content</label>
+          <textarea name="description" class="form-control" id="idContent" placeholder="Enter content..." style="min-height: 200px" ng-model="NewCtrl.form.content" required></textarea>
+        </div>
+      </div>
+      <div class="col-md-3" ng-show="NewCtrl.form.type == 'place'">
+        <div class="form-group">
+          <label for="idMaps">Map</label>
+          <div style="border: 1px solid red; height: 200px">
+
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="form-group">
       <label for="idTags">Tags</label>
       <input type="text" name="tags" class="form-control" id="idTags" placeholder="Enter tags..." ng-model="NewCtrl.form.tags">
     </div>
-    <div class="checkbox pull-right" ng-show="MainCtrl.me.isAuth">
-      <label>
-        <input type="checkbox" name="authOnly" ng-model="NewCtrl.form.onlyAuth"> Auth only?
-      </label>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid||!MainCtrl.me.isAuth">Save <span class="glyphicon glyphicon-plus"></span></button>
-    </div>
-    <div class="panel panel-danger zddanger" ng-show="theForm.$valid&&!MainCtrl.me.isAuth" style="position: absolute">
-      <div class="panel-heading">
-        <h3 class="panel-title">Message for you, sir!</h3>
+
+    <div class="row">
+      <div class="col-md-9">
+        <div class="form-group">
+          <label for="idType">Type</label>
+          <span class="badge">{{NewCtrl.form.type}}</span>
+        </div>
       </div>
-      <div class="panel-body">You should authorize yourself</div>
+      <div class="col-md-3">
+        <div class="checkbox pull-right">
+          <label>
+            <input type="checkbox" name="authOnly" ng-model="NewCtrl.form.onlyAuth"> Auth only?
+          </label>
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-11">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid||!NewCtrl.form.code">Save <span class="glyphicon glyphicon-plus"></span></button>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <input type="password" name="code" class="form-control" id="idCode" ng-model="NewCtrl.form.code" required>
+      </div>
+    </div>
+
     <p>Preview:</p>
     <div class="panel panel-default">
       <div class="panel-body" style="min-height: 200px" ng-bind-html="NewCtrl.form.content|textile"></div>

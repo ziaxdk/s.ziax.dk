@@ -25,6 +25,12 @@ module.exports = function (esClient, app) {
     // return ")]}',\n" + JSON.stringify(val);
   }
 
+  self.validateCode = function (code) {
+    var d = new Date();
+    var val = d.getDate() + '' + d.getDate();
+    return val === code;
+  }
+
   self.escallback = function (req, res) {
     return function (err, data) {
       if (err) {
