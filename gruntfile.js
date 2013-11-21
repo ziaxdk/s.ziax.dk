@@ -62,6 +62,7 @@ module.exports = function (grunt) {
             'build/src/js/lib/angular-animate.min.js',
             'build/src/js/lib/textile.min.js',
             'build/src/js/lib/moment.min.js',
+            'build/src/js/lib/leaflet.min.js',
             'build/src/js/ziaxdash.min.js'
           ]
         }
@@ -70,6 +71,7 @@ module.exports = function (grunt) {
         files: {
           'build/src/css/ziaxdash.all.min.css': [
             'build/src/css/animate.min.css',
+            'build/src/css/leaflet.min.css',
             'build/src/css/ziaxdash.min.css'
             // 'build/src/css/ng-trans.min.css'
           ]

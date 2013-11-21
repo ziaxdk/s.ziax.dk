@@ -28,21 +28,29 @@ module.exports = function (esClient, app, core) {
       res.send("err");
       return;
     }
+    save = {
+      header: src.header,
+      content: src.content,
+      tags: src.tags,
+      createdutc: new Date(),
+      clicks: 0,
+      ip: ip,
+      onlyAuth: src.onlyAuth
+
+    };
     switch(src.type) {
-      case 'article':
-        save = {
-          header: src.header,
-          content: src.content,
-          tags: src.tags,
-          createdutc: new Date(),
-          clicks: 0,
-          ip: ip,
-          onlyAuth: src.onlyAuth
-        };
+      case 'link': {
+        save.url = src.url;
         break;
+      }
+      case 'place': {
+        var latlon = src.location.split(',');
+        save.location = { lat: latlon[0].trim(), lon: latlon[1].trim() };
+      }
     }
 
-
+    // console.log(save);
+    // res.send("ok");
     esClient.index({ _index: core.INDEX, _type: src.type }, save, core.escallback(req, res));
   });
 };

@@ -7,7 +7,9 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
       controllerAs: "IndexCtrl"
   });
   $routeProvider.when('/new', {
-      templateUrl: "/html/_new.html"
+      templateUrl: "/html/_new.html",
+      controller: "NewController",
+      controllerAs: "NewCtrl"
   });
   $routeProvider.when('/show/:id', {
       templateUrl: "/html/_show.html",
@@ -26,5 +28,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
   });
 
   $sceDelegateProvider.resourceUrlWhitelist([ 'self', 'http://www.ziax.dk/*']);
+
+  L.Icon.Default.imagePath = "/css/images/"
 
 }]);

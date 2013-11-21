@@ -9,7 +9,9 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
       controllerAs: "IndexCtrl"
   });
   $routeProvider.when('/new', {
-      templateUrl: "/html/_new.html"
+      templateUrl: "/html/_new.html",
+      controller: "NewController",
+      controllerAs: "NewCtrl"
   });
   $routeProvider.when('/show/:id', {
       templateUrl: "/html/_show.html",
@@ -28,6 +30,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
   });
 
   $sceDelegateProvider.resourceUrlWhitelist([ 'self', 'http://www.ziax.dk/*']);
+
+  L.Icon.Default.imagePath = "/css/images/"
 
 }]);
 
@@ -81,38 +85,47 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
 }]);
 
 module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', function ($scope, $http, RestDrive, Delayer) {
-  var _t = this, Delayer = new Delayer(2000);
+  var _t = this, delayScraper = new Delayer(2000);
   _t.form = {
     onlyAuth: false,
     type: 'article'
   };
-  _t.label = function (val1, val2) {
-    return _t.form.type === 'link' ? val2:val1;
-  }
 
-  $scope.$watch(function () { return _t.form.header; }, function (n, o) {
-    if (n === o) return;
-      Delayer.run(function () {
-        if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(n)) {
-          _t.form.type = 'place';
-          _t.form.location = { lat: 55, lon: 12 };
-        }
-        else if (/^https?\:\/\//.test(n)) {
-          $http.get('/api/scrape', { params: { q: encodeURIComponent(n) } }).success(function (data) {
-            // var link = _t.form.header;
-            // _t.form.header = data.title1 || data.title2;
-            _t.form.url = data.title1 || data.title2; //link;
-            _t.form.content = '"' + link + '":' + link + '\n' + data.desc1 || data.desc2;
-            _t.form.type = 'link';
-          });
-        }
-        else {
-          _t.form.url = null;
-          _t.form.type = 'article';
-        }
+  var lisLink, lisPlace, lisArticle;
+
+  var resetListeners = function () {
+    if (lisLink) lisLink();
+    if (lisPlace) lisPlace();
+    if (lisArticle) lisArticle();
+  };
+
+
+  $scope.$watch(function () { return _t.form.q; }, function (q) {
+    if (!q) return;
+    resetListeners();
+    if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(q)) {
+      _t.form.type = 'place';
+      _t.form.header = null;
+      lisPlace = $scope.$watch(function () { return _t.form.q; }, function (n) { _t.form.location = n; });
+    }
+    else if (/^https?\:\/\//.test(q)) {
+      _t.form.type = 'link';
+      lisLink = $scope.$watch(function () { return _t.form.q; }, function (n) { _t.form.url = n; });
+      delayScraper.run(function () {
+        $http.get('/api/scrape', { params: { q: encodeURIComponent(q) } }).success(function (data) {
+          _t.form.header = data.title1 || data.title2; //link;
+          _t.form.content = '"' + _t.form.url + '":' + _t.form.url + '\n\n' + data.desc1 || data.desc2;
+        });
       });
+
+    }
+    else {
+      _t.form.type = 'article';
+      lisArticle = $scope.$watch(function () { return _t.form.q; }, function (n) { _t.form.header = n; });
+    }
   });
-// "Link to Wikipedia":http://www.wikipedia.org
+
+  // "Link to Wikipedia":http://www.wikipedia.org
   _t.submit = function () {
     // console.log(_t.form);
     // return;
@@ -124,7 +137,7 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', f
       type: _t.form.type,
       location: _t.form.location,
       tags: _t.form.tags ? _t.form.tags.split(' ') : [],
-
+      onlyAuth: _t.form.onlyAuth,
       code: _t.form.code
     };
 
@@ -196,6 +209,38 @@ module.directive('ngFocusBlurClass', [function () {
       element.removeClass(attrs.ngFocusBlurClass || 'ngFocus');
     })
   };
+}]);
+
+module.directive('dashLeaflet', [function () {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var map = L.map(element[0], {
+        center: [0, 0],
+        zoom: 12
+      });
+      L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{
+        attribution:''
+      }).addTo(map);
+      var layer = L.featureGroup().addTo(map);
+
+
+      scope.$watch(function () {
+        return scope.$eval(attrs.dashLeaflet);
+      }, function (value) {
+        if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
+          var latlon = value.split(',');
+          layer.clearLayers();
+          L.marker(latlon).addTo(layer);
+          map.setView(latlon);
+        }
+      });
+
+
+
+
+    }
+  }; 
 }]);
 
 module.directive('dashAheadInput', [function () {
