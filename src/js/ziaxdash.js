@@ -13,9 +13,9 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
       controller: "NewController",
       controllerAs: "NewCtrl"
   });
-  $routeProvider.when('/show/:id', {
+  $routeProvider.when('/show/:type/:id', {
       templateUrl: "/html/_show.html",
-      resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({id: $route.current.params.id }); }] },
+      resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
       controller: "ShowController",
       controllerAs: "ShowCtrl"
   });
@@ -151,13 +151,17 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
   var _t = this, facetSearch = Delayer(500), first = true;
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
-  _t.show = function (id) {
-    $location.path('/show/' + encodeURIComponent(id));
+  _t.show = function (hit) {
+    // $location.path('/show/' + encodeURIComponent(id));
+    $location.path('/show/' + encodeURIComponent(hit.type) + '/' + encodeURIComponent(hit.id));
   };
-  _t.types = [ {term: 'article', selected: true}, {term: 'link', selected: true}, {term: 'place', selected: true} ];
+
   _t.allTypes = function () {
     setSelected(_t.types, true);
     doSearch();
+  };
+  _t.star = function (hit) {
+    console.log(hit);
   };
 
   // $timeout(function () {
@@ -180,8 +184,8 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
     doSearch();
   };
 
-  _t.facet = function (me) {
-    me.hit.selected = !me.hit.selected;
+  _t.facet = function (hit) {
+    hit.selected = !hit.selected;
     doSearch();
   };
 
@@ -192,10 +196,14 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
         if (val.selected) tags.push(val.term);
       });
       var types = [];
-      angular.forEach(_t.types, function (val) {
-        if (val.selected) types.push(val.term);
+      angular.forEach(_t.result.facets.types.terms, function (val) {
+        if (!val.selected) types.push(val.term);
       });
-      RestXQ.save({ q: $route.current.params.q, facets: { tags: tags }, types: types }).$promise.then(function(data) {
+      // console.log(types);
+      RestXQ.save({ 
+        q: $route.current.params.q, 
+        facets: { tags: tags }, types: types 
+      }).$promise.then(function(data) {
         _t.result.hits = data.hits;
       });
     });
@@ -211,6 +219,24 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
 module.controller('ShowController', ['Drive', '$http', function (Drive, $http) {
   this.Drive = Drive;
   // $http.put('/q', { id: Drive.id });
+}]);
+
+module.directive('dashFacet', ['$parse', function ($parse) {
+  return {
+    restrict: 'A',
+    replace: true,
+    // scope: {
+    //   list: '@'
+    // },
+    // template: '<ul class="list-group facets clearfix">' +
+    //     '<li ng-show="icon"><button class="btn btn-success" ng-click="ResultCtrl.allTypes()"><i class="{{icon}}"></i></button></li>' +
+    //     '<li ng-repeat="hit in list track by hit.term">' +
+    //       '<button class="btn" ng-class="{\'btn-default\': !hit.selected, \'btn-primary\': hit.selected}" ng-click="ResultCtrl.facet(hit)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>' +
+    //     '</li>' +
+    //   '</ul>',
+    link: function(scope, element, attrs) {
+    }
+  }; 
 }]);
 
 module.directive('ngFocusBlurClass', [function () {

@@ -8,6 +8,11 @@ module.exports = function (esClient, app, core) {
         }
       },
       facets: {
+        types: {
+          terms: {
+            field : "_type"
+          }
+        },
         tags: {
           terms: {
             field: "tags"
@@ -21,9 +26,9 @@ module.exports = function (esClient, app, core) {
   });
 
   app.post('/api/q', function (req, res) {
-    esClient.get({ _index: core.INDEX, _type: "drive", _id: req.body.id }, core.escallback(req, res));
-    esClient.update({ _index: core.INDEX, _type: "drive", _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) {
-      console.log (err ? err : data);
+    esClient.get({ _index: core.INDEX, _type: req.body.type, _id: req.body.id }, core.escallback(req, res));
+    esClient.update({ _index: core.INDEX, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) {
+      //console.log (err ? err : data);
     });
   });
 

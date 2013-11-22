@@ -11,9 +11,9 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
       controller: "NewController",
       controllerAs: "NewCtrl"
   });
-  $routeProvider.when('/show/:id', {
+  $routeProvider.when('/show/:type/:id', {
       templateUrl: "/html/_show.html",
-      resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({id: $route.current.params.id }); }] },
+      resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
       controller: "ShowController",
       controllerAs: "ShowCtrl"
   });
