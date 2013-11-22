@@ -9,9 +9,7 @@ module.exports = function (esClient, app, core) {
   //   }, core.escallback(req, res));
   // });
   app.get('/api/drive', function (req, res) {
-    esClient.count({_index: core.INDEX}, {
-      "term" : { "_type" : "drive" }
-    }, core.escallback(req,res));
+    esClient.count({ _index: 'ziax', _type: 'article,link,place' }, undefined, core.escallback(req,res));
   });
 
   // app.post('/api/drive', core.ensureAuthenticated, function (req, res) {

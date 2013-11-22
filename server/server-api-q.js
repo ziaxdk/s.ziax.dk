@@ -1,7 +1,7 @@
 module.exports = function (esClient, app, core) {
 
   app.get('/api/q', function (req, res) {
-    esClient.search({_index: core.INDEX}, {
+    esClient.search({ _index: core.INDEX, _type: 'article,link,place' }, {
       query : {
         term: {
           header: req.query.q

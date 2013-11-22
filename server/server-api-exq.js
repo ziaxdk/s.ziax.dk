@@ -29,6 +29,6 @@ module.exports = function (esClient, app, core) {
       });
     }
 
-    esClient.search({_index: core.INDEX}, xq, core.escallback(req, res));
+    esClient.search({ _index: core.INDEX, _type: req.body.types.join() }, xq, core.escallback(req, res));
   });
 };

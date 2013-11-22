@@ -1,6 +1,12 @@
 <div class="col-md-12">
   
-  
+  <ul class="list-group facets clearfix">
+    <li><button class="btn btn-success" ng-click="ResultCtrl.allTypes()"><i class="glyphicon glyphicon-ok"></i></button></li>
+    <li ng-repeat="hit in ResultCtrl.types track by hit.term">
+      <button class="btn" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-click="ResultCtrl.facet(this)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
+    </li>
+  </ul>
+
   <ul class="list-group facets clearfix">
     <li><button class="btn btn-danger" ng-click="ResultCtrl.facetClear()"><i class="glyphicon glyphicon-ban-circle"></i></button></li>
     <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms track by hit.term">
