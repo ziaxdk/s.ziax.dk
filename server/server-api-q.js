@@ -2,10 +2,26 @@ module.exports = function (esClient, app, core) {
 
   app.get('/api/q', function (req, res) {
     esClient.search({ _index: core.INDEX, _type: 'article,link,place' }, {
-      query : {
-        term: {
-          header: req.query.q
-        }
+      "query": {
+           "function_score": {
+               "query": {
+                   "query_string": {
+                      "fields": [ "header^4", "content^2" ],
+                      "query": req.query.q
+                   }
+               },
+               "functions": [
+                   {
+                      "boost_factor": "1000",
+                      "filter": {
+                          "term": {
+                              "star": true
+                              
+                          }
+                      }
+                  }
+               ]
+          }
       },
       facets: {
         types: {
@@ -21,7 +37,7 @@ module.exports = function (esClient, app, core) {
       }
     }, core.escallback(req, res));
     esClient.index({ _index: core.INDEX, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) {
-      console.log('his', err, data);
+      // console.log('his', err, data);
     });
   });
 
@@ -34,3 +50,27 @@ module.exports = function (esClient, app, core) {
 
 
 };
+
+// {
+//     "query": {
+//          "function_score": {
+//              "query": {
+//                  "query_string": {
+//                     "fields": [ "header", "content" ],
+//                     "query": "node"
+//                  }
+//              },
+//              "functions": [
+//                  {
+//                     "boost_factor": "1000",
+//                     "filter": {
+//                         "term": {
+//                             "star": true
+                            
+//                         }
+//                     }
+//                 }
+//              ]
+//         }
+//     }
+// }

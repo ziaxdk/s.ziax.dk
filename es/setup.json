@@ -36,8 +36,11 @@
         },
         "ip": {
           "type": "ip"
-          },
+        },
         "onlyAuth": {
+          "type": "boolean"
+        },
+        "star": {
           "type": "boolean"
         }
       }
@@ -65,8 +68,11 @@
         },
         "ip": {
           "type": "ip"
-          },
+        },
         "onlyAuth": {
+          "type": "boolean"
+        },
+        "star": {
           "type": "boolean"
         }
       }
@@ -94,8 +100,11 @@
         },
         "ip": {
           "type": "ip"
-          },
+        },
         "onlyAuth": {
+          "type": "boolean"
+        },
+        "star": {
           "type": "boolean"
         }
       }

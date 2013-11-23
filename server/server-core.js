@@ -58,6 +58,13 @@ module.exports = function (esClient, app) {
     res.send(self.ngSafe(req.user));
   });
 
+  app.post('/api/star', function (req, res) {
+    esClient.update({ _index: self.INDEX, _type: req.body.type, _id: req.body.id }, { doc: { "star" : req.body.val } }, function (err, data) {
+      console.log (err ? err : data);
+    });
+    res.send(self.ngSafe("ok"));
+  });
+
 
 
   // var parent = function () { };

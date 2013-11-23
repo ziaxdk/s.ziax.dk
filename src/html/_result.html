@@ -18,9 +18,11 @@
     <div class="list-group-item hit" ng-repeat="hit in ResultCtrl.result.hits.hits track by hit.id">
       <div class="pull-right">
         <small>{{hit.source.createdutc|date:'medium'}} ({{hit.source.clicks}})</small>
-        <i class="glyphicon glyphicon-star-empty" ng-click="ResultCtrl.star(hit)"></i>
+        <a href="javascript:;" ng-click="ResultCtrl.star(hit)">
+          <i class="glyphicon" ng-class="{'glyphicon-star-empty': !hit.source.star, 'glyphicon-star': hit.source.star}"></i>
+        </a>
       </div>
-      <a ng-click="ResultCtrl.show(hit)">
+      <a href="javascript:;" ng-click="ResultCtrl.show(hit)">
         <h4 class="list-group-item-heading">{{hit.source.header}}</h4>
         <p class="list-group-item-text">{{hit.source.content}}</p>
       </a>

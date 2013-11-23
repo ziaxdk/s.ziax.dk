@@ -148,7 +148,11 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', f
 
 module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
   function (Drives, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
-  var _t = this, facetSearch = Delayer(500), first = true;
+  var _t = this, 
+      facetSearch = Delayer(500), 
+      first = true,
+      starDelayer = Delayer(100)
+      ;
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
   _t.show = function (hit) {
@@ -161,7 +165,10 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
     doSearch();
   };
   _t.star = function (hit) {
-    console.log(hit);
+    hit.source.star = !hit.source.star;
+    starDelayer.run(function () {
+      $http.post('/api/star', { id: hit.id, val: hit.source.star, type: hit.type });
+    });
   };
 
   // $timeout(function () {
@@ -200,10 +207,7 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
         if (!val.selected) types.push(val.term);
       });
       // console.log(types);
-      RestXQ.save({ 
-        q: $route.current.params.q, 
-        facets: { tags: tags }, types: types 
-      }).$promise.then(function(data) {
+      RestXQ.save({ q: $route.current.params.q, facets: { tags: tags }, types: types }).$promise.then(function(data) {
         _t.result.hits = data.hits;
       });
     });
