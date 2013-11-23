@@ -1,4 +1,4 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ngSanitize/sanitize.js#L38" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ngSanitize/sanitize.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$sanitize</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.2/src/ngSanitize/sanitize.js#L38" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ngSanitize/sanitize.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$sanitize</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ngSanitize</code>
 </span>
 </div>
@@ -17,10 +17,10 @@ browser, won&#39;t make it through the sanitizer.</p>
 </div></td></tr></table></div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="ngsanitize-sanitize-page"><h4 id="example_source">Source</h4>
-<div source-edit="ngSanitize" source-edit-deps="angular.js script.js" source-edit-html="index.html-168" source-edit-css="" source-edit-js="script.js-167" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-169"></div>
+<div source-edit="ngSanitize" source-edit-deps="angular.js script.js" source-edit-html="index.html-169" source-edit-css="" source-edit-js="script.js-168" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-170"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-168" ng-html-wrap="ngSanitize angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-168">
+<pre class="prettyprint linenums" ng-set-text="index.html-169" ng-html-wrap="ngSanitize angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-169">
   
   <div ng-controller="Ctrl">
      Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
@@ -57,8 +57,8 @@ browser, won&#39;t make it through the sanitizer.</p>
 </script>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-167"></pre>
-<script type="text/ng-template" id="script.js-167">
+<pre class="prettyprint linenums" ng-set-text="script.js-168"></pre>
+<script type="text/ng-template" id="script.js-168">
     function Ctrl($scope, $sce) {
       $scope.snippet =
         '<p style="color:blue">an html\n' +
@@ -71,8 +71,8 @@ browser, won&#39;t make it through the sanitizer.</p>
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-169"></pre>
-<script type="text/ng-template" id="scenario.js-169">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-170"></pre>
+<script type="text/ng-template" id="scenario.js-170">
   it('should sanitize the html snippet by default', function() {
     expect(using('#bind-html-with-sanitize').element('div').html()).
       toBe('<p>an html\n<em>click here</em>\nsnippet</p>');
@@ -103,6 +103,6 @@ browser, won&#39;t make it through the sanitizer.</p>
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="ngSanitize" ng-set-html="index.html-168" ng-eval-javascript="script.js-167"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="ngSanitize" ng-set-html="index.html-169" ng-eval-javascript="script.js-168"></div>
 </div></div>
 </div>

@@ -1,5 +1,5 @@
 <a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/migration.ngdoc" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1 id="migrating-from-10-to-12">Migrating from 1.0 to 1.2</h1>
-<div class="migrating-from-10-to-12"><div class="migrating-from-1-0-to-1-2-page"><p>AngularJS version 1.2 introduces several breaking changes that will may require changes to your
+<div class="migrating-from-10-to-12"><div class="migrating-from-1-0-to-1-2-page"><p>AngularJS version 1.2 introduces several breaking changes that may require changes to your
 application&#39;s source code.</p>
 <p>Although we try to avoid breaking changes, there are some cases where it is unavoidable.
 AngularJS 1.2 has undergone a thourough security review to make applications safer by default,
@@ -29,7 +29,7 @@ below should still apply, but you may want to consult the
   <li><a href="guide/migration#resource-methods-return-the-promise">Resource methods return the promise</a></li>
   <li><a href="guide/migration#resource-promises-are-resolved-with-the-resource-instance">Resource promises are resolved with the resource instance</a></li>
   <li><a href="guide/migration#$locationsearch-supports-multiple-keys">$location.search supports multiple keys</a></li>
-  <li><a href="guide/migration#nghtmlbindunsafe-has-been-removed-and-replaced-by-nghtmlbind">ngHtmlBindUnsafe has been removed and replaced by ngHtmlBind</a></li>
+  <li><a href="guide/migration#ngbindhtmlunsafe-has-been-removed-and-replaced-by-ngbindhtml">ngBindHtmlUnsafe has been removed and replaced by ngBindHtml</a></li>
   <li><a href="guide/migration#form-names-that-are-expressions-are-evaluated">Form names that are expressions are evaluated</a></li>
   <li><a href="guide/migration#hasownproperty-disallowed-as-an-input-name">hasOwnProperty disallowed as an input name</a></li>
   <li><a href="guide/migration#directives-order-of-postlink-functions-reversed">Directives: Order of postLink functions reversed</a></li>
@@ -39,7 +39,7 @@ below should still apply, but you may want to consult the
   <li><a href="guide/migration#urls-are-now-sanitized-against-a-whitelist">URLs are now sanitized against a whitelist</a></li>
   <li><a href="guide/migration#isolate-scope-only-exposed-to-directives-with-property">Isolate scope only exposed to directives with <code>scope</code> property</a></li>
   <li><a href="guide/migration#change-to-interpolation-priority">Change to interpolation priority</a></li>
-  <li><a href="guide/migration#underscore-prefixed/suffixed-prorperties-are-non-bindable">Underscore-prefixed/suffixed prorperties are non-bindable</a></li>
+  <li><a href="guide/migration#underscore-prefixed/suffixed-properties-are-non-bindable">Underscore-prefixed/suffixed properties are non-bindable</a></li>
   <li><a href="guide/migration#you-cannot-bind-to-select[multiple]">You cannot bind to select[multiple]</a></li>
   <li><a href="guide/migration#uncommon-region-specific-local-files-were-removed-from-i18n">Uncommon region-specific local files were removed from i18n</a></li>
 </ul>
@@ -217,9 +217,9 @@ same value provided that the values are stored in an array.</p>
 should be fixed, or a simple serialization of the array should be done on the client before
 passing it to <code>$location</code>.</p>
 <p>See <a href="https://github.com/angular/angular.js/commit/807394095b991357225a03d5fed81fea5c9a1abe">80739409</a>.</p>
-<h3 id="nghtmlbindunsafe-has-been-removed-and-replaced-by-nghtmlbind">ngHtmlBindUnsafe has been removed and replaced by ngHtmlBind</h3>
-<p><code>ngHtmlBind</code> which has been moved from <code>ngSanitize</code> module to the core <code>ng</code> module.</p>
-<p><code>ngBindHtml</code> provides <code>ngHtmlBindUnsafe</code> like
+<h3 id="ngbindhtmlunsafe-has-been-removed-and-replaced-by-ngbindhtml">ngBindHtmlUnsafe has been removed and replaced by ngBindHtml</h3>
+<p><code>ngBindHtml</code> which has been moved from <code>ngSanitize</code> module to the core <code>ng</code> module.</p>
+<p><code>ngBindHtml</code> provides <code>ngBindHtmlUnsafe</code> like
 behavior (evaluate an expression and innerHTML the result into the DOM) when bound to the result
 of <code>$sce.trustAsHtml(string)</code>. When bound to a plain string, the string is sanitized via
 <code>$sanitize</code> before being innerHTML&#39;d. If the <code>$sanitize</code> service isn&#39;t available (<code>ngSanitize</code>
@@ -387,7 +387,7 @@ binding is set up in the pre-linking phase.</p>
 <a href="https://github.com/angular/angular.js/issues/4525">#4525</a>,
 <a href="https://github.com/angular/angular.js/issues/4528">#4528</a>, and
 <a href="https://github.com/angular/angular.js/issues/4649">#4649</a></p>
-<h3 id="underscore-prefixed/suffixed-prorperties-are-non-bindable">Underscore-prefixed/suffixed prorperties are non-bindable</h3>
+<h3 id="underscore-prefixed/suffixed-properties-are-non-bindable">Underscore-prefixed/suffixed properties are non-bindable</h3>
 <p>This change introduces the notion of &quot;private&quot; properties (properties
 whose names begin and/or end with an underscore) on the scope chain.
 These properties will not be available to Angular expressions (i.e. {{

@@ -1,4 +1,4 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ng/directive/ngClass.js#L73" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngClass.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">ngClass</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.2/src/ng/directive/ngClass.js#L65" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngClass.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">ngClass</code>
 <div><span class="hint">directive in module <code ng:non-bindable="">ng</code>
 </span>
 </div>
@@ -28,10 +28,10 @@ element.</p>
 <h2 id="example">Example</h2>
 <div class="example"><div class="ng-directive-page ng-directive-ngclass-page"><p>Example that demonstrates basic bindings via ngClass directive.
 <h4 id="example_source">Source</h4>
-<div source-edit="" source-edit-deps="angular.js" source-edit-html="index.html-62" source-edit-css="style.css-63" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-64"></div>
+<div source-edit="" source-edit-deps="angular.js" source-edit-html="index.html-66" source-edit-css="style.css-67" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-68"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-62" ng-html-wrap=" angular.js"></pre>
-<script type="text/ng-template" id="index.html-62">
+<pre class="prettyprint linenums" ng-set-text="index.html-66" ng-html-wrap=" angular.js"></pre>
+<script type="text/ng-template" id="index.html-66">
     <p ng-class="{strike: deleted, bold: important, red: error}">Map Syntax Example</p>
     <input type="checkbox" ng-model="deleted"> deleted (apply "strike" class)<br>
     <input type="checkbox" ng-model="important"> important (apply "bold" class)<br>
@@ -47,8 +47,8 @@ element.</p>
   </script>
 </div>
 <div class="tab-pane" title="style.css">
-<pre class="prettyprint linenums" ng-set-text="style.css-63"></pre>
-<style type="text/css" id="style.css-63">
+<pre class="prettyprint linenums" ng-set-text="style.css-67"></pre>
+<style type="text/css" id="style.css-67">
     .strike {
       text-decoration: line-through;
     }
@@ -61,8 +61,8 @@ element.</p>
   </style>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-64"></pre>
-<script type="text/ng-template" id="scenario.js-64">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-68"></pre>
+<script type="text/ng-template" id="scenario.js-68">
     it('should let you toggle the class', function() {
 
       expect(element('.doc-example-live p:first').prop('className')).not().toMatch(/bold/);
@@ -91,14 +91,14 @@ element.</p>
   </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-62" ng-eval-javascript=""></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-66" ng-eval-javascript=""></div>
 <h4 id="example_animations">Animations</h4>
 <p>The example below demonstrates how to perform animations using ngClass.</p>
 <h4 id="example_source">Source</h4>
-<div source-edit="" source-edit-deps="angular.js angular-animate.js" source-edit-html="index.html-65" source-edit-css="style.css-66" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-67"></div>
+<div source-edit="" source-edit-deps="angular.js angular-animate.js" source-edit-html="index.html-69" source-edit-css="style.css-70" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-71"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-65" ng-html-wrap=" angular.js angular-animate.js"></pre>
-<script type="text/ng-template" id="index.html-65">
+<pre class="prettyprint linenums" ng-set-text="index.html-69" ng-html-wrap=" angular.js angular-animate.js"></pre>
+<script type="text/ng-template" id="index.html-69">
    <input type="button" value="set" ng-click="myVar='my-class'">
    <input type="button" value="clear" ng-click="myVar=''">
    <br>
@@ -106,8 +106,8 @@ element.</p>
   </script>
 </div>
 <div class="tab-pane" title="style.css">
-<pre class="prettyprint linenums" ng-set-text="style.css-66"></pre>
-<style type="text/css" id="style.css-66">
+<pre class="prettyprint linenums" ng-set-text="style.css-70"></pre>
+<style type="text/css" id="style.css-70">
     .base-class {
       -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
       transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
@@ -120,8 +120,8 @@ element.</p>
   </style>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-67"></pre>
-<script type="text/ng-template" id="scenario.js-67">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-71"></pre>
+<script type="text/ng-template" id="scenario.js-71">
     it('should check ng-class', function() {
       expect(element('.doc-example-live span').prop('className')).not().
         toMatch(/my-class/);
@@ -139,7 +139,7 @@ element.</p>
   </script>
 </div>
 </div><div class="pull-right"> <button class="btn btn-primary" ng-click="animationsOff=true" ng-hide="animationsOff">Animations on</button> <button class="btn btn-primary disabled" ng-click="animationsOff=false" ng-show="animationsOff">Animations off</button></div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-class="{'animations-off':animationsOff == true}" ng-embed-app="" ng-set-html="index.html-65" ng-eval-javascript=""></div>
+<div class="well doc-example-live animate-container" ng-class="{'animations-off':animationsOff == true}" ng-embed-app="" ng-set-html="index.html-69" ng-eval-javascript=""></div>
 <h4 id="example_ngclass-and-pre-existing-css3-transitions/animations">ngClass and pre-existing CSS3 Transitions/Animations</h4>
 <p>The ngClass directive still supports CSS3 Transitions/Animations even if they do not follow the ngAnimate CSS naming structure.
 Upon animation ngAnimate will apply supplementary CSS classes to track the start and end of an animation, but this will not hinder

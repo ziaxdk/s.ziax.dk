@@ -1,4 +1,4 @@
-<a href="http://github.com/angular/angular.js/tree/v1.2.1/src/ng/anchorScroll.js#L3" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/anchorScroll.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$anchorScroll</code>
+<a href="http://github.com/angular/angular.js/tree/v1.2.2/src/ng/anchorScroll.js#L3" class="view-source btn btn-action"><i class="icon-zoom-in"> </i> View source</a><a href="http://github.com/angular/angular.js/edit/master/src/ng/anchorScroll.js" class="improve-docs btn btn-primary"><i class="icon-edit"> </i> Improve this doc</a><h1><code ng:non-bindable="">$anchorScroll</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ng</code>
 </span>
 </div>
@@ -23,10 +23,10 @@ This can be disabled by calling <code>$anchorScrollProvider.disableAutoScrolling
 </div>
 <h2 id="example">Example</h2>
 <div class="example"><div class="ng-anchorscroll-page"><h4 id="example_source">Source</h4>
-<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-1" source-edit-css="style.css" source-edit-js="script.js-2" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="" source-edit-deps="angular.js script.js" source-edit-html="index.html-2" source-edit-css="style.css" source-edit-js="script.js-3" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-1" ng-html-wrap=" angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-1">
+<pre class="prettyprint linenums" ng-set-text="index.html-2" ng-html-wrap=" angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-2">
   <div id="scrollArea" ng-controller="ScrollCtrl">
     <a ng-click="gotoBottom()">Go to bottom</a>
     <a id="bottom"></a> You're at the bottom!
@@ -48,8 +48,8 @@ This can be disabled by calling <code>$anchorScrollProvider.disableAutoScrolling
 </style>
 </div>
 <div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-2"></pre>
-<script type="text/ng-template" id="script.js-2">
+<pre class="prettyprint linenums" ng-set-text="script.js-3"></pre>
+<script type="text/ng-template" id="script.js-3">
   function ScrollCtrl($scope, $location, $anchorScroll) {
     $scope.gotoBottom = function (){
       // set the location.hash to the id of
@@ -63,6 +63,6 @@ This can be disabled by calling <code>$anchorScrollProvider.disableAutoScrolling
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-1" ng-eval-javascript="script.js-2"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="" ng-set-html="index.html-2" ng-eval-javascript="script.js-3"></div>
 </div></div>
 </div>

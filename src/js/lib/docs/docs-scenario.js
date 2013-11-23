@@ -244,6 +244,33 @@ describe("angular+jqlite", function() {
   
 });
 
+  describe("api/ng.$compile", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ng.$compile");
+    });
+  
+      it('should auto compile', function() {
+        expect(element('div[compile]').text()).toBe('Hello Angular');
+        input('html').enter('{{name}}!');
+        expect(element('div[compile]').text()).toBe('Angular!');
+      });
+
+});
+
+  describe("api/ng.$compileProvider", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ng.$compileProvider");
+    });
+  
+});
+
+  describe("api/ng.$compile.directive.Attributes", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ng.$compile.directive.Attributes");
+    });
+  
+});
+
   describe("api/ng.$controllerProvider", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/api/ng.$controllerProvider");
@@ -1433,13 +1460,6 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("api/ng.$httpBackend", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ng.$httpBackend");
-    });
-  
-});
-
   describe("api/ng.$http", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/api/ng.$http");
@@ -1467,6 +1487,13 @@ describe("angular+jqlite", function() {
       expect(binding('data')).toBe('Request failed');
     });
 
+});
+
+  describe("api/ng.$httpBackend", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ng.$httpBackend");
+    });
+  
 });
 
   describe("api/ng.$interpolateProvider", function() {
@@ -1578,13 +1605,6 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("api/ng.$timeout", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ng.$timeout");
-    });
-  
-});
-
   describe("api/ng.$sceDelegate", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/api/ng.$sceDelegate");
@@ -1624,6 +1644,13 @@ describe("angular+jqlite", function() {
 
 });
 
+  describe("api/ng.$timeout", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ng.$timeout");
+    });
+  
+});
+
   describe("api/ng.$window", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/api/ng.$window");
@@ -1635,27 +1662,6 @@ describe("angular+jqlite", function() {
      // element(':button').click();
     });
 
-});
-
-  describe("api/ngCookies", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngCookies");
-    });
-  
-});
-
-  describe("api/ngCookies.$cookies", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngCookies.$cookies");
-    });
-  
-});
-
-  describe("api/ngCookies.$cookieStore", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngCookies.$cookieStore");
-    });
-  
 });
 
   describe("api/ngAnimate", function() {
@@ -1679,29 +1685,135 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("api/ng.$compile", function() {
+  describe("api/ngCookies", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ng.$compile");
-    });
-  
-      it('should auto compile', function() {
-        expect(element('div[compile]').text()).toBe('Hello Angular');
-        input('html').enter('{{name}}!');
-        expect(element('div[compile]').text()).toBe('Angular!');
-      });
-
-});
-
-  describe("api/ng.$compileProvider", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ng.$compileProvider");
+      browser().navigateTo("index-nocache.html#!/api/ngCookies");
     });
   
 });
 
-  describe("api/ng.$compile.directive.Attributes", function() {
+  describe("api/ngCookies.$cookies", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ng.$compile.directive.Attributes");
+      browser().navigateTo("index-nocache.html#!/api/ngCookies.$cookies");
+    });
+  
+});
+
+  describe("api/ngCookies.$cookieStore", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngCookies.$cookieStore");
+    });
+  
+});
+
+  describe("api/angular.mock", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/angular.mock");
+    });
+  
+});
+
+  describe("api/ngMock.$exceptionHandlerProvider", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMock.$exceptionHandlerProvider");
+    });
+  
+});
+
+  describe("api/ngMock.$exceptionHandler", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMock.$exceptionHandler");
+    });
+  
+});
+
+  describe("api/ngMock.$log", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMock.$log");
+    });
+  
+});
+
+  describe("api/ngMock.$interval", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMock.$interval");
+    });
+  
+});
+
+  describe("api/angular.mock.TzDate", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/angular.mock.TzDate");
+    });
+  
+});
+
+  describe("api/angular.mock.dump", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/angular.mock.dump");
+    });
+  
+});
+
+  describe("api/ngMock.$httpBackend", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMock.$httpBackend");
+    });
+  
+});
+
+  describe("api/ngMock.$timeout", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMock.$timeout");
+    });
+  
+});
+
+  describe("api/ngMock", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMock");
+    });
+  
+});
+
+  describe("api/ngMockE2E", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMockE2E");
+    });
+  
+});
+
+  describe("api/ngMockE2E.$httpBackend", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngMockE2E.$httpBackend");
+    });
+  
+});
+
+  describe("api/angular.mock.module", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/angular.mock.module");
+    });
+  
+});
+
+  describe("api/angular.mock.inject", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/angular.mock.inject");
+    });
+  
+});
+
+  describe("api/ngResource", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngResource");
+    });
+  
+});
+
+  describe("api/ngResource.$resource", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ngResource.$resource");
     });
   
 });
@@ -1724,20 +1836,6 @@ describe("angular+jqlite", function() {
       expect(content).toMatch(/Book Id\: Scarlet/);
     });
 
-});
-
-  describe("api/ngResource", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngResource");
-    });
-  
-});
-
-  describe("api/ngResource.$resource", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngResource.$resource");
-    });
-  
 });
 
   describe("api/ngRoute", function() {
@@ -1903,6 +2001,52 @@ describe("angular+jqlite", function() {
   
 });
 
+  describe("api/ng", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/api/ng");
+    });
+  
+});
+
+  describe("cookbook/advancedform", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/cookbook/advancedform");
+    });
+  
+    it('should enable save button', function() {
+      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
+      input('form.name').enter('');
+      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
+      input('form.name').enter('change');
+      expect(element(':button:contains(Save)').attr('disabled')).toBeFalsy();
+      element(':button:contains(Save)').click();
+      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
+    });
+    it('should enable cancel button', function() {
+      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
+      input('form.name').enter('change');
+      expect(element(':button:contains(Cancel)').attr('disabled')).toBeFalsy();
+      element(':button:contains(Cancel)').click();
+      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
+      expect(element(':input[ng\\:model="form.name"]').val()).toEqual('John Smith');
+    });
+
+});
+
+  describe("cookbook/buzz", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/cookbook/buzz");
+    });
+  
+     xit('fetch buzz and expand', function() {
+       element(':button:contains(fetch)').click();
+       expect(repeater('div.buzz').count()).toBeGreaterThan(0);
+       element('.buzz a:contains(Expand replies):first').click();
+       expect(repeater('div.reply').count()).toBeGreaterThan(0);
+     });
+
+});
+
   describe("cookbook/deeplinking", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/cookbook/deeplinking");
@@ -1960,13 +2104,6 @@ describe("angular+jqlite", function() {
 
 });
 
-  describe("api/ng", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ng");
-    });
-  
-});
-
   describe("cookbook/helloworld", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/cookbook/helloworld");
@@ -1980,18 +2117,11 @@ describe("angular+jqlite", function() {
 
 });
 
-  describe("cookbook/buzz", function() {
+  describe("cookbook/index", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/cookbook/buzz");
+      browser().navigateTo("index-nocache.html#!/cookbook/index");
     });
   
-     xit('fetch buzz and expand', function() {
-       element(':button:contains(fetch)').click();
-       expect(repeater('div.buzz').count()).toBeGreaterThan(0);
-       element('.buzz a:contains(Expand replies):first').click();
-       expect(repeater('div.reply').count()).toBeGreaterThan(0);
-     });
-
 });
 
   describe("cookbook/mvc", function() {
@@ -2016,29 +2146,18 @@ describe("angular+jqlite", function() {
 
 });
 
-  describe("cookbook/advancedform", function() {
+  describe("error/$animate:notcsel", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/cookbook/advancedform");
+      browser().navigateTo("index-nocache.html#!/error/$animate:notcsel");
     });
   
-    it('should enable save button', function() {
-      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
-      input('form.name').enter('');
-      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
-      input('form.name').enter('change');
-      expect(element(':button:contains(Save)').attr('disabled')).toBeFalsy();
-      element(':button:contains(Save)').click();
-      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
-    });
-    it('should enable cancel button', function() {
-      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
-      input('form.name').enter('change');
-      expect(element(':button:contains(Cancel)').attr('disabled')).toBeFalsy();
-      element(':button:contains(Cancel)').click();
-      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
-      expect(element(':input[ng\\:model="form.name"]').val()).toEqual('John Smith');
-    });
+});
 
+  describe("error/$cacheFactory:iid", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/error/$cacheFactory:iid");
+    });
+  
 });
 
   describe("error/$compile:ctreq", function() {
@@ -2090,16 +2209,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("cookbook/index", function() {
+  describe("error/$compile:tplrt", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/cookbook/index");
-    });
-  
-});
-
-  describe("error/$animate:notcsel", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$animate:notcsel");
+      browser().navigateTo("index-nocache.html#!/error/$compile:tplrt");
     });
   
 });
@@ -2107,20 +2219,6 @@ describe("angular+jqlite", function() {
   describe("error/$compile:uterdir", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/error/$compile:uterdir");
-    });
-  
-});
-
-  describe("error/$cacheFactory:iid", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$cacheFactory:iid");
-    });
-  
-});
-
-  describe("error/$compile:tplrt", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$compile:tplrt");
     });
   
 });
@@ -2174,9 +2272,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/$interpolate:noconcat", function() {
+  describe("error/$injector:pget", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$interpolate:noconcat");
+      browser().navigateTo("index-nocache.html#!/error/$injector:pget");
     });
   
 });
@@ -2188,16 +2286,23 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/$injector:pget", function() {
+  describe("error/$interpolate:interr", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$injector:pget");
+      browser().navigateTo("index-nocache.html#!/error/$interpolate:interr");
     });
   
 });
 
-  describe("error/$interpolate:interr", function() {
+  describe("error/$interpolate:noconcat", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$interpolate:interr");
+      browser().navigateTo("index-nocache.html#!/error/$interpolate:noconcat");
+    });
+  
+});
+
+  describe("error/jqLite:nosel", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/error/jqLite:nosel");
     });
   
 });
@@ -2216,16 +2321,16 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/jqLite:nosel", function() {
+  describe("error/$location:ihshprfx", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/jqLite:nosel");
+      browser().navigateTo("index-nocache.html#!/error/$location:ihshprfx");
     });
   
 });
 
-  describe("error/$location:ihshprfx", function() {
+  describe("error/$location:ipthprfx", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$location:ihshprfx");
+      browser().navigateTo("index-nocache.html#!/error/$location:ipthprfx");
     });
   
 });
@@ -2244,13 +2349,6 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/$location:ipthprfx", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$location:ipthprfx");
-    });
-  
-});
-
   describe("error/ng:badname", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/error/ng:badname");
@@ -2265,16 +2363,16 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/ng:cpws", function() {
+  describe("error/ng:cpi", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/ng:cpws");
+      browser().navigateTo("index-nocache.html#!/error/ng:cpi");
     });
   
 });
 
-  describe("error/ng:cpi", function() {
+  describe("error/ng:cpws", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/ng:cpi");
+      browser().navigateTo("index-nocache.html#!/error/ng:cpws");
     });
   
 });
@@ -2307,6 +2405,27 @@ describe("angular+jqlite", function() {
   
 });
 
+  describe("error/ngRepeat:iexp", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/error/ngRepeat:iexp");
+    });
+  
+});
+
+  describe("error/ngRepeat:iidexp", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/error/ngRepeat:iidexp");
+    });
+  
+});
+
+  describe("error/ngTransclude:orphan", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/error/ngTransclude:orphan");
+    });
+  
+});
+
   describe("error/$parse:isecdom", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/error/$parse:isecdom");
@@ -2317,13 +2436,6 @@ describe("angular+jqlite", function() {
   describe("error/$parse:isecfld", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/error/$parse:isecfld");
-    });
-  
-});
-
-  describe("error/ngRepeat:iexp", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/ngRepeat:iexp");
     });
   
 });
@@ -2363,16 +2475,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/ngRepeat:iidexp", function() {
+  describe("error/$resource:badargs", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/ngRepeat:iidexp");
-    });
-  
-});
-
-  describe("error/$resource:badmember", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$resource:badmember");
+      browser().navigateTo("index-nocache.html#!/error/$resource:badargs");
     });
   
 });
@@ -2384,6 +2489,13 @@ describe("angular+jqlite", function() {
   
 });
 
+  describe("error/$resource:badmember", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/error/$resource:badmember");
+    });
+  
+});
+
   describe("error/$resource:badname", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/error/$resource:badname");
@@ -2391,23 +2503,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/ngTransclude:orphan", function() {
+  describe("error/$rootScope:infdig", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/ngTransclude:orphan");
-    });
-  
-});
-
-  describe("error/$resource:badargs", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$resource:badargs");
-    });
-  
-});
-
-  describe("error/$sanitize:badparse", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$sanitize:badparse");
+      browser().navigateTo("index-nocache.html#!/error/$rootScope:infdig");
     });
   
 });
@@ -2419,9 +2517,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("error/$rootScope:infdig", function() {
+  describe("error/$sanitize:badparse", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$rootScope:infdig");
+      browser().navigateTo("index-nocache.html#!/error/$sanitize:badparse");
     });
   
 });
@@ -2461,16 +2559,23 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/animations", function() {
+  describe("error/$sce:iwcard", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/animations");
+      browser().navigateTo("index-nocache.html#!/error/$sce:iwcard");
     });
   
 });
 
-  describe("error/$sce:iwcard", function() {
+  describe("error/$sce:unsafe", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$sce:iwcard");
+      browser().navigateTo("index-nocache.html#!/error/$sce:unsafe");
+    });
+  
+});
+
+  describe("guide/animations", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/guide/animations");
     });
   
 });
@@ -2489,9 +2594,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/databinding", function() {
+  describe("guide/concepts", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/databinding");
+      browser().navigateTo("index-nocache.html#!/guide/concepts");
     });
   
 });
@@ -2503,9 +2608,23 @@ describe("angular+jqlite", function() {
   
 });
 
+  describe("guide/databinding", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/guide/databinding");
+    });
+  
+});
+
   describe("guide/dev_guide.e2e-testing", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/guide/dev_guide.e2e-testing");
+    });
+  
+});
+
+  describe("guide/dev_guide.services.$location", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/guide/dev_guide.services.$location");
     });
   
 });
@@ -2526,13 +2645,6 @@ describe("angular+jqlite", function() {
       expect(element(':input[ng\\:model="message"]').val()).toEqual('test');
     });
 
-});
-
-  describe("guide/dev_guide.services.$location", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/dev_guide.services.$location");
-    });
-  
 });
 
   describe("guide/dev_guide.services.managing_dependencies", function() {
@@ -2570,20 +2682,6 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/di", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/di");
-    });
-  
-});
-
-  describe("error/$sce:unsafe", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/error/$sce:unsafe");
-    });
-  
-});
-
   describe("guide/dev_guide.unit-testing", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/guide/dev_guide.unit-testing");
@@ -2591,11 +2689,23 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/filter", function() {
+  describe("guide/di", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/filter");
+      browser().navigateTo("index-nocache.html#!/guide/di");
     });
   
+});
+
+  describe("guide/directive", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/guide/directive");
+    });
+  
+      it('should show off bindings', function() {
+        expect(element('div[ng-controller="Ctrl1"] span[ng-bind]').text())
+          .toBe('Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)');
+      });
+
 });
 
   describe("guide/expression", function() {
@@ -2630,6 +2740,13 @@ describe("angular+jqlite", function() {
 
 });
 
+  describe("guide/filter", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/guide/filter");
+    });
+  
+});
+
   describe("guide/forms", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/guide/forms");
@@ -2651,13 +2768,6 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/introduction", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/introduction");
-    });
-  
-});
-
   describe("guide/index", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/guide/index");
@@ -2665,9 +2775,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/module", function() {
+  describe("guide/introduction", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/module");
+      browser().navigateTo("index-nocache.html#!/guide/introduction");
     });
   
 });
@@ -2679,9 +2789,23 @@ describe("angular+jqlite", function() {
   
 });
 
+  describe("guide/module", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/guide/module");
+    });
+  
+});
+
   describe("guide/providers", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/guide/providers");
+    });
+  
+});
+
+  describe("guide/scope", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/guide/scope");
     });
   
 });
@@ -2700,9 +2824,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/concepts", function() {
+  describe("misc/downloading", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/concepts");
+      browser().navigateTo("index-nocache.html#!/misc/downloading");
     });
   
 });
@@ -2721,28 +2845,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("guide/directive", function() {
+  describe("tutorial/index", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/directive");
-    });
-  
-      it('should show off bindings', function() {
-        expect(element('div[ng-controller="Ctrl1"] span[ng-bind]').text())
-          .toBe('Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)');
-      });
-
-});
-
-  describe("guide/scope", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/guide/scope");
-    });
-  
-});
-
-  describe("misc/downloading", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/misc/downloading");
+      browser().navigateTo("index-nocache.html#!/tutorial/index");
     });
   
 });
@@ -2761,9 +2866,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("tutorial/step_04", function() {
+  describe("tutorial/step_02", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/tutorial/step_04");
+      browser().navigateTo("index-nocache.html#!/tutorial/step_02");
     });
   
 });
@@ -2775,9 +2880,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("tutorial/step_06", function() {
+  describe("tutorial/step_04", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/tutorial/step_06");
+      browser().navigateTo("index-nocache.html#!/tutorial/step_04");
     });
   
 });
@@ -2785,6 +2890,20 @@ describe("angular+jqlite", function() {
   describe("tutorial/step_05", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/tutorial/step_05");
+    });
+  
+});
+
+  describe("tutorial/step_06", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/tutorial/step_06");
+    });
+  
+});
+
+  describe("tutorial/step_07", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-nocache.html#!/tutorial/step_07");
     });
   
 });
@@ -2803,13 +2922,6 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("tutorial/step_07", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/tutorial/step_07");
-    });
-  
-});
-
   describe("tutorial/step_10", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/tutorial/step_10");
@@ -2824,27 +2936,6 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("tutorial/the_end", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/tutorial/the_end");
-    });
-  
-});
-
-  describe("tutorial/index", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/tutorial/index");
-    });
-  
-});
-
-  describe("tutorial/step_02", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/tutorial/step_02");
-    });
-  
-});
-
   describe("tutorial/step_12", function() {
     beforeEach(function() {
       browser().navigateTo("index-nocache.html#!/tutorial/step_12");
@@ -2852,100 +2943,9 @@ describe("angular+jqlite", function() {
   
 });
 
-  describe("api/angular.mock", function() {
+  describe("tutorial/the_end", function() {
     beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/angular.mock");
-    });
-  
-});
-
-  describe("api/ngMock.$exceptionHandlerProvider", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMock.$exceptionHandlerProvider");
-    });
-  
-});
-
-  describe("api/ngMock.$exceptionHandler", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMock.$exceptionHandler");
-    });
-  
-});
-
-  describe("api/ngMock.$log", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMock.$log");
-    });
-  
-});
-
-  describe("api/ngMock.$interval", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMock.$interval");
-    });
-  
-});
-
-  describe("api/angular.mock.TzDate", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/angular.mock.TzDate");
-    });
-  
-});
-
-  describe("api/angular.mock.dump", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/angular.mock.dump");
-    });
-  
-});
-
-  describe("api/ngMock.$httpBackend", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMock.$httpBackend");
-    });
-  
-});
-
-  describe("api/ngMock.$timeout", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMock.$timeout");
-    });
-  
-});
-
-  describe("api/ngMock", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMock");
-    });
-  
-});
-
-  describe("api/ngMockE2E", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMockE2E");
-    });
-  
-});
-
-  describe("api/ngMockE2E.$httpBackend", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/ngMockE2E.$httpBackend");
-    });
-  
-});
-
-  describe("api/angular.mock.module", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/angular.mock.module");
-    });
-  
-});
-
-  describe("api/angular.mock.inject", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-nocache.html#!/api/angular.mock.inject");
+      browser().navigateTo("index-nocache.html#!/tutorial/the_end");
     });
   
 });
@@ -3195,6 +3195,33 @@ describe("angular+jquery", function() {
   describe("api/ng.$templateCache", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/api/ng.$templateCache");
+    });
+  
+});
+
+  describe("api/ng.$compile", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ng.$compile");
+    });
+  
+      it('should auto compile', function() {
+        expect(element('div[compile]').text()).toBe('Hello Angular');
+        input('html').enter('{{name}}!');
+        expect(element('div[compile]').text()).toBe('Angular!');
+      });
+
+});
+
+  describe("api/ng.$compileProvider", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ng.$compileProvider");
+    });
+  
+});
+
+  describe("api/ng.$compile.directive.Attributes", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ng.$compile.directive.Attributes");
     });
   
 });
@@ -4388,13 +4415,6 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("api/ng.$httpBackend", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ng.$httpBackend");
-    });
-  
-});
-
   describe("api/ng.$http", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/api/ng.$http");
@@ -4422,6 +4442,13 @@ describe("angular+jquery", function() {
       expect(binding('data')).toBe('Request failed');
     });
 
+});
+
+  describe("api/ng.$httpBackend", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ng.$httpBackend");
+    });
+  
 });
 
   describe("api/ng.$interpolateProvider", function() {
@@ -4533,13 +4560,6 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("api/ng.$timeout", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ng.$timeout");
-    });
-  
-});
-
   describe("api/ng.$sceDelegate", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/api/ng.$sceDelegate");
@@ -4579,6 +4599,13 @@ describe("angular+jquery", function() {
 
 });
 
+  describe("api/ng.$timeout", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ng.$timeout");
+    });
+  
+});
+
   describe("api/ng.$window", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/api/ng.$window");
@@ -4590,27 +4617,6 @@ describe("angular+jquery", function() {
      // element(':button').click();
     });
 
-});
-
-  describe("api/ngCookies", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngCookies");
-    });
-  
-});
-
-  describe("api/ngCookies.$cookies", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngCookies.$cookies");
-    });
-  
-});
-
-  describe("api/ngCookies.$cookieStore", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngCookies.$cookieStore");
-    });
-  
 });
 
   describe("api/ngAnimate", function() {
@@ -4634,29 +4640,135 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("api/ng.$compile", function() {
+  describe("api/ngCookies", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ng.$compile");
-    });
-  
-      it('should auto compile', function() {
-        expect(element('div[compile]').text()).toBe('Hello Angular');
-        input('html').enter('{{name}}!');
-        expect(element('div[compile]').text()).toBe('Angular!');
-      });
-
-});
-
-  describe("api/ng.$compileProvider", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ng.$compileProvider");
+      browser().navigateTo("index-jq-nocache.html#!/api/ngCookies");
     });
   
 });
 
-  describe("api/ng.$compile.directive.Attributes", function() {
+  describe("api/ngCookies.$cookies", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ng.$compile.directive.Attributes");
+      browser().navigateTo("index-jq-nocache.html#!/api/ngCookies.$cookies");
+    });
+  
+});
+
+  describe("api/ngCookies.$cookieStore", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngCookies.$cookieStore");
+    });
+  
+});
+
+  describe("api/angular.mock", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock");
+    });
+  
+});
+
+  describe("api/ngMock.$exceptionHandlerProvider", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$exceptionHandlerProvider");
+    });
+  
+});
+
+  describe("api/ngMock.$exceptionHandler", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$exceptionHandler");
+    });
+  
+});
+
+  describe("api/ngMock.$log", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$log");
+    });
+  
+});
+
+  describe("api/ngMock.$interval", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$interval");
+    });
+  
+});
+
+  describe("api/angular.mock.TzDate", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.TzDate");
+    });
+  
+});
+
+  describe("api/angular.mock.dump", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.dump");
+    });
+  
+});
+
+  describe("api/ngMock.$httpBackend", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$httpBackend");
+    });
+  
+});
+
+  describe("api/ngMock.$timeout", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$timeout");
+    });
+  
+});
+
+  describe("api/ngMock", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMock");
+    });
+  
+});
+
+  describe("api/ngMockE2E", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMockE2E");
+    });
+  
+});
+
+  describe("api/ngMockE2E.$httpBackend", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngMockE2E.$httpBackend");
+    });
+  
+});
+
+  describe("api/angular.mock.module", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.module");
+    });
+  
+});
+
+  describe("api/angular.mock.inject", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.inject");
+    });
+  
+});
+
+  describe("api/ngResource", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngResource");
+    });
+  
+});
+
+  describe("api/ngResource.$resource", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ngResource.$resource");
     });
   
 });
@@ -4679,20 +4791,6 @@ describe("angular+jquery", function() {
       expect(content).toMatch(/Book Id\: Scarlet/);
     });
 
-});
-
-  describe("api/ngResource", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngResource");
-    });
-  
-});
-
-  describe("api/ngResource.$resource", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngResource.$resource");
-    });
-  
 });
 
   describe("api/ngRoute", function() {
@@ -4858,6 +4956,52 @@ describe("angular+jquery", function() {
   
 });
 
+  describe("api/ng", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/api/ng");
+    });
+  
+});
+
+  describe("cookbook/advancedform", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/cookbook/advancedform");
+    });
+  
+    it('should enable save button', function() {
+      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
+      input('form.name').enter('');
+      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
+      input('form.name').enter('change');
+      expect(element(':button:contains(Save)').attr('disabled')).toBeFalsy();
+      element(':button:contains(Save)').click();
+      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
+    });
+    it('should enable cancel button', function() {
+      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
+      input('form.name').enter('change');
+      expect(element(':button:contains(Cancel)').attr('disabled')).toBeFalsy();
+      element(':button:contains(Cancel)').click();
+      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
+      expect(element(':input[ng\\:model="form.name"]').val()).toEqual('John Smith');
+    });
+
+});
+
+  describe("cookbook/buzz", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/cookbook/buzz");
+    });
+  
+     xit('fetch buzz and expand', function() {
+       element(':button:contains(fetch)').click();
+       expect(repeater('div.buzz').count()).toBeGreaterThan(0);
+       element('.buzz a:contains(Expand replies):first').click();
+       expect(repeater('div.reply').count()).toBeGreaterThan(0);
+     });
+
+});
+
   describe("cookbook/deeplinking", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/cookbook/deeplinking");
@@ -4915,13 +5059,6 @@ describe("angular+jquery", function() {
 
 });
 
-  describe("api/ng", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ng");
-    });
-  
-});
-
   describe("cookbook/helloworld", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/cookbook/helloworld");
@@ -4935,18 +5072,11 @@ describe("angular+jquery", function() {
 
 });
 
-  describe("cookbook/buzz", function() {
+  describe("cookbook/index", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/cookbook/buzz");
+      browser().navigateTo("index-jq-nocache.html#!/cookbook/index");
     });
   
-     xit('fetch buzz and expand', function() {
-       element(':button:contains(fetch)').click();
-       expect(repeater('div.buzz').count()).toBeGreaterThan(0);
-       element('.buzz a:contains(Expand replies):first').click();
-       expect(repeater('div.reply').count()).toBeGreaterThan(0);
-     });
-
 });
 
   describe("cookbook/mvc", function() {
@@ -4971,29 +5101,18 @@ describe("angular+jquery", function() {
 
 });
 
-  describe("cookbook/advancedform", function() {
+  describe("error/$animate:notcsel", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/cookbook/advancedform");
+      browser().navigateTo("index-jq-nocache.html#!/error/$animate:notcsel");
     });
   
-    it('should enable save button', function() {
-      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
-      input('form.name').enter('');
-      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
-      input('form.name').enter('change');
-      expect(element(':button:contains(Save)').attr('disabled')).toBeFalsy();
-      element(':button:contains(Save)').click();
-      expect(element(':button:contains(Save)').attr('disabled')).toBeTruthy();
-    });
-    it('should enable cancel button', function() {
-      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
-      input('form.name').enter('change');
-      expect(element(':button:contains(Cancel)').attr('disabled')).toBeFalsy();
-      element(':button:contains(Cancel)').click();
-      expect(element(':button:contains(Cancel)').attr('disabled')).toBeTruthy();
-      expect(element(':input[ng\\:model="form.name"]').val()).toEqual('John Smith');
-    });
+});
 
+  describe("error/$cacheFactory:iid", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/error/$cacheFactory:iid");
+    });
+  
 });
 
   describe("error/$compile:ctreq", function() {
@@ -5045,16 +5164,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("cookbook/index", function() {
+  describe("error/$compile:tplrt", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/cookbook/index");
-    });
-  
-});
-
-  describe("error/$animate:notcsel", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$animate:notcsel");
+      browser().navigateTo("index-jq-nocache.html#!/error/$compile:tplrt");
     });
   
 });
@@ -5062,20 +5174,6 @@ describe("angular+jquery", function() {
   describe("error/$compile:uterdir", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/error/$compile:uterdir");
-    });
-  
-});
-
-  describe("error/$cacheFactory:iid", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$cacheFactory:iid");
-    });
-  
-});
-
-  describe("error/$compile:tplrt", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$compile:tplrt");
     });
   
 });
@@ -5129,9 +5227,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/$interpolate:noconcat", function() {
+  describe("error/$injector:pget", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$interpolate:noconcat");
+      browser().navigateTo("index-jq-nocache.html#!/error/$injector:pget");
     });
   
 });
@@ -5143,16 +5241,23 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/$injector:pget", function() {
+  describe("error/$interpolate:interr", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$injector:pget");
+      browser().navigateTo("index-jq-nocache.html#!/error/$interpolate:interr");
     });
   
 });
 
-  describe("error/$interpolate:interr", function() {
+  describe("error/$interpolate:noconcat", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$interpolate:interr");
+      browser().navigateTo("index-jq-nocache.html#!/error/$interpolate:noconcat");
+    });
+  
+});
+
+  describe("error/jqLite:nosel", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/error/jqLite:nosel");
     });
   
 });
@@ -5171,16 +5276,16 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/jqLite:nosel", function() {
+  describe("error/$location:ihshprfx", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/jqLite:nosel");
+      browser().navigateTo("index-jq-nocache.html#!/error/$location:ihshprfx");
     });
   
 });
 
-  describe("error/$location:ihshprfx", function() {
+  describe("error/$location:ipthprfx", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$location:ihshprfx");
+      browser().navigateTo("index-jq-nocache.html#!/error/$location:ipthprfx");
     });
   
 });
@@ -5199,13 +5304,6 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/$location:ipthprfx", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$location:ipthprfx");
-    });
-  
-});
-
   describe("error/ng:badname", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/error/ng:badname");
@@ -5220,16 +5318,16 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/ng:cpws", function() {
+  describe("error/ng:cpi", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/ng:cpws");
+      browser().navigateTo("index-jq-nocache.html#!/error/ng:cpi");
     });
   
 });
 
-  describe("error/ng:cpi", function() {
+  describe("error/ng:cpws", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/ng:cpi");
+      browser().navigateTo("index-jq-nocache.html#!/error/ng:cpws");
     });
   
 });
@@ -5262,6 +5360,27 @@ describe("angular+jquery", function() {
   
 });
 
+  describe("error/ngRepeat:iexp", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/error/ngRepeat:iexp");
+    });
+  
+});
+
+  describe("error/ngRepeat:iidexp", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/error/ngRepeat:iidexp");
+    });
+  
+});
+
+  describe("error/ngTransclude:orphan", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/error/ngTransclude:orphan");
+    });
+  
+});
+
   describe("error/$parse:isecdom", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/error/$parse:isecdom");
@@ -5272,13 +5391,6 @@ describe("angular+jquery", function() {
   describe("error/$parse:isecfld", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/error/$parse:isecfld");
-    });
-  
-});
-
-  describe("error/ngRepeat:iexp", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/ngRepeat:iexp");
     });
   
 });
@@ -5318,16 +5430,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/ngRepeat:iidexp", function() {
+  describe("error/$resource:badargs", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/ngRepeat:iidexp");
-    });
-  
-});
-
-  describe("error/$resource:badmember", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$resource:badmember");
+      browser().navigateTo("index-jq-nocache.html#!/error/$resource:badargs");
     });
   
 });
@@ -5339,6 +5444,13 @@ describe("angular+jquery", function() {
   
 });
 
+  describe("error/$resource:badmember", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/error/$resource:badmember");
+    });
+  
+});
+
   describe("error/$resource:badname", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/error/$resource:badname");
@@ -5346,23 +5458,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/ngTransclude:orphan", function() {
+  describe("error/$rootScope:infdig", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/ngTransclude:orphan");
-    });
-  
-});
-
-  describe("error/$resource:badargs", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$resource:badargs");
-    });
-  
-});
-
-  describe("error/$sanitize:badparse", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$sanitize:badparse");
+      browser().navigateTo("index-jq-nocache.html#!/error/$rootScope:infdig");
     });
   
 });
@@ -5374,9 +5472,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("error/$rootScope:infdig", function() {
+  describe("error/$sanitize:badparse", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$rootScope:infdig");
+      browser().navigateTo("index-jq-nocache.html#!/error/$sanitize:badparse");
     });
   
 });
@@ -5416,16 +5514,23 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/animations", function() {
+  describe("error/$sce:iwcard", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/animations");
+      browser().navigateTo("index-jq-nocache.html#!/error/$sce:iwcard");
     });
   
 });
 
-  describe("error/$sce:iwcard", function() {
+  describe("error/$sce:unsafe", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$sce:iwcard");
+      browser().navigateTo("index-jq-nocache.html#!/error/$sce:unsafe");
+    });
+  
+});
+
+  describe("guide/animations", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/guide/animations");
     });
   
 });
@@ -5444,9 +5549,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/databinding", function() {
+  describe("guide/concepts", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/databinding");
+      browser().navigateTo("index-jq-nocache.html#!/guide/concepts");
     });
   
 });
@@ -5458,9 +5563,23 @@ describe("angular+jquery", function() {
   
 });
 
+  describe("guide/databinding", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/guide/databinding");
+    });
+  
+});
+
   describe("guide/dev_guide.e2e-testing", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/guide/dev_guide.e2e-testing");
+    });
+  
+});
+
+  describe("guide/dev_guide.services.$location", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/guide/dev_guide.services.$location");
     });
   
 });
@@ -5481,13 +5600,6 @@ describe("angular+jquery", function() {
       expect(element(':input[ng\\:model="message"]').val()).toEqual('test');
     });
 
-});
-
-  describe("guide/dev_guide.services.$location", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/dev_guide.services.$location");
-    });
-  
 });
 
   describe("guide/dev_guide.services.managing_dependencies", function() {
@@ -5525,20 +5637,6 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/di", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/di");
-    });
-  
-});
-
-  describe("error/$sce:unsafe", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/error/$sce:unsafe");
-    });
-  
-});
-
   describe("guide/dev_guide.unit-testing", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/guide/dev_guide.unit-testing");
@@ -5546,11 +5644,23 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/filter", function() {
+  describe("guide/di", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/filter");
+      browser().navigateTo("index-jq-nocache.html#!/guide/di");
     });
   
+});
+
+  describe("guide/directive", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/guide/directive");
+    });
+  
+      it('should show off bindings', function() {
+        expect(element('div[ng-controller="Ctrl1"] span[ng-bind]').text())
+          .toBe('Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)');
+      });
+
 });
 
   describe("guide/expression", function() {
@@ -5585,6 +5695,13 @@ describe("angular+jquery", function() {
 
 });
 
+  describe("guide/filter", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/guide/filter");
+    });
+  
+});
+
   describe("guide/forms", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/guide/forms");
@@ -5606,13 +5723,6 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/introduction", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/introduction");
-    });
-  
-});
-
   describe("guide/index", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/guide/index");
@@ -5620,9 +5730,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/module", function() {
+  describe("guide/introduction", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/module");
+      browser().navigateTo("index-jq-nocache.html#!/guide/introduction");
     });
   
 });
@@ -5634,9 +5744,23 @@ describe("angular+jquery", function() {
   
 });
 
+  describe("guide/module", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/guide/module");
+    });
+  
+});
+
   describe("guide/providers", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/guide/providers");
+    });
+  
+});
+
+  describe("guide/scope", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/guide/scope");
     });
   
 });
@@ -5655,9 +5779,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/concepts", function() {
+  describe("misc/downloading", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/concepts");
+      browser().navigateTo("index-jq-nocache.html#!/misc/downloading");
     });
   
 });
@@ -5676,28 +5800,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("guide/directive", function() {
+  describe("tutorial/index", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/directive");
-    });
-  
-      it('should show off bindings', function() {
-        expect(element('div[ng-controller="Ctrl1"] span[ng-bind]').text())
-          .toBe('Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)');
-      });
-
-});
-
-  describe("guide/scope", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/guide/scope");
-    });
-  
-});
-
-  describe("misc/downloading", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/misc/downloading");
+      browser().navigateTo("index-jq-nocache.html#!/tutorial/index");
     });
   
 });
@@ -5716,9 +5821,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("tutorial/step_04", function() {
+  describe("tutorial/step_02", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_04");
+      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_02");
     });
   
 });
@@ -5730,9 +5835,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("tutorial/step_06", function() {
+  describe("tutorial/step_04", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_06");
+      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_04");
     });
   
 });
@@ -5740,6 +5845,20 @@ describe("angular+jquery", function() {
   describe("tutorial/step_05", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/tutorial/step_05");
+    });
+  
+});
+
+  describe("tutorial/step_06", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_06");
+    });
+  
+});
+
+  describe("tutorial/step_07", function() {
+    beforeEach(function() {
+      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_07");
     });
   
 });
@@ -5758,13 +5877,6 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("tutorial/step_07", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_07");
-    });
-  
-});
-
   describe("tutorial/step_10", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/tutorial/step_10");
@@ -5779,27 +5891,6 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("tutorial/the_end", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/tutorial/the_end");
-    });
-  
-});
-
-  describe("tutorial/index", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/tutorial/index");
-    });
-  
-});
-
-  describe("tutorial/step_02", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/tutorial/step_02");
-    });
-  
-});
-
   describe("tutorial/step_12", function() {
     beforeEach(function() {
       browser().navigateTo("index-jq-nocache.html#!/tutorial/step_12");
@@ -5807,100 +5898,9 @@ describe("angular+jquery", function() {
   
 });
 
-  describe("api/angular.mock", function() {
+  describe("tutorial/the_end", function() {
     beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock");
-    });
-  
-});
-
-  describe("api/ngMock.$exceptionHandlerProvider", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$exceptionHandlerProvider");
-    });
-  
-});
-
-  describe("api/ngMock.$exceptionHandler", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$exceptionHandler");
-    });
-  
-});
-
-  describe("api/ngMock.$log", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$log");
-    });
-  
-});
-
-  describe("api/ngMock.$interval", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$interval");
-    });
-  
-});
-
-  describe("api/angular.mock.TzDate", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.TzDate");
-    });
-  
-});
-
-  describe("api/angular.mock.dump", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.dump");
-    });
-  
-});
-
-  describe("api/ngMock.$httpBackend", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$httpBackend");
-    });
-  
-});
-
-  describe("api/ngMock.$timeout", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMock.$timeout");
-    });
-  
-});
-
-  describe("api/ngMock", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMock");
-    });
-  
-});
-
-  describe("api/ngMockE2E", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMockE2E");
-    });
-  
-});
-
-  describe("api/ngMockE2E.$httpBackend", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/ngMockE2E.$httpBackend");
-    });
-  
-});
-
-  describe("api/angular.mock.module", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.module");
-    });
-  
-});
-
-  describe("api/angular.mock.inject", function() {
-    beforeEach(function() {
-      browser().navigateTo("index-jq-nocache.html#!/api/angular.mock.inject");
+      browser().navigateTo("index-jq-nocache.html#!/tutorial/the_end");
     });
   
 });
