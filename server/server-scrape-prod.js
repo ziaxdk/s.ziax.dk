@@ -34,8 +34,9 @@
   }
 
   var scrape = function (req, res) {
-    if (!req.query.q) res.send(Utils.ngSafe(""));
-    fetch(req.query.q).done(function ($) {
+    var uri = decodeURIComponent(req.query.q);
+    if (!uri) res.send(Utils.ngSafe(""));
+    fetch(uri).done(function ($) {
       // Priorities:
       // Header
       // 1. <title>
