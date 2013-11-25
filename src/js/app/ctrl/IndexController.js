@@ -1,5 +1,5 @@
-module.controller('IndexController', ['History', '$location',
-  function (History, $location) {
+module.controller('IndexController', ['History', 'LocationService', '$location', '$scope',
+  function (History, LocationService, $location, $scope) {
   var _t = this;
   _t.history = History.data.facets.history.terms;
   
@@ -7,4 +7,9 @@ module.controller('IndexController', ['History', '$location',
   _t.search = function (q) {
     $location.path('res/' +  encodeURIComponent(q.term));
   };
+
+  $scope.$watch(function () {return LocationService.coords; }, function (n) {
+    if (!n.hasFix) return;
+    console.log('latlon', n);
+  });
 }]);

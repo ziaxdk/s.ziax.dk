@@ -3,25 +3,24 @@ module.exports = function (esClient, app, core) {
   app.get('/api/q', function (req, res) {
     esClient.search({ _index: core.INDEX, _type: 'article,link,place' }, {
       "query": {
-           "function_score": {
-               "query": {
-                   "query_string": {
-                      "fields": [ "header^4", "content^2" ],
-                      "query": req.query.q
-                   }
-               },
-               "functions": [
-                   {
-                      "boost_factor": "1000",
-                      "filter": {
-                          "term": {
-                              "star": true
-                              
-                          }
-                      }
-                  }
-               ]
+        "function_score": {
+          "query": {
+            "query_string": {
+              "fields": [ "header^4", "content^2" ],
+              "query": req.query.q
+            }
+          },
+          "functions": [
+          {
+            "boost_factor": "1000",
+            "filter": {
+              "term": {
+                "star": true
+              }
+            }
           }
+          ]
+        }
       },
       facets: {
         types: {
