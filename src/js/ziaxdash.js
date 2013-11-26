@@ -35,8 +35,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
 
 }]);
 
-module.controller('IndexController', ['History', '$location',
-  function (History, $location) {
+module.controller('IndexController', ['History', 'LocationService', '$location', '$scope',
+  function (History, LocationService, $location, $scope) {
   var _t = this;
   _t.history = History.data.facets.history.terms;
   
@@ -44,6 +44,11 @@ module.controller('IndexController', ['History', '$location',
   _t.search = function (q) {
     $location.path('res/' +  encodeURIComponent(q.term));
   };
+
+  $scope.$watch(function () {return LocationService.coords; }, function (n) {
+    if (!n.hasFix) return;
+    console.log('latlon', n);
+  });
 }]);
 
 module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', 'UserService', 'RestDrive', 
@@ -331,6 +336,36 @@ module.filter('textile', ['$sce', function ($sce) {
   return function (val) {
     return !val ? "" : $sce.trustAsHtml(textile.parse(val));
   };
+}]);
+
+module.service('LocationService', ['$window', '$rootScope', function ($window, $rootScope) {
+	var coords = {
+    hasFix: false,
+    lat: 0, 
+    lon: 0
+  };
+	
+  function whenLocated (position) {
+    var c = position.coords;
+    // console.log(c);
+    $rootScope.$apply(function () {
+      coords.hasFix = true;
+      coords.lat = c.latitude;
+      coords.lon = c.longitude;
+    });
+	};
+
+	if (navigator.geolocation) {
+		// navigator.geolocation.getCurrentPosition(whenLocated);
+		navigator.geolocation.watchPosition(whenLocated);
+	}
+	else {
+		console.log('location not supported');
+	};
+
+	return {
+		coords: coords
+	};
 }]);
 
 module.service('UserService', ['$http', function ($http) {
