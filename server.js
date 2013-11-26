@@ -88,7 +88,8 @@ passport.deserializeUser(function(user, done) {
 // });
 
 app.use(express.static(__dirname + "/src"));
-var port = process.env.PORT || 80;
+// var port = process.env.PORT || 80;
+var port = 8080;
 theServer.listen(port, function () {
   console.log("Running on " + port);
 });

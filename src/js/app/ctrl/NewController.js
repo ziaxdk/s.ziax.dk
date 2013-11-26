@@ -28,7 +28,7 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', f
       delayScraper.run(function () {
         $http.get('/api/scrape', { params: { q: encodeURIComponent(q) } }).success(function (data) {
           _t.form.header = data.title1 || data.title2 || data.title3; //link;
-          _t.form.content = '"' + _t.form.url + '":' + _t.form.url + '\n\n' + data.desc1 || data.desc2 || data.desc3;
+          _t.form.content = '"' + _t.form.url + '":' + _t.form.url + '\n\n' + (data.desc1 || data.desc2 || data.desc3);
         });
       });
 
