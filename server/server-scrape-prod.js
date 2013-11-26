@@ -41,24 +41,30 @@
       // Header
       // 1. <title>
       // 2. <meta property="og:title" content="" />
+      // 3. <meta name="og:title" content="" />
 
       // Description
-      // <meta name="description" content="" />
-      // <meta property="og:description" content="" />
+      // 1. <meta name="description" content="" />
+      // 2. <meta property="og:description" content="" />
+      // 3. <meta name="og:description" content="" />"
 
 
       var title1 = safeGetDataFromTag(function () { return $('title').text; });
       var title2 = safeGetDataFromTag(function () { return $('meta[property="og:title"]').attribs.content; });
+      var title3 = safeGetDataFromTag(function () { return $('meta[name="og:title"]').attribs.content; });
 
       var desc1 = safeGetDataFromTag(function () { return $('meta[name="description"]').attribs.content; });
       var desc2 = safeGetDataFromTag(function () { return $('meta[property="og:description"]').attribs.content; });
+      var desc3 = safeGetDataFromTag(function () { return $('meta[name="og:description"]').attribs.content; });
 
       var obj = {
         title1: title1,
         title2: title2,
+        title3: title3,
 
         desc1: desc1,
-        desc2: desc2
+        desc2: desc2,
+        desc3: desc3
       };
       res.send(Utils.ngSafe(obj));
     }, function (err) {
