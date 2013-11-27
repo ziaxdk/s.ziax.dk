@@ -144,7 +144,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            src: ['build/src/*.html']
+            src: ['build/src/**/*.html']
           }
         ]
       }

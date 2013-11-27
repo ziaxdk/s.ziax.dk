@@ -58,6 +58,7 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   _t.me = UserService.me;
   // _t.me = { isAuth: true, id: 123, name: 'profile.displayName' };
   _t.form = { };
+  _t.doFocus = true;
 
   _t.search = function () {
     if (!_t.form.q) return;
@@ -289,6 +290,12 @@ module.directive('dashLeaflet', [function () {
 
     }
   }; 
+}]);
+
+module.directive('ngSetFocus', [function () {
+  return function (scope, element, attrs) {
+    element[0].focus();
+  };
 }]);
 
 module.directive('dashAheadInput', [function () {
