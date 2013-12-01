@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2013-11-22T17:08:04.564Z
+# 2013-11-27T10:07:44.801Z
 
 # cache all of these
 CACHE:
@@ -18,11 +18,11 @@ components/bootstrap/js/bootstrap.min.js
 components/font-awesome/css/font-awesome-ie7.min.css
 components/font-awesome/css/font-awesome.css
 components/font-awesome/css/font-awesome.min.css
+components/font-awesome/font/FontAwesome.otf
 components/font-awesome/font/fontawesome-webfont.eot
 components/font-awesome/font/fontawesome-webfont.svg
 components/font-awesome/font/fontawesome-webfont.ttf
 components/font-awesome/font/fontawesome-webfont.woff
-components/font-awesome/font/FontAwesome.otf
 components/google-code-prettify.js
 components/jquery.js
 components/jquery.min.js
@@ -35,9 +35,11 @@ css/docs.css
 css/prettify.css
 docs-data.js
 favicon.ico
+img/AngularJS-small.png
+img/One_Way_Data_Binding.png
+img/Two_Way_Data_Binding.png
 img/angular_parts.png
 img/angularjs-for-header-only.svg
-img/AngularJS-small.png
 img/bullet.png
 img/form_data_flow.png
 img/glyphicons-halflings-white.png
@@ -58,7 +60,6 @@ img/guide/scenario_runner.png
 img/guide/simple_scope_final.png
 img/helloworld.png
 img/helloworld_2way.png
-img/One_Way_Data_Binding.png
 img/tutorial/catalog_screen.png
 img/tutorial/tutorial_00.png
 img/tutorial/tutorial_00_final.png
@@ -69,7 +70,6 @@ img/tutorial/tutorial_07_final.png
 img/tutorial/tutorial_08-09_final.png
 img/tutorial/tutorial_10-11_final.png
 img/tutorial/xhr_service_final.png
-img/Two_Way_Data_Binding.png
 index-debug.html
 index-jq-debug.html
 index-jq-nocache.html
@@ -78,6 +78,10 @@ index-nocache.html
 index.html
 js/docs.js
 notes/empty.tmp
+partials/api/AUTO.$injector.html
+partials/api/AUTO.$provide.html
+partials/api/AUTO.html
+partials/api/angular.IModule.html
 partials/api/angular.bind.html
 partials/api/angular.bootstrap.html
 partials/api/angular.copy.html
@@ -87,7 +91,6 @@ partials/api/angular.extend.html
 partials/api/angular.forEach.html
 partials/api/angular.fromJson.html
 partials/api/angular.identity.html
-partials/api/angular.IModule.html
 partials/api/angular.injector.html
 partials/api/angular.isArray.html
 partials/api/angular.isDate.html
@@ -99,19 +102,16 @@ partials/api/angular.isObject.html
 partials/api/angular.isString.html
 partials/api/angular.isUndefined.html
 partials/api/angular.lowercase.html
+partials/api/angular.mock.TzDate.html
 partials/api/angular.mock.dump.html
 partials/api/angular.mock.html
 partials/api/angular.mock.inject.html
 partials/api/angular.mock.module.html
-partials/api/angular.mock.TzDate.html
 partials/api/angular.module.html
 partials/api/angular.noop.html
 partials/api/angular.toJson.html
 partials/api/angular.uppercase.html
 partials/api/angular.version.html
-partials/api/AUTO.$injector.html
-partials/api/AUTO.$provide.html
-partials/api/AUTO.html
 partials/api/index.html
 partials/api/ng.$anchorScroll.html
 partials/api/ng.$animate.html
@@ -140,8 +140,8 @@ partials/api/ng.$parse.html
 partials/api/ng.$parseProvider.html
 partials/api/ng.$q.html
 partials/api/ng.$rootElement.html
-partials/api/ng.$rootScope.html
 partials/api/ng.$rootScope.Scope.html
+partials/api/ng.$rootScope.html
 partials/api/ng.$rootScopeProvider.html
 partials/api/ng.$sce.html
 partials/api/ng.$sceDelegate.html
@@ -189,8 +189,8 @@ partials/api/ng.directive:ngKeydown.html
 partials/api/ng.directive:ngKeypress.html
 partials/api/ng.directive:ngKeyup.html
 partials/api/ng.directive:ngList.html
-partials/api/ng.directive:ngModel.html
 partials/api/ng.directive:ngModel.NgModelController.html
+partials/api/ng.directive:ngModel.html
 partials/api/ng.directive:ngMousedown.html
 partials/api/ng.directive:ngMouseenter.html
 partials/api/ng.directive:ngMouseleave.html
@@ -228,8 +228,8 @@ partials/api/ng.html
 partials/api/ngAnimate.$animate.html
 partials/api/ngAnimate.$animateProvider.html
 partials/api/ngAnimate.html
-partials/api/ngCookies.$cookies.html
 partials/api/ngCookies.$cookieStore.html
+partials/api/ngCookies.$cookies.html
 partials/api/ngCookies.html
 partials/api/ngMock.$exceptionHandler.html
 partials/api/ngMock.$exceptionHandlerProvider.html
