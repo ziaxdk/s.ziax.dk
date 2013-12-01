@@ -8,7 +8,7 @@ module.exports = function (esClient, app, core) {
         "function_score": {
           "query": {
             "query_string": {
-              "fields": [ "header^4", "content^2" ],
+              "fields": [ "header^4", "content^3", "tags^2" ],
               "query": q
             }
           },

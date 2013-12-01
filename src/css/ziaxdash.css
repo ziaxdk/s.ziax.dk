@@ -45,10 +45,6 @@ body {
   animation: fadeInRight 200ms;
   -webkit-animation: fadeInRight 200ms;
 }
-.zdview.ng-leave {
-  animation: slideOutUp 1s;
-  -webkit-animation: slideOutUp 1s;
-}
 .zdfade.ng-hide {
   display: inline !important;
   animation: fadeIn 3s;

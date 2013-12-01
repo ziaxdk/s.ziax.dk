@@ -43,9 +43,22 @@
         </div>
       </div>
 
-      <div class="row" ng-if="NewCtrl.bigMap">
-        <div class="col-md-12">
-          <div style="border: 1px solid #666; height: 400px"dash-leaflet="NewCtrl.form.q" dash-leaflet-big="NewCtrl.bigMap">
+      <div ng-if="NewCtrl.bigMap">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="idMaps">Map</label>
+              <div style="border: 1px solid #666; height: 400px"dash-leaflet="NewCtrl.form.q" dash-leaflet-big="NewCtrl.bigMap">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" ng-class="{'has-error': theForm.description.$invalid }">
+              <label for="idContent">Content</label>
+              <textarea name="description" class="form-control" id="idContent" placeholder="Enter content..." style="min-height: 200px" ng-model="NewCtrl.form.content" required></textarea>
+            </div>
           </div>
         </div>
       </div>
