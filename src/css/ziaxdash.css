@@ -34,6 +34,13 @@ body {
 #q.qfocus {
   width: 400px;
 }
+.dash-control-big {
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  background-color: #f4f4f4;
+  padding: 6px;
+  color: black;
+}
 .zdview.ng-enter {
   animation: fadeInRight 200ms;
   -webkit-animation: fadeInRight 200ms;

@@ -1,22 +1,25 @@
-module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', function ($scope, $http, RestDrive, Delayer) {
+module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '$route', function ($scope, $http, RestDrive, Delayer, $route) {
+  var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
+  var initQ = $route.current.params.q;
+
   _t.form = {
     onlyAuth: false,
     type: 'article'
   };
+  _t.bigMap = false;
 
-  var lisLink, lisPlace, lisArticle;
+  if (angular.isDefined(initQ) && initQ) {
+    _t.form.q = initQ;
+  }
 
-  var resetListeners = function () {
-    if (lisLink) lisLink();
-    if (lisPlace) lisPlace();
-    if (lisArticle) lisArticle();
-  };
 
 
   $scope.$watch(function () { return _t.form.q; }, function (q) {
     if (!q) return;
-    resetListeners();
+    if (lisLink) lisLink();
+    if (lisPlace) lisPlace();
+    if (lisArticle) lisArticle();
     if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(q)) {
       _t.form.type = 'place';
       _t.form.header = null;
@@ -31,7 +34,6 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', f
           _t.form.content = '"' + _t.form.url + '":' + _t.form.url + '\n\n' + (data.desc1 || data.desc2 || data.desc3);
         });
       });
-
     }
     else {
       _t.form.type = 'article';
