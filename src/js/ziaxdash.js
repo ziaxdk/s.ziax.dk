@@ -163,9 +163,9 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
       starDelayer = Delayer(100)
       ;
   _t.result = ApiSearchResult.data;
-  console.log(_t.result);
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
+  setSelected(facetTypes, true);
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
   _t.show = function (hit) {
@@ -174,7 +174,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
   };
 
   _t.allTypes = function () {
-    setSelected(facetTypes, false);
+    setSelected(facetTypes, true);
     doSearch();
   };
   _t.star = function (hit) {
@@ -201,23 +201,10 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
 
   function doSearch () {
     facetSearch.run(function () {
-      
-      // var tags = [];
-      // angular.forEach(facetTerms, function (val) {
-      //   if (val.selected) tags.push(val.term);
-      // });
-      var tags = getSelectedFacet(facetTerms);
-      var types = getSelectedFacet(facetTypes);
-      console.log(types);
-      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: tags }, types: types }).success(function (data) {
-        console.log(data);
+      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: getSelectedFacet(facetTerms) }, types: getSelectedFacet(facetTypes) }).success(function (data) {
         _t.result.hits = data.hits;
         filterFacet(facetTerms, data.facets.tags.terms);
       });
-      // RestXQ.save({ q: $route.current.params.q, facets: { tags: tags }, types: types }).$promise.then(function(data) {
-      //   _t.result.hits = data.hits;
-      //   filterFacet(facetTerms, data.facets.tags.terms);
-      // });
     });
   }
 
