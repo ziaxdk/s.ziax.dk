@@ -1,5 +1,5 @@
 module.exports = function (esClient, app, core) {
-  var _ = require('underscore');
+  var deepExtend = require('deep-extend');
 
   
   function build (q, tags) {
@@ -39,16 +39,27 @@ module.exports = function (esClient, app, core) {
     }
 
     if (tags && tags.length !== 0) {
-      _.extend(query, {
+      deepExtend(query, {
         filter: {
-          term: {
-            tags: tags
+          terms: {
+            tags: tags,
+            execution: 'and'
+          }
+        },
+        facets: {
+          tags: {
+            "facet_filter": {
+              terms: {
+                tags: tags,
+                execution: 'and'
+              }
+            }
           }
         }
       });
     }
 
-
+    // console.log(query);
 
     return query;
   };
@@ -82,7 +93,7 @@ module.exports = function (esClient, app, core) {
 //              "query": {
 //                  "query_string": {
 //                     "fields": [ "header", "content" ],
-//                     "query": "node"
+//                     "query": "*"
 //                  }
 //              },
 //              "functions": [
@@ -96,6 +107,28 @@ module.exports = function (esClient, app, core) {
 //                     }
 //                 }
 //              ]
+//         }
+//     },
+//     facets: {
+//         types: {
+//           terms: {
+//             field : "_type"
+//           }
+//         },
+//         tags: {
+//           terms: {
+//             field: "tags"
+//           },
+//             "facet_filter" : {
+//                 "term" : { 
+//                     "tags" : "javascript"
+//                 }
+//             }
+//         }
+//     },
+//     "filter": {
+//         "term": {
+//            "tags": "javascript"
 //         }
 //     }
 // }

@@ -21,7 +21,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
   });
   $routeProvider.when('/res/:q', {
       templateUrl: "/html/_result.html",
-      resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
+      // resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
+      resolve: { ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
@@ -154,13 +155,17 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
   };
 }]);
 
-module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
-  function (Drives, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
+module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
+  function (ApiSearchResult, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
   var _t = this, 
       facetSearch = Delayer(500), 
       first = true,
       starDelayer = Delayer(100)
       ;
+  _t.result = ApiSearchResult.data;
+  console.log(_t.result);
+  var facetTerms = _t.result.facets.tags.terms;
+  var facetTypes = _t.result.facets.types.terms;
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
   _t.show = function (hit) {
@@ -169,7 +174,7 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
   };
 
   _t.allTypes = function () {
-    setSelected(_t.types, true);
+    setSelected(facetTypes, false);
     doSearch();
   };
   _t.star = function (hit) {
@@ -183,19 +188,9 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
     _t.showHits = true;
   // }, 300);
 
-  _t.result = Drives;
-  // _t.result = {
-  //   facets: {
-  //     tags: {
-  //       terms: [{term: "node", selected: false}, {term:"js", selected: false}]
-  //     }
-  //   },
-  //   hits: {
-  //     hits: []
-  //   }
-  // };
+
   _t.facetClear = function () {
-    setSelected(_t.result.facets.tags.terms, false);
+    setSelected(facetTerms, false);
     doSearch();
   };
 
@@ -206,19 +201,40 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
 
   function doSearch () {
     facetSearch.run(function () {
-      var tags = [];
-      angular.forEach(_t.result.facets.tags.terms, function (val) {
-        if (val.selected) tags.push(val.term);
-      });
-      var types = [];
-      angular.forEach(_t.result.facets.types.terms, function (val) {
-        if (!val.selected) types.push(val.term);
-      });
-      // console.log(types);
-      RestXQ.save({ q: $route.current.params.q, facets: { tags: tags }, types: types }).$promise.then(function(data) {
+      
+      // var tags = [];
+      // angular.forEach(facetTerms, function (val) {
+      //   if (val.selected) tags.push(val.term);
+      // });
+      var tags = getSelectedFacet(facetTerms);
+      var types = getSelectedFacet(facetTypes);
+      console.log(types);
+      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: tags }, types: types }).success(function (data) {
+        console.log(data);
         _t.result.hits = data.hits;
+        filterFacet(facetTerms, data.facets.tags.terms);
       });
+      // RestXQ.save({ q: $route.current.params.q, facets: { tags: tags }, types: types }).$promise.then(function(data) {
+      //   _t.result.hits = data.hits;
+      //   filterFacet(facetTerms, data.facets.tags.terms);
+      // });
     });
+  }
+
+  function filterFacet (facetTerms, dataFacetTerms) {
+    for (var i = facetTerms.length - 1; i >= 0; i--) {
+      var val = facetTerms[i];
+      val.disabled = true;
+
+      for (var j = dataFacetTerms.length - 1; j >= 0; j--) {
+         if (dataFacetTerms[j].term === val.term) {
+          val.disabled = false;
+          val.count = dataFacetTerms[j].count;
+          break;
+         }
+      };
+
+    };
   }
 
   function setSelected (col, val) {
@@ -226,7 +242,16 @@ module.controller('ResultController', ['Drives', 'RestXQ', 'Delayer', '$scope', 
       item.selected = val;
     });
   }
+
+  function getSelectedFacet (facets) {
+    var res = [];
+    angular.forEach(facets, function (val) {
+      if (val.selected) res.push(val.term);
+    });
+    return res;
+  }
 }]);
+
 
 module.controller('ShowController', ['Drive', '$http', function (Drive, $http) {
   this.Drive = Drive;

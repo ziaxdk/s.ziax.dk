@@ -19,7 +19,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
   });
   $routeProvider.when('/res/:q', {
       templateUrl: "/html/_result.html",
-      resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
+      // resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
+      resolve: { ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
