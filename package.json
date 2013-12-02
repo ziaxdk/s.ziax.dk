@@ -44,6 +44,7 @@
     "karma-phantomjs-launcher": "~0.1.0",
     "karma": "~0.10.4",
     "grunt-karma": "~0.6.2",
-    "karma-commonjs": "0.0.2"
+    "karma-commonjs": "0.0.2",
+    "shelljs": "~0.2.6"
   }
 }

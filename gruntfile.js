@@ -242,6 +242,7 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -258,7 +259,7 @@ module.exports = function (grunt) {
   // grunt.loadTasks('lib/tasks/grunt-elasticsearch.js');
   grunt.loadTasks('lib/tasks');
 
-  grunt.registerTask('default', []);
+  grunt.registerTask('default', ['custom']);
   // grunt.registerTask('setup_es_local', ['http:local_delete', 'http:local_setup', 'http:local_dummy']);
 
   // grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'less:production', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
@@ -272,4 +273,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dev', ['express:dev', /*'karma:unit:start',*/ 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);
+
+  grunt.registerTask('custom', function () {
+    grunt.log.writeln('custom task, code goes here');
+    grunt.log.writeln(util.getHash());
+  });
 };
