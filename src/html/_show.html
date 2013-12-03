@@ -1,4 +1,11 @@
 <div class="col-md-12">
-    <h5>{{ShowCtrl.Drive.source.header}}</h5>
-    <div ng-bind-html="ShowCtrl.Drive.source.content|textile"></div>
+  <h5>{{ShowCtrl.Result.source.header}}</h5>
+  <div ng-bind-html="ShowCtrl.Result.source.content|textile"></div>
+
+  <div ng-if="ShowCtrl.Result.type == 'place'">
+    <div style="height: 500px" dash-leaflet="ShowCtrl.Result.source.location.leaflet" dash-leaflet-readonly="true"></div>
+
+  </div>
+
+
 </div>

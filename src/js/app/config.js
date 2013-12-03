@@ -13,7 +13,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
   });
   $routeProvider.when('/show/:type/:id', {
       templateUrl: "/html/_show.html",
-      resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
+      // resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
+      resolve: { Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }] },
       controller: "ShowController",
       controllerAs: "ShowCtrl"
   });

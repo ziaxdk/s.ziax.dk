@@ -1,4 +1,5 @@
 module.exports = function (esClient, app, core) {
+  var _ = require('underscore');
   // Drive
   // app.get('/api/drive', function (req, res) {
   //   // TODO: If user is authenticated, include onlyAuth also
@@ -42,8 +43,13 @@ module.exports = function (esClient, app, core) {
         break;
       }
       case 'place': {
-        var latlon = src.location.split(',');
-        save.location = { lat: latlon[0].trim(), lon: latlon[1].trim() };
+        if (_.isObject(src.location)) {
+          save.location = src.location;
+        }
+        else {
+          var latlon = src.location.split(',');
+          save.location = { lat: latlon[0].trim(), lon: latlon[1].trim() };
+        }
       }
     }
 

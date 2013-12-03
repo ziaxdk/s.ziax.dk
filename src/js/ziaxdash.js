@@ -15,7 +15,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
   });
   $routeProvider.when('/show/:type/:id', {
       templateUrl: "/html/_show.html",
-      resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
+      // resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
+      resolve: { Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }] },
       controller: "ShowController",
       controllerAs: "ShowCtrl"
   });
@@ -245,9 +246,12 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
 }]);
 
 
-module.controller('ShowController', ['Drive', '$http', function (Drive, $http) {
-  this.Drive = Drive;
-  // $http.put('/q', { id: Drive.id });
+module.controller('ShowController', ['Result', '$http', function (Result, $http) {
+  this.Result = Result.data;
+
+  if (this.Result.source.location) {
+    this.Result.source.location.leaflet = this.Result.source.location.lat + ',' + this.Result.source.location.lon;
+  }
 }]);
 
 module.directive('dashFacet', ['$parse', function ($parse) {
@@ -342,24 +346,23 @@ module.directive('dashLeaflet', ['$parse', function ($parse) {
         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
           var latlon = value.split(',');
           layer.clearLayers();
-          L.marker(latlon, { draggable: true })
-            .on('dragend', function (evt) {
-              var ll = this.getLatLng();
-              scope.$evalAsync(function () {
-                latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-              })
-              // scope.$apply(function () {
-              //   latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-              // });
+          var m = L.marker(latlon, { draggable: true });
+            m.on('dragend', function (evt) {
+            var ll = this.getLatLng();
+            scope.$evalAsync(function () {
+              latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
             })
-            .addTo(layer);
+            // scope.$apply(function () {
+            //   latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
+            // });
+          })
+          if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
+            m.options.draggable = false;
+          }
+          m.addTo(layer);
           map.setView(latlon);
         }
       });
-
-
-
-
     }
   }; 
 }]);
