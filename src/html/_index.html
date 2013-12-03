@@ -7,6 +7,6 @@
     <h3 class="panel-title">Recent searches</h3>
   </div>
   <div class="panel-body">
-    <a href="javascript:;" class="list-group-item" ng-repeat="his in IndexCtrl.history" ng-click="IndexCtrl.search(his)">{{his.term}}<span class="badge">12{{his.count}}</span></a>
+    <a href="javascript:;" class="list-group-item" ng-repeat="his in IndexCtrl.history" ng-click="IndexCtrl.search(his)">{{his.term}}<span class="badge">{{his.count}}</span></a>
   </div>
 </div>
