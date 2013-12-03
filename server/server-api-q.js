@@ -1,5 +1,7 @@
 module.exports = function (esClient, app, core) {
-  var deepExtend = require('deep-extend');
+  var deepExtend = require('deep-extend'),
+      _ = require('underscore');
+  var types = ['link', 'place', 'article'];
 
   
   function build (q, tags) {
@@ -64,10 +66,39 @@ module.exports = function (esClient, app, core) {
     return query;
   };
 
+  function getTypes (data) {
+    var q = data.q;
+    if (q.indexOf(':') === -1) {
+      return {
+        q: q,
+        type: types.join()
+      }
+    }
+
+    var type = _.find(types, function (t) {
+      var r = new RegExp('^_' + t + ':');
+      return r.test(data.q);
+    });
+    if (!type) return {
+        q: q,
+        type: types.join()
+    }
+    
+    q = q.substring(q.indexOf(':') + 1, q.length);
+    if(!q) q = "SPASSER";
+
+    return { 
+      q: q,
+      type: type
+    };
+  }
+
   
   app.get('/api/q', function (req, res) {
     var data = req.query;
-    esClient.search({ _index: core.INDEX, _type: 'article,link,place' }, build(data.q, null), core.escallback(req, res));
+    var qObject = getTypes(data);
+    console.log(qObject);
+    esClient.search({ _index: core.INDEX, _type: qObject.type }, build(qObject.q, null), core.escallback(req, res));
     esClient.index({ _index: core.INDEX, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) {
       // console.log('his', err, data);
     });
