@@ -1,7 +1,12 @@
-<div class="jumbotron">
-  <h1>Dashboard in the ziax world</h1>
-  <p>Recent searches:</p>
-  <span ng-repeat="his in IndexCtrl.history">
-    <a href="javascript:;" ng-click="IndexCtrl.search(his)">{{his.term}}</a> <b class="badge">{{his.count}}</b>
-  </span>
+<button type="button" class="btn btn-default" ng-click="IndexCtrl.toggle()">
+  <i class="glyphicon" ng-class="{'glyphicon-chevron-down': !IndexCtrl.showInfo, 'glyphicon-chevron-up': IndexCtrl.showInfo}"></i>
+</button>
+
+<div class="panel panel-default" ng-show="IndexCtrl.showInfo">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent searches</h3>
+  </div>
+  <div class="panel-body">
+    <a href="javascript:;" class="list-group-item" ng-repeat="his in IndexCtrl.history" ng-click="IndexCtrl.search(his)">{{his.term}}<span class="badge">12{{his.count}}</span></a>
+  </div>
 </div>
