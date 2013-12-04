@@ -172,6 +172,12 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
   setSelected(facetTypes, true);
+
+  _t.facetTermsOperator = "and";
+
+
+  $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
+
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
   _t.show = function (hit) {
@@ -371,6 +377,37 @@ module.directive('ngSetFocus', [function () {
   return function (scope, element, attrs) {
     element[0].focus();
   };
+}]);
+
+module.directive('ngToggleButton', ['$parse', function ($parse) {
+  return {
+    restrict: 'A',
+    template: '<button type="button" class="btn btn-info btn-sm" ng-click="click()">{{label}} *{{ngToggleButton}}*</button>',
+    replace: true,
+    scope: {
+      ngToggleButton: '='
+    },
+    link: function (scope, element, attrs) {
+      var labels = attrs.ngToggleButtonLabels.split(','),
+          first = true;
+      if (labels.length !== 2) throw Error("labels !== 2");
+
+
+
+      scope.click = function () {
+        first = !first;
+        scope.ngToggleButton = "aaa"
+        setLabel();
+      }
+
+      console.log(scope.ngToggleButton, scope, scope.$eval(scope.ngToggleButton), $parse(scope.ngToggleButton)(scope))
+
+      setLabel();
+      function setLabel () {
+        scope.label = first ? labels[0] : labels[1];
+      }
+    }
+  }
 }]);
 
 module.directive('dashAheadInput', [function () {

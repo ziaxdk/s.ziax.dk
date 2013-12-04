@@ -9,6 +9,12 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
   setSelected(facetTypes, true);
+
+  _t.facetTermsOperator = "and";
+
+
+  $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
+
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
   _t.show = function (hit) {
