@@ -12,8 +12,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
 
   _t.facetTermsOperator = "and";
 
-
-  $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
+  // $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
 
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
@@ -50,7 +49,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
 
   function doSearch () {
     facetSearch.run(function () {
-      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: getSelectedFacet(facetTerms) }, types: getSelectedFacet(facetTypes) }).success(function (data) {
+      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes) }).success(function (data) {
         _t.result.hits = data.hits;
         filterFacet(facetTerms, data.facets.tags.terms);
       });

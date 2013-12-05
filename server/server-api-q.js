@@ -40,20 +40,20 @@ module.exports = function (esClient, app, core) {
       }
     }
 
-    if (tags && tags.length !== 0) {
+    if (tags && tags.terms.length !== 0) {
       deepExtend(query, {
         filter: {
           terms: {
-            tags: tags,
-            execution: 'and'
+            tags: tags.terms,
+            execution: tags.operator
           }
         },
         facets: {
           tags: {
             "facet_filter": {
               terms: {
-                tags: tags,
-                execution: 'and'
+                tags: tags.terms,
+                execution: tags.operator
               }
             }
           }

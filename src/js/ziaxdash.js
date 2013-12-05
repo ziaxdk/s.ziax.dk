@@ -175,8 +175,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
 
   _t.facetTermsOperator = "and";
 
-
-  $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
+  // $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
 
   // TODO: Consider moving to routeProvider
   // $http.put('/history', { q: $route.current.params.q });
@@ -213,7 +212,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
 
   function doSearch () {
     facetSearch.run(function () {
-      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: getSelectedFacet(facetTerms) }, types: getSelectedFacet(facetTypes) }).success(function (data) {
+      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes) }).success(function (data) {
         _t.result.hits = data.hits;
         filterFacet(facetTerms, data.facets.tags.terms);
       });
@@ -379,37 +378,6 @@ module.directive('ngSetFocus', [function () {
   };
 }]);
 
-module.directive('ngToggleButton', ['$parse', function ($parse) {
-  return {
-    restrict: 'A',
-    template: '<button type="button" class="btn btn-info btn-sm" ng-click="click()">{{label}} *{{ngToggleButton}}*</button>',
-    replace: true,
-    scope: {
-      ngToggleButton: '='
-    },
-    link: function (scope, element, attrs) {
-      var labels = attrs.ngToggleButtonLabels.split(','),
-          first = true;
-      if (labels.length !== 2) throw Error("labels !== 2");
-
-
-
-      scope.click = function () {
-        first = !first;
-        scope.ngToggleButton = "aaa"
-        setLabel();
-      }
-
-      console.log(scope.ngToggleButton, scope, scope.$eval(scope.ngToggleButton), $parse(scope.ngToggleButton)(scope))
-
-      setLabel();
-      function setLabel () {
-        scope.label = first ? labels[0] : labels[1];
-      }
-    }
-  }
-}]);
-
 module.directive('dashAheadInput', [function () {
   return function(scope, element, attrs) {
     console.log('link');
@@ -421,6 +389,29 @@ module.directive('dashAhead', [function () {
     restrict: 'E',
     link: function (scope, element, attrs, ctrl) {
       console.log(arguments);
+    }
+  }
+}]);
+
+module.directive('ngxToggleButton', ['$parse', function ($parse) {
+  return {
+    restrict: 'E',
+    template: '<button type="button" class="btn btn-info btn-sm" ng-click="click()">{{model}}</button>',
+    replace: true,
+    scope: {
+      model: '='
+    },
+    controller: function ($scope, $element, $attrs) {
+      var atl = $attrs.ngxToggleButtonLabels;
+      var labels = angular.isDefined(atl) ? atl.split(',') : "yes,no".split(','),
+          first = true;
+      $scope.$watch(function () { return first; }, function (n) {
+        $scope.model = first ? labels[0] : labels[1];
+      });
+      if (labels.length !== 2) throw Error("labels !== 2");
+      $scope.click = function () {
+        first = !first;
+      }
     }
   }
 }]);
