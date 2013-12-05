@@ -1,4 +1,4 @@
-module.directive('ngxToggleButton', ['$parse', function ($parse) {
+module.directive('ngxToggleButton', [function () {
   return {
     restrict: 'E',
     template: '<button type="button" class="btn btn-info btn-sm" ng-click="click()">{{model}}</button>',
@@ -6,7 +6,7 @@ module.directive('ngxToggleButton', ['$parse', function ($parse) {
     scope: {
       model: '='
     },
-    controller: function ($scope, $element, $attrs) {
+    controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
       var atl = $attrs.ngxToggleButtonLabels;
       var labels = angular.isDefined(atl) ? atl.split(',') : "yes,no".split(','),
           first = true;
@@ -17,6 +17,6 @@ module.directive('ngxToggleButton', ['$parse', function ($parse) {
       $scope.click = function () {
         first = !first;
       }
-    }
+    }]
   }
 }]);
