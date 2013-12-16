@@ -30,6 +30,11 @@ app.configure('development', function () {
   es = elasticsearch.createClient(Config.es.development);
   core = require('./server/server-core.js')(es, app);
   app.get('/api/scrape', Scraper.scrape);
+  // app.use(function (err, req, res, next) {
+  //   console.log('err', err);
+  //   res.send("OK");
+
+  // });
 });
 
 app.configure('production', function () {

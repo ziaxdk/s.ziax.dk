@@ -31,12 +31,10 @@ module.exports = function (esClient, app) {
     return val === code;
   }
 
-  self.escallback = function (req, res) {
+  self.escallback = function (req, res, next) {
     return function (err, data) {
       if (err) {
-        console.log(err);
-        res.send(self.ngSafe("err"));
-        return;
+        return next(err);
       }
       res.send(self.ngSafe(data));
     };

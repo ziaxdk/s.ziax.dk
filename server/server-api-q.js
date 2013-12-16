@@ -95,9 +95,10 @@ module.exports = function (esClient, app, core) {
 
   
   app.get('/api/q', function (req, res) {
+    // console.log(arguments.length, req.xhr);
     var data = req.query;
     var qObject = getTypes(data);
-    console.log(qObject);
+    // console.log(qObject);
     esClient.search({ _index: core.INDEX, _type: qObject.type }, build(qObject.q, null), core.escallback(req, res));
     esClient.index({ _index: core.INDEX, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) {
       // console.log('his', err, data);
