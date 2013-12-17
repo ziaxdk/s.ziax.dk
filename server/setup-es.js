@@ -21,7 +21,9 @@
 
     function ensureAuthenticated (req, res, next) {
       if (req.isAuthenticated()) { return next(); }
-      res.redirect('/loginerr');
+      // res.redirect('/loginerr');
+      res.status(403);
+      res.send();
     };
 
 
