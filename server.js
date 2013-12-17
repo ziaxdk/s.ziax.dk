@@ -8,8 +8,6 @@ var express = require('express')
     , Config = require('./_config.json')
     , Promise = require('promise')
     , es = null
-    , INDEX = "ziax"
-    , core
     ;
 
 var app = module.exports = express();
@@ -28,7 +26,8 @@ app.configure('development', function () {
   console.log("configure development");
   Config.me = 'http://localhost:8080/';
   es = elasticsearch.createClient(Config.es.development);
-  core = require('./server/server-core.js')(es, app);
+  // core = require('./server/server-core.js')(es, app);
+  require('./server/setup-es')(es, app);
   app.get('/api/scrape', Scraper.scrape);
   // app.use(function (err, req, res, next) {
   //   console.log('err', err);
@@ -42,7 +41,8 @@ app.configure('production', function () {
   console.log("configure production");
   Config.me = 'http://s.ziax.dk/';
   es = elasticsearch.createClient(Config.es.production);
-  core = require('./server/server-core.js')(es, app);
+  // core = require('./server/server-core.js')(es, app);
+  require('./server/setup-es')(es, app);
   app.get('/api/scrape', Scraper.scrape);
 });
 

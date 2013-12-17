@@ -1,9 +1,9 @@
 module.exports = function (esClient, app, core) {
   var deepExtend = require('deep-extend'),
-      _ = require('underscore');
-  var types = ['link', 'place', 'article'];
+      _ = require('underscore'),
+      utils2 = require('./utils2'),
+      esCommon = require('./es-common');
 
-  
   function build (q, tags) {
     var query = {
       "query": {
@@ -61,7 +61,7 @@ module.exports = function (esClient, app, core) {
       });
     }
 
-    // console.log(query);
+    // utils2.log(query);
 
     return query;
   };
@@ -71,17 +71,17 @@ module.exports = function (esClient, app, core) {
     if (q.indexOf(':') === -1) {
       return {
         q: q,
-        type: types.join()
+        type: esCommon.types.join()
       }
     }
 
-    var type = _.find(types, function (t) {
+    var type = _.find(esCommon.types, function (t) {
       var r = new RegExp('^_' + t + ':');
       return r.test(data.q);
     });
     if (!type) return {
         q: q,
-        type: types.join()
+        type: esCommon.types.join()
     }
     
     q = q.substring(q.indexOf(':') + 1, q.length);
@@ -94,27 +94,22 @@ module.exports = function (esClient, app, core) {
   }
 
   
-  app.get('/api/q', function (req, res) {
-    // console.log(arguments.length, req.xhr);
+  app.get('/api/q', function (req) {
     var data = req.query;
     var qObject = getTypes(data);
-    // console.log(qObject);
-    esClient.search({ _index: core.INDEX, _type: qObject.type }, build(qObject.q, null), core.escallback(req, res));
-    esClient.index({ _index: core.INDEX, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) {
-      // console.log('his', err, data);
-    });
+    esClient.search({ _index: esCommon.index, _type: qObject.type }, build(qObject.q, null), esCommon.callback(arguments));
+    esClient.index({ _index: esCommon.index, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) { });
   });
 
-  app.post('/api/xq', function (req, res) {
+  app.post('/api/xq', function (req) {
     var data = req.body;
-    esClient.search({ _index: core.INDEX, _type: data.types.join() }, build(data.q, data.facets.tags), core.escallback(req, res));
+    var qObject = getTypes(data);
+    esClient.search({ _index: esCommon.index, _type: qObject.type }, build(qObject.q, data.facets.tags), esCommon.callback(arguments));
   });
 
-  app.post('/api/q', function (req, res) {
-    esClient.get({ _index: core.INDEX, _type: req.body.type, _id: req.body.id }, core.escallback(req, res));
-    esClient.update({ _index: core.INDEX, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) {
-      //console.log (err ? err : data);
-    });
+  app.post('/api/q', function (req) {
+    esClient.get({ _index: esCommon.index, _type: req.body.type, _id: req.body.id }, esCommon.callback(arguments));
+    esClient.update({ _index: esCommon.index, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) { });
   });
 
 };
