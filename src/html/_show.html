@@ -1,11 +1,26 @@
 <div class="col-md-12">
-  <h5>{{ShowCtrl.Result.source.header}}</h5>
-  <div ng-bind-html="ShowCtrl.Result.source.content|textile"></div>
+  <p>
+    <h4>{{ShowCtrl.Result.source.header}}</h4>
+  </p>
+
+  <p>
+    <ul class="list-group facets clearfix">
+      <li ng-repeat="hit in ShowCtrl.Result.source.tags track by hit">
+        <button class="btn btn-sm" ng-class="{'btn-default': false, 'btn-primary': true}">{{hit}}</button>
+      </li>
+    </ul>
+  </p>
+
+
+
+  <p ng-bind-html="ShowCtrl.Result.source.content|textile"></p>
 
   <div ng-if="ShowCtrl.Result.type == 'place'">
     <div style="height: 500px" dash-leaflet="ShowCtrl.Result.source.location.leaflet" dash-leaflet-readonly="true"></div>
 
   </div>
+
+
 
 
 </div>
