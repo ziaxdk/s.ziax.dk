@@ -73,7 +73,7 @@ module.exports = function (grunt) {
           'build/src/css/ziaxdash.all.min.css': [
             'build/src/css/animate.min.css',
             'build/src/css/leaflet.min.css',
-            'build/src/css/leaflet.min.css',
+            'build/src/css/ziaxdash.min.css',
             'build/src/css/leaflet-awesome-markers.min.css'
             // 'build/src/css/ng-trans.min.css'
           ]
@@ -281,7 +281,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build_css', [ 'less:build', 'cssmin:build', 'concat:build_css' ]);
   grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
-  grunt.registerTask('build', ['clean:build', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', 'removelogging:dist', 'clean:build_post' ]);
+  grunt.registerTask('build', ['clean:build', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', /*'removelogging:dist',*/ 'clean:build_post' ]);
 
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
 
