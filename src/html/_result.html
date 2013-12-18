@@ -29,8 +29,8 @@
       </div>
       <a href="javascript:;" ng-click="ResultCtrl.show(hit)">
         <h4 class="list-group-item-heading">{{hit.source.header}}</h4>
-        <p class="list-group-item-text">{{hit.source.content}}</p>
       </a>
+      <p class="list-group-item-text">{{hit.source.content|textile|html:25}}</p>
     </div>
   </div>
 
