@@ -151,6 +151,17 @@ module.exports = function (grunt) {
         ]
       }
     },
+    removelogging: {
+      dist: {
+        src: "build/src/js/ziaxdash.all.min.js",
+        dest: "build/src/js/ziaxdash.all.min.js",
+
+        options: {
+          // see below for options. this is optional.
+        }
+      }
+    },
+
 
     // deploy to www.ziax.dk
     compress: {
@@ -258,6 +269,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-htmlrefs');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks("grunt-remove-logging");
   // grunt.loadTasks('lib/tasks/grunt-elasticsearch.js');
   grunt.loadTasks('lib/tasks');
 
@@ -269,7 +281,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build_css', [ 'less:build', 'cssmin:build', 'concat:build_css' ]);
   grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
-  grunt.registerTask('build', ['clean:build', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', 'clean:build_post' ]);
+  grunt.registerTask('build', ['clean:build', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', 'removelogging:dist', 'clean:build_post' ]);
 
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
 
