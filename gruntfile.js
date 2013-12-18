@@ -46,7 +46,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            src: ['build/src/js/*.js'],
+            src: ['build/src/js/*.js', 'build/src/js/lib-ext/*.js'],
             ext: '.min.js'
           }
         ]
@@ -63,6 +63,7 @@ module.exports = function (grunt) {
             'build/src/js/lib/textile.min.js',
             'build/src/js/lib/moment.min.js',
             'build/src/js/lib/leaflet.min.js',
+            'build/src/js/lib-ext/leaflet-awesome-markers.min.js',
             'build/src/js/ziaxdash.min.js'
           ]
         }

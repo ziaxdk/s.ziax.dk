@@ -28,7 +28,8 @@ module.directive('dashLeafletMarker', ['$parse', function ($parse) {
     { name: 'coffee', color: 'darkred' },
     { name: 'shopping-cart', color: 'darkgreen' },
     { name: 'eye', color: 'blue' },
-    { name: 'camera', color: 'orange' }
+    { name: 'camera', color: 'orange' },
+    { name: 'home', color: 'red' }
   ];
   return {
     restrict: 'E',
