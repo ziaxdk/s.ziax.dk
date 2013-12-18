@@ -109,8 +109,8 @@ Jasmine, the end-to-end test uses APIs of <a href="guide/dev_guide.e2e-testing">
 end-to-end tests! Use <code>./scripts/e2e-test.sh</code> script for that. End-to-end tests are slow, so unlike
 with unit tests, Karma will exit after the test run and will not automatically rerun the test
 suite on every file change. To rerun the test suite, execute the <code>e2e-test.sh</code> script again.</p>
-<p>Note: You must ensure you&#39;ve installed karma-ng-scenario prior to running the <code>e2e-test.sh</code> script.
-You can do this by issuing <code>npm install karma-ng-scenario</code> into your terminal.</p>
+<p>Note: You must ensure you&#39;ve installed the karma-ng-scenario framework plugin prior to running the
+<code>e2e-test.sh</code> script. You can do this by issuing <code>npm install</code> into your terminal.</p>
 <p>This test verifies that the search box and the repeater are correctly wired together. Notice how
 easy it is to write end-to-end tests in Angular. Although this example is for a simple test, it
 really is that easy to set up any functional, readable, end-to-end test.</p>
@@ -128,7 +128,7 @@ model lives in the scope, defined by the <code>ng-controller=&quot;PhoneListCtrl
 <p>If you want to bind to the query model from the <code>&lt;title&gt;</code> element, you must <strong>move</strong> the
 <code>ngController</code> declaration to the HTML element because it is the common parent of both the body
 and title elements:</p>
-<pre><code>    &lt;html ng-app ng-controller=&quot;PhoneListCtrl&quot;&gt;</code></pre>
+<pre><code>    &lt;html ng-app=&quot;phonecatApp&quot; ng-controller=&quot;PhoneListCtrl&quot;&gt;</code></pre>
 <p>Be sure to <strong>remove</strong> the <code>ng-controller</code> declaration from the body element.</p>
 <p>While using double curlies works fine within the title element, you might have noticed that
 for a split second they are actually displayed to the user while the page is loading. A better

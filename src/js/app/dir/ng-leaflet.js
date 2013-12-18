@@ -2,21 +2,40 @@ module.directive('dashLeaflet', ['$parse', function ($parse) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
-      var map = L.map(element[0], {
-        center: [0, 0],
-        zoom: 12
+      var icons = [
+            { name: 'cutlery', color: 'cadetblue' },
+            { name: 'coffee', color: 'darkred' },
+            { name: 'shopping-cart', color: 'darkgreen' },
+            { name: 'eye', color: 'blue' },
+            { name: 'camera', color: 'orange' },
+            { name: 'home', color: 'red' }
+          ],
+          map = L.map(element[0], { center: [0, 0], zoom: 12 }),
+          bigMapGet = $parse(attrs.dashLeafletBig),
+          bigMapSet = bigMapGet.assign,
+          bigMapEnabled = bigMapGet(scope),
+          latLonGet = $parse(attrs.dashLeaflet),
+          latLonSet = latLonGet.assign,
+          latlon = [0, 0],
+          leafletMarker = L.marker(latlon, { draggable: true, icon: L.AwesomeMarkers.icon({ icon: 'fa-spinner', markerColor: 'darkpurple', prefix: 'fa' }) });
+
+      // <!-- 'red', 'darkred', 'orange', 'green', 'darkgreen', 'blue', 'purple', 'darkpuple', 'cadetblue' -->
+      leafletMarker.on('dragend', function (evt) {
+        var ll = this.getLatLng();
+        scope.$evalAsync(function () {
+          latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
+        })
       });
-      L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{
-        attribution:''
-      }).addTo(map);
+      if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
+        leafletMarker.options.draggable = false;
+      }
 
-      var bigMapGet = $parse(attrs.dashLeafletBig);
-      var bigMapSet = bigMapGet.assign;
+      var layer = L.featureGroup().addTo(map);
+      L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
+      leafletMarker.addTo(layer);
 
 
-      var v = bigMapGet(scope);
-      if (angular.isDefined(v) && typeof v === 'boolean') {
-
+      if (angular.isDefined(bigMapEnabled) && typeof bigMapEnabled === 'boolean') {
         var MyControl = L.Control.extend({
             options: {
                 position: 'topright'
@@ -34,53 +53,31 @@ module.directive('dashLeaflet', ['$parse', function ($parse) {
 
                 L.DomEvent
                   .on(link, 'click', function () {
-                    var v = bigMapGet(scope);
                     scope.$evalAsync(function () {
-                      bigMapSet(scope, !v);
+                      bigMapSet(scope, !bigMapEnabled);
                     });
                   });
-
                 return container;
             }
         });
-
         map.addControl(new MyControl());
       }
 
-
-
-      var layer = L.featureGroup().addTo(map);
-
-      var latLonGet = $parse(attrs.dashLeaflet);
-      var latLonSet = latLonGet.assign;
-
-
-      scope.$watch(function () {
-        return scope.$eval(attrs.dashLeaflet);
-      }, function (value) {
+      scope.$watch(function () { return scope.$eval(attrs.dashLeaflet) }, function (value) {
         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
-          var latlon = value.split(',');
-          layer.clearLayers();
-  
-          var redMarker = L.AwesomeMarkers.icon({
-            icon: 'fa-cutlery',
-            markerColor: 'red',
-            prefix: 'fa'
-          });
-
-          var m = L.marker(latlon, { draggable: true, icon: redMarker });
-          m.on('dragend', function (evt) {
-          var ll = this.getLatLng();
-          scope.$evalAsync(function () {
-            latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-          })
-        })
-        if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
-          m.options.draggable = false;
-        }
-        m.addTo(layer);
-        map.setView(latlon);
+          latlon = value.split(',');
+          leafletMarker.setLatLng(latlon);
+          map.setView(latlon);
       }});
+
+      attrs.$observe('dashLeafletIcon', function (val) {
+        if (!val) return;
+        icons.forEach(function (i) {
+          if (i.name === val) {
+            leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + i.name, markerColor: i.color, prefix: 'fa' }));
+          }
+        });
+      });
     }
   }; 
 }]);

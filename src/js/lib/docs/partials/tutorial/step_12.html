@@ -32,7 +32,7 @@ as the <code>angular-animate.js</code> file. The animation module, known as <cod
 <pre class="prettyprint linenums">
 ...
   &lt;!-- jQuery is used for JavaScript animations (include this before angular.js) --&gt;
-  &lt;script src="http://code.jquery.com/jquery-2.0.3.min.js"&gt;&lt;/script&gt;
+  &lt;script src="http://code.jquery.com/jquery-1.10.2.min.js"&gt;&lt;/script&gt;
 
   &lt;!-- required module to enable animation support in AngularJS --&gt;
   &lt;script src="lib/angular/angular-animate.js"&gt;&lt;/script&gt;
@@ -44,6 +44,10 @@ as the <code>angular-animate.js</code> file. The animation module, known as <cod
   &lt;link rel="stylesheet" href="css/animations.css"&gt;
 ...
 </pre>
+<div class="alert alert-error">
+  <strong>Important:</strong> Be sure to use jQuery version <code>1.10.x</code>. AngularJS does not yet support jQuery <code>2.x</code>.
+</div>
+
 <p>Animations can now be created within the CSS code (<code>animations.css</code>) as well as the JavaScript code (<code>animations.js</code>).
 But before we start, let&#39;s create a new module which uses the ngAnimate module as a dependency just like we did before
 with <code>ngResource</code>.</p>
@@ -128,7 +132,7 @@ First let&#39;s add an extra CSS class to our repeated element so that we can ho
 }
 </pre>
 <p>As you can see our <code>phone-listing</code> CSS class is combined together with the animation hooks that occur when items are
-inserted info and removed from the list:</p>
+inserted into and removed from the list:</p>
 <ul>
 <li>The <code>ng-enter</code> class is applied to the element when a new phone is added to the list and rendered on the page.</li>
 <li>The <code>ng-move</code> class is applied when items are moved around in the list.</li>
@@ -330,10 +334,6 @@ angular.module('phonecatAnimations', ['ngAnimate'])
 isn&#39;t required to do JavaScript animations with AngularJS, but we&#39;re going to use it because writing
 your own JavaScript animation library is beyond the scope of this tutorial. For more on
 <code>jQuery.animate</code>, see the <a href="http://api.jquery.com/animate/">jQuery documentation</a>.</p>
-<div class="alert alert-error">
-  <strong>Important:</strong> Be sure to use jQuery version <code>1.10.x</code>. AngularJS does not yet support jQuery <code>2.x</code>.
-</div>
-
 <p>The <code>addClass</code> and <code>removeClass</code> callback functions are called whenever an a class is added or removed
 on the element that contains the class we registered, which is in this case <code>.phone</code>. When the <code>.active</code>
 class is added to the element (via the <code>ng-class</code> directive) the <code>addClass</code> JavaScript callback will

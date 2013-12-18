@@ -8,8 +8,8 @@ module.directive('dashLeafletMarkers', ['$parse', function ($parse) {
     controller: ['$scope', function ($scope) {
       // console.log('done');
       this.setIcon = function (icon) {
-        console.log('setIcon', icon);
         _iconS($scope, icon);
+        // console.log(icon)
       }
 
     }],
@@ -33,12 +33,12 @@ module.directive('dashLeafletMarker', ['$parse', function ($parse) {
   ];
   return {
     restrict: 'E',
-    template: '<div class="awesome-marker-icon-{{color}} awesome-marker" style="position: relative; float: left" ng-click="click()"><i class="fa fa-{{icon}}" style="color: white"></i></div>',
+    template: '<a href="javascript:;" ng-click="click()"><div class="awesome-marker-icon-{{color}} awesome-marker" style="position: relative; float: left"><i class="fa fa-{{icon}}" style="color: white"></i></div></a>',
     replace: true,
     scope: {
 
     },
-    require: '^dashLeafletMarkers',
+    require: '?^dashLeafletMarkers',
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
 
       $scope.click = function (icon) {

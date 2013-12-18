@@ -50,7 +50,7 @@ the element attribute.</p>
 <p>We also added phone images next to each record using an image tag with the <a href="api/ng.directive:ngSrc"><code>ngSrc</code></a> directive. That directive prevents the
 browser from treating the angular <code>{{ expression }}</code> markup literally, and initiating a request to
 invalid url <code>http://localhost:8000/app/{{phone.imageUrl}}</code>, which it would have done if we had only
-specified an attribute binding in a regular <code>src</code> attribute (<code>&lt;img  class=&quot;diagram&quot; src=&quot;{{phone.imageUrl}}&quot;&gt;</code>).
+specified an attribute binding in a regular <code>src</code> attribute (<code>&lt;img src=&quot;{{phone.imageUrl}}&quot;&gt;</code>).
 Using the <code>ngSrc</code> directive prevents the browser from making an http request to an invalid location.</p>
 <h3 id="test">Test</h3>
 <p><strong><code>test/e2e/scenarios.js</code></strong>:
