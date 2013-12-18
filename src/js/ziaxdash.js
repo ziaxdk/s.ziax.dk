@@ -107,6 +107,7 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
     type: 'article'
   };
   _t.bigMap = false;
+  _t.mapIcon = 'cutlery';
 
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;
@@ -288,6 +289,65 @@ module.directive('ngFocusBlurClass', [function () {
   };
 }]);
 
+module.directive('dashLeafletMarkers', ['$parse', function ($parse) {
+  var _iconG, _iconS;
+  return {
+    restrict: 'E',
+    template: '<div class="clearfix" ng-transclude></div>',
+    replace: true,
+    transclude: true,
+    controller: ['$scope', function ($scope) {
+      // console.log('done');
+      this.setIcon = function (icon) {
+        console.log('setIcon', icon);
+        _iconS($scope, icon);
+      }
+
+    }],
+    link: function(scope, element, attrs) {
+      _iconG = $parse(attrs.icon);
+      _iconS = _iconG.assign;
+
+    }
+  }
+}]);
+
+module.directive('dashLeafletMarker', ['$parse', function ($parse) {
+  var parent,
+   icons = [
+    { name: 'cutlery', color: 'cadetblue' },
+    { name: 'coffee', color: 'darkred' },
+    { name: 'shopping-cart', color: 'darkgreen' },
+    { name: 'eye', color: 'blue' },
+    { name: 'camera', color: 'orange' }
+  ];
+  return {
+    restrict: 'E',
+    template: '<div class="awesome-marker-icon-{{color}} awesome-marker" style="position: relative; float: left" ng-click="click()"><i class="fa fa-{{icon}}" style="color: white"></i></div>',
+    replace: true,
+    scope: {
+
+    },
+    require: '^dashLeafletMarkers',
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+
+      $scope.click = function (icon) {
+        parent.setIcon($scope.icon);
+      }
+    }],
+    link: function(scope, element, attrs, ctrl) {
+      parent = ctrl;
+      icons.forEach(function (v) {
+        if (v.name === attrs.icon) {
+          scope.icon = v.name;
+          scope.color = v.color;
+
+        }
+      });
+      // console.log(arguments);
+    }
+  }
+}]);
 module.directive('dashLeaflet', ['$parse', function ($parse) {
   return {
     restrict: 'A',
@@ -351,23 +411,26 @@ module.directive('dashLeaflet', ['$parse', function ($parse) {
         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
           var latlon = value.split(',');
           layer.clearLayers();
-          var m = L.marker(latlon, { draggable: true });
-            m.on('dragend', function (evt) {
-            var ll = this.getLatLng();
-            scope.$evalAsync(function () {
-              latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-            })
-            // scope.$apply(function () {
-            //   latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-            // });
+  
+          var redMarker = L.AwesomeMarkers.icon({
+            icon: 'fa-cutlery',
+            markerColor: 'red',
+            prefix: 'fa'
+          });
+
+          var m = L.marker(latlon, { draggable: true, icon: redMarker });
+          m.on('dragend', function (evt) {
+          var ll = this.getLatLng();
+          scope.$evalAsync(function () {
+            latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
           })
-          if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
-            m.options.draggable = false;
-          }
-          m.addTo(layer);
-          map.setView(latlon);
+        })
+        if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
+          m.options.draggable = false;
         }
-      });
+        m.addTo(layer);
+        map.setView(latlon);
+      }});
     }
   }; 
 }]);

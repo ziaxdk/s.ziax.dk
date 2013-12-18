@@ -8,6 +8,7 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
     type: 'article'
   };
   _t.bigMap = false;
+  _t.mapIcon = 'cutlery';
 
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;

@@ -61,23 +61,26 @@ module.directive('dashLeaflet', ['$parse', function ($parse) {
         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
           var latlon = value.split(',');
           layer.clearLayers();
-          var m = L.marker(latlon, { draggable: true });
-            m.on('dragend', function (evt) {
-            var ll = this.getLatLng();
-            scope.$evalAsync(function () {
-              latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-            })
-            // scope.$apply(function () {
-            //   latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-            // });
+  
+          var redMarker = L.AwesomeMarkers.icon({
+            icon: 'fa-cutlery',
+            markerColor: 'red',
+            prefix: 'fa'
+          });
+
+          var m = L.marker(latlon, { draggable: true, icon: redMarker });
+          m.on('dragend', function (evt) {
+          var ll = this.getLatLng();
+          scope.$evalAsync(function () {
+            latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
           })
-          if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
-            m.options.draggable = false;
-          }
-          m.addTo(layer);
-          map.setView(latlon);
+        })
+        if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
+          m.options.draggable = false;
         }
-      });
+        m.addTo(layer);
+        map.setView(latlon);
+      }});
     }
   }; 
 }]);
