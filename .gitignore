@@ -1,4 +1,5 @@
 node_modules/
+es/server/
 zip/
 build/
 _config.json
