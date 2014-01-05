@@ -3,7 +3,10 @@
 
   function callback (args) {
     return function (err, data) {
-      if (err) return args[2](err);
+      if (err) {
+        console.log(err);
+        return args[2](err);
+      }
       args[1].send(utils.ngSafe(data));
     }
   }

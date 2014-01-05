@@ -34,8 +34,16 @@
   function validateCode (code) {
     var d = new Date();
     var val = d.getDate() + '' + d.getDate();
+    console.log(code, val);
     return val === code;
   }
+
+  function ensureAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    // res.redirect('/loginerr');
+    res.status(403);
+    res.send();
+  };
 
 
 
@@ -44,7 +52,8 @@
   var obj = {
     log: log,
     ngSafe: ngSafe,
-    validateCode: validateCode
+    validateCode: validateCode,
+    ensureAuthenticated: ensureAuthenticated
   };
 
   if (typeof module !== 'undefined' && module.exports) {

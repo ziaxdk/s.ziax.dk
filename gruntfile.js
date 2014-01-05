@@ -185,7 +185,7 @@ module.exports = function (grunt) {
     // Dev
     express: {
       options: {
-        port: 8080
+        port: 8081
       },
       dev: {
         options: {

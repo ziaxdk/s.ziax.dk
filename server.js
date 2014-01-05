@@ -3,7 +3,8 @@ var express = require('express')
     , http = require('http')
     , elasticsearch = require('elasticsearch')
     , passport = require('passport')
-    , GoogleStrategy = require('passport-google').Strategy
+    // , GoogleStrategy = require('passport-google').Strategy
+    , GoogleStrategy2 = require('passport-google-oauth').OAuth2Strategy
     , _ = require('underscore')
     , Config = require('./_config.json')
     , Promise = require('promise')
@@ -22,9 +23,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.configure('development', function () {
-  var Scraper = require('./server/server-scrape-dev.js');
+  // var Scraper = require('./server/server-scrape-dev.js');
+  var Scraper = require('./server/server-scrape-prod.js');
   console.log("configure development");
-  Config.me = 'http://localhost:8080/';
+  Config.me = 'http://localhost:8081/';
   es = elasticsearch.createClient(Config.es.development);
   // core = require('./server/server-core.js')(es, app);
   require('./server/setup-es')(es, app);
@@ -46,21 +48,16 @@ app.configure('production', function () {
   app.get('/api/scrape', Scraper.scrape);
 });
 
-passport.use(new GoogleStrategy(
-  {
-    returnURL: Config.me +'api/auth/google/callback',
-    realm: Config.me,
-    stateless: true
+passport.use(new GoogleStrategy2({
+    clientID: '231761169549-j0ruk7pr12eqsdqbivrvoc5a29o29s55.apps.googleusercontent.com',
+    clientSecret: 'eK4lxm-VGUUD1xCwexTKGbJo',
+    callbackURL: Config.me + 'api/auth/google/callback'
   },
-  function(identifier, profile, done) {
+  function(accessToken, refreshToken, profile, done) {
     if (profile.emails[0].value !== Config.whoami) return done(null, false);
-    console.log(profile);
-    return done(null , { id: identifier, name: profile.displayName });
+    return done(null , { id: profile.id, name: profile.displayName });
   }
 ));
-
-app.get('/api/auth/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
-app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) { res.redirect('/'); });
 
 passport.serializeUser(function(user, done) {
   done(null, JSON.stringify(user));
@@ -68,6 +65,36 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, JSON.parse(user));
 });
+
+app.get('/api/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
+app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) { res.redirect('/'); });
+
+/* * */
+
+// passport.use(new GoogleStrategy(
+//   {
+//     returnURL: Config.me +'api/auth/google/callback',
+//     realm: Config.me,
+//     stateless: true
+//   },
+//   function(identifier, profile, done) {
+//     if (profile.emails[0].value !== Config.whoami) return done(null, false);
+//     console.log(profile);
+//     return done(null , { id: identifier, name: profile.displayName });
+//   }
+// ));
+
+// app.get('/api/auth/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
+// app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) { res.redirect('/'); });
+
+// passport.serializeUser(function(user, done) {
+//   done(null, JSON.stringify(user));
+// });
+// passport.deserializeUser(function(user, done) {
+//   done(null, JSON.parse(user));
+// });
+
+/* * */
 
 // app.get('/suggest', function (req, res) {
 //   es.suggest({_index: INDEX}, {
@@ -93,8 +120,7 @@ passport.deserializeUser(function(user, done) {
 // });
 
 app.use(express.static(__dirname + "/src"));
-// var port = process.env.PORT || 80;
-var port = 8080;
+var port = process.env.PORT || 8080;
 theServer.listen(port, function () {
   console.log("Running on " + port);
 });

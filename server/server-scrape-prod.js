@@ -1,5 +1,5 @@
 (function () {
-  var Utils = require('./utils'),
+  var Utils = require('./utils2'),
       Nodeio = require('node.io'),
       Promise = require('promise')
       ;

@@ -19,16 +19,7 @@
       }, esCommon.callback(arguments));
     });
 
-    function ensureAuthenticated (req, res, next) {
-      if (req.isAuthenticated()) { return next(); }
-      // res.redirect('/loginerr');
-      res.status(403);
-      res.send();
-    };
-
-
-
-    app.get('/api/me', ensureAuthenticated, function (req, res) {
+    app.get('/api/me', utils.ensureAuthenticated, function (req, res) {
       res.send(utils.ngSafe(req.user));
     });
 

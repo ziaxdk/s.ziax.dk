@@ -1,16 +1,8 @@
-module.directive('dashLeaflet', ['$parse', function ($parse) {
+module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, PlaceService) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
-      var icons = [
-            { name: 'cutlery', color: 'cadetblue' },
-            { name: 'coffee', color: 'darkred' },
-            { name: 'shopping-cart', color: 'darkgreen' },
-            { name: 'eye', color: 'blue' },
-            { name: 'camera', color: 'orange' },
-            { name: 'home', color: 'red' }
-          ],
-          map = L.map(element[0], { center: [0, 0], zoom: 12 }),
+      var map = L.map(element[0], { center: [0, 0], zoom: 12 }),
           bigMapGet = $parse(attrs.dashLeafletBig),
           bigMapSet = bigMapGet.assign,
           bigMapEnabled = bigMapGet(scope),
@@ -72,11 +64,8 @@ module.directive('dashLeaflet', ['$parse', function ($parse) {
 
       attrs.$observe('dashLeafletIcon', function (val) {
         if (!val) return;
-        icons.forEach(function (i) {
-          if (i.name === val) {
-            leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + i.name, markerColor: i.color, prefix: 'fa' }));
-          }
-        });
+        var poi = PlaceService.getPoi(val)
+        leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
       });
     }
   }; 

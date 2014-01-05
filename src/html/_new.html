@@ -123,14 +123,15 @@
     <!-- <pre>{{NewCtrl.form|json}}</pre> -->
 
     <div class="row">
-      <div class="col-md-11">
+      <div class="col-md-12">
         <div class="form-group">
-          <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid||!NewCtrl.form.code">Save <span class="glyphicon glyphicon-plus"></span></button>
+          <!-- <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid||!NewCtrl.form.code">Save <span class="glyphicon glyphicon-plus"></span></button> -->
+          <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid">Save <span class="glyphicon glyphicon-plus"></span></button>
         </div>
       </div>
-      <div class="col-md-1">
+      <!-- <div class="col-md-1">
         <input type="password" name="code" class="form-control" id="idCode" ng-model="NewCtrl.form.code" required>
-      </div>
+      </div> -->
     </div>
 
     <p>Preview:</p>

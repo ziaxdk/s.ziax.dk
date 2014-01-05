@@ -10,15 +10,15 @@
     });
 
 
-    app.post('/api/drive', function (req, res) {
+    app.post('/api/drive', utils.ensureAuthenticated, function (req, res) {
       var save,
           src = req.body,
           ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-      if (!utils.validateCode(src.code)) {
-        res.send("err");
-        return;
-      }
+      // if (!utils.validateCode(src.code)) {
+      //   res.send("err validateCode");
+      //   return;
+      // }
       save = {
         header: src.header,
         content: src.content,

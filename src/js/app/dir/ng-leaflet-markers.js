@@ -1,4 +1,4 @@
-module.directive('dashLeafletMarkers', ['$parse', function ($parse) {
+module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($parse, PlaceService) {
   var _iconG, _iconS;
   return {
     restrict: 'E',
@@ -21,16 +21,8 @@ module.directive('dashLeafletMarkers', ['$parse', function ($parse) {
   }
 }]);
 
-module.directive('dashLeafletMarker', ['$parse', function ($parse) {
-  var parent,
-   icons = [
-    { name: 'cutlery', color: 'cadetblue' },
-    { name: 'coffee', color: 'darkred' },
-    { name: 'shopping-cart', color: 'darkgreen' },
-    { name: 'eye', color: 'blue' },
-    { name: 'camera', color: 'orange' },
-    { name: 'home', color: 'red' }
-  ];
+module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($parse, PlaceService) {
+  var parent;
   return {
     restrict: 'E',
     template: '<a href="javascript:;" ng-click="click()"><div class="awesome-marker-icon-{{color}} awesome-marker" style="position: relative; float: left"><i class="fa fa-{{icon}}" style="color: white"></i></div></a>',
@@ -46,15 +38,10 @@ module.directive('dashLeafletMarker', ['$parse', function ($parse) {
       }
     }],
     link: function(scope, element, attrs, ctrl) {
+      var poi = PlaceService.getPoi(attrs.icon);
+      scope.icon = poi.name;
+      scope.color = poi.color;
       parent = ctrl;
-      icons.forEach(function (v) {
-        if (v.name === attrs.icon) {
-          scope.icon = v.name;
-          scope.color = v.color;
-
-        }
-      });
-      // console.log(arguments);
     }
   }
 }]);
