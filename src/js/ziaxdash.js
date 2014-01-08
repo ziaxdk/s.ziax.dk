@@ -1,7 +1,7 @@
 (function () {
 var module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);
 // Config
-module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, $sceDelegateProvider) {
+module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider) {
   $routeProvider.when('/', {
       templateUrl: "/html/_index.html",
       resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
@@ -35,6 +35,25 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
 
   L.Icon.Default.imagePath = "/css/images/"
 
+
+  // $provide.factory('403', ['$q', function($q) {
+  //     return {
+  //       'responseError': function(rejection) {
+  //         console.log('responseError', rejection);
+  //         if (rejection.status === 403) {
+  //           console.log('not auth')
+  //         }
+
+  //         // // do something on error
+  //         // if (canRecover(rejection)) {
+  //         //   return responseOrNewPromise
+  //         // }
+  //         return $q.reject(rejection);
+  //       }
+  //     };
+  //   }]);
+  // $httpProvider.interceptors.push('403');
+
 }]);
 
 module.controller('IndexController', ['History', 'LocationService', '$location', '$scope',
@@ -58,8 +77,8 @@ module.controller('IndexController', ['History', 'LocationService', '$location',
   });
 }]);
 
-module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', 'UserService', 'RestDrive', 
-  function ($scope, $rootScope, $location, $routeParams, UserService, RestDrive) {
+module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'UserService', 'RestDrive', 
+  function ($scope, $rootScope, $location, $routeParams, $window, UserService, RestDrive) {
   var _t = this;
   _t.hits = null;
   _t.me = UserService.me;
@@ -78,7 +97,9 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   };
 
   _t.newLogin = function () {
-    _t.iframeUrl = "/api/auth/google"
+    var nw = $window.open('/api/auth/google', 'popupGoog', 'height=600,width=450');
+    if ($window.focus) nw.focus();
+    console.log('b');
   };
 
   RestDrive.query(null, function (res) {
@@ -97,7 +118,8 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '$route', function ($scope, $http, RestDrive, Delayer, $route) {
+module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
+  function ($scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
   var initQ = $route.current.params.q;
@@ -108,6 +130,7 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
   };
   _t.bigMap = false;
   _t.mapIcon = 'cutlery';
+  _t.mapIcons = PlaceService.poi;
 
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;
@@ -150,7 +173,8 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
       header: _t.form.header,
       content: _t.form.content,
       url: _t.form.url,
-      type: _t.form.type,
+      type: PlaceService.getPoi(_t.mapIcon).type,
+      icon: _t.mapIcon,
       location: _t.form.location,
       tags: _t.form.tags ? _t.form.tags.split(' ') : [],
       onlyAuth: _t.form.onlyAuth,
@@ -158,7 +182,12 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
     };
 
     // console.log(obj);
-    RestDrive.save(obj);
+    // RestDrive.save(obj);
+    DocumentService.save(obj).then(function () {
+      console.log('ok', arguments);
+    }, function (err) {
+      MessageService.err(err.status, err.data);
+    });
   };
 }]);
 
@@ -453,6 +482,31 @@ module.directive('ngxToggleButton', [function () {
   }
 }]);
 
+module.directive('zMessage', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+  return {
+    restrict: 'A',
+    template: 
+    '<div class="z-msg" ng-show="enable">' +
+    '  <div class="container">' +
+    '    <div class="row">{{msg}}123</div>' +
+    '  </div>' +
+    '</div>',
+    replace: true,
+    scope: { },
+    link: function ($scope, $element, $attrs) {
+      $scope.msg = "foobar";
+      $rootScope.$on('err', function (event, data) {
+        $scope.msg = '(' + data.num + ') ' + data.msg;
+        $scope.enable = true;
+        $timeout(function () {
+          $scope.enable = false;
+        }, 2000);
+
+      })
+    }
+  }
+}]);
+
 module.factory('Delayer', ['$timeout', function ($timeout) {
   var delayer = function (delayInMs) {
     var canceler;
@@ -496,6 +550,17 @@ module.filter('textile', ['$sce', function ($sce) {
   };
 }]);
 
+module.service('DocumentService', ['$http', function ($http) {
+  function save(document) {
+    console.log('saving', document);
+    return $http.post('/api/document', document);
+  }
+
+  return {
+    save: save
+  };
+}]);
+
 module.service('LocationService', ['$window', '$rootScope', function ($window, $rootScope) {
 	var coords = {
     hasFix: false,
@@ -526,8 +591,19 @@ module.service('LocationService', ['$window', '$rootScope', function ($window, $
 	};
 }]);
 
+module.service('MessageService', ['$rootScope', function ($rootScope) {
+
+  function err(num, msg) {
+    $rootScope.$emit('err', { num: num, msg: msg });
+  }
+
+  return {
+    err: err
+  };
+}]);
+
 module.service('PlaceService', [function () {
-  function each (cb) {
+  function each(cb) {
     var len = poi.length;
     while (len--) {
       if (cb(poi[len])) return poi[len];
@@ -535,12 +611,12 @@ module.service('PlaceService', [function () {
   };
 
   var poi = [
-      { name: 'cutlery', color: 'cadetblue', title: 'Restaurant' },
-      { name: 'coffee', color: 'darkred', title: 'Coffee' },
-      { name: 'shopping-cart', color: 'darkgreen', title: 'Shopping' },
-      { name: 'eye', color: 'blue', title: 'Viewpoint' },
-      { name: 'camera', color: 'orange', title: 'Photography' },
-      { name: 'home', color: 'red', title: 'Hotel' }
+      { name: 'cutlery', type: 'cutlery', color: 'cadetblue', title: 'Restaurant' },
+      { name: 'coffee', type: 'coffee', color: 'darkred', title: 'Coffee' },
+      { name: 'shopping-cart', type: 'shopping-cart', color: 'darkgreen', title: 'Shopping' },
+      { name: 'eye', type: 'eye', color: 'blue', title: 'Viewpoint' },
+      { name: 'camera', type: 'camera', color: 'orange', title: 'Photography' },
+      { name: 'home', type: 'home', color: 'red', title: 'Hotel' }
     ],
   getPoi = function (name) {
     return each(function (poi) { return poi.name === name });

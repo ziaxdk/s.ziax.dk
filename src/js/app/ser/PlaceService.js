@@ -1,5 +1,5 @@
 module.service('PlaceService', [function () {
-  function each (cb) {
+  function each(cb) {
     var len = poi.length;
     while (len--) {
       if (cb(poi[len])) return poi[len];
@@ -7,12 +7,12 @@ module.service('PlaceService', [function () {
   };
 
   var poi = [
-      { name: 'cutlery', color: 'cadetblue', title: 'Restaurant' },
-      { name: 'coffee', color: 'darkred', title: 'Coffee' },
-      { name: 'shopping-cart', color: 'darkgreen', title: 'Shopping' },
-      { name: 'eye', color: 'blue', title: 'Viewpoint' },
-      { name: 'camera', color: 'orange', title: 'Photography' },
-      { name: 'home', color: 'red', title: 'Hotel' }
+      { name: 'cutlery', type: 'cutlery', color: 'cadetblue', title: 'Restaurant' },
+      { name: 'coffee', type: 'coffee', color: 'darkred', title: 'Coffee' },
+      { name: 'shopping-cart', type: 'shopping-cart', color: 'darkgreen', title: 'Shopping' },
+      { name: 'eye', type: 'eye', color: 'blue', title: 'Viewpoint' },
+      { name: 'camera', type: 'camera', color: 'orange', title: 'Photography' },
+      { name: 'home', type: 'home', color: 'red', title: 'Hotel' }
     ],
   getPoi = function (name) {
     return each(function (poi) { return poi.name === name });

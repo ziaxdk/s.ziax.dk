@@ -1,4 +1,5 @@
-module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '$route', function ($scope, $http, RestDrive, Delayer, $route) {
+module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
+  function ($scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
   var initQ = $route.current.params.q;
@@ -9,6 +10,7 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
   };
   _t.bigMap = false;
   _t.mapIcon = 'cutlery';
+  _t.mapIcons = PlaceService.poi;
 
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;
@@ -51,7 +53,8 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
       header: _t.form.header,
       content: _t.form.content,
       url: _t.form.url,
-      type: _t.form.type,
+      type: PlaceService.getPoi(_t.mapIcon).type,
+      icon: _t.mapIcon,
       location: _t.form.location,
       tags: _t.form.tags ? _t.form.tags.split(' ') : [],
       onlyAuth: _t.form.onlyAuth,
@@ -59,6 +62,11 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'Delayer', '
     };
 
     // console.log(obj);
-    RestDrive.save(obj);
+    // RestDrive.save(obj);
+    DocumentService.save(obj).then(function () {
+      console.log('ok', arguments);
+    }, function (err) {
+      MessageService.err(err.status, err.data);
+    });
   };
 }]);

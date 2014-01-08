@@ -1,5 +1,7 @@
 <div class="col-md-12">
 
+  <div class="alert alert-danger" ng-if="!MainCtrl.me.isAuth"><strong>Ohh!</strong> Cannot add new when unauthorized, sooo ....</div>
+
   <form role="form" ng-submit="NewCtrl.submit()" novalidate name="theForm">
     <div class="form-group" ng-class="{'has-error': theForm.q.$invalid }">
       <input type="text" name="q" class="form-control" id="idQ" placeholder="Enter something..." ng-model="NewCtrl.form.q" required>
@@ -34,12 +36,7 @@
             <textarea name="description" class="form-control" id="idContent" placeholder="Enter content..." style="min-height: 200px" ng-model="NewCtrl.form.content" required></textarea>
           </div>
           <dash-leaflet-markers icon="NewCtrl.mapIcon">
-            <dash-leaflet-marker icon="cutlery"></dash-leaflet-marker>
-            <dash-leaflet-marker icon="coffee"></dash-leaflet-marker>
-            <dash-leaflet-marker icon="shopping-cart"></dash-leaflet-marker>
-            <dash-leaflet-marker icon="eye"></dash-leaflet-marker>
-            <dash-leaflet-marker icon="camera"></dash-leaflet-marker>
-            <dash-leaflet-marker icon="home"></dash-leaflet-marker>
+            <dash-leaflet-marker ng-repeat="i in NewCtrl.mapIcons track by i.type" icon="{{i.name}}"></dash-leaflet-marker>
           </dash-leaflet-markers>
         </div>
         <div class="col-md-3">
@@ -126,7 +123,7 @@
       <div class="col-md-12">
         <div class="form-group">
           <!-- <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid||!NewCtrl.form.code">Save <span class="glyphicon glyphicon-plus"></span></button> -->
-          <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid">Save <span class="glyphicon glyphicon-plus"></span></button>
+          <button type="submit" class="btn btn-primary" ng-disabled="theForm.$invalid||!MainCtrl.me.isAuth">Save <span class="glyphicon glyphicon-plus"></span></button>
         </div>
       </div>
       <!-- <div class="col-md-1">

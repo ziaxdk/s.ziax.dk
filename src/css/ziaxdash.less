@@ -99,7 +99,26 @@ body {
     display: block !important;
     // animation-delay:2s;
     // -webkit-animation-delay:2s;
-     animation: bounceInDown 1000ms;
+    animation: bounceInDown 1000ms;
     -webkit-animation: bounceInDown 1000ms;
   }
 }
+.z-msg {
+  &.ng-hide-add {
+    display: block !important;
+    animation: bounceInDown 800ms;
+    -webkit-animation: bounceInUp 800ms;
+  }
+  &.ng-hide-remove {
+    display: block !important;
+    animation: bounceInUp 800ms;
+    -webkit-animation: bounceInUp 800ms;
+  }
+  position: fixed;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: #bbb;
+}
+

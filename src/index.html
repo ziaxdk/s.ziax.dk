@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/leaflet-awesome-markers.css">
   <!-- endref -->
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="search" type="application/opensearchdescription+xml" href="//localhost:8081/js/app/os.xml" title="SearcH!!" />
 </head>
 <body ng-controller="MainController as MainCtrl">
   <nav class="navbar navbar-fixed-top zdnavbartop" role="navigation">
@@ -45,13 +46,15 @@
   <div class="container" style="position: relative">
     <div class="row zdview" ng-view style="position: absolute; left: 0; right: 0; padding-bottom: 20px"></div>  
   </div>
-    <nav class="navbar navbar-fixed-bottom zdnavbarbottom">
-      <div class="pull-left zdfade" ng-show="MainCtrl.hits">Total: {{MainCtrl.hits}} documents</div>
-      <div class="pull-right">
-        <a href="/api/auth/google" ng-hide="MainCtrl.me.isAuth"><i class="glyphicon glyphicon-link"></i></a>
-        <span ng-show="MainCtrl.me.isAuth" class="zdfade">{{MainCtrl.me.name}}</span>
-      </div>
-    </nav>
+  <div z-message></div>
+  <nav class="navbar navbar-fixed-bottom zdnavbarbottom">
+    <div class="pull-left zdfade" ng-show="MainCtrl.hits">Total: {{MainCtrl.hits}} documents</div>
+    <div class="pull-right">
+      <!-- <a href="javascript:;" ng-hide="MainCtrl.me.isAuth" ng-click="MainCtrl.newLogin()"><i class="glyphicon glyphicon-link"></i></a> -->
+      <a href="/api/auth/google" ng-hide="MainCtrl.me.isAuth"><i class="glyphicon glyphicon-link"></i></a>
+      <span ng-show="MainCtrl.me.isAuth" class="zdfade">{{MainCtrl.me.name}}</span>
+    </div>
+  </nav>
   <!-- ref:js js/ziaxdash.all.min.js -->
   <script type="text/javascript" src="js/lib/angular.js"></script>
   <script type="text/javascript" src="js/lib/angular-route.js"></script>

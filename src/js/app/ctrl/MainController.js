@@ -1,5 +1,5 @@
-module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', 'UserService', 'RestDrive', 
-  function ($scope, $rootScope, $location, $routeParams, UserService, RestDrive) {
+module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'UserService', 'RestDrive', 
+  function ($scope, $rootScope, $location, $routeParams, $window, UserService, RestDrive) {
   var _t = this;
   _t.hits = null;
   _t.me = UserService.me;
@@ -18,7 +18,9 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   };
 
   _t.newLogin = function () {
-    _t.iframeUrl = "/api/auth/google"
+    var nw = $window.open('/api/auth/google', 'popupGoog', 'height=600,width=450');
+    if ($window.focus) nw.focus();
+    console.log('b');
   };
 
   RestDrive.query(null, function (res) {

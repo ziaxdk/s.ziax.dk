@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>SearcH</ShortName>
+  <Description>SearcH at ziax</Description>
+  <Url type="text/html" method="get" template="http://s.ziax.dk/#/res/{searchTerms}" />
+  <Developer>ZiaxDK</Developer>
+  <InputEncoding>UTF-8</InputEncoding>
+</OpenSearchDescription>

@@ -9,6 +9,11 @@
       esClient.count({ _index: esCommon.index, _type: esCommon.types.join() }, undefined, esCommon.callback(arguments));
     });
 
+    app.post('/api/document', utils.ensureAuthenticated, function (req, res) {
+      res.status(500);
+      res.send('fina');
+    });
+
 
     app.post('/api/drive', utils.ensureAuthenticated, function (req, res) {
       var save,

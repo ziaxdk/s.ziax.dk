@@ -1,5 +1,5 @@
 // Config
-module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvider, $sceDelegateProvider) {
+module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider) {
   $routeProvider.when('/', {
       templateUrl: "/html/_index.html",
       resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
@@ -32,5 +32,24 @@ module.config(['$routeProvider', '$sceDelegateProvider', function ($routeProvide
   $sceDelegateProvider.resourceUrlWhitelist([ 'self', 'http://www.ziax.dk/*']);
 
   L.Icon.Default.imagePath = "/css/images/"
+
+
+  // $provide.factory('403', ['$q', function($q) {
+  //     return {
+  //       'responseError': function(rejection) {
+  //         console.log('responseError', rejection);
+  //         if (rejection.status === 403) {
+  //           console.log('not auth')
+  //         }
+
+  //         // // do something on error
+  //         // if (canRecover(rejection)) {
+  //         //   return responseOrNewPromise
+  //         // }
+  //         return $q.reject(rejection);
+  //       }
+  //     };
+  //   }]);
+  // $httpProvider.interceptors.push('403');
 
 }]);

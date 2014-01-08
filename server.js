@@ -5,7 +5,9 @@ var express = require('express')
     , passport = require('passport')
     // , GoogleStrategy = require('passport-google').Strategy
     , GoogleStrategy2 = require('passport-google-oauth').OAuth2Strategy
+    , RememberMeStrategy = require('passport-remember-me').Strategy
     , _ = require('underscore')
+    , Users = require('./server/Users.js')()
     , Config = require('./_config.json')
     , Promise = require('promise')
     , es = null
@@ -21,6 +23,7 @@ app.use(express.json());
 app.use(express.session({ secret: 'keyboard like ziax dash', key: 'dash.ziax.dk' }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.authenticate('remember-me'));
 
 app.configure('development', function () {
   // var Scraper = require('./server/server-scrape-dev.js');
@@ -54,8 +57,10 @@ passport.use(new GoogleStrategy2({
     callbackURL: Config.me + 'api/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
-    if (profile.emails[0].value !== Config.whoami) return done(null, false);
-    return done(null , { id: profile.id, name: profile.displayName });
+    var _user = Users.getByEmail(profile.emails[0].value);
+    if (!_user) return done(null, false);
+    // if (profile.emails[0].value !== Config.whoami) return done(null, false);
+    return done(null , _user);
   }
 ));
 
@@ -67,7 +72,55 @@ passport.deserializeUser(function(user, done) {
 });
 
 app.get('/api/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
-app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) { res.redirect('/'); });
+app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) {
+  res.cookie('remember_me', req.user.id , { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
+  // console.log('req.user', req.user);
+  res.redirect('/'); 
+});
+
+passport.use(new RememberMeStrategy(
+  function(token, done) {
+    var _user = Users.getById(token)
+    if (!_user) return done(null, false);
+    return done(null, _user);
+    // Token.consume(token, function (err, user) {
+    //   if (err) { return done(err); }
+    //   if (!user) { return done(null, false); }
+    //   return done(null, user);
+    // });
+  },
+  function(user, done) {
+    // var token = utils.generateToken(64);
+    // Token.save(token, { userId: user.id }, function(err) {
+    //   if (err) { return done(err); }
+    //   return done(null, token);
+    // });
+    return done(null, user.id);
+  }
+));
+
+app.get('/test', function (req, res) {
+  res.cookie('remember_me', '1001', { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
+  // console.log(req.sessionID)
+  console.log('req.user', req.user);
+  res.send("ok");
+});
+// app.post('/api/auth/remember', 
+//   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+//   function(req, res, next) {
+//     // issue a remember me cookie if the option was checked
+//     if (!req.body.remember_me) { return next(); }
+
+//     var token = utils.generateToken(64);
+//     Token.save(token, { userId: req.user.id }, function(err) {
+//       if (err) { return done(err); }
+//       res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
+//       return next();
+//     });
+//   },
+//   function(req, res) {
+//     res.redirect('/');
+//   });
 
 /* * */
 
