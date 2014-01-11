@@ -1,10 +1,9 @@
 (function () {
   module.exports = function (esClient, app) {
-    var esCommon = require('./es-common'),
-        utils = require('./utils2');
-
-    require('./es-q')(esClient, app);
-    require('./es-document')(esClient, app);
+    var esCommon = require('./es-common')
+        , utils = require('./utils2')
+        , esq = require('./es-q')(esClient, app)
+        , esdocument = require('./es-document')(esClient, app);
 
     app.get('/api/history', function () {
       esClient.search({_index: esCommon.index}, {
@@ -29,5 +28,10 @@
       });
       res.send(utils.ngSafe("ok"));
     });
+  
+    return {
+      esq: esq,
+      esdocument: esdocument
+    }
   }
 }());

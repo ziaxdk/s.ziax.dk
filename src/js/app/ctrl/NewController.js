@@ -16,8 +16,6 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
     _t.form.q = initQ;
   }
 
-
-
   $scope.$watch(function () { return _t.form.q; }, function (q) {
     if (!q) return;
     if (lisLink) lisLink();
@@ -53,8 +51,8 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
       header: _t.form.header,
       content: _t.form.content,
       url: _t.form.url,
-      type: PlaceService.getPoi(_t.mapIcon).type,
-      icon: _t.mapIcon,
+      type: _t.form.type,
+      icon: PlaceService.getPoi(_t.mapIcon).type,
       location: _t.form.location,
       tags: _t.form.tags ? _t.form.tags.split(' ') : [],
       onlyAuth: _t.form.onlyAuth,
@@ -64,9 +62,10 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
     // console.log(obj);
     // RestDrive.save(obj);
     DocumentService.save(obj).then(function () {
-      console.log('ok', arguments);
+      MessageService.ok("Saved");
     }, function (err) {
       MessageService.err(err.status, err.data);
     });
+
   };
 }]);

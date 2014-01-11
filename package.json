@@ -13,14 +13,14 @@
     "elasticsearch": "~0.3.12",
     "promise": "~3.2.0",
     "passport": "~0.1.17",
-    "passport-google": "~0.3.0",
     "passport-github": "~0.1.5",
     "underscore": "~1.5.2",
     "deep-extend": "~0.2.6",
     "node.io": "~0.5.1",
     "passport-google-oauth": "~0.1.5",
     "socket.io": "~0.9.16",
-    "passport-remember-me": "0.0.1"
+    "passport-remember-me": "0.0.1",
+    "q": "~1.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -1,7 +1,7 @@
-module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'UserService', 'RestDrive', 
-  function ($scope, $rootScope, $location, $routeParams, $window, UserService, RestDrive) {
+module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'UserService', 'GlobalService', 'RestDrive', 
+  function ($scope, $rootScope, $location, $routeParams, $window, UserService, GlobalService, RestDrive) {
   var _t = this;
-  _t.hits = null;
+  _t.global = GlobalService;
   _t.me = UserService.me;
   // _t.me = { isAuth: true, id: 123, name: 'profile.displayName' };
   _t.form = { };
@@ -23,9 +23,6 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
     console.log('b');
   };
 
-  RestDrive.query(null, function (res) {
-    _t.hits = res.count;
-  });
 
   $rootScope.$on('$routeChangeStart', function () {
     // ngProgress.start();

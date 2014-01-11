@@ -52,4 +52,24 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
   //   }]);
   // $httpProvider.interceptors.push('403');
 
+
+
+}]);
+
+module.run(['$window', '$rootScope', 'GlobalService', function ($window, $rootScope, GlobalService) {
+  var location = $window.location;
+  var socket = io.connect('//' + location.hostname);
+  
+  socket.on('news', function (data) {
+  });
+
+  socket.on('connect', function (data) {
+    $rootScope.$evalAsync(function () {
+      // console.log(data);
+      if (!data) return;
+      GlobalService.count = data.count;
+    });
+  });
+
+
 }]);

@@ -48,13 +48,14 @@
   </div>
   <div z-message></div>
   <nav class="navbar navbar-fixed-bottom zdnavbarbottom">
-    <div class="pull-left zdfade" ng-show="MainCtrl.hits">Total: {{MainCtrl.hits}} documents</div>
+    <div class="pull-left zdfade" ng-show="MainCtrl.hits">Total: {{MainCtrl.global.count}} documents</div>
     <div class="pull-right">
       <!-- <a href="javascript:;" ng-hide="MainCtrl.me.isAuth" ng-click="MainCtrl.newLogin()"><i class="glyphicon glyphicon-link"></i></a> -->
       <a href="/api/auth/google" ng-hide="MainCtrl.me.isAuth"><i class="glyphicon glyphicon-link"></i></a>
       <span ng-show="MainCtrl.me.isAuth" class="zdfade">{{MainCtrl.me.name}}</span>
     </div>
   </nav>
+  <script src="/socket.io/socket.io.js"></script>
   <!-- ref:js js/ziaxdash.all.min.js -->
   <script type="text/javascript" src="js/lib/angular.js"></script>
   <script type="text/javascript" src="js/lib/angular-route.js"></script>

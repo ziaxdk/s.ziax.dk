@@ -2,22 +2,35 @@ module.directive('zMessage', ['$rootScope', '$timeout', function ($rootScope, $t
   return {
     restrict: 'A',
     template: 
-    '<div class="z-msg" ng-show="enable">' +
-    '  <div class="container">' +
-    '    <div class="row">{{msg}}123</div>' +
-    '  </div>' +
+    '<div class="z-msg">' +
+    '      <ul>' +
+    '        <li ng-repeat="m in msgs track by $index" ng-class="m.cls">{{m.msg}}</li>' +
+    '      </ul>' +
     '</div>',
     replace: true,
     scope: { },
     link: function ($scope, $element, $attrs) {
-      $scope.msg = "foobar";
-      $rootScope.$on('err', function (event, data) {
-        $scope.msg = '(' + data.num + ') ' + data.msg;
-        $scope.enable = true;
-        $timeout(function () {
-          $scope.enable = false;
-        }, 2000);
+      $scope.msgs = [];
 
+      function addMsg(type, msg, num) {
+        if (num> 0) {
+          $scope.msgs.push({cls: 'err', msg: '(' + num + ') ' + msg});
+        }
+        else {
+          $scope.msgs.push({cls: 'ok', msg: msg});
+        }
+
+        $timeout(function () {
+          $scope.msgs.pop();
+        }, 4000);
+      }
+
+
+      $rootScope.$on('err', function (event, data) {
+        addMsg('err', data.msg, data.num);
+      })
+      $rootScope.$on('ok', function (event, data) {
+        addMsg('ok', data.msg);
       })
     }
   }

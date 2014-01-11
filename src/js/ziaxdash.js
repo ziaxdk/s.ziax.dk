@@ -54,6 +54,26 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
   //   }]);
   // $httpProvider.interceptors.push('403');
 
+
+
+}]);
+
+module.run(['$window', '$rootScope', 'GlobalService', function ($window, $rootScope, GlobalService) {
+  var location = $window.location;
+  var socket = io.connect('//' + location.hostname);
+  
+  socket.on('news', function (data) {
+  });
+
+  socket.on('connect', function (data) {
+    $rootScope.$evalAsync(function () {
+      // console.log(data);
+      if (!data) return;
+      GlobalService.count = data.count;
+    });
+  });
+
+
 }]);
 
 module.controller('IndexController', ['History', 'LocationService', '$location', '$scope',
@@ -77,10 +97,10 @@ module.controller('IndexController', ['History', 'LocationService', '$location',
   });
 }]);
 
-module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'UserService', 'RestDrive', 
-  function ($scope, $rootScope, $location, $routeParams, $window, UserService, RestDrive) {
+module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'UserService', 'GlobalService', 'RestDrive', 
+  function ($scope, $rootScope, $location, $routeParams, $window, UserService, GlobalService, RestDrive) {
   var _t = this;
-  _t.hits = null;
+  _t.global = GlobalService;
   _t.me = UserService.me;
   // _t.me = { isAuth: true, id: 123, name: 'profile.displayName' };
   _t.form = { };
@@ -102,9 +122,6 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
     console.log('b');
   };
 
-  RestDrive.query(null, function (res) {
-    _t.hits = res.count;
-  });
 
   $rootScope.$on('$routeChangeStart', function () {
     // ngProgress.start();
@@ -135,8 +152,6 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;
   }
-
-
 
   $scope.$watch(function () { return _t.form.q; }, function (q) {
     if (!q) return;
@@ -173,8 +188,8 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
       header: _t.form.header,
       content: _t.form.content,
       url: _t.form.url,
-      type: PlaceService.getPoi(_t.mapIcon).type,
-      icon: _t.mapIcon,
+      type: _t.form.type,
+      icon: PlaceService.getPoi(_t.mapIcon).type,
       location: _t.form.location,
       tags: _t.form.tags ? _t.form.tags.split(' ') : [],
       onlyAuth: _t.form.onlyAuth,
@@ -184,10 +199,11 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
     // console.log(obj);
     // RestDrive.save(obj);
     DocumentService.save(obj).then(function () {
-      console.log('ok', arguments);
+      MessageService.ok("Saved");
     }, function (err) {
       MessageService.err(err.status, err.data);
     });
+
   };
 }]);
 
@@ -486,22 +502,35 @@ module.directive('zMessage', ['$rootScope', '$timeout', function ($rootScope, $t
   return {
     restrict: 'A',
     template: 
-    '<div class="z-msg" ng-show="enable">' +
-    '  <div class="container">' +
-    '    <div class="row">{{msg}}123</div>' +
-    '  </div>' +
+    '<div class="z-msg">' +
+    '      <ul>' +
+    '        <li ng-repeat="m in msgs track by $index" ng-class="m.cls">{{m.msg}}</li>' +
+    '      </ul>' +
     '</div>',
     replace: true,
     scope: { },
     link: function ($scope, $element, $attrs) {
-      $scope.msg = "foobar";
-      $rootScope.$on('err', function (event, data) {
-        $scope.msg = '(' + data.num + ') ' + data.msg;
-        $scope.enable = true;
-        $timeout(function () {
-          $scope.enable = false;
-        }, 2000);
+      $scope.msgs = [];
 
+      function addMsg(type, msg, num) {
+        if (num> 0) {
+          $scope.msgs.push({cls: 'err', msg: '(' + num + ') ' + msg});
+        }
+        else {
+          $scope.msgs.push({cls: 'ok', msg: msg});
+        }
+
+        $timeout(function () {
+          $scope.msgs.pop();
+        }, 4000);
+      }
+
+
+      $rootScope.$on('err', function (event, data) {
+        addMsg('err', data.msg, data.num);
+      })
+      $rootScope.$on('ok', function (event, data) {
+        addMsg('ok', data.msg);
       })
     }
   }
@@ -552,12 +581,19 @@ module.filter('textile', ['$sce', function ($sce) {
 
 module.service('DocumentService', ['$http', function ($http) {
   function save(document) {
-    console.log('saving', document);
     return $http.post('/api/document', document);
   }
 
   return {
     save: save
+  };
+}]);
+
+module.service('GlobalService', ['$http', function ($http) {
+
+
+  return {
+    count: 0
   };
 }]);
 
@@ -592,13 +628,21 @@ module.service('LocationService', ['$window', '$rootScope', function ($window, $
 }]);
 
 module.service('MessageService', ['$rootScope', function ($rootScope) {
+  function emit(type, num, msg) {
+    $rootScope.$emit(type, { num: num, msg: msg });
+  }
 
   function err(num, msg) {
-    $rootScope.$emit('err', { num: num, msg: msg });
+    emit('err', num, msg);
+  }
+
+  function ok(msg) {
+    emit('ok', 0, msg);
   }
 
   return {
-    err: err
+    err: err,
+    ok: ok
   };
 }]);
 

@@ -1,8 +1,19 @@
 (function () {
   module.exports = function (esClient, app) {
-    var esCommon = require('./es-common'),
-        _ = require('underscore'),
-        utils = require('./utils2');
+    var esCommon = require('./es-common')
+        , _ = require('underscore')
+        , utils = require('./utils2')
+        , sio = require('./socketio.js')
+        , Q = require('q');
+
+    function count() {
+      var d = Q.defer();
+      esClient.count({ _index: esCommon.index, _type: esCommon.types.join() }, undefined, function (err, data) { 
+        if (err) return d.reject(err);
+        return d.resolve(data);
+      });
+      return d.promise;
+    }
 
 
     app.get('/api/drive', function () {
@@ -10,20 +21,10 @@
     });
 
     app.post('/api/document', utils.ensureAuthenticated, function (req, res) {
-      res.status(500);
-      res.send('fina');
-    });
-
-
-    app.post('/api/drive', utils.ensureAuthenticated, function (req, res) {
       var save,
           src = req.body,
           ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-      // if (!utils.validateCode(src.code)) {
-      //   res.send("err validateCode");
-      //   return;
-      // }
       save = {
         header: src.header,
         content: src.content,
@@ -54,6 +55,10 @@
       // res.send("ok");
       esClient.index({ _index: esCommon.index, _type: src.type }, save, esCommon.callback(arguments));
     });
+
+    return {
+      count: count
+    }
 
   };
 }())

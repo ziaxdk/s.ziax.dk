@@ -1,10 +1,11 @@
 (function () {
   var Utils = require('./utils2'),
       Nodeio = require('node.io'),
-      Promise = require('promise')
+      // Promise = require('promise'),
+      Q = require('q')
       ;
 
-  var fetch = function (url) {
+  // var fetch = function (url) {
 
     // var promise = new Promise(function (resolve, reject) {
     //   get('http://www.google.com', function (err, res) {
@@ -13,15 +14,27 @@
     //   });
     // });
     
-    var promise = new Promise(function (resolve, reject) {
-      Nodeio.scrape(function() {
-        this.getHtml(url, function(err, $) {
-          if (err) reject(err);
-          else resolve($);
-        });
+  //   var promise = new Promise(function (resolve, reject) {
+  //     Nodeio.scrape(function() {
+  //       this.getHtml(url, function(err, $) {
+  //         if (err) reject(err);
+  //         else resolve($);
+  //       });
+  //     });
+  //   });
+  //   return promise;
+  // }
+
+  var fetchQ = function () {
+    var q = Q.defer();
+    Nodeio.scrape(function() {
+      this.getHtml(url, function(err, $) {
+        if (err) q.reject(err);
+        else q.resolve($);
       });
     });
-    return promise;
+    return q.promise;
+
   }
 
   var safeGetDataFromTag = function (selector) {
@@ -36,7 +49,7 @@
   var scrape = function (req, res) {
     var uri = decodeURIComponent(req.query.q);
     if (!uri) res.send(Utils.ngSafe(""));
-    fetch(uri).done(function ($) {
+    fetchQ(uri).then(function ($) {
       // Priorities:
       // Header
       // 1. <title>
@@ -72,15 +85,13 @@
     });
   };
 
-  var obj = {
-    scrape: scrape
-  };
-
-  if (typeof module !== 'undefined' && module.exports) {
-    module.exports = obj;
+  function configWithApp(app) {
+    app.get('/api/scrape', scrape);
   }
-  else {
-    root.utils = obj;
+
+  module.exports = {
+    scrape: scrape,
+    configWithApp: configWithApp
   }
 }());
 
