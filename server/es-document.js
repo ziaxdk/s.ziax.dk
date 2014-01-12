@@ -2,12 +2,11 @@
   var es = require('./es.js')
       , _ = require('underscore')
       , utils = require('./utils')
-      // , sio = require('./socketio.js')
-      // , Q = require('q');
+      , Q = require('q');
 
   function count() {
     var d = Q.defer();
-    esClient.count({ _index: esCommon.index, _type: esCommon.types.join() }, undefined, function (err, data) { 
+    es.client.count({ _index: es.index, _type: es.types.join() }, undefined, function (err, data) { 
       if (err) return d.reject(err);
       return d.resolve(data);
     });

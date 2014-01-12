@@ -1,19 +1,16 @@
 (function () {
-  var SIO = require('./../server.js').sio;
-  // module.exports = function (sio, esdocument) {
-  //   sio.sockets.on('connection', function (socket) {
-  //     // console.log('A socket connected!');
-  //     esdocument.count().then(function(data) {
-  //       count = data.count;
-  //       socket.emit('connect', data);
-  //     })
-  //   });
-  // };
+  var SIO = require('./../server.js').sio
+      esDocument = require('./es-document.js');
 
-  console.log(SIO)
-
+    SIO.sockets.on('connection', function (socket) {
+      console.log('A socket connected!');
+      esDocument.count().then(function(data) {
+        count = data.count;
+        socket.emit('connect', data);
+      })
+    });
 
   module.exports = {
 
   }
-}())
+}());
