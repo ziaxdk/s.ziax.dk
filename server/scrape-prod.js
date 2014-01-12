@@ -1,9 +1,7 @@
 (function () {
-  var Utils = require('./utils2'),
-      Nodeio = require('node.io'),
-      // Promise = require('promise'),
-      Q = require('q')
-      ;
+  var Utils = require('./utils.js')
+    , Nodeio = require('node.io')
+    , Q = require('q');
 
   // var fetch = function (url) {
 
@@ -85,13 +83,12 @@
     });
   };
 
-  function configWithApp(app) {
+  function routes(app) {
     app.get('/api/scrape', scrape);
   }
 
   module.exports = {
-    scrape: scrape,
-    configWithApp: configWithApp
+    routes: routes
   }
 }());
 
