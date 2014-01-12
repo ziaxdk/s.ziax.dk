@@ -1,21 +1,21 @@
 (function () {
-  module.exports = function (esClient, app) {
-    var esCommon = require('./es-common')
-        , _ = require('underscore')
-        , utils = require('./utils2')
-        , sio = require('./socketio.js')
-        , Q = require('q');
+  var es = require('./es.js')
+      , _ = require('underscore')
+      , utils = require('./utils')
+      // , sio = require('./socketio.js')
+      // , Q = require('q');
 
-    function count() {
-      var d = Q.defer();
-      esClient.count({ _index: esCommon.index, _type: esCommon.types.join() }, undefined, function (err, data) { 
-        if (err) return d.reject(err);
-        return d.resolve(data);
-      });
-      return d.promise;
-    }
+  function count() {
+    var d = Q.defer();
+    esClient.count({ _index: esCommon.index, _type: esCommon.types.join() }, undefined, function (err, data) { 
+      if (err) return d.reject(err);
+      return d.resolve(data);
+    });
+    return d.promise;
+  }
 
 
+  function routes(app) {
     app.get('/api/drive', function () {
       esClient.count({ _index: esCommon.index, _type: esCommon.types.join() }, undefined, esCommon.callback(arguments));
     });
@@ -55,10 +55,11 @@
       // res.send("ok");
       esClient.index({ _index: esCommon.index, _type: src.type }, save, esCommon.callback(arguments));
     });
+  }
 
-    return {
-      count: count
-    }
+  module.exports = {
+    routes: routes,
+    count: count
+  }
 
-  };
-}())
+}());

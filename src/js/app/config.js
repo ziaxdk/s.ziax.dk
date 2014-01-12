@@ -57,6 +57,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 }]);
 
 module.run(['$window', '$rootScope', 'GlobalService', function ($window, $rootScope, GlobalService) {
+  return;
   var location = $window.location;
   var socket = io.connect('//' + location.hostname);
   

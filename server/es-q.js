@@ -1,8 +1,9 @@
-module.exports = function (esClient, app, core) {
+(function () {
   var deepExtend = require('deep-extend'),
       _ = require('underscore'),
-      utils2 = require('./utils2'),
-      esCommon = require('./es-common');
+      utils = require('./utils.js'),
+      es = require('./es.js');
+
 
   function build (q, tags) {
     var query = {
@@ -71,17 +72,17 @@ module.exports = function (esClient, app, core) {
     if (q.indexOf(':') === -1) {
       return {
         q: q,
-        type: esCommon.types.join()
+        type: es.types.join()
       }
     }
 
-    var type = _.find(esCommon.types, function (t) {
+    var type = _.find(es.types, function (t) {
       var r = new RegExp('^_' + t + ':');
       return r.test(data.q);
     });
     if (!type) return {
         q: q,
-        type: esCommon.types.join()
+        type: es.types.join()
     }
     
     q = q.substring(q.indexOf(':') + 1, q.length);
@@ -93,26 +94,31 @@ module.exports = function (esClient, app, core) {
     };
   }
 
-  
-  app.get('/api/q', function (req) {
-    var data = req.query;
-    var qObject = getTypes(data);
-    esClient.search({ _index: esCommon.index, _type: qObject.type }, build(qObject.q, null), esCommon.callback(arguments));
-    esClient.index({ _index: esCommon.index, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) { });
-  });
+  function routes(app) {
+    app.get('/api/q', function (req) {
+      var data = req.query;
+      var qObject = getTypes(data);
+      es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, null), es.callback(arguments));
+      es.client.index({ _index: es.index, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) { });
+    });
 
   app.post('/api/xq', function (req) {
     var data = req.body;
     var qObject = getTypes(data);
-    esClient.search({ _index: esCommon.index, _type: qObject.type }, build(qObject.q, data.facets.tags), esCommon.callback(arguments));
+    es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, data.facets.tags), es.callback(arguments));
   });
 
   app.post('/api/q', function (req) {
-    esClient.get({ _index: esCommon.index, _type: req.body.type, _id: req.body.id }, esCommon.callback(arguments));
-    esClient.update({ _index: esCommon.index, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) { });
+    es.client.get({ _index: es.index, _type: req.body.type, _id: req.body.id }, es.callback(arguments));
+    es.client.update({ _index: es.index, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) { });
   });
+  }
 
-};
+  module.exports = {
+    routes: routes
+
+  }
+}());
 
 // {
 //     "query": {
