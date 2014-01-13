@@ -48,31 +48,38 @@
             tags: tags.terms,
             execution: tags.operator
           }
-        },
-        facets: {
-          tags: {
-            "facet_filter": {
-              terms: {
-                tags: tags.terms,
-                execution: tags.operator
+        }
+      });
+
+      if (tags.operator == 'and') {
+        deepExtend(query, {
+          facets: {
+            tags: {
+              "facet_filter": {
+                terms: {
+                  tags: tags.terms,
+                  execution: tags.operator
+                }
               }
             }
           }
-        }
-      });
+
+        });
+      }
     }
 
-    // utils2.log(query);
+    // utils.log(query);
 
     return query;
   };
 
   function getTypes (data) {
-    var q = data.q;
+    var q = data.q
+      , types = data.types || es.types;
     if (q.indexOf(':') === -1) {
       return {
         q: q,
-        type: es.types.join()
+        type: types.join()
       }
     }
 
@@ -82,7 +89,7 @@
     });
     if (!type) return {
         q: q,
-        type: es.types.join()
+        type: types.join()
     }
     
     q = q.substring(q.indexOf(':') + 1, q.length);
@@ -102,16 +109,16 @@
       es.client.index({ _index: es.index, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) { });
     });
 
-  app.post('/api/xq', function (req) {
-    var data = req.body;
-    var qObject = getTypes(data);
-    es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, data.facets.tags), es.callback(arguments));
-  });
+    app.post('/api/xq', function (req) {
+      var data = req.body;
+      var qObject = getTypes(data);
+      es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, data.facets.tags), es.callback(arguments));
+    });
 
-  app.post('/api/q', function (req) {
-    es.client.get({ _index: es.index, _type: req.body.type, _id: req.body.id }, es.callback(arguments));
-    es.client.update({ _index: es.index, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) { });
-  });
+    app.post('/api/q', function (req) {
+      es.client.get({ _index: es.index, _type: req.body.type, _id: req.body.id }, es.callback(arguments));
+      es.client.update({ _index: es.index, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) { });
+    });
   }
 
   module.exports = {

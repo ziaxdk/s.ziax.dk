@@ -31,12 +31,12 @@
     // return ")]}',\n" + JSON.stringify(val);
   }
 
-  function validateCode (code) {
-    var d = new Date();
-    var val = d.getDate() + '' + d.getDate();
-    console.log(code, val);
-    return val === code;
-  }
+  // function validateCode (code) {
+  //   var d = new Date();
+  //   var val = d.getDate() + '' + d.getDate();
+  //   console.log(code, val);
+  //   return val === code;
+  // }
 
   function ensureAuthenticated (req, res, next) {
     if (req.isAuthenticated()) { return next(); }
@@ -52,7 +52,7 @@
   var obj = {
     log: log,
     ngSafe: ngSafe,
-    validateCode: validateCode,
+    // validateCode: validateCode,
     ensureAuthenticated: ensureAuthenticated
   };
 
