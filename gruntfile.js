@@ -77,7 +77,8 @@ module.exports = function (grunt) {
             'build/src/css/animate.min.css',
             'build/src/css/leaflet.min.css',
             'build/src/css/ziaxdash.min.css',
-            'build/src/css/leaflet-awesome-markers.min.css'
+            'build/src/css/leaflet-awesome-markers.min.css',
+            'build/src/css/fa-4.0.3.min.css'
             // 'build/src/css/ng-trans.min.css'
           ]
         }

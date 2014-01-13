@@ -12,7 +12,9 @@
       desc2: "some silly content that should be coming from a mega monster silly scraper"
     }
 
-    res.send(Utils.ngSafe(obj));
+    setTimeout(function () {
+      res.send(Utils.ngSafe(obj));
+    }, 2000);
 
   };
 
