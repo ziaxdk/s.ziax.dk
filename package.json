@@ -50,6 +50,7 @@
     "grunt-karma": "~0.6.2",
     "karma-commonjs": "0.0.2",
     "shelljs": "~0.2.6",
-    "grunt-remove-logging": "~0.2.0"
+    "grunt-remove-logging": "~0.2.0",
+    "grunt-template": "~0.2.2"
   }
 }

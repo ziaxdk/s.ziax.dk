@@ -1,12 +1,15 @@
 "use strict";
-var util = require('./lib/gruntutils.js');
-var Config = require('./_config.json');
-var esurl = 'http://localhost:9200';
+var util = require('./lib/gruntutils.js')
+  , Config = require('./_config.json')
+  , esurl = 'http://localhost:9200'
+  , shelljs = require('shelljs');
 
 module.exports = function (grunt) {
+  var buildno = '-';
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    buildno: 'ziax',
 
     // Build
     clean: {
@@ -55,7 +58,7 @@ module.exports = function (grunt) {
     concat: {
       build_js: {
         files: {
-          'build/src/js/ziaxdash.all.min.js': [
+          'build/src/js/<%= buildno %>.min.js': [
             'build/src/js/lib/angular.min.js',
             'build/src/js/lib/angular-route.min.js',
             'build/src/js/lib/angular-resource.min.js',
@@ -70,7 +73,7 @@ module.exports = function (grunt) {
       },
       build_css: {
         files: {
-          'build/src/css/ziaxdash.all.min.css': [
+          'build/src/css/<%= buildno %>.min.css': [
             'build/src/css/animate.min.css',
             'build/src/css/leaflet.min.css',
             'build/src/css/ziaxdash.min.css',
@@ -118,10 +121,23 @@ module.exports = function (grunt) {
         },*/
         /** any other parameter included on the options will be passed for template evaluation */
         options: {
-          buildNumber: 47878
+          buildNumber: '<%= buildno %>'
         }
       }
     },
+    // template: {
+    //   build: {
+    //     options: {
+    //       data: function () {
+    //         return {
+    //           build: grunt.option('build')
+    //         }
+    //       }
+    //     },
+    //       src: 'build/src/index.html',
+    //       dest: 'build/src/index.html'
+    //   }
+    // },
     copy: {
       build: {
         files: [
@@ -270,6 +286,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-htmlrefs');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks("grunt-remove-logging");
+  grunt.loadNpmTasks('grunt-template');
   // grunt.loadTasks('lib/tasks/grunt-elasticsearch.js');
   grunt.loadTasks('lib/tasks');
 
@@ -281,16 +298,16 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build_css', [ 'less:build', 'cssmin:build', 'concat:build_css' ]);
   grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
-  grunt.registerTask('build', ['clean:build', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', /*'removelogging:dist',*/ 'clean:build_post' ]);
+  grunt.registerTask('build', ['clean:build', 'gitrev', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', /*'removelogging:dist',*/ 'clean:build_post' ]);
 
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
 
   grunt.registerTask('dev', ['express:dev', /*'karma:unit:start',*/ 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);
 
-  grunt.registerTask('custom', function () {
-    grunt.log.writeln('custom task, code goes here');
-    grunt.log.writeln(util.getHash());
+  grunt.registerTask('gitrev', function () {
+    buildno = shelljs.exec('git rev-parse --short HEAD', { silent: true }).output.replace('\n', '');
+    grunt.config('buildno', buildno);
   });
 };
 /*
