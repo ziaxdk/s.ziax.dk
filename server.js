@@ -40,6 +40,7 @@
     Config.me = Config.host + '/';
     sio.set('transports', ['websocket']);
     sio.set('log level', 0);
+    require('./server/auth.js');
     require('./server/es.js').routes(app);
     require('./server/es-q.js').routes(app);
     require('./server/es-document.js').routes(app);

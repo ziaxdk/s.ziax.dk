@@ -49,6 +49,13 @@
     res.redirect('/'); 
   });
 
+  app.get('/api/auth/leave', function (req, res) {
+    res.clearCookie('remember_me');
+    req.logout();
+    // req.session.destroy();
+    res.redirect('/');
+  });
+
   module.exports = {
   }
 }());

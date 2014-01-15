@@ -53,7 +53,7 @@
     <div class="pull-right">
       <!-- <a href="javascript:;" ng-hide="MainCtrl.me.isAuth" ng-click="MainCtrl.newLogin()"><i class="glyphicon glyphicon-link"></i></a> -->
       <a href="/api/auth/google" ng-hide="MainCtrl.me.isAuth"><i class="glyphicon glyphicon-link"></i></a>
-      <span ng-show="MainCtrl.me.isAuth" class="zdfade">{{MainCtrl.me.name}}</span>
+      <a href="/api/auth/leave" ng-show="MainCtrl.me.isAuth" class="zdfade">{{MainCtrl.me.name}}</a>
     </div>
   </nav>
   <script src="/socket.io/socket.io.js"></script>

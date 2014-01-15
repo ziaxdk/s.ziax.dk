@@ -2,7 +2,7 @@
   var utils = require('./utils.js')
     , elasticsearch = require('elasticsearch')
     , Config = require('./../_config.json')
-    , client = elasticsearch.createClient(Config.es.development)
+    , client = elasticsearch.createClient(process.env.NODE_ENV === 'production' ? Config.es.production : Config.es.development)
     , types = ['link', 'place', 'article']
     , index = 'ziax';
 
