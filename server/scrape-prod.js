@@ -1,6 +1,8 @@
 (function () {
   var Utils = require('./utils.js')
-    , Nodeio = require('node.io')
+    // , Nodeio = require('node.io')
+    , request = require('request')
+    , cheerio = require('cheerio')
     , Q = require('q');
 
   // var fetch = function (url) {
@@ -23,17 +25,18 @@
   //   return promise;
   // }
 
-  var fetchQ = function () {
-    var q = Q.defer();
-    Nodeio.scrape(function() {
-      this.getHtml(url, function(err, $) {
-        if (err) q.reject(err);
-        else q.resolve($);
-      });
-    });
-    return q.promise;
 
-  }
+  // var fetchQ = function (url) {
+  //   var q = Q.defer();
+  //   Nodeio.scrape(function() {
+  //     this.getHtml(url, function(err, $) {
+  //       if (err) q.reject(err);
+  //       else q.resolve($);
+  //     });
+  //   });
+  //   return q.promise;
+
+  // }
 
   var safeGetDataFromTag = function (selector) {
     try {
@@ -44,10 +47,23 @@
     }
   }
 
+  function fetchQ(url) {
+    var q = Q.defer();
+
+    request(url, function (error, response, body) {
+      if (error || response.statusCode !== 200) q.reject(err);
+      q.resolve(body);
+
+    })
+
+    return q.promise;
+  }
+
   var scrape = function (req, res) {
     var uri = decodeURIComponent(req.query.q);
     if (!uri) res.send(Utils.ngSafe(""));
-    fetchQ(uri).then(function ($) {
+    fetchQ(uri).then(function (data) {
+      var $ = cheerio.load(data);
       // Priorities:
       // Header
       // 1. <title>
@@ -59,14 +75,15 @@
       // 2. <meta property="og:description" content="" />
       // 3. <meta name="og:description" content="" />"
 
+      // console.log($('meta[property="og:title"]')[0].attribs.content);
 
-      var title1 = safeGetDataFromTag(function () { return $('title').text; });
-      var title2 = safeGetDataFromTag(function () { return $('meta[property="og:title"]').attribs.content; });
-      var title3 = safeGetDataFromTag(function () { return $('meta[name="og:title"]').attribs.content; });
+      var title1 = safeGetDataFromTag(function () { return $('title').text(); });
+      var title2 = safeGetDataFromTag(function () { return $('meta[property="og:title"]')[0].attribs.content; });
+      var title3 = safeGetDataFromTag(function () { return $('meta[name="og:title"]')[0].attribs.content; });
 
-      var desc1 = safeGetDataFromTag(function () { return $('meta[name="description"]').attribs.content; });
-      var desc2 = safeGetDataFromTag(function () { return $('meta[property="og:description"]').attribs.content; });
-      var desc3 = safeGetDataFromTag(function () { return $('meta[name="og:description"]').attribs.content; });
+      var desc1 = safeGetDataFromTag(function () { return $('meta[name="description"]')[0].attribs.content; });
+      var desc2 = safeGetDataFromTag(function () { return $('meta[property="og:description"]')[0].attribs.content; });
+      var desc3 = safeGetDataFromTag(function () { return $('meta[name="og:description"]')[0].attribs.content; });
 
       var obj = {
         title1: title1,

@@ -32,7 +32,7 @@
     require('./server/es-q.js').routes(app);
     require('./server/es-document.js').routes(app);
     require('./server/socketio.js');
-    require('./server/scrape-dev.js').routes(app);
+    require('./server/scrape-prod.js').routes(app);
   });
 
   app.configure('production', function () {

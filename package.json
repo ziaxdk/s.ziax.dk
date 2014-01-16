@@ -15,12 +15,13 @@
     "passport": "~0.1.17",
     "passport-github": "~0.1.5",
     "deep-extend": "~0.2.6",
-    "node.io": "~0.5.1",
     "passport-google-oauth": "~0.1.5",
     "socket.io": "~0.9.16",
     "passport-remember-me": "0.0.1",
     "q": "~1.0.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "cheerio": "~0.13.1",
+    "request": "~2.33.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
