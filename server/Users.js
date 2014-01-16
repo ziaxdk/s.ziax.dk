@@ -1,5 +1,5 @@
 (function () {
-  var _ = require('underscore');
+  var _ = require('lodash');
 
   var _users = [
       { id: '1001', email: 'kenneth@ziax.dk', name: 'Kenneth Olsen' }

@@ -2,7 +2,7 @@
   var passport = require('passport')
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
     , RememberMeStrategy = require('passport-remember-me').Strategy
-    , _ = require('underscore')
+    , _ = require('lodash')
     , Users = require('./users.js')
     , Config = require('./../_config.json')
     , app = require('./../server.js').app;

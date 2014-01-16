@@ -1,32 +1,52 @@
 (function () {
-  var deepExtend = require('deep-extend'),
-      _ = require('underscore'),
-      utils = require('./utils.js'),
-      es = require('./es.js');
+  var deepExtend = require('deep-extend')
+      , _ = require('lodash')
+      , utils = require('./utils.js')
+      , es = require('./es.js');
 
 
-  function build (q, tags) {
-    var query = {
+  function getQuery(q) {
+    return {
+      "multi_match": {
+        "query": q,
+        "fields": [
+          "header^4",
+          "content^3",
+          "tags^2"
+        ]
+      }
+    }
+  }
+
+  function getAll() {
+    return {
+      "match_all": {}
+    }
+  }
+
+
+  function getScope(q, tags) {
+    return {
       "query": {
         "function_score": {
-          "query": {
-            "query_string": {
-              "fields": [ "header^4", "content^3", "tags^2" ],
-              "query": q
-            }
-          },
+          "query": q === '*' ? getAll() : getQuery(q),
           "functions": [
-          {
-            "boost_factor": "1000",
-            "filter": {
-              "term": {
-                "star": true
-              }
+            {
+              "filter": {
+                "term": {
+                  "star": true
+                }
+              },
+              "boost_factor": 1000
             }
-          }
           ]
         }
-      },
+      }
+    };
+  }
+
+  function getFacets() {
+    return {    
       facets: {
         types: {
           terms: {
@@ -39,39 +59,52 @@
           }
         }
       }
-    }
+    };
+  }
 
-    if (tags && tags.terms.length !== 0) {
-      deepExtend(query, {
-        filter: {
-          terms: {
-            tags: tags.terms,
-            execution: tags.operator
-          }
+  function addFilters(tags) {
+    if (!tags || tags.terms.length == 0) return {};
+    return {
+      filter: {
+        terms: {
+          tags: tags.terms,
+          execution: tags.operator
         }
-      });
+      }
+    };
+  }
 
-      if (tags.operator == 'and') {
-        deepExtend(query, {
-          facets: {
-            tags: {
-              "facet_filter": {
-                terms: {
-                  tags: tags.terms,
-                  execution: tags.operator
-                }
-              }
+  function addFacetFilters(tags) {
+    if (!tags || tags.terms.length == 0 || tags.operator !== 'and') return {};
+
+    return {
+      facets: {
+        tags: {
+          "facet_filter": {
+            terms: {
+              tags: tags.terms,
+              execution: tags.operator
             }
           }
-
-        });
+        }
       }
     }
+  }
 
-    // utils.log(query);
+  function addMeta(from, to) {
+    return {
+      "size": 10
+    }
+  }
 
+  function build (q, tags, from, to) {
+    var query = getScope(q, tags);
+    _.assign(query, getFacets(), addFilters(tags), addFacetFilters(tags), addMeta(from, to));
+    utils.log(query);
     return query;
-  };
+  }
+
+
 
   function getTypes (data) {
     var q = data.q
@@ -172,3 +205,73 @@
 //         }
 //     }
 // }
+
+
+
+  // function build2 (q, tags) {
+  //   var query = {
+  //     "query": {
+  //       "function_score": {
+  //         "query": {
+  //           "query_string": {
+  //             "fields": [ "header^4", "content^3", "tags^2" ],
+  //             "query": q
+  //           }
+  //         },
+  //         "functions": [
+  //         {
+  //           "boost_factor": "1000",
+  //           "filter": {
+  //             "term": {
+  //               "star": true
+  //             }
+  //           }
+  //         }
+  //         ]
+  //       }
+  //     },
+  //     facets: {
+  //       types: {
+  //         terms: {
+  //           field : "_type"
+  //         }
+  //       },
+  //       tags: {
+  //         terms: {
+  //           field: "tags"
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   if (tags && tags.terms.length !== 0) {
+  //     deepExtend(query, {
+  //       filter: {
+  //         terms: {
+  //           tags: tags.terms,
+  //           execution: tags.operator
+  //         }
+  //       }
+  //     });
+
+  //     if (tags.operator == 'and') {
+  //       deepExtend(query, {
+  //         facets: {
+  //           tags: {
+  //             "facet_filter": {
+  //               terms: {
+  //                 tags: tags.terms,
+  //                 execution: tags.operator
+  //               }
+  //             }
+  //           }
+  //         }
+
+  //       });
+  //     }
+  //   }
+
+  //   // utils.log(query);
+
+  //   return query;
+  // };

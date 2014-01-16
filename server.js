@@ -38,8 +38,11 @@
   app.configure('production', function () {
     console.log("configure production");
     Config.me = Config.host + '/';
-    sio.set('transports', ['websocket']);
+    sio.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
     sio.set('log level', 0);
+    sio.enable('browser client minification');
+    sio.enable('browser client etag');
+    sio.enable('browser client gzip');
     require('./server/auth.js');
     require('./server/es.js').routes(app);
     require('./server/es-q.js').routes(app);

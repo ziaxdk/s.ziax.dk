@@ -1,6 +1,6 @@
 (function () {
   var es = require('./es.js')
-      , _ = require('underscore')
+      , _ = require('lodash')
       , utils = require('./utils')
       , Q = require('q');
 
