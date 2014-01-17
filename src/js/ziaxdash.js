@@ -274,8 +274,8 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
 
 module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
   function (ApiSearchResult, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
-  var _t = this, 
-      facetSearch = Delayer(500), 
+  var _t = this,
+      facetSearch = Delayer(500),
       first = true,
       starDelayer = Delayer(100)
       ;
@@ -322,12 +322,8 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
     doSearch();
   };
 
-  _t.pager = function(c) {
-    _t.idx = c;
-  }
-
-  $scope.$watch(function() { return _t.idx; }, function(n) {
-    if (!n) return;
+  $scope.$watch(function() { return _t.idx; }, function(n,o) {
+    if (n == o) return;
     doSearch();
   });
 
@@ -615,34 +611,25 @@ module.directive('zPagination', ['$parse', function ($parse) {
   return {
     restrict: 'A',
     replace: true,
-    template: 
-    '<div>' +
-    '<ul class="pagination">' +
-      '<li ng-repeat="n in data" ng-class="{active: idx == n.idx}"><a href="javascript:;" ng-click="click(n)">{{n.idx}}</a></li>' +
-    '</ul></div>',
+    template:
+      '<div>' +
+      '<ul class="pagination">' +
+        '<li ng-repeat="n in data" ng-class="{active: idx+1 == n.idx}"><a href="javascript:;" ng-click="click(n)">{{n.idx}}</a></li>' +
+      '</ul></div>',
     scope: {
-      change: '&'
+      change: '&',
+      idx: "="
     },
     controller: ['$scope', function ($scope) {
       $scope.click = function(n) {
-        // console.log(this, n, $scope)
-        $scope.change({idx: n.idx - 1});
-      }
+        $scope.idx = n.idx - 1;
+      };
     }],
+
     link: function(scope, element, attrs) {
       var size = 10;
-      scope.idx = 0;
       scope.data = [];
-      // console.log('link', arguments);
-      // attrs.$observe(attrs.count, function (value) {
-      //   console.log(value)
-      // })
 
-      // console.log(attrs.count)
-
-      attrs.$observe('idx', function(value) {
-        scope.idx = value;
-      });
       attrs.$observe('count', function(value) {
         var num = Math.ceil(value / size);
         var data = [];
@@ -652,7 +639,7 @@ module.directive('zPagination', ['$parse', function ($parse) {
         scope.data = data;
       });
     }
-  }; 
+  };
 }]);
 
 module.factory('Delayer', ['$timeout', function ($timeout) {

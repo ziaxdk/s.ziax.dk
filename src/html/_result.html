@@ -44,7 +44,7 @@
   <li><a href="#">&raquo;</a></li>
 </ul>
  -->
-  <div z-pagination count="{{ResultCtrl.result.hits.total}}" idx="{{ResultCtrl.idx}}" change="ResultCtrl.pager(idx)"></div>
+  <div z-pagination count="{{ResultCtrl.result.hits.total}}" idx="ResultCtrl.idx"></div>
 
   <div class="well well-sm hitsinfo" ng-show="ResultCtrl.showHits">Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</div>
 

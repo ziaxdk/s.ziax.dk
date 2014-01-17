@@ -1,7 +1,7 @@
 module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
   function (ApiSearchResult, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
-  var _t = this, 
-      facetSearch = Delayer(500), 
+  var _t = this,
+      facetSearch = Delayer(500),
       first = true,
       starDelayer = Delayer(100)
       ;
@@ -48,12 +48,8 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
     doSearch();
   };
 
-  _t.pager = function(c) {
-    _t.idx = c;
-  }
-
-  $scope.$watch(function() { return _t.idx; }, function(n) {
-    if (!n) return;
+  $scope.$watch(function() { return _t.idx; }, function(n,o) {
+    if (n == o) return;
     doSearch();
   });
 
