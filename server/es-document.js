@@ -16,7 +16,7 @@
 
   function routes(app) {
     app.get('/api/drive', function () {
-      esClient.count({ _index: esCommon.index, _type: esCommon.types.join() }, undefined, esCommon.callback(arguments));
+      es.client.count({ _index: es.index, _type: es.types.join() }, undefined, es.callback(arguments));
     });
 
     app.post('/api/document', utils.ensureAuthenticated, function (req, res) {
@@ -52,7 +52,7 @@
 
       // console.log(save);
       // res.send("ok");
-      esClient.index({ _index: esCommon.index, _type: src.type }, save, esCommon.callback(arguments));
+      es.client.index({ _index: es.index, _type: src.type }, save, es.callback(arguments));
     });
   }
 

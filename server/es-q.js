@@ -1,6 +1,7 @@
 (function () {
   var deepExtend = require('deep-extend')
       , _ = require('lodash')
+      , deepExtend = require('deep-extend')
       , utils = require('./utils.js')
       , es = require('./es.js');
 
@@ -91,16 +92,20 @@
     }
   }
 
-  function addMeta(from, to) {
+  function addMeta(idx, size) {
     return {
-      "size": 10
+      "size": size,
+      "from": idx * size
     }
   }
 
-  function build (q, tags, from, to) {
+  function build (q, tags, idx, size) {
     var query = getScope(q, tags);
-    _.assign(query, getFacets(), addFilters(tags), addFacetFilters(tags), addMeta(from, to));
-    utils.log(query);
+    deepExtend(query, getFacets());
+    deepExtend(query, addFilters(tags));
+    deepExtend(query, addFacetFilters(tags));
+    deepExtend(query, addMeta(idx||0, size||10));
+    // utils.log(query);
     return query;
   }
 
@@ -145,7 +150,7 @@
     app.post('/api/xq', function (req) {
       var data = req.body;
       var qObject = getTypes(data);
-      es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, data.facets.tags), es.callback(arguments));
+      es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, data.facets.tags, data.pager.idx), es.callback(arguments));
     });
 
     app.post('/api/q', function (req) {

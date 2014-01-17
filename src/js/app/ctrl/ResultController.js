@@ -8,6 +8,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
   _t.result = ApiSearchResult.data;
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
+  _t.idx = 0;
   setSelected(facetTypes, true);
 
   _t.facetTermsOperator = "and";
@@ -47,9 +48,18 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
     doSearch();
   };
 
+  _t.pager = function(c) {
+    _t.idx = c;
+  }
+
+  $scope.$watch(function() { return _t.idx; }, function(n) {
+    if (!n) return;
+    doSearch();
+  });
+
   function doSearch () {
     facetSearch.run(function () {
-      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes) }).success(function (data) {
+      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
         _t.result.hits = data.hits;
         filterFacet(facetTerms, data.facets.tags.terms);
       });

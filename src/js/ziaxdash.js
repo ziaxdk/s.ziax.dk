@@ -282,6 +282,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
   _t.result = ApiSearchResult.data;
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
+  _t.idx = 0;
   setSelected(facetTypes, true);
 
   _t.facetTermsOperator = "and";
@@ -321,9 +322,18 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
     doSearch();
   };
 
+  _t.pager = function(c) {
+    _t.idx = c;
+  }
+
+  $scope.$watch(function() { return _t.idx; }, function(n) {
+    if (!n) return;
+    doSearch();
+  });
+
   function doSearch () {
     facetSearch.run(function () {
-      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes) }).success(function (data) {
+      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
         _t.result.hits = data.hits;
         filterFacet(facetTerms, data.facets.tags.terms);
       });
@@ -599,6 +609,50 @@ module.directive('zMessage', ['$rootScope', '$timeout', function ($rootScope, $t
       })
     }
   }
+}]);
+
+module.directive('zPagination', ['$parse', function ($parse) {
+  return {
+    restrict: 'A',
+    replace: true,
+    template: 
+    '<div>' +
+    '<ul class="pagination">' +
+      '<li ng-repeat="n in data" ng-class="{active: idx == n.idx}"><a href="javascript:;" ng-click="click(n)">{{n.idx}}</a></li>' +
+    '</ul></div>',
+    scope: {
+      change: '&'
+    },
+    controller: ['$scope', function ($scope) {
+      $scope.click = function(n) {
+        // console.log(this, n, $scope)
+        $scope.change({idx: n.idx - 1});
+      }
+    }],
+    link: function(scope, element, attrs) {
+      var size = 10;
+      scope.idx = 0;
+      scope.data = [];
+      // console.log('link', arguments);
+      // attrs.$observe(attrs.count, function (value) {
+      //   console.log(value)
+      // })
+
+      // console.log(attrs.count)
+
+      attrs.$observe('idx', function(value) {
+        scope.idx = value;
+      });
+      attrs.$observe('count', function(value) {
+        var num = Math.ceil(value / size);
+        var data = [];
+        for (var i = 0; i < num; i++) {
+          data.push({idx: i + 1});
+        }
+        scope.data = data;
+      });
+    }
+  }; 
 }]);
 
 module.factory('Delayer', ['$timeout', function ($timeout) {
