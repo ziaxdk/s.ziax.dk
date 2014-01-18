@@ -29,7 +29,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       redirectTo: "/"
   });
 
-  $sceDelegateProvider.resourceUrlWhitelist([ 'self', 'http://www.ziax.dk/*']);
+  $sceDelegateProvider.resourceUrlWhitelist([ 'self', '**']);
 
   L.Icon.Default.imagePath = "/css/images/"
 

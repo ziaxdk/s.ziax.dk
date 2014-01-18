@@ -20,7 +20,8 @@
   <div class="list-group">
     <div class="list-group-item hit" ng-repeat="hit in ResultCtrl.result.hits.hits track by hit.id">
       <div class="pull-right" style="z-index: 10000">
-        <a ng-href="{{hit.source.url}}" title="{{hit.source.url}}" ng-if="hit.type=='link'"><i class="glyphicon glyphicon-link"></i></a>
+        <a ng-href="{{hit.source.url}}" title="{{hit.source.url}}" ng-if="hit.type=='link'" z-popover-iframe="hit.source.url"><i class="glyphicon glyphicon-link"></i></a>
+        
         <i class="glyphicon" ng-class="{'glyphicon-pencil': hit.type=='article', 'glyphicon-globe': hit.type=='place'}"></i>
         <small>{{hit.source.createdutc|date:'medium'}} ({{hit.source.clicks}})</small>
         <a href="javascript:;" ng-click="ResultCtrl.star(hit)">
@@ -34,18 +35,7 @@
     </div>
   </div>
 
-<!-- <ul class="pagination">
-  <li><a href="#">&laquo;</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
-</ul>
- -->
   <div z-pagination count="{{ResultCtrl.result.hits.total}}" idx="ResultCtrl.idx"></div>
-
   <div class="well well-sm hitsinfo" ng-show="ResultCtrl.showHits">Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</div>
 
 </div>

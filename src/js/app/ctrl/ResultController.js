@@ -53,6 +53,14 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
     doSearch();
   });
 
+  _t.mover = function(hit) {
+    console.log('over');
+  }
+
+  _t.mleave = function(hit) {
+    console.log('leave');
+  }
+
   function doSearch () {
     facetSearch.run(function () {
       $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
