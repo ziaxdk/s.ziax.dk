@@ -17,11 +17,16 @@ module.service('PlaceService', [function () {
   getPoi = function (name) {
     return each(function (poi) { return poi.name === name });
   };
+  function getPoiDefault(name) {
+    var poi = getPoi(name);
+    return poi != null ? poi : { type:'spinner', color: 'darkpurple' };
+  }
 
 
   return {
     poi: poi,
-    getPoi: getPoi
+    getPoi: getPoi,
+    getPoiDefault: getPoiDefault
 
   };
 }]);

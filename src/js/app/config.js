@@ -25,6 +25,12 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
+  $routeProvider.when('/places', {
+      templateUrl: "/html/_places.html",
+      controller: "PlacesController",
+      controllerAs: "PlacesCtrl",
+      resolve: { ApiSearchResult: ['$http', function($http) { return $http.get('/api/q?q=_place:*'); }] }
+  });
   $routeProvider.otherwise({
       redirectTo: "/"
   });
