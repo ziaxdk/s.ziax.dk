@@ -1,8 +1,9 @@
 (function () {
   var es = require('./es.js')
-      , _ = require('lodash')
-      , utils = require('./utils')
-      , Q = require('q');
+    // , sio = require('./socketio.js')
+    , _ = require('lodash')
+    , utils = require('./utils')
+    , Q = require('q');
 
   function count() {
     var d = Q.defer();
@@ -40,6 +41,7 @@
           break;
         }
         case 'place': {
+          save.icon = src.icon;
           if (_.isObject(src.location)) {
             save.location = src.location;
           }

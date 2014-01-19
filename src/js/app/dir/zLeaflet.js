@@ -12,18 +12,22 @@ module.directive('zLeaflet', ['$parse', '$location', 'PlaceService', function ($
 
       angular.forEach(iconsGet(scope), function(hit) {
         var place = hit.source
-          , poi = PlaceService.getPoiDefault(place.icon);
-        L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
+          , poi = PlaceService.getPoiDefault(place.icon)
+          , marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
         .on('click', function() {
           scope.$apply(function() {
             $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id));
           });
-        }).addTo(map);
-        bounds.push(place.location);
+        }).on('mouseover', function() {
+          marker.openPopup();
+        }).on('mouseout', function() {
+          marker.closePopup();
+        }).bindPopup(hit.source.header, { closeButton: false }).addTo(map);
+        bounds.push(L.latLng(place.location));
       });
 
-      // map.panInsideBounds(L.latLngBounds(bounds));
       map.fitBounds(L.latLngBounds(bounds));
+      // map.panInsideBounds(L.latLngBounds(bounds), { maxZoom: 5 });
 
       // http://localhost:8081/#/show/place/hiTP47HKRmqynG2JoUqCTw
 
@@ -39,6 +43,10 @@ module.directive('zLeaflet', ['$parse', '$location', 'PlaceService', function ($
       //   var poi = PlaceService.getPoi(val)
       //   leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
       // });
+
+      scope.$on('$destroy', function() {
+          map.remove();
+      });
     }
-  }; 
+  };
 }]);

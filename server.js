@@ -31,8 +31,8 @@
     require('./server/es.js').routes(app);
     require('./server/es-q.js').routes(app);
     require('./server/es-document.js').routes(app);
-    require('./server/socketio.js');
     require('./server/scrape-prod.js').routes(app);
+    require('./server/socketio.js');
   });
 
   app.configure('production', function () {
@@ -47,8 +47,8 @@
     require('./server/es.js').routes(app);
     require('./server/es-q.js').routes(app);
     require('./server/es-document.js').routes(app);
-    require('./server/socketio.js');
     require('./server/scrape-prod.js').routes(app);
+    require('./server/socketio.js');
   });
 
 
