@@ -22,7 +22,8 @@ module.directive('zLeaflet', ['$parse', '$location', 'PlaceService', function ($
         bounds.push(place.location);
       });
 
-      map.panInsideBounds(L.latLngBounds(bounds));
+      // map.panInsideBounds(L.latLngBounds(bounds));
+      map.fitBounds(L.latLngBounds(bounds));
 
       // http://localhost:8081/#/show/place/hiTP47HKRmqynG2JoUqCTw
 
