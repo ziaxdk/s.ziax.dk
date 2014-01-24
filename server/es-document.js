@@ -15,9 +15,25 @@
   }
 
 
+
   function routes(app) {
     app.get('/api/drive', function () {
       es.client.count({ _index: es.index, _type: es.types.join() }, undefined, es.callback(arguments));
+    });
+
+    app.get('/api/tags', function() {
+      var q = {
+          "facets": {
+             "tags": {
+                "terms": {
+                   "field": "tags",
+                   "size": 2147483647,
+                   "order": "term"
+                }
+             }
+          }
+      };
+      es.client.request.post({ pathname: es.index + '/' + es.types.join() + '/_search?search_type=count' }, q, es.callback(arguments));
     });
 
     app.post('/api/document', utils.ensureAuthenticated, function (req, res) {

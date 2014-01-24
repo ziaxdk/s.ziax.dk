@@ -20,7 +20,9 @@
       </div>
       <div class="form-group">
         <label for="idTags">Tags</label>
-        <input type="text" name="tags" class="form-control" id="idTags" placeholder="Enter tags..." ng-model="NewCtrl.form.tags">
+        <div z-select2="NewCtrl.tags.data.facets.tags.terms" ng-model="NewCtrl.form.tags"></div>
+        <!-- <select data-placeholder="Enter tags..." class="form-control" multiple tabindex="1" z-select2 ng-model="NewCtrl.form.tags" ng-options="tag.term as tag.term for tag in NewCtrl.tags.data.facets.tags.terms"> -->
+        </select>
       </div>
     </div>
 

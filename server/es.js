@@ -33,8 +33,9 @@
         console.log(err);
         return args[2](err);
       }
+      args[1].contentType('application/json');
       args[1].send(utils.ngSafe(data));
-    }
+    };
   }
 
   module.exports = {

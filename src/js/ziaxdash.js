@@ -10,6 +10,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
   });
   $routeProvider.when('/new', {
       templateUrl: "/html/_new.html",
+      resolve: { NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
       controller: "NewController",
       controllerAs: "NewCtrl"
   });
@@ -206,12 +207,13 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
-  function ($scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
+module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
+  function (NewApiResult, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
   var initQ = $route.current.params.q;
 
+  _t.tags = NewApiResult;
   _t.form = {
     onlyAuth: false,
     type: 'article'
@@ -262,13 +264,12 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
       type: _t.form.type,
       icon: PlaceService.getPoi(_t.mapIcon).type,
       location: _t.form.location,
-      tags: _t.form.tags ? _t.form.tags.split(' ') : [],
+      tags: _t.form.tags||[],
       onlyAuth: _t.form.onlyAuth,
       code: _t.form.code
     };
 
     // console.log(obj);
-    // RestDrive.save(obj);
     DocumentService.save(obj).then(function () {
       MessageService.ok("Saved");
     }, function (err) {
@@ -753,6 +754,32 @@ module.directive('zPopoverIframe', ['$parse', '$document', '$compile', '$timeout
           }
         });
       };
+    }
+  };
+}]);
+
+module.directive('zSelect2', [function () {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    template: '<input type="hidden" class="form-control" />',
+    replace: true,
+    link: function(scope, element, attrs, ngModel) {
+      scope.$watch(attrs.zSelect2, function(val) {
+        var temp = [];
+        angular.forEach(val, function(e) {
+          temp.push(e.term);
+        });
+        element.select2({
+          tags: temp,
+          multiple: true
+        }).on('change', function(evt) {
+          ngModel.$setViewValue(evt.val);
+        });
+      });
+      scope.$on('$destroy', function() {
+        element.select2('destroy');
+      });
     }
   };
 }]);
