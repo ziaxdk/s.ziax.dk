@@ -1,9 +1,10 @@
-module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
-  function ($scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
+module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
+  function (NewApiResult, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
   var initQ = $route.current.params.q;
 
+  _t.tags = NewApiResult;
   _t.form = {
     onlyAuth: false,
     type: 'article'
@@ -54,13 +55,12 @@ module.controller('NewController', ['$scope', '$http', 'RestDrive', 'DocumentSer
       type: _t.form.type,
       icon: PlaceService.getPoi(_t.mapIcon).type,
       location: _t.form.location,
-      tags: _t.form.tags ? _t.form.tags.split(' ') : [],
+      tags: _t.form.tags||[],
       onlyAuth: _t.form.onlyAuth,
       code: _t.form.code
     };
 
     // console.log(obj);
-    // RestDrive.save(obj);
     DocumentService.save(obj).then(function () {
       MessageService.ok("Saved");
     }, function (err) {

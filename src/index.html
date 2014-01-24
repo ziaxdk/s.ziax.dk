@@ -13,11 +13,14 @@
   <link rel="stylesheet" href="css/ziaxdash.css">
   <link rel="stylesheet" href="css/leaflet-awesome-markers.css">
   <link rel="stylesheet" href="css/fa-4.0.3.min.css">
+  <link rel="stylesheet" href="css/select2.css">
+  <link rel="stylesheet" href="css/select2-bootstrap.css">
   <!-- endref -->
   <!-- <link rel="search" type="application/opensearchdescription+xml" href="//localhost:8081/js/app/os.xml" title="SearcH!!" /> -->
+  <script src="/js/lib/head.load.js"></script>
 </head>
 <body ng-controller="MainController as MainCtrl">
-  <nav class="navbar navbar-fixed-top zdnavbartop" role="navigation">
+  <nav class="navbar navbar-collapse navbar-fixed-top zdnavbartop" role="navigation">
     <div class="container">
 <!--       <div class="row">
         <div class="col-md-12">
@@ -43,8 +46,8 @@
       </div>
  -->    </div>
   </nav>
-  <div class="container" style="position: relative">
-    <div class="row zdview" ng-view style="position: absolute; left: 0; right: 0; padding-bottom: 20px"></div>  
+  <div class="container">
+    <div class="row zdview" ng-view style="padding-bottom: 20px"></div>  
   </div>
   <div z-message></div>
   <nav class="navbar navbar-fixed-bottom zdnavbarbottom">
@@ -57,6 +60,8 @@
   </nav>
   <script src="/socket.io/socket.io.js"></script>
   <!-- ref:js js/<%= buildNumber %>.min.js -->
+  <script type="text/javascript" src="js/lib/jquery-2.0.3.js"></script>
+  <script type="text/javascript" src="js/lib/select2.js"></script>
   <script type="text/javascript" src="js/lib/angular.js"></script>
   <script type="text/javascript" src="js/lib/angular-route.js"></script>
   <script type="text/javascript" src="js/lib/angular-resource.js"></script>

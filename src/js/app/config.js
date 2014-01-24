@@ -8,6 +8,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
   });
   $routeProvider.when('/new', {
       templateUrl: "/html/_new.html",
+      resolve: { NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
       controller: "NewController",
       controllerAs: "NewCtrl"
   });
