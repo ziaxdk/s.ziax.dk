@@ -238,25 +238,34 @@ module.exports = function (grunt) {
       // }
     },
 
-    // https://github.com/ncb000gt/node-es/blob/master/lib/core.js
+    // hhttps://github.com/elasticsearch/elasticsearch-js
     elasticsearch: {
-      local: {
-        ignoreErrors: true,
-        config: Config.es.development,
-        tasks: [
-          { 'indices.deleteIndex': { _index: 'ziax'} },
-          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
-          { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
-        ]
+      setup: {
+        local: {
+          ignoreErrors: true,
+          config: Config.es.development,
+          tasks: [
+            { 'indices.deleteIndex': { _index: 'ziax'} },
+            { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
+            { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+          ]
+        },
+        azure: {
+          ignoreErrors: true,
+          config: Config.es.deploy,
+          tasks: [
+            { 'indices.deleteIndex': { _index: 'ziax'} },
+            { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] }
+            // { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+          ]
+        }
       },
-      azure: {
-        ignoreErrors: true,
-        config: Config.es.deploy,
-        tasks: [
-          { 'indices.deleteIndex': { _index: 'ziax'} },
-          { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] }
-          // { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
-        ]
+      backup: {
+        prod2dev: {
+          indices: [ 'ziax' ],
+          src: Config.es.production,
+          dest: Config.es.development
+        }
       }
     }
     // ,
@@ -308,6 +317,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('gitrev', function () {
     buildno = shelljs.exec('git rev-parse --short HEAD', { silent: true }).output.replace('\n', '');
+    grunt.log.writeln('build is', buildno);
     grunt.config('buildno', buildno);
   });
 };
