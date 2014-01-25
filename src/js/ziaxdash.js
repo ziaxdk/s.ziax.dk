@@ -269,7 +269,8 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
       code: _t.form.code
     };
 
-    // console.log(obj);
+    console.log(obj);
+    return;
     DocumentService.save(obj).then(function () {
       MessageService.ok("Saved");
     }, function (err) {
@@ -762,7 +763,7 @@ module.directive('zSelect2', [function () {
   return {
     restrict: 'A',
     require: 'ngModel',
-    template: '<input type="hidden" class="form-control" />',
+    template: '<input type="hidden" class="form-control" placeholder="Enter tags..." />',
     replace: true,
     link: function(scope, element, attrs, ngModel) {
       scope.$watch(attrs.zSelect2, function(val) {
@@ -777,6 +778,11 @@ module.directive('zSelect2', [function () {
           ngModel.$setViewValue(evt.val);
         });
       });
+
+      ngModel.$render = function() {
+        element.val(ngModel.$viewValue);
+      };
+
       scope.$on('$destroy', function() {
         element.select2('destroy');
       });
