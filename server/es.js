@@ -2,7 +2,7 @@
   var utils = require('./utils.js')
     , elasticsearch = require('elasticsearch')
     , Config = require('./../_config.json')
-    , client = elasticsearch.createClient(process.env.NODE_ENV === 'production' ? Config.es.production : Config.es.development)
+    , client = new elasticsearch.Client(process.env.NODE_ENV === 'production' ? Config.es.production : Config.es.development)
     , types = ['link', 'place', 'article']
     , index = 'ziax';
 
@@ -14,7 +14,7 @@
     });
 
     app.get('/api/history', function () {
-      client.search({_index: index}, {
+      client.search({ index: index, body: {
         facets: {
           history: {
             terms: {
@@ -23,8 +23,9 @@
           }
         },
         size: 0
-      }, callback(arguments));
+      }}, callback(arguments));
     });
+
   }
 
   function callback (args) {

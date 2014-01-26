@@ -6,34 +6,47 @@
     , Q = require('q');
 
   function count() {
-    var d = Q.defer();
-    es.client.count({ _index: es.index, _type: es.types.join() }, undefined, function (err, data) { 
-      if (err) return d.reject(err);
-      return d.resolve(data);
+    return es.client.count({
+      index: es.index,
+      type: es.types
     });
-    return d.promise;
   }
 
 
 
   function routes(app) {
-    app.get('/api/drive', function () {
-      es.client.count({ _index: es.index, _type: es.types.join() }, undefined, es.callback(arguments));
+    // app.get('/api/drive', function () {
+    //   es.client.count({ index: es.index, type: es.types }, es.callback(arguments));
+    //   // es.client.count({ _index: es.index, _type: es.types.join() }, undefined, es.callback(arguments));
+    // });
+
+    app.post('/api/star', function(req) {
+      es.client.update({
+        index: es.index,
+        type: req.body.type,
+        id: req.body.id,
+        body: {
+           doc: { "star" : req.body.val }
+        }
+      }, es.callback(arguments));
     });
 
     app.get('/api/tags', function() {
-      var q = {
-          "facets": {
-             "tags": {
-                "terms": {
-                   "field": "tags",
-                   "size": 2147483647,
-                   "order": "term"
-                }
-             }
-          }
-      };
-      es.client.request.post({ pathname: es.index + '/' + es.types.join() + '/_search?search_type=count' }, q, es.callback(arguments));
+      es.client.search({
+        index: es.index,
+        type: es.types,
+        searchType: 'count',
+        body: {
+        "facets": {
+           "tags": {
+              "terms": {
+                 "field": "tags",
+                 "size": 2147483647,
+                 "order": "term"
+              }
+           }
+        }
+      } }, es.callback(arguments));
     });
 
     app.post('/api/document', utils.ensureAuthenticated, function (req, res) {
@@ -70,7 +83,12 @@
 
       // console.log(save);
       // res.send("ok");
-      es.client.index({ _index: es.index, _type: src.type }, save, es.callback(arguments));
+      // es.client.index({ _index: es.index, _type: src.type }, save, es.callback(arguments)); // OLD
+      es.client.index({
+        index: es.index,
+        type: src.type,
+        body: save
+      }, es.callback(arguments));
     });
   }
 

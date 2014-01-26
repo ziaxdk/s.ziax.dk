@@ -60,8 +60,8 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
       code: _t.form.code
     };
 
-    console.log(obj);
-    return;
+    // console.log(obj);
+    // return;
     DocumentService.save(obj).then(function () {
       MessageService.ok("Saved");
     }, function (err) {

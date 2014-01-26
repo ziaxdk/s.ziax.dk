@@ -117,8 +117,8 @@
     if (q.indexOf(':') === -1) {
       return {
         q: q,
-        type: types.join()
-      }
+        type: types
+      };
     }
 
     var type = _.find(es.types, function (t) {
@@ -127,13 +127,13 @@
     });
     if (!type) return {
         q: q,
-        type: types.join()
-    }
+        type: types
+    };
     
     q = q.substring(q.indexOf(':') + 1, q.length);
     if(!q) q = "SPASSER";
 
-    return { 
+    return {
       q: q,
       type: type
     };
@@ -143,19 +143,34 @@
     app.get('/api/q', function (req) {
       var data = req.query;
       var qObject = getTypes(data);
-      es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, null), es.callback(arguments));
-      es.client.index({ _index: es.index, _type: "history" }, { q: req.query.q, q2: req.query.q, createdutc: new Date() }, function (err, data) { });
+      es.client.search({
+        index: es.index,
+        type: qObject.type,
+        body: build(qObject.q, null)
+      }, es.callback(arguments));
+      es.client.index({ index: es.index, type: 'history', body: { q: req.query.q, q2: req.query.q, createdutc: new Date() }}, function (err, data) { });
     });
 
     app.post('/api/xq', function (req) {
       var data = req.body;
       var qObject = getTypes(data);
-      es.client.search({ _index: es.index, _type: qObject.type }, build(qObject.q, data.facets.tags, data.pager.idx), es.callback(arguments));
+      es.client.search({
+        index: es.index,
+        type: qObject.type,
+        body: build(qObject.q, data.facets.tags, data.pager.idx)
+      }, es.callback(arguments));
     });
 
     app.post('/api/q', function (req) {
-      es.client.get({ _index: es.index, _type: req.body.type, _id: req.body.id }, es.callback(arguments));
-      es.client.update({ _index: es.index, _type: req.body.type, _id: req.body.id }, { "script" : "ctx._source.clicks += 1" }, function (err, data) { });
+      es.client.get({ index: es.index, type: req.body.type, id: req.body.id }, es.callback(arguments));
+      es.client.update({
+        index: es.index,
+        type: req.body.type,
+        id: req.body.id,
+        body: {
+          "script" : "ctx._source.clicks += 1"
+        }
+      }, function(err, data) { });
     });
   }
 
