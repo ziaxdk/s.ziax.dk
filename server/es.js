@@ -14,16 +14,19 @@
     });
 
     app.get('/api/history', function () {
-      client.search({ index: index, body: {
-        facets: {
-          history: {
-            terms: {
-              field: "q2.facet"
+      client.search({
+        index: index,
+        searchType: 'count',
+        body: {
+          facets: {
+            history: {
+              terms: {
+                field: "q2.facet"
+              }
             }
           }
-        },
-        size: 0
-      }}, callback(arguments));
+        }
+      }, callback(arguments));
     });
 
   }

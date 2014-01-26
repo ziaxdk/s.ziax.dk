@@ -59,6 +59,8 @@ module.exports = function (grunt) {
       build_js: {
         files: {
           'build/src/js/<%= buildno %>.min.js': [
+            'build/src/js/lib/jquery-2.0.3.min.js',
+            'build/src/js/lib/select2.min.js',
             'build/src/js/lib/angular.min.js',
             'build/src/js/lib/angular-route.min.js',
             'build/src/js/lib/angular-resource.min.js',
@@ -78,8 +80,9 @@ module.exports = function (grunt) {
             'build/src/css/leaflet.min.css',
             'build/src/css/ziaxdash.min.css',
             'build/src/css/leaflet-awesome-markers.min.css',
-            'build/src/css/fa-4.0.3.min.css'
-            // 'build/src/css/ng-trans.min.css'
+            'build/src/css/fa-4.0.3.min.css',
+            'build/src/css/select2.min.css',
+            'build/src/css/select2-bootstrap.min.css'
           ]
         }
       },
