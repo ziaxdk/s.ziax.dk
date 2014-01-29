@@ -16,7 +16,7 @@ module.directive('ngxToggleButton', [function () {
       if (labels.length !== 2) throw Error("labels !== 2");
       $scope.click = function () {
         first = !first;
-      }
+      };
     }]
-  }
+  };
 }]);

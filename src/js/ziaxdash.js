@@ -585,9 +585,9 @@ module.directive('ngxToggleButton', [function () {
       if (labels.length !== 2) throw Error("labels !== 2");
       $scope.click = function () {
         first = !first;
-      }
+      };
     }]
-  }
+  };
 }]);
 
 module.directive('zLeaflet', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {

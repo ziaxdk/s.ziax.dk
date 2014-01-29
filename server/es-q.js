@@ -16,13 +16,13 @@
           "tags^2"
         ]
       }
-    }
+    };
   }
 
   function getAll() {
     return {
       "match_all": {}
-    }
+    };
   }
 
 
@@ -39,6 +39,12 @@
                 }
               },
               "boost_factor": 1000
+            },
+            {
+              "script_score":
+              {
+                "script": "_score * doc['clicks'].value"
+              }
             }
           ]
         }
@@ -47,7 +53,7 @@
   }
 
   function getFacets() {
-    return {    
+    return {
       facets: {
         types: {
           terms: {
@@ -64,7 +70,7 @@
   }
 
   function addFilters(tags) {
-    if (!tags || tags.terms.length == 0) return {};
+    if (!tags || tags.terms.length === 0) return {};
     return {
       filter: {
         terms: {
@@ -177,121 +183,53 @@
   module.exports = {
     routes: routes
 
-  }
+  };
 }());
 
+// "script_score": 
 // {
-//     "query": {
-//          "function_score": {
-//              "query": {
-//                  "query_string": {
-//                     "fields": [ "header", "content" ],
-//                     "query": "*"
-//                  }
-//              },
-//              "functions": [
-//                  {
-//                     "boost_factor": "1000",
-//                     "filter": {
-//                         "term": {
-//                             "star": true
-                            
-//                         }
-//                     }
-//                 }
-//              ]
-//         }
-//     },
-//     facets: {
-//         types: {
-//           terms: {
-//             field : "_type"
-//           }
-//         },
-//         tags: {
-//           terms: {
-//             field: "tags"
-//           },
-//             "facet_filter" : {
-//                 "term" : { 
-//                     "tags" : "javascript"
-//                 }
-//             }
-//         }
-//     },
-//     "filter": {
-//         "term": {
-//            "tags": "javascript"
-//         }
-//     }
+//   "script": "_score * doc['clicks'].value"
 // }
 
 
-
-  // function build2 (q, tags) {
-  //   var query = {
-  //     "query": {
-  //       "function_score": {
-  //         "query": {
-  //           "query_string": {
-  //             "fields": [ "header^4", "content^3", "tags^2" ],
-  //             "query": q
-  //           }
-  //         },
-  //         "functions": [
-  //         {
-  //           "boost_factor": "1000",
-  //           "filter": {
-  //             "term": {
-  //               "star": true
-  //             }
-  //           }
-  //         }
-  //         ]
-  //       }
-  //     },
-  //     facets: {
-  //       types: {
-  //         terms: {
-  //           field : "_type"
-  //         }
-  //       },
-  //       tags: {
-  //         terms: {
-  //           field: "tags"
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   if (tags && tags.terms.length !== 0) {
-  //     deepExtend(query, {
-  //       filter: {
-  //         terms: {
-  //           tags: tags.terms,
-  //           execution: tags.operator
-  //         }
-  //       }
-  //     });
-
-  //     if (tags.operator == 'and') {
-  //       deepExtend(query, {
-  //         facets: {
-  //           tags: {
-  //             "facet_filter": {
-  //               terms: {
-  //                 tags: tags.terms,
-  //                 execution: tags.operator
-  //               }
-  //             }
-  //           }
-  //         }
-
-  //       });
-  //     }
-  //   }
-
-  //   // utils.log(query);
-
-  //   return query;
-  // };
+// {
+//     "query": {
+//       "function_score": {
+//         "query": {
+//           "multi_match": {
+//             "query": "safari",
+//             "fields": [
+//               "header^4",
+//               "content^3",
+//               "tags^2"
+//             ]
+//           }
+//         },
+//         "functions": [
+//           {
+//             "filter": {
+//               "term": {
+//                 "star": true
+//               }
+//             },
+//             "boost_factor": 1000
+//           }
+//         ]
+//       }
+//     },
+//     "facets": {
+//       "types": {
+//         "terms": {
+//           "field": "_type"
+//         }
+//       },
+//       "tags": {
+//         "terms": {
+//           "field": "tags"
+//         }
+//       }
+//     },
+//     "size": 10,
+//     "from": 0
+//   }
+//   

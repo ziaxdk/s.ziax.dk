@@ -10,7 +10,7 @@
   <ul class="list-group facets clearfix">
     <li><button class="btn btn-danger btn-sm" ng-click="ResultCtrl.facetClear()"><i class="glyphicon glyphicon-ban-circle"></i></button></li>
     <li>
-      <ngx-toggle-button model="ResultCtrl.facetTermsOperator" ngx-toggle-button-labels="and,or" />
+      <ngx-toggle-button model="ResultCtrl.facetTermsOperator" ngx-toggle-button-labels="or,and" />
     </li>
     <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms track by hit.term" ng-hide="hit.disabled">
       <button class="btn btn-sm" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-disabled="hit.disabled" ng-click="ResultCtrl.facet(hit)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
