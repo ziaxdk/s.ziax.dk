@@ -82,7 +82,7 @@
   }
 
   function addFacetFilters(tags) {
-    if (!tags || tags.terms.length == 0 || tags.operator !== 'and') return {};
+    if (!tags || tags.terms.length === 0 || tags.operator !== 'and') return {};
 
     return {
       facets: {
@@ -95,14 +95,14 @@
           }
         }
       }
-    }
+    };
   }
 
   function addMeta(idx, size) {
     return {
       "size": size,
       "from": idx * size
-    }
+    };
   }
 
   function build (q, tags, idx, size) {
@@ -146,6 +146,14 @@
   }
 
   function routes(app) {
+    app.get('/api/places', function(req) {
+      es.client.search({
+        index: es.index,
+        type: 'place',
+        body: build('*', undefined, undefined, 5000)
+      }, es.callback(arguments));
+    });
+
     app.get('/api/q', function (req) {
       var data = req.query;
       var qObject = getTypes(data);

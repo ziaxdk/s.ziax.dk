@@ -16,7 +16,7 @@
   <p ng-bind-html="ShowCtrl.Result.source.content|textile"></p>
 
   <div ng-if="ShowCtrl.Result.type == 'place'">
-    <div style="height: 500px" dash-leaflet="ShowCtrl.Result.source.location.leaflet" dash-leaflet-readonly="true"></div>
+    <div style="height: 500px" dash-leaflet="ShowCtrl.Result.source.location.leaflet" dash-leaflet-readonly="true" dash-leaflet-icon="{{ShowCtrl.Result.source.icon}}"></div>
 
   </div>
 

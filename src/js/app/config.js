@@ -30,7 +30,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       templateUrl: "/html/_places.html",
       controller: "PlacesController",
       controllerAs: "PlacesCtrl",
-      resolve: { ApiSearchResult: ['$http', function($http) { return $http.get('/api/q?q=_place:*'); }] }
+      resolve: { ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
   });
   $routeProvider.otherwise({
       redirectTo: "/"
@@ -38,7 +38,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
   $sceDelegateProvider.resourceUrlWhitelist([ 'self', '**']);
 
-  L.Icon.Default.imagePath = "/css/images/"
+  L.Icon.Default.imagePath = "/css/images/";
 
 
   // $provide.factory('403', ['$q', function($q) {

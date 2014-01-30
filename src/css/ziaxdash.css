@@ -50,6 +50,16 @@ body {
   animation: fadeIn 3s;
   -webkit-animation: fadeIn 3s;
 }
+.inandout.ng-hide-remove {
+  display: block !important;
+  animation: fadeIn 1s;
+  -webkit-animation: fadeIn 1s;
+}
+.inandout.ng-hide-add {
+  display: block !important;
+  animation: fadeOut 1s;
+  -webkit-animation: fadeOut 1s;
+}
 .hit.ng-enter {
   animation: bounceIn 300ms;
   -webkit-animation: bounceIn 300ms;

@@ -50,24 +50,26 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
 
   $scope.$watch(function() { return _t.idx; }, function(n,o) {
     if (n == o) return;
-    doSearch();
+    execute();
   });
 
   _t.mover = function(hit) {
     console.log('over');
-  }
+  };
 
   _t.mleave = function(hit) {
     console.log('leave');
+  };
+
+  function execute() {
+    $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
+      _t.result.hits = data.hits;
+      filterFacet(facetTerms, data.facets.tags.terms);
+    });
   }
 
   function doSearch () {
-    facetSearch.run(function () {
-      $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
-        _t.result.hits = data.hits;
-        filterFacet(facetTerms, data.facets.tags.terms);
-      });
-    });
+    facetSearch.run(execute);
   }
 
   function filterFacet (facetTerms, dataFacetTerms) {
@@ -81,9 +83,8 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
           val.count = dataFacetTerms[j].count;
           break;
          }
-      };
-
-    };
+      }
+    }
   }
 
   function setSelected (col, val) {
