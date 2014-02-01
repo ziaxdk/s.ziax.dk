@@ -16,7 +16,7 @@ module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, Pla
         var ll = this.getLatLng();
         scope.$evalAsync(function () {
           latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-        })
+        });
       });
       if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
         leafletMarker.options.draggable = false;
@@ -55,7 +55,7 @@ module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, Pla
         map.addControl(new MyControl());
       }
 
-      scope.$watch(function () { return scope.$eval(attrs.dashLeaflet) }, function (value) {
+      scope.$watch(function () { return scope.$eval(attrs.dashLeaflet); }, function (value) {
         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
           latlon = value.split(',');
           leafletMarker.setLatLng(latlon);
@@ -64,9 +64,13 @@ module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, Pla
 
       attrs.$observe('dashLeafletIcon', function (val) {
         if (!val) return;
-        var poi = PlaceService.getPoi(val)
+        var poi = PlaceService.getPoi(val);
         leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
       });
+
+      scope.$on('$destroy', function() {
+        map.remove();
+      });
     }
-  }; 
+  };
 }]);

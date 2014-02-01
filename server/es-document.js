@@ -65,11 +65,10 @@
 
       };
       switch(src.type) {
-        case 'link': {
+        case 'link':
           save.url = src.url;
           break;
-        }
-        case 'place': {
+        case 'place':
           save.icon = src.icon;
           if (_.isObject(src.location)) {
             save.location = src.location;
@@ -78,7 +77,6 @@
             var latlon = src.location.split(',');
             save.location = { lat: latlon[0].trim(), lon: latlon[1].trim() };
           }
-        }
       }
 
       // console.log(save);

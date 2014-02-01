@@ -22,15 +22,15 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
   $routeProvider.when('/res/:q', {
       templateUrl: "/html/_result.html",
       // resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
-      resolve: { ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
+      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('search'); }], ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
   $routeProvider.when('/places', {
-      templateUrl: "/html/_places.html",
-      controller: "PlacesController",
-      controllerAs: "PlacesCtrl",
-      resolve: { ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
+      templateUrl: "/html/_result.html",
+      controller: "ResultController",
+      controllerAs: "ResultCtrl",
+      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
   });
   $routeProvider.otherwise({
       redirectTo: "/"
@@ -63,7 +63,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
 }]);
 
-module.run(['$window', '$rootScope', 'GlobalService', function ($window, $rootScope, GlobalService) {
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService',
+  function ($window, $rootScope, $templateCache, GlobalService) {
   var location = $window.location;
   var socket = io.connect('//' + location.hostname);
   
@@ -77,6 +78,4 @@ module.run(['$window', '$rootScope', 'GlobalService', function ($window, $rootSc
       GlobalService.count = data.count;
     });
   });
-
-
 }]);

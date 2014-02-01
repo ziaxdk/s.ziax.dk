@@ -24,15 +24,15 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
   $routeProvider.when('/res/:q', {
       templateUrl: "/html/_result.html",
       // resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
-      resolve: { ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
+      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('search'); }], ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
       controller: "ResultController",
       controllerAs: "ResultCtrl"
   });
   $routeProvider.when('/places', {
-      templateUrl: "/html/_places.html",
-      controller: "PlacesController",
-      controllerAs: "PlacesCtrl",
-      resolve: { ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
+      templateUrl: "/html/_result.html",
+      controller: "ResultController",
+      controllerAs: "ResultCtrl",
+      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
   });
   $routeProvider.otherwise({
       redirectTo: "/"
@@ -65,7 +65,8 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
 }]);
 
-module.run(['$window', '$rootScope', 'GlobalService', function ($window, $rootScope, GlobalService) {
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService',
+  function ($window, $rootScope, $templateCache, GlobalService) {
   var location = $window.location;
   var socket = io.connect('//' + location.hostname);
   
@@ -79,8 +80,6 @@ module.run(['$window', '$rootScope', 'GlobalService', function ($window, $rootSc
       GlobalService.count = data.count;
     });
   });
-
-
 }]);
 
 module.controller('EditController', ['$scope', '$http', 'RestDrive', 'Delayer', '$route', function ($scope, $http, RestDrive, Delayer, $route) {
@@ -282,17 +281,34 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
 
 module.controller('PlacesController', ['ApiSearchResult',
   function (ApiSearchResult) {
-    this.places = ApiSearchResult.data.hits.hits;
+    var t = this;
+    t.places = ApiSearchResult.data.hits.hits;
+    t.tags = ApiSearchResult.data.facets.tags.terms;
+    setSelected(t.tags, true);
+
+    t.doSearch = function() {
+      console.log('t.search', t);
+    };
+
+    function setSelected (col, val) {
+      angular.forEach(col, function (item) {
+      item.selected = val;
+    });
+  }
+
 }]);
 
-module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
-  function (ApiSearchResult, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
+module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
+  function (ApiType, ApiSearchResult, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
   var _t = this,
       facetSearch = Delayer(500),
       first = true,
       starDelayer = Delayer(100)
       ;
+
+
   _t.result = ApiSearchResult.data;
+  _t.apiType = ApiType.type;
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
   _t.idx = 0;
@@ -349,7 +365,7 @@ module.controller('ResultController', ['ApiSearchResult', 'RestXQ', 'Delayer', '
   };
 
   function execute() {
-    $http.post('/api/xq', { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
+    $http.post(ApiType.uri, { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
       _t.result.hits = data.hits;
       filterFacet(facetTerms, data.facets.tags.terms);
     });
@@ -492,7 +508,7 @@ module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, Pla
         var ll = this.getLatLng();
         scope.$evalAsync(function () {
           latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-        })
+        });
       });
       if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
         leafletMarker.options.draggable = false;
@@ -531,7 +547,7 @@ module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, Pla
         map.addControl(new MyControl());
       }
 
-      scope.$watch(function () { return scope.$eval(attrs.dashLeaflet) }, function (value) {
+      scope.$watch(function () { return scope.$eval(attrs.dashLeaflet); }, function (value) {
         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
           latlon = value.split(',');
           leafletMarker.setLatLng(latlon);
@@ -540,11 +556,15 @@ module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, Pla
 
       attrs.$observe('dashLeafletIcon', function (val) {
         if (!val) return;
-        var poi = PlaceService.getPoi(val)
+        var poi = PlaceService.getPoi(val);
         leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
       });
+
+      scope.$on('$destroy', function() {
+        map.remove();
+      });
     }
-  }; 
+  };
 }]);
 
 module.directive('ngSetFocus', [function () {
@@ -591,55 +611,119 @@ module.directive('ngxToggleButton', [function () {
   };
 }]);
 
-module.directive('zLeaflet', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
+// module.directive('zLeaflet', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
+//   return {
+//     restrict: 'A',
+//     link: function(scope, element, attrs) {
+//       var map = L.map(element[0], { center: [0, 0], zoom: 12 }),
+//           iconsGet = $parse(attrs.zLeaflet),
+//           layer = L.featureGroup().addTo(map),
+//           bounds = [];
+//       L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
+//       // leafletMarker.addTo(layer);
+
+
+//       // L.ziax.tagsSelector(scope).addTo(map);
+
+//       angular.forEach(iconsGet(scope), function(hit) {
+//         var place = hit.source,
+//             poi = PlaceService.getPoiDefault(place.icon),
+//             marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
+//         .on('click', function() {
+//           scope.$apply(function() {
+//             $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id));
+//           });
+//         }).on('mouseover', function() {
+//           marker.openPopup();
+//         }).on('mouseout', function() {
+//           marker.closePopup();
+//         }).bindPopup(hit.source.header, { closeButton: false }).addTo(map);
+//         bounds.push(L.latLng(place.location));
+//       });
+
+//       map.fitBounds(L.latLngBounds(bounds));
+//       // map.panInsideBounds(L.latLngBounds(bounds), { maxZoom: 5 });
+
+//       // http://localhost:8081/#/show/place/hiTP47HKRmqynG2JoUqCTw
+
+//       // scope.$watch(function () { return scope.$eval(attrs.dashLeaflet) }, function (value) {
+//       //   if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
+//       //     latlon = value.split(',');
+//       //     leafletMarker.setLatLng(latlon);
+//       //     map.setView(latlon);
+//       // }});
+
+//       // attrs.$observe('dashLeafletIcon', function (val) {
+//       //   if (!val) return;
+//       //   var poi = PlaceService.getPoi(val)
+//       //   leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
+//       // });
+
+//       scope.$on('$destroy', function() {
+//           map.remove();
+//       });
+//     }
+//   };
+// }]);
+
+module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
   return {
     restrict: 'A',
-    link: function(scope, element, attrs) {
-      var map = L.map(element[0], { center: [0, 0], zoom: 12 })
-        , iconsGet = $parse(attrs.zLeaflet)
-        , layer = L.featureGroup().addTo(map)
-        , bounds = [];
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+      var t = this,
+          map = L.map($element[0], { center: [0, 0], zoom: 12 }),
+          layer = L.featureGroup().addTo(map);
       L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
-      // leafletMarker.addTo(layer);
 
+      t.map = map;
 
-      angular.forEach(iconsGet(scope), function(hit) {
-        var place = hit.source
-          , poi = PlaceService.getPoiDefault(place.icon)
-          , marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
-        .on('click', function() {
-          scope.$apply(function() {
-            $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id));
-          });
-        }).on('mouseover', function() {
-          marker.openPopup();
-        }).on('mouseout', function() {
-          marker.closePopup();
-        }).bindPopup(hit.source.header, { closeButton: false }).addTo(map);
-        bounds.push(L.latLng(place.location));
+      $scope.$on('$destroy', function() {
+        map.remove();
       });
 
-      map.fitBounds(L.latLngBounds(bounds));
-      // map.panInsideBounds(L.latLngBounds(bounds), { maxZoom: 5 });
-
-      // http://localhost:8081/#/show/place/hiTP47HKRmqynG2JoUqCTw
-
-      // scope.$watch(function () { return scope.$eval(attrs.dashLeaflet) }, function (value) {
-      //   if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
-      //     latlon = value.split(',');
-      //     leafletMarker.setLatLng(latlon);
-      //     map.setView(latlon);
-      // }});
-
-      // attrs.$observe('dashLeafletIcon', function (val) {
-      //   if (!val) return;
-      //   var poi = PlaceService.getPoi(val)
-      //   leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
-      // });
-
-      scope.$on('$destroy', function() {
-          map.remove();
+      $scope.$watch(function () { return $scope.$eval($attrs.zMap); }, function (values) {
+        layer.clearLayers();
+        angular.forEach(values, function(value) {
+          var place = value.source,
+              poi = PlaceService.getPoiDefault(place.icon),
+              marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
+                .on('click', function() { $scope.$evalAsync(function() { $location.path('/show/' + value.type + '/' + encodeURIComponent(value.id)); }); })
+                .on('mouseover', function() { marker.openPopup(); })
+                .on('mouseout', function() { marker.closePopup(); })
+                .bindPopup(value.source.header, { closeButton: false })
+                .addTo(layer);
+        });
+        map.fitBounds(layer.getBounds());
       });
+    }],
+    link: function(scope, element, attrs) {
+    }
+  };
+}]);
+
+module.directive('zMapControl', ['$compile', '$rootScope', 'LeafletControlsService',
+  function ($compile, $rootScope, LeafletControlsService) {
+  
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    compile: function() {
+      var html = $compile('<div class="leaflet-control-layers"><div class="list-group"><a ng-class="{active: tag.selected}" href="javascript:;" ng-click="facet(tag)" ng-repeat="tag in tags track by tag.term" class="list-group-item"><span class="badge">{{tag.count}}</span>{{tag.term}}</a></div></div>'),
+          nScope = $rootScope.$new();
+
+      return function link(scope, element, attrs, zmap) {
+        nScope.tags = [];
+
+        nScope.facet = function(hit) {
+          scope.$eval(attrs.zMapControlCb, {hit: hit});
+        };
+
+        scope.$watch(function () { return scope.$eval(attrs.zMapControl); }, function (value) {
+          nScope.tags = value;
+        });
+        
+        zmap.map.addControl(LeafletControlsService.tagsControl({html: html, scope: nScope}));
+      };
     }
   };
 }]);
@@ -791,6 +875,21 @@ module.directive('zSelect2', [function () {
   };
 }]);
 
+module.factory('ApiTypeFactory', [function () {
+  var apiType = function (type) {
+    if (type === 'places') return {
+      uri: '/api/places',
+      type: 'places'
+    };
+
+    return {
+      uri: '/api/xq',
+      type: 'search'
+    };
+  };
+  return apiType;
+}]);
+
 module.factory('Delayer', ['$timeout', function ($timeout) {
   var delayer = function (delayInMs) {
     var canceler;
@@ -849,6 +948,37 @@ module.service('GlobalService', ['$http', function ($http) {
 
   return {
     count: 0
+  };
+}]);
+
+module.service('LeafletControlsService', [function () {
+
+  var TagClass = L.Control.extend({
+    options: {
+      position: 'bottomright'
+    },
+    
+    initialize: function (options) {
+      L.Util.setOptions(this, options);
+      this._elements = options.html(options.scope);
+    },
+
+    onAdd: function() {
+      this._initLayout();
+      return this._container;
+    },
+
+    _initLayout: function () {
+      var container = this._container = L.DomUtil.create('div', 'tags-control');
+      angular.element(container).append(this._elements);
+      return container;
+    }
+  });
+
+  return {
+    tagsControl: function(options) {
+      return new TagClass(options);
+    }
   };
 }]);
 

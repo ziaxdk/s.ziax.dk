@@ -10,11 +10,16 @@
     });
   });
 
+  function status() {
+    console.log(SIO);
+  }
+
   function plusOne() {
 
   }
 
   module.exports = {
-    plusOne: plusOne
+    plusOne: plusOne,
+    status: status
   };
 }());

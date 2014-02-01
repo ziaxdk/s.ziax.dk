@@ -1,3 +1,5 @@
 <div class="col-md-12">
-  <div z-leaflet="PlacesCtrl.places" style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px"></div>
+  <!-- <div z-leaflet="PlacesCtrl.places" style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px"></div> -->
+  <div z-map="PlacesCtrl.places" z-map-control="PlacesCtrl.tags" z-map-control-cb="PlacesCtrl.doSearch()" style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px"></div>
+
 </div>

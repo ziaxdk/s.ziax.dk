@@ -1,9 +1,8 @@
 (function () {
-  var deepExtend = require('deep-extend')
-      , _ = require('lodash')
-      , deepExtend = require('deep-extend')
-      , utils = require('./utils.js')
-      , es = require('./es.js');
+  var deepExtend = require('deep-extend'),
+      _ = require('lodash'),
+      utils = require('./utils.js'),
+      es = require('./es.js');
 
 
   function getQuery(q) {
@@ -118,8 +117,8 @@
 
 
   function getTypes (data) {
-    var q = data.q
-      , types = data.types || es.types;
+    var q = data.q,
+        types = data.types || es.types;
     if (q.indexOf(':') === -1) {
       return {
         q: q,
@@ -151,6 +150,15 @@
         index: es.index,
         type: 'place',
         body: build('*', undefined, undefined, 5000)
+      }, es.callback(arguments));
+    });
+
+    app.post('/api/places', function(req) {
+      var data = req.body;
+      es.client.search({
+        index: es.index,
+        type: 'place',
+        body: build('*', data.facets.tags, undefined, 5000)
       }, es.callback(arguments));
     });
 

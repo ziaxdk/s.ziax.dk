@@ -1,41 +1,45 @@
 <div class="col-md-12">
-  
-  <ul class="list-group facets clearfix">
-    <li><button class="btn btn-success btn-sm" ng-click="ResultCtrl.allTypes()"><i class="glyphicon glyphicon-ok"></i></button></li>
-    <li ng-repeat="hit in ResultCtrl.result.facets.types.terms track by hit.term">
-      <button class="btn btn-sm" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-click="ResultCtrl.facet(hit)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
-    </li>
-  </ul>
-
-  <ul class="list-group facets clearfix">
-    <li><button class="btn btn-danger btn-sm" ng-click="ResultCtrl.facetClear()"><i class="glyphicon glyphicon-ban-circle"></i></button></li>
-    <li>
-      <ngx-toggle-button model="ResultCtrl.facetTermsOperator" ngx-toggle-button-labels="or,and" />
-    </li>
-    <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms track by hit.term" ng-hide="hit.disabled" class="inandout">
-      <button class="btn btn-sm" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-disabled="hit.disabled" ng-click="ResultCtrl.facet(hit)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
-    </li>
-  </ul>
-
-  <div class="list-group">
-    <div class="list-group-item hit" ng-repeat="hit in ResultCtrl.result.hits.hits track by hit.id">
-      <div class="pull-right" style="z-index: 10000">
-        <a ng-href="{{hit.source.url}}" title="{{hit.source.url}}" ng-if="hit.type=='link'" z-popover-iframe="hit.source.url"><i class="glyphicon glyphicon-link"></i></a>
-        
-        <i class="glyphicon" ng-class="{'glyphicon-pencil': hit.type=='article', 'glyphicon-globe': hit.type=='place'}"></i>
-        <small>{{hit.source.createdutc|date:'medium'}} ({{hit.source.clicks}})</small>
-        <a href="javascript:;" ng-click="ResultCtrl.star(hit)">
-          <i class="glyphicon" ng-class="{'glyphicon-star-empty': !hit.source.star, 'glyphicon-star': hit.source.star}"></i>
-        </a>
-      </div>
-      <a href="javascript:;" ng-click="ResultCtrl.show(hit)">
-        <h4 class="list-group-item-heading">{{hit.source.header}}</h4>
-      </a>
-      <p class="list-group-item-text">{{hit.source.content|textile|html:25}}</p>
-    </div>
+  <div ng-if="ResultCtrl.apiType === 'places'" z-map="ResultCtrl.result.hits.hits" z-map-control="ResultCtrl.result.facets.tags.terms" z-map-control-cb="ResultCtrl.facet(hit)" style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px">
   </div>
 
-  <div z-pagination count="{{ResultCtrl.result.hits.total}}" idx="ResultCtrl.idx"></div>
-  <div class="well well-sm hitsinfo" ng-show="ResultCtrl.showHits">Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</div>
+  <div ng-if="ResultCtrl.apiType === 'search'">
+    <ul class="list-group facets clearfix">
+      <li><button class="btn btn-success btn-sm" ng-click="ResultCtrl.allTypes()"><i class="glyphicon glyphicon-ok"></i></button></li>
+      <li ng-repeat="hit in ResultCtrl.result.facets.types.terms track by hit.term">
+        <button class="btn btn-sm" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-click="ResultCtrl.facet(hit)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
+      </li>
+    </ul>
+
+    <ul class="list-group facets clearfix">
+      <li><button class="btn btn-danger btn-sm" ng-click="ResultCtrl.facetClear()"><i class="glyphicon glyphicon-ban-circle"></i></button></li>
+      <li>
+        <ngx-toggle-button model="ResultCtrl.facetTermsOperator" ngx-toggle-button-labels="or,and" />
+      </li>
+      <li ng-repeat="hit in ResultCtrl.result.facets.tags.terms track by hit.term" ng-hide="hit.disabled" class="inandout">
+        <button class="btn btn-sm" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-disabled="hit.disabled" ng-click="ResultCtrl.facet(hit)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
+      </li>
+    </ul>
+
+    <div class="list-group">
+      <div class="list-group-item hit" ng-repeat="hit in ResultCtrl.result.hits.hits track by hit.id">
+        <div class="pull-right" style="z-index: 10000">
+          <a ng-href="{{hit.source.url}}" title="{{hit.source.url}}" ng-if="hit.type=='link'" z-popover-iframe="hit.source.url"><i class="glyphicon glyphicon-link"></i></a>
+          
+          <i class="glyphicon" ng-class="{'glyphicon-pencil': hit.type=='article', 'glyphicon-globe': hit.type=='place'}"></i>
+          <small>{{hit.source.createdutc|date:'medium'}} ({{hit.source.clicks}})</small>
+          <a href="javascript:;" ng-click="ResultCtrl.star(hit)">
+            <i class="glyphicon" ng-class="{'glyphicon-star-empty': !hit.source.star, 'glyphicon-star': hit.source.star}"></i>
+          </a>
+        </div>
+        <a href="javascript:;" ng-click="ResultCtrl.show(hit)">
+          <h4 class="list-group-item-heading">{{hit.source.header}}</h4>
+        </a>
+        <p class="list-group-item-text">{{hit.source.content|textile|html:25}}</p>
+      </div>
+    </div>
+
+    <div z-pagination count="{{ResultCtrl.result.hits.total}}" idx="ResultCtrl.idx"></div>
+    <div class="well well-sm hitsinfo" ng-show="ResultCtrl.showHits">Hits: {{ResultCtrl.result.hits.total}} - took: {{ResultCtrl.result.took}} ms</div>
+  </div>
 
 </div>
