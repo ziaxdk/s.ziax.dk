@@ -314,7 +314,7 @@ module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', '
   _t.idx = 0;
   setSelected(facetTypes, true);
 
-  _t.facetTermsOperator = "and";
+  _t.facetTermsOperator = "or";
 
   // $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
 
@@ -708,7 +708,7 @@ module.directive('zMapControl', ['$compile', '$rootScope', 'LeafletControlsServi
     restrict: 'A',
     require: 'zMap',
     compile: function() {
-      var html = $compile('<div class="leaflet-control-layers"><div class="list-group"><a ng-class="{active: tag.selected}" href="javascript:;" ng-click="facet(tag)" ng-repeat="tag in tags track by tag.term" class="list-group-item"><span class="badge">{{tag.count}}</span>{{tag.term}}</a></div></div>'),
+      var html = $compile('<div class="leaflet-control-layers z-map-tags-control"><div class="list-group"><a ng-class="{active: tag.selected}" href="javascript:;" ng-click="facet(tag)" ng-repeat="tag in tags track by tag.term" class="list-group-item"><span class="badge">{{tag.count}}</span>{{tag.term}}</a></div></div>'),
           nScope = $rootScope.$new();
 
       return function link(scope, element, attrs, zmap) {

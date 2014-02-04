@@ -14,7 +14,7 @@ module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', '
   _t.idx = 0;
   setSelected(facetTypes, true);
 
-  _t.facetTermsOperator = "and";
+  _t.facetTermsOperator = "or";
 
   // $scope.$watch(function () { return _t.facetTermsOperator; }, function (n) { console.log('now', n)  })
 

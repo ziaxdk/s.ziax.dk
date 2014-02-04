@@ -137,3 +137,7 @@ body {
   animation: bounceOut 300ms;
   -webkit-animation: bounceOut 300ms;
 }
+.z-map-tags-control .list-group {
+  margin: 0px;
+  min-width: 100px;
+}
