@@ -1,8 +1,7 @@
 module.service('LeafletControlsService', [function () {
-
-  var TagClass = L.Control.extend({
+  var LeafletControlClass = L.Control.extend({
     options: {
-      position: 'bottomright'
+      position: 'topright'
     },
     
     initialize: function (options) {
@@ -16,15 +15,15 @@ module.service('LeafletControlsService', [function () {
     },
 
     _initLayout: function () {
-      var container = this._container = L.DomUtil.create('div', 'tags-control');
+      var container = this._container = L.DomUtil.create('div', this.options.className);
       angular.element(container).append(this._elements);
       return container;
     }
   });
 
   return {
-    tagsControl: function(options) {
-      return new TagClass(options);
+    leafletControl: function(options) {
+      return new LeafletControlClass(options);
     }
   };
 }]);

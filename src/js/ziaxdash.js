@@ -218,8 +218,12 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
     type: 'article'
   };
   _t.bigMap = false;
+  _t.mapSize = 's';
   _t.mapIcon = 'cutlery';
   _t.mapIcons = PlaceService.poi;
+
+  $scope.$watch(function() { return _t.mapSize; }, function(v) { console.log('mapSize', v) })
+  $scope.$watch(function() { return _t.form.q; }, function(v) { console.log('q', v) })
 
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;
@@ -490,82 +494,82 @@ module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($pars
     }
   }
 }]);
-module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, PlaceService) {
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs) {
-      var map = L.map(element[0], { center: [0, 0], zoom: 12 }),
-          bigMapGet = $parse(attrs.dashLeafletBig),
-          bigMapSet = bigMapGet.assign,
-          bigMapEnabled = bigMapGet(scope),
-          latLonGet = $parse(attrs.dashLeaflet),
-          latLonSet = latLonGet.assign,
-          latlon = [0, 0],
-          leafletMarker = L.marker(latlon, { draggable: true, icon: L.AwesomeMarkers.icon({ icon: 'fa-spinner', markerColor: 'darkpurple', prefix: 'fa' }) });
+// module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, PlaceService) {
+//   return {
+//     restrict: 'A',
+//     link: function(scope, element, attrs) {
+//       var map = L.map(element[0], { center: [0, 0], zoom: 12 }),
+//           bigMapGet = $parse(attrs.dashLeafletBig),
+//           bigMapSet = bigMapGet.assign,
+//           bigMapEnabled = bigMapGet(scope),
+//           latLonGet = $parse(attrs.dashLeaflet),
+//           latLonSet = latLonGet.assign,
+//           latlon = [0, 0],
+//           leafletMarker = L.marker(latlon, { draggable: true, icon: L.AwesomeMarkers.icon({ icon: 'fa-spinner', markerColor: 'darkpurple', prefix: 'fa' }) });
 
-      // <!-- 'red', 'darkred', 'orange', 'green', 'darkgreen', 'blue', 'purple', 'darkpuple', 'cadetblue' -->
-      leafletMarker.on('dragend', function (evt) {
-        var ll = this.getLatLng();
-        scope.$evalAsync(function () {
-          latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-        });
-      });
-      if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
-        leafletMarker.options.draggable = false;
-      }
+//       // <!-- 'red', 'darkred', 'orange', 'green', 'darkgreen', 'blue', 'purple', 'darkpuple', 'cadetblue' -->
+//       leafletMarker.on('dragend', function (evt) {
+//         var ll = this.getLatLng();
+//         scope.$evalAsync(function () {
+//           latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
+//         });
+//       });
+//       if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
+//         leafletMarker.options.draggable = false;
+//       }
 
-      var layer = L.featureGroup().addTo(map);
-      L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
-      leafletMarker.addTo(layer);
+//       var layer = L.featureGroup().addTo(map);
+//       L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
+//       leafletMarker.addTo(layer);
 
 
-      if (angular.isDefined(bigMapEnabled) && typeof bigMapEnabled === 'boolean') {
-        var MyControl = L.Control.extend({
-            options: {
-                position: 'topright'
-            },
+//       if (angular.isDefined(bigMapEnabled) && typeof bigMapEnabled === 'boolean') {
+//         var MyControl = L.Control.extend({
+//             options: {
+//                 position: 'topright'
+//             },
 
-            onAdd: function (map) {
-                // create the control container with a particular class name
-                var container = L.DomUtil.create('div', 'my-custom-control');
-                container.setAttribute('aria-haspopup', true);
+//             onAdd: function (map) {
+//                 // create the control container with a particular class name
+//                 var container = L.DomUtil.create('div', 'my-custom-control');
+//                 container.setAttribute('aria-haspopup', true);
 
-                var link = L.DomUtil.create('a', 'dash-control-big', container);
-                link.href = 'javascript:;';
-                link.title = "Upscale";
-                link.innerText = 'X';
+//                 var link = L.DomUtil.create('a', 'dash-control-big', container);
+//                 link.href = 'javascript:;';
+//                 link.title = "Upscale";
+//                 link.innerText = 'X';
 
-                L.DomEvent
-                  .on(link, 'click', function () {
-                    scope.$evalAsync(function () {
-                      bigMapSet(scope, !bigMapEnabled);
-                    });
-                  });
-                return container;
-            }
-        });
-        map.addControl(new MyControl());
-      }
+//                 L.DomEvent
+//                   .on(link, 'click', function () {
+//                     scope.$evalAsync(function () {
+//                       bigMapSet(scope, !bigMapEnabled);
+//                     });
+//                   });
+//                 return container;
+//             }
+//         });
+//         map.addControl(new MyControl());
+//       }
 
-      scope.$watch(function () { return scope.$eval(attrs.dashLeaflet); }, function (value) {
-        if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
-          latlon = value.split(',');
-          leafletMarker.setLatLng(latlon);
-          map.setView(latlon);
-      }});
+//       scope.$watch(function () { return scope.$eval(attrs.dashLeaflet); }, function (value) {
+//         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
+//           latlon = value.split(',');
+//           leafletMarker.setLatLng(latlon);
+//           map.setView(latlon);
+//       }});
 
-      attrs.$observe('dashLeafletIcon', function (val) {
-        if (!val) return;
-        var poi = PlaceService.getPoi(val);
-        leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
-      });
+//       attrs.$observe('dashLeafletIcon', function (val) {
+//         if (!val) return;
+//         var poi = PlaceService.getPoi(val);
+//         leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
+//       });
 
-      scope.$on('$destroy', function() {
-        map.remove();
-      });
-    }
-  };
-}]);
+//       scope.$on('$destroy', function() {
+//         map.remove();
+//       });
+//     }
+//   };
+// }]);
 
 module.directive('ngSetFocus', [function () {
   return function (scope, element, attrs) {
@@ -669,6 +673,8 @@ module.directive('ngxToggleButton', [function () {
 module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
   return {
     restrict: 'A',
+    // scope: {},
+    // priority: 1,
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var t = this,
           map = L.map($element[0], { center: [0, 0], zoom: 12 }),
@@ -681,26 +687,141 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
         map.remove();
       });
 
-      $scope.$watch(function () { return $scope.$eval($attrs.zMap); }, function (values) {
-        layer.clearLayers();
-        angular.forEach(values, function(value) {
-          var place = value.source,
-              poi = PlaceService.getPoiDefault(place.icon),
-              marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
-                .on('click', function() { $scope.$evalAsync(function() { $location.path('/show/' + value.type + '/' + encodeURIComponent(value.id)); }); })
-                .on('mouseover', function() { marker.openPopup(); })
-                .on('mouseout', function() { marker.closePopup(); })
-                .bindPopup(value.source.header, { closeButton: false })
-                .addTo(layer);
-        });
-        map.fitBounds(layer.getBounds());
-      });
     }],
     link: function(scope, element, attrs) {
     }
   };
 }]);
 
+module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', 'PlaceService', 'LeafletControlsService',
+  function ($compile, $parse, $rootScope, PlaceService, LeafletControlsService) {
+
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    // priority: 2,
+    // scope: true,
+    compile: function() {
+      var html = $compile('<div class="leaflet-control-layers z-map-markers">' +
+      '</div>'),
+          nScope = $rootScope.$new();
+
+      return function link(scope, element, attrs, zmap) {
+        var map = zmap.map,
+            layer = L.featureGroup().addTo(map);
+
+        attrs.$observe('zMapMarkers', function(places) {
+          layer.clearLayers();
+          angular.forEach(angular.fromJson(places), function(hit) {
+            var place = hit.source,
+                poi = PlaceService.getPoiDefault(place.icon),
+                marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
+                  .on('click', function() { $scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
+                  .on('mouseover', function() { marker.openPopup(); })
+                  .on('mouseout', function() { marker.closePopup(); })
+                  .bindPopup(hit.source.header, { closeButton: false })
+                  .addTo(layer);
+          });
+          map.fitBounds(layer.getBounds());
+        });
+
+        map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-markers'}));
+
+        scope.$on('$destroy', function() {
+          map.removeLayer(layer);
+          nScope.$destroy();
+        });
+      };
+    }
+  };
+}]);
+
+module.directive('zMapSizer', ['$compile', '$parse', '$rootScope', 'LeafletControlsService',
+  function ($compile, $parse, $rootScope, LeafletControlsService) {
+
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    // priority: 2,
+    // scope: true,
+    compile: function() {
+      var html = $compile('<div class="leaflet-control-layers z-map-sizer">' +
+        '<div class="btn-group" ng-class="groupSize">' +
+        '<button ng-repeat="b in buttons" type="button" class="btn" ng-class="{\'btn-primary\': b.key == sizeAct, \'btn-default\': b.key != sizeAct}" ng-click="setSize(b.key)">{{b.val}}</button>' +
+        '</div>' +
+      '</div>'),
+          nScope = $rootScope.$new();
+      nScope.buttons = [{key: 's', val: 'Small'}, {key: 'm', val: 'Medium'}, {key: 'l', val: 'Large'}];
+
+      return function link(scope, element, attrs, zmap) {
+        var map = zmap.map,
+            bigG = $parse(attrs.zMapSizer),
+            bigS = bigG.assign;
+
+        nScope.setSize = function(size) {
+          nScope.sizeAct = size;
+          bigS(scope, size);
+        };
+
+        var s = bigG(scope);
+        if (s) nScope.sizeAct = s;
+
+        nScope.groupSize = 'btn-group-sm';
+        if (attrs.zMapSizerSize) nScope.groupSize = 'btn-group-' + attrs.zMapSizerSize;
+        map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-sizer'}));
+
+        scope.$on('$destroy', function() {
+          nScope.$destroy();
+        });
+      };
+    }
+  };
+}]);
+
+module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceService', 'LeafletControlsService',
+  function ($compile, $parse, $rootScope, PlaceService, LeafletControlsService) {
+
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    priority: 2,
+    link: function(scope, element, attrs, zmap) {
+      var map = zmap.map,
+          markerG = $parse(attrs.zMapMarker),
+          markerS = markerG.assign,
+          pos = markerG(scope).split(','),
+          layer = L.featureGroup().addTo(map),
+          marker = L.marker(pos, {
+            draggable: true,
+            icon: L.AwesomeMarkers.icon({ icon: 'fa-spinner', markerColor: 'darkpurple', prefix: 'fa' }) })
+          .on('drag', function(e) {
+            click(e.target);
+          })
+          .addTo(layer);
+
+      function click(e) {
+        var ll = e.latlng||e.getLatLng();
+        marker.setLatLng(ll);
+        scope.$evalAsync(function () {
+          markerS(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
+        });
+      }
+
+      map.on('click', click);
+      map.setView(pos);
+
+      attrs.$observe('zMapMarkerIcon', function (val) {
+        if (!val) return;
+        var poi = PlaceService.getPoi(val);
+        marker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
+      });
+      scope.$on('$destroy', function() {
+        map.off('click', click);
+        map.removeLayer(layer);
+      });
+    }
+  };
+}]);
 module.directive('zMapControl', ['$compile', '$rootScope', 'LeafletControlsService',
   function ($compile, $rootScope, LeafletControlsService) {
   
@@ -712,6 +833,7 @@ module.directive('zMapControl', ['$compile', '$rootScope', 'LeafletControlsServi
           nScope = $rootScope.$new();
 
       return function link(scope, element, attrs, zmap) {
+        var map = zmap.map;
         nScope.tags = [];
 
         nScope.facet = function(hit) {
@@ -722,7 +844,10 @@ module.directive('zMapControl', ['$compile', '$rootScope', 'LeafletControlsServi
           nScope.tags = value;
         });
         
-        zmap.map.addControl(LeafletControlsService.tagsControl({html: html, scope: nScope}));
+        map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-tags-select', position: 'bottomright'}));
+        scope.$on('$destroy', function() {
+          nScope.$destroy();
+        });
       };
     }
   };
@@ -952,10 +1077,9 @@ module.service('GlobalService', ['$http', function ($http) {
 }]);
 
 module.service('LeafletControlsService', [function () {
-
-  var TagClass = L.Control.extend({
+  var LeafletControlClass = L.Control.extend({
     options: {
-      position: 'bottomright'
+      position: 'topright'
     },
     
     initialize: function (options) {
@@ -969,15 +1093,15 @@ module.service('LeafletControlsService', [function () {
     },
 
     _initLayout: function () {
-      var container = this._container = L.DomUtil.create('div', 'tags-control');
+      var container = this._container = L.DomUtil.create('div', this.options.className);
       angular.element(container).append(this._elements);
       return container;
     }
   });
 
   return {
-    tagsControl: function(options) {
-      return new TagClass(options);
+    leafletControl: function(options) {
+      return new LeafletControlClass(options);
     }
   };
 }]);

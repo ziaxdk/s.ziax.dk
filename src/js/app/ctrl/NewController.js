@@ -10,8 +10,12 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
     type: 'article'
   };
   _t.bigMap = false;
+  _t.mapSize = 's';
   _t.mapIcon = 'cutlery';
   _t.mapIcons = PlaceService.poi;
+
+  $scope.$watch(function() { return _t.mapSize; }, function(v) { console.log('mapSize', v) })
+  $scope.$watch(function() { return _t.form.q; }, function(v) { console.log('q', v) })
 
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;

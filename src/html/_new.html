@@ -31,7 +31,7 @@
         <label for="idHeader">Header</label>
         <input type="text" name="header" class="form-control" id="idHeader" ng-model="NewCtrl.form.header" required>
       </div>
-      <div class="row" ng-if="!NewCtrl.bigMap">
+      <div class="row" ng-if="NewCtrl.mapSize == 's'">
         <div class="col-md-9">
           <div class="form-group" ng-class="{'has-error': theForm.description.$invalid }">
             <label for="idContent">Content</label>
@@ -44,19 +44,19 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="idMaps">Map</label>
-            <div style="border: 1px solid #666; height: 200px" dash-leaflet="NewCtrl.form.q" dash-leaflet-big="NewCtrl.bigMap" dash-leaflet-icon="{{NewCtrl.mapIcon}}">
-            </div>
+            <!-- <div style="border: 1px solid #666; height: 200px" dash-leaflet="NewCtrl.form.q" dash-leaflet-big="NewCtrl.bigMap" dash-leaflet-icon="{{NewCtrl.mapIcon}}"></div> -->
+            <div style="border: 1px solid #666; height: 200px" z-map z-map-sizer="NewCtrl.mapSize" z-map-sizer-size="xs" z-map-marker="NewCtrl.form.q" z-map-marker-icon="{{NewCtrl.mapIcon}}"></div>
           </div>
         </div>
       </div>
 
-      <div ng-if="NewCtrl.bigMap">
+      <div ng-if="NewCtrl.mapSize == 'm'">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
               <label for="idMaps">Map</label>
-              <div style="border: 1px solid #666; height: 400px" dash-leaflet="NewCtrl.form.q" dash-leaflet-big="NewCtrl.bigMap" dash-leaflet-icon="{{NewCtrl.mapIcon}}">
-              </div>
+              <!-- <div style="border: 1px solid #666; height: 400px" dash-leaflet="NewCtrl.form.q" dash-leaflet-big="NewCtrl.bigMap" dash-leaflet-icon="{{NewCtrl.mapIcon}}"></div> -->
+              <div style="border: 1px solid #666; height: 400px" z-map z-map-sizer="NewCtrl.mapSize" z-map-sizer-size="xs" z-map-marker="NewCtrl.form.q" z-map-marker-icon="{{NewCtrl.mapIcon}}"></div>
             </div>
           </div>
         </div>
@@ -79,6 +79,11 @@
               <textarea name="description" class="form-control" id="idContent" placeholder="Enter content..." style="min-height: 200px" ng-model="NewCtrl.form.content" required></textarea>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div ng-if="NewCtrl.mapSize == 'l'">
+        <div z-map z-map-sizer="NewCtrl.mapSize" z-map-sizer-size="xs" z-map-marker="NewCtrl.form.q" z-map-marker-icon="{{NewCtrl.mapIcon}}" style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px">
         </div>
       </div>
 
