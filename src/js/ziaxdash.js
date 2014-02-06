@@ -413,9 +413,9 @@ module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', '
 module.controller('ShowController', ['Result', '$http', function (Result, $http) {
   this.Result = Result.data;
 
-  if (this.Result.source.location) {
-    this.Result.source.location.leaflet = this.Result.source.location.lat + ',' + this.Result.source.location.lon;
-  }
+  // if (this.Result.source.location) {
+  //   this.Result.source.location.leaflet = this.Result.source.location.lat + ',' + this.Result.source.location.lon;
+  // }
 }]);
 
 module.directive('dashFacet', ['$parse', function ($parse) {
@@ -693,8 +693,8 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
   };
 }]);
 
-module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', 'PlaceService', 'LeafletControlsService',
-  function ($compile, $parse, $rootScope, PlaceService, LeafletControlsService) {
+module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', '$location', 'PlaceService', 'LeafletControlsService',
+  function ($compile, $parse, $rootScope, $location, PlaceService, LeafletControlsService) {
 
   return {
     restrict: 'A',
@@ -702,9 +702,7 @@ module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', 'PlaceServi
     // priority: 2,
     // scope: true,
     compile: function() {
-      var html = $compile('<div class="leaflet-control-layers z-map-markers">' +
-      '</div>'),
-          nScope = $rootScope.$new();
+      var nScope = $rootScope.$new();
 
       return function link(scope, element, attrs, zmap) {
         var map = zmap.map,
@@ -716,7 +714,7 @@ module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', 'PlaceServi
             var place = hit.source,
                 poi = PlaceService.getPoiDefault(place.icon),
                 marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
-                  .on('click', function() { $scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
+                  .on('click', function() { scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
                   .on('mouseover', function() { marker.openPopup(); })
                   .on('mouseout', function() { marker.closePopup(); })
                   .bindPopup(hit.source.header, { closeButton: false })
