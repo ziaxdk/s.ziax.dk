@@ -6,8 +6,10 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var t = this,
           map = L.map($element[0], { center: [0, 0], zoom: 12 }),
-          layer = L.featureGroup().addTo(map);
-      L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
+          base1 = L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map),
+          base2 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '' }),
+          base3 = L.bingLayer("Alv2HutsIUPb_D2Jz0KdN37XixBdCph40lz8uMUNyUM2yp3IPg0oaiHn-J0ieMU4");
+          chooser = L.control.layers({ 'Normal': base1, 'OSM': base2, 'Bing': base3 }, {}, { position: 'bottomleft' }).addTo(map);
 
       t.map = map;
 
@@ -146,7 +148,7 @@ module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceServic
     }
   };
 }]);
-module.directive('zMapControl', ['$compile', '$rootScope', 'LeafletControlsService',
+module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsService',
   function ($compile, $rootScope, LeafletControlsService) {
   
   return {
@@ -161,10 +163,10 @@ module.directive('zMapControl', ['$compile', '$rootScope', 'LeafletControlsServi
         nScope.tags = [];
 
         nScope.facet = function(hit) {
-          scope.$eval(attrs.zMapControlCb, {hit: hit});
+          scope.$eval(attrs.zMapTagsControlCb, {hit: hit});
         };
 
-        scope.$watch(function () { return scope.$eval(attrs.zMapControl); }, function (value) {
+        scope.$watch(function () { return scope.$eval(attrs.zMapTagsControl); }, function (value) {
           nScope.tags = value;
         });
         
