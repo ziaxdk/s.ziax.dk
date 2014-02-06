@@ -723,8 +723,6 @@ module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', '$location'
           map.fitBounds(layer.getBounds());
         });
 
-        map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-markers'}));
-
         scope.$on('$destroy', function() {
           map.removeLayer(layer);
           nScope.$destroy();
