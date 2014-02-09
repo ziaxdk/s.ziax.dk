@@ -9,9 +9,10 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
           base1 = L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map),
           base2 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '' }),
           base3 = L.bingLayer("Alv2HutsIUPb_D2Jz0KdN37XixBdCph40lz8uMUNyUM2yp3IPg0oaiHn-J0ieMU4");
-          chooser = L.control.layers({ 'Normal': base1, 'OSM': base2, 'Bing': base3 }, {}, { position: 'bottomleft' }).addTo(map);
+          chooser = L.control.layers({ 'Modern': base1, 'Basic': base2, 'Bing': base3 }, {}, { position: 'bottomleft' }).addTo(map);
 
       t.map = map;
+      t.chooser = chooser;
 
       $scope.$on('$destroy', function() {
         map.remove();
@@ -23,8 +24,8 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
   };
 }]);
 
-module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', '$location', 'PlaceService', 'LeafletControlsService',
-  function ($compile, $parse, $rootScope, $location, PlaceService, LeafletControlsService) {
+module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceService',
+  function ($compile, $rootScope, $location, PlaceService) {
 
   return {
     restrict: 'A',
@@ -36,12 +37,14 @@ module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', '$location'
 
       return function link(scope, element, attrs, zmap) {
         var map = zmap.map,
-            layer = L.featureGroup().addTo(map);
+            chooser = zmap.chooser,
+            layers = L.featureGroup().addTo(map);
 
         attrs.$observe('zMapMarkers', function(places) {
-          layer.clearLayers();
+          layers.clearLayers();
           angular.forEach(angular.fromJson(places), function(hit) {
-            var place = hit.source,
+            var layer = L.featureGroup().addTo(layers);
+                place = hit.source,
                 poi = PlaceService.getPoiDefault(place.icon),
                 marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
                   .on('click', function() { scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
@@ -49,12 +52,16 @@ module.directive('zMapMarkers', ['$compile', '$parse', '$rootScope', '$location'
                   .on('mouseout', function() { marker.closePopup(); })
                   .bindPopup(hit.source.header, { closeButton: false })
                   .addTo(layer);
+
           });
-          map.fitBounds(layer.getBounds());
+          map.fitBounds(layers.getBounds());
         });
 
+        chooser.addOverlay(layers, 'Places');
+
         scope.$on('$destroy', function() {
-          map.removeLayer(layer);
+          chooser.removeLayer(layers);
+          map.removeLayer(layers);
           nScope.$destroy();
         });
       };
@@ -175,6 +182,110 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
           nScope.$destroy();
         });
       };
+    }
+  };
+}]);
+module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    link: function(scope, element, attrs, zmap) {
+      var map = zmap.map,
+          chooser = zmap.chooser,
+          layer = L.featureGroup().addTo(map),
+          path = null,
+          iss = L.marker([0, 0]).addTo(layer),
+          uri = 'http://api.open-notify.org/iss-now.json?callback=JSON_CALLBACK',
+          run = null,
+          cancel = false;
+
+      function grab() {
+        if (cancel) return;
+        $http.jsonp(uri).success(function(data) {
+          add(data.iss_position);
+          if (cancel) return;
+          run = $timeout(grab, 1000);
+        });
+      }
+
+      function add(ll) {
+        // console.log('open', ll.latitude, ll.longitude);
+        var pos = L.latLng(ll.latitude, ll.longitude);
+        iss.setLatLng(pos);
+        if (!path) {
+          path = L.polyline([pos], { color: 'red', noClip: true }).addTo(layer);
+        } else {
+          path.addLatLng(pos);
+        }
+      }
+
+      function enable(e) {
+        if (e && e.layer == layer) {
+          cancel = false;
+          grab();
+        }
+      }
+      function disable(e) {
+        if (e && e.layer == layer) {
+          cancel = true;
+        }
+      }
+      chooser.addOverlay(layer, 'ISS (old)???');
+      map.on('overlayadd', enable);
+      map.on('overlayremove', disable);
+      scope.$on('$destroy', function() {
+        disable();
+        map.off('overlayadd', enable);
+        map.off('overlayremove', disable);
+        chooser.removeLayer(layer);
+        map.removeLayer(layer);
+      });
+      grab();
+    }
+  };
+}]);
+module.directive('zMapIss', ['$http', '$timeout', '$interval', function ($http, $timeout, $interval) {
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    link: function(scope, element, attrs, zmap) {
+      var map = zmap.map,
+          chooser = zmap.chooser,
+          layer = L.featureGroup().addTo(map),
+          path = null,
+          run = null,
+          iss = L.marker([0, 0]).addTo(layer);
+
+      // Lib: https://github.com/shashwatak/satellite-js
+      $interval(function() {
+        var tle_line_1 = "1 25544U 98067A   14038.60428872  .00016717  00000-0  10270-3 0  9000";
+        var tle_line_2 = "2 25544  51.6478  21.9511 0003678 109.5628 250.5920 15.50140778 31226";
+        var satrec = satellite.twoline2satrec (tle_line_1, tle_line_2);
+        var date = new Date();
+        var position_and_velocity = satellite.propagate (satrec, date.getUTCFullYear(), date.getUTCMonth()+1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+        var position_eci = position_and_velocity["position"];
+        // var velocity_eci = position_and_velocity["velocity"];
+        var gmst = satellite.gstime_from_date (date.getUTCFullYear(), date.getUTCMonth()+1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+        var position_gd    = satellite.eci_to_geodetic (position_eci, gmst);
+        var longitude = position_gd["longitude"];
+        var latitude  = position_gd["latitude"];
+        var longitude_str = satellite.degrees_long (longitude);
+        var latitude_str  = satellite.degrees_lat  (latitude);
+        var pos = L.latLng(latitude_str, longitude_str);
+        iss.setLatLng(pos);
+        if (!path) {
+          path = L.polyline([pos], { color: 'red', noClip: true }).addTo(layer);
+        } else {
+          path.addLatLng(pos);
+        }
+      }, 1000);
+
+      chooser.addOverlay(layer, 'ISS???');
+      scope.$on('$destroy', function() {
+        chooser.removeLayer(layer);
+        map.removeLayer(layer);
+        $interval.cancel(run);
+      });
     }
   };
 }]);

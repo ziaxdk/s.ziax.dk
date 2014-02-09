@@ -59,6 +59,7 @@ module.exports = function (grunt) {
       build_js: {
         files: {
           'build/src/js/<%= buildno %>.min.js': [
+            'build/src/js/lib/satellite.min.js',
             'build/src/js/lib/jquery-2.0.3.min.js',
             'build/src/js/lib/select2.min.js',
             'build/src/js/lib/angular.min.js',
