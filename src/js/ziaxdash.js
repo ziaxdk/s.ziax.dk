@@ -443,130 +443,6 @@ module.directive('ngFocusBlurClass', [function () {
   };
 }]);
 
-module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($parse, PlaceService) {
-  var _iconG, _iconS;
-  return {
-    restrict: 'E',
-    template: '<div class="clearfix" ng-transclude></div>',
-    replace: true,
-    transclude: true,
-    controller: ['$scope', function ($scope) {
-      // console.log('done');
-      this.setIcon = function (icon) {
-        _iconS($scope, icon);
-        // console.log(icon)
-      }
-
-    }],
-    link: function(scope, element, attrs) {
-      _iconG = $parse(attrs.icon);
-      _iconS = _iconG.assign;
-
-    }
-  }
-}]);
-
-module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($parse, PlaceService) {
-  var parent;
-  return {
-    restrict: 'E',
-    template: '<a href="javascript:;" ng-click="click()"><div class="awesome-marker-icon-{{color}} awesome-marker" style="position: relative; float: left"><i class="fa fa-{{icon}}" style="color: white"></i></div></a>',
-    replace: true,
-    scope: {
-
-    },
-    require: '?^dashLeafletMarkers',
-    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
-
-      $scope.click = function (icon) {
-        parent.setIcon($scope.icon);
-      }
-    }],
-    link: function(scope, element, attrs, ctrl) {
-      var poi = PlaceService.getPoi(attrs.icon);
-      scope.icon = poi.name;
-      scope.color = poi.color;
-      parent = ctrl;
-    }
-  }
-}]);
-// module.directive('dashLeaflet', ['$parse', 'PlaceService', function ($parse, PlaceService) {
-//   return {
-//     restrict: 'A',
-//     link: function(scope, element, attrs) {
-//       var map = L.map(element[0], { center: [0, 0], zoom: 12 }),
-//           bigMapGet = $parse(attrs.dashLeafletBig),
-//           bigMapSet = bigMapGet.assign,
-//           bigMapEnabled = bigMapGet(scope),
-//           latLonGet = $parse(attrs.dashLeaflet),
-//           latLonSet = latLonGet.assign,
-//           latlon = [0, 0],
-//           leafletMarker = L.marker(latlon, { draggable: true, icon: L.AwesomeMarkers.icon({ icon: 'fa-spinner', markerColor: 'darkpurple', prefix: 'fa' }) });
-
-//       // <!-- 'red', 'darkred', 'orange', 'green', 'darkgreen', 'blue', 'purple', 'darkpuple', 'cadetblue' -->
-//       leafletMarker.on('dragend', function (evt) {
-//         var ll = this.getLatLng();
-//         scope.$evalAsync(function () {
-//           latLonSet(scope, ll.lat.toFixed(4) + ',' + ll.lng.toFixed(4));
-//         });
-//       });
-//       if (attrs.dashLeafletReadonly && attrs.dashLeafletReadonly === 'true') {
-//         leafletMarker.options.draggable = false;
-//       }
-
-//       var layer = L.featureGroup().addTo(map);
-//       L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
-//       leafletMarker.addTo(layer);
-
-
-//       if (angular.isDefined(bigMapEnabled) && typeof bigMapEnabled === 'boolean') {
-//         var MyControl = L.Control.extend({
-//             options: {
-//                 position: 'topright'
-//             },
-
-//             onAdd: function (map) {
-//                 // create the control container with a particular class name
-//                 var container = L.DomUtil.create('div', 'my-custom-control');
-//                 container.setAttribute('aria-haspopup', true);
-
-//                 var link = L.DomUtil.create('a', 'dash-control-big', container);
-//                 link.href = 'javascript:;';
-//                 link.title = "Upscale";
-//                 link.innerText = 'X';
-
-//                 L.DomEvent
-//                   .on(link, 'click', function () {
-//                     scope.$evalAsync(function () {
-//                       bigMapSet(scope, !bigMapEnabled);
-//                     });
-//                   });
-//                 return container;
-//             }
-//         });
-//         map.addControl(new MyControl());
-//       }
-
-//       scope.$watch(function () { return scope.$eval(attrs.dashLeaflet); }, function (value) {
-//         if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
-//           latlon = value.split(',');
-//           leafletMarker.setLatLng(latlon);
-//           map.setView(latlon);
-//       }});
-
-//       attrs.$observe('dashLeafletIcon', function (val) {
-//         if (!val) return;
-//         var poi = PlaceService.getPoi(val);
-//         leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
-//       });
-
-//       scope.$on('$destroy', function() {
-//         map.remove();
-//       });
-//     }
-//   };
-// }]);
-
 module.directive('ngSetFocus', [function () {
   return function (scope, element, attrs) {
     element[0].focus();
@@ -610,61 +486,6 @@ module.directive('ngxToggleButton', [function () {
     }]
   };
 }]);
-
-// module.directive('zLeaflet', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
-//   return {
-//     restrict: 'A',
-//     link: function(scope, element, attrs) {
-//       var map = L.map(element[0], { center: [0, 0], zoom: 12 }),
-//           iconsGet = $parse(attrs.zLeaflet),
-//           layer = L.featureGroup().addTo(map),
-//           bounds = [];
-//       L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map);
-//       // leafletMarker.addTo(layer);
-
-
-//       // L.ziax.tagsSelector(scope).addTo(map);
-
-//       angular.forEach(iconsGet(scope), function(hit) {
-//         var place = hit.source,
-//             poi = PlaceService.getPoiDefault(place.icon),
-//             marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
-//         .on('click', function() {
-//           scope.$apply(function() {
-//             $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id));
-//           });
-//         }).on('mouseover', function() {
-//           marker.openPopup();
-//         }).on('mouseout', function() {
-//           marker.closePopup();
-//         }).bindPopup(hit.source.header, { closeButton: false }).addTo(map);
-//         bounds.push(L.latLng(place.location));
-//       });
-
-//       map.fitBounds(L.latLngBounds(bounds));
-//       // map.panInsideBounds(L.latLngBounds(bounds), { maxZoom: 5 });
-
-//       // http://localhost:8081/#/show/place/hiTP47HKRmqynG2JoUqCTw
-
-//       // scope.$watch(function () { return scope.$eval(attrs.dashLeaflet) }, function (value) {
-//       //   if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
-//       //     latlon = value.split(',');
-//       //     leafletMarker.setLatLng(latlon);
-//       //     map.setView(latlon);
-//       // }});
-
-//       // attrs.$observe('dashLeafletIcon', function (val) {
-//       //   if (!val) return;
-//       //   var poi = PlaceService.getPoi(val)
-//       //   leafletMarker.setIcon(L.AwesomeMarkers.icon({ icon: 'fa-' + poi.name, markerColor: poi.color, prefix: 'fa' }));
-//       // });
-
-//       scope.$on('$destroy', function() {
-//           map.remove();
-//       });
-//     }
-//   };
-// }]);
 
 module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
   return {
@@ -711,15 +532,14 @@ module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceSe
         attrs.$observe('zMapMarkers', function(places) {
           layers.clearLayers();
           angular.forEach(angular.fromJson(places), function(hit) {
-            var layer = L.featureGroup().addTo(layers);
-                place = hit.source,
+            var place = hit.source,
                 poi = PlaceService.getPoiDefault(place.icon),
                 marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
                   .on('click', function() { scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
                   .on('mouseover', function() { marker.openPopup(); })
                   .on('mouseout', function() { marker.closePopup(); })
                   .bindPopup(hit.source.header, { closeButton: false })
-                  .addTo(layer);
+                  .addTo(layers);
 
           });
           map.fitBounds(layers.getBounds());
@@ -860,7 +680,7 @@ module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
     link: function(scope, element, attrs, zmap) {
       var map = zmap.map,
           chooser = zmap.chooser,
-          layer = L.featureGroup().addTo(map),
+          layer = L.featureGroup(),
           path = null,
           iss = L.marker([0, 0]).addTo(layer),
           uri = 'http://api.open-notify.org/iss-now.json?callback=JSON_CALLBACK',

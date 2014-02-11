@@ -1,5 +1,5 @@
 <div class="col-md-12">
-  <div ng-if="ResultCtrl.apiType === 'places'" z-map z-map-markers="{{ResultCtrl.result.hits.hits}}" z-map-tags-control="ResultCtrl.result.facets.tags.terms" z-map-tags-control-cb="ResultCtrl.facet(hit)" z-map-iss style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px">
+  <div ng-if="ResultCtrl.apiType === 'places'" z-map z-map-markers="{{ResultCtrl.result.hits.hits}}" z-map-tags-control="ResultCtrl.result.facets.tags.terms" z-map-tags-control-cb="ResultCtrl.facet(hit)" z-map-iss z-map-iss2 style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px">
   </div>
 
   <div ng-if="ResultCtrl.apiType === 'search'">

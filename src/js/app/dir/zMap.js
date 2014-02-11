@@ -43,15 +43,14 @@ module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceSe
         attrs.$observe('zMapMarkers', function(places) {
           layers.clearLayers();
           angular.forEach(angular.fromJson(places), function(hit) {
-            var layer = L.featureGroup().addTo(layers);
-                place = hit.source,
+            var place = hit.source,
                 poi = PlaceService.getPoiDefault(place.icon),
                 marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
                   .on('click', function() { scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
                   .on('mouseover', function() { marker.openPopup(); })
                   .on('mouseout', function() { marker.closePopup(); })
                   .bindPopup(hit.source.header, { closeButton: false })
-                  .addTo(layer);
+                  .addTo(layers);
 
           });
           map.fitBounds(layers.getBounds());
@@ -192,7 +191,7 @@ module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
     link: function(scope, element, attrs, zmap) {
       var map = zmap.map,
           chooser = zmap.chooser,
-          layer = L.featureGroup().addTo(map),
+          layer = L.featureGroup(),
           path = null,
           iss = L.marker([0, 0]).addTo(layer),
           uri = 'http://api.open-notify.org/iss-now.json?callback=JSON_CALLBACK',
