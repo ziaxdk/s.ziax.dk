@@ -12,6 +12,15 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       controller: "NewController",
       controllerAs: "NewCtrl"
   });
+  $routeProvider.when('/edit/:type/:id', {
+      templateUrl: "/html/_new.html",
+      resolve: {// TODO: Create mulitple GET
+        Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }],
+        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] 
+      },
+      controller: "NewController",
+      controllerAs: "NewCtrl"
+  });
   $routeProvider.when('/show/:type/:id', {
       templateUrl: "/html/_show.html",
       // resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },

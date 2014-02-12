@@ -41,6 +41,10 @@
     done(null, JSON.parse(user));
   });
 
+  // app.get('/api/hack', function(req, res) {
+  //   res.cookie('remember_me', 1001 , { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
+  //   res.redirect('/'); 
+  // });
 
   app.get('/api/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
   app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) {

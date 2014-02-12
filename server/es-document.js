@@ -79,12 +79,14 @@
           }
       }
 
-      // console.log(save);
+      // console.log(save, src.id);
       // res.send("ok");
+      // return;
       // es.client.index({ _index: es.index, _type: src.type }, save, es.callback(arguments)); // OLD
       es.client.index({
         index: es.index,
         type: src.type,
+        id: src.id,
         body: save
       }, es.callback(arguments));
     });

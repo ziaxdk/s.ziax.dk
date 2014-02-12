@@ -1,5 +1,5 @@
-module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
-  function (NewApiResult, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
+module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
+  function (NewApiResult, Result, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
   var initQ = $route.current.params.q;
@@ -16,6 +16,18 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
 
   // $scope.$watch(function() { return _t.mapSize; }, function(v) { console.log('mapSize', v) })
   // $scope.$watch(function() { return _t.form.q; }, function(v) { console.log('q', v) })
+
+  if (Result && Result.data) {
+    // console.log(Result.data.source);
+    var result = Result.data.source;
+    _t.form.header = _t.form.q = result.header;
+    _t.form.content = result.content;
+    _t.form.tags = result.tags;
+    _t.form.onlyAuth = result.onlyAuth;
+    _t.form.utl = result.url;
+    _t.form.id = Result.data.id;
+    _t.form.type = Result.data.type;
+  }
 
   if (angular.isDefined(initQ) && initQ) {
     _t.form.q = initQ;
@@ -53,6 +65,7 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
     // return;
     if ($scope.theForm.$invalid) return;
     var obj = {
+      id: _t.form.id,
       header: _t.form.header,
       content: _t.form.content,
       url: _t.form.url,
@@ -60,8 +73,7 @@ module.controller('NewController', ['NewApiResult', '$scope', '$http', 'RestDriv
       icon: PlaceService.getPoi(_t.mapIcon).type,
       location: _t.form.location,
       tags: _t.form.tags||[],
-      onlyAuth: _t.form.onlyAuth,
-      code: _t.form.code
+      onlyAuth: _t.form.onlyAuth
     };
 
     // console.log(obj);
