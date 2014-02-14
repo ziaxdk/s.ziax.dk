@@ -230,12 +230,21 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
 
     // console.log(obj);
     // return;
-    DocumentService.save(obj).then(function () {
-      MessageService.ok("Saved");
-    }, function (err) {
-      MessageService.err(err.status, err.data);
-    });
+    if (obj.id) {
+      DocumentService.update(obj).then(function () {
+        MessageService.ok("Updated");
+      }, function (err) {
+        MessageService.err(err.status, err.data);
+      });
 
+    }
+    else {
+      DocumentService.save(obj).then(function () {
+        MessageService.ok("Saved");
+      }, function (err) {
+        MessageService.err(err.status, err.data);
+      });
+    }
   };
 }]);
 
@@ -948,9 +957,13 @@ module.service('DocumentService', ['$http', function ($http) {
   function save(document) {
     return $http.post('/api/document', document);
   }
+  function update(document) {
+    return $http.put('/api/document', document);
+  }
 
   return {
-    save: save
+    save: save,
+    update: update
   };
 }]);
 

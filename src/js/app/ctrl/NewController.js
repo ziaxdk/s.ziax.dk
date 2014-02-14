@@ -78,11 +78,20 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
 
     // console.log(obj);
     // return;
-    DocumentService.save(obj).then(function () {
-      MessageService.ok("Saved");
-    }, function (err) {
-      MessageService.err(err.status, err.data);
-    });
+    if (obj.id) {
+      DocumentService.update(obj).then(function () {
+        MessageService.ok("Updated");
+      }, function (err) {
+        MessageService.err(err.status, err.data);
+      });
 
+    }
+    else {
+      DocumentService.save(obj).then(function () {
+        MessageService.ok("Saved");
+      }, function (err) {
+        MessageService.err(err.status, err.data);
+      });
+    }
   };
 }]);
