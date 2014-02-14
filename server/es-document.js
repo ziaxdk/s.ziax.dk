@@ -75,11 +75,13 @@
             save.location = { lat: latlon[0].trim(), lon: latlon[1].trim() };
           }
       }
-      es.client.index({
+      es.client.update({
         index: es.index,
         type: src.type,
         id: src.id,
-        body: save
+        body: {
+          doc: save
+        }
       }, es.callback(arguments));
     });
 
