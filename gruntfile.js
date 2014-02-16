@@ -1,10 +1,9 @@
-"use strict";
-var util = require('./lib/gruntutils.js')
-  , Config = require('./_config.json')
-  , esurl = 'http://localhost:9200'
-  , shelljs = require('shelljs');
+var util = require('./lib/gruntutils.js'),
+    Config = require('./_config.json'),
+    shelljs = require('shelljs');
 
 module.exports = function (grunt) {
+  "use strict";
   var buildno = '-';
 
   grunt.initConfig({
@@ -270,9 +269,28 @@ module.exports = function (grunt) {
           indices: [ { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') } ],
           src: Config.es.production,
           dest: Config.es.development
+        },
+        dev2prod: {
+          indices: [ { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') } ],
+          src: Config.es.development,
+          dest: Config.es.production
+        }
+      }
+    },
+    conftransform: {
+      build: {
+        src: '_config.json',
+        dest: 'build/_config.json',
+        config: {
+          es: {
+            production: {
+              host: "http://localhost:9200"
+            }
+          }
         }
       }
     }
+
     // ,
     // karma: {
     //   unit: {
@@ -313,7 +331,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build_css', [ 'less:build', 'cssmin:build', 'concat:build_css' ]);
   grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
-  grunt.registerTask('build', ['clean:build', 'gitrev', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', /*'removelogging:dist',*/ 'clean:build_post' ]);
+  grunt.registerTask('build', ['clean:build', 'gitrev', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', /*'removelogging:dist',*/ 'clean:build_post', 'conftransform:build' ]);
 
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
 
