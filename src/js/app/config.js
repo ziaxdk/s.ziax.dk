@@ -39,7 +39,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       templateUrl: "/html/_result.html",
       controller: "ResultController",
       controllerAs: "ResultCtrl",
-      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
+      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/placeswithiss', { cache: false }); }] }
   });
   $routeProvider.otherwise({
       redirectTo: "/"

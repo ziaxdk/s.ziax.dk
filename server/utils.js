@@ -1,14 +1,17 @@
 (function () {
-  var util = require('util');
+  var util = require('util'),
+      request = require('request'),
+      Q = require('q');
 
   function log(obj) {
     util.log(util.inspect(obj, { depth: null, colors: true }));
-  };
+  }
 
   function check (val) {
     if (!val || val === null) return false;
     return toString.apply(val) == '[object Array]' || typeof val == 'object' ;
-  };
+  }
+
   function ngPrivate (obj) {
     for (var key in obj) {
       var val = obj[key];
@@ -43,7 +46,17 @@
     // res.redirect('/loginerr');
     res.status(403);
     res.send();
-  };
+  }
+
+  function fetchUri(url) {
+    var q = Q.defer();
+
+    request(url, function (error, response, body) {
+      if (error || response.statusCode !== 200) q.reject(err);
+      q.resolve(body);
+    });
+    return q.promise;
+  }
 
 
 
@@ -53,7 +66,8 @@
     log: log,
     ngSafe: ngSafe,
     // validateCode: validateCode,
-    ensureAuthenticated: ensureAuthenticated
+    ensureAuthenticated: ensureAuthenticated,
+    fetchUri: fetchUri
   };
 
   if (typeof module !== 'undefined' && module.exports) {

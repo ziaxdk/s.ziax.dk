@@ -38,7 +38,7 @@
 
   // }
 
-  var safeGetDataFromTag = function (selector) {
+  function safeGetDataFromTag(selector) {
     try {
       return selector();
     }
@@ -47,22 +47,10 @@
     }
   }
 
-  function fetchQ(url) {
-    var q = Q.defer();
-
-    request(url, function (error, response, body) {
-      if (error || response.statusCode !== 200) q.reject(err);
-      q.resolve(body);
-
-    })
-
-    return q.promise;
-  }
-
   var scrape = function (req, res) {
     var uri = decodeURIComponent(req.query.q);
     if (!uri) res.send(Utils.ngSafe(""));
-    fetchQ(uri).then(function (data) {
+    Utils.fetchUri(uri).then(function (data) {
       var $ = cheerio.load(data);
       // Priorities:
       // Header

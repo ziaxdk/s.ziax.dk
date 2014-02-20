@@ -32,6 +32,7 @@
     require('./server/es-q.js').routes(app);
     require('./server/es-document.js').routes(app);
     require('./server/scrape-prod.js').routes(app);
+    require('./server/iss.js').routes(app);
     require('./server/socketio.js');
   });
 
@@ -48,6 +49,7 @@
     require('./server/es-q.js').routes(app);
     require('./server/es-document.js').routes(app);
     require('./server/scrape-prod.js').routes(app);
+    require('./server/iss.js').routes(app);
     require('./server/socketio.js');
   });
 

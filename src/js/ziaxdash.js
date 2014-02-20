@@ -41,7 +41,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       templateUrl: "/html/_result.html",
       controller: "ResultController",
       controllerAs: "ResultCtrl",
-      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
+      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/placeswithiss', { cache: false }); }] }
   });
   $routeProvider.otherwise({
       redirectTo: "/"
@@ -276,7 +276,9 @@ module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', '
       ;
 
 
-  _t.result = ApiSearchResult.data;
+  _t.result = ApiSearchResult.data.places;
+  _t.tle = ApiSearchResult.data.tle;
+
   _t.apiType = ApiType.type;
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
@@ -749,7 +751,7 @@ module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
     }
   };
 }]);
-module.directive('zMapIss', ['$http', '$timeout', '$interval', function ($http, $timeout, $interval) {
+module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', function ($http, $timeout, $interval, $parse) {
   return {
     restrict: 'A',
     require: 'zMap',
@@ -761,10 +763,20 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', function ($http, 
           run = null,
           iss = L.marker([0, 0]).addTo(layer);
 
+      // 20-02-2014
+      var tle_line_1 = "1 25544U 98067A   14050.52955885  .00016717  00000-0  10270-3 0  9004";
+      var tle_line_2 = "2 25544  51.6500 322.8568 0003647 155.3472 204.7854 15.50497588 33075";
+      var tle = attrs.zMapIss;
+      if (tle) {
+        var atle = $parse(tle)(scope);
+        if (angular.isArray(atle)) {
+          tle_line_1 = atle[0];
+          tle_line_2 = atle[1];
+          // console.log('tle parsed', tle_line_1, tle_line_2);
+        }
+      }
       // Lib: https://github.com/shashwatak/satellite-js
-      $interval(function() {
-        var tle_line_1 = "1 25544U 98067A   14038.60428872  .00016717  00000-0  10270-3 0  9000";
-        var tle_line_2 = "2 25544  51.6478  21.9511 0003678 109.5628 250.5920 15.50140778 31226";
+      function calc() {
         var satrec = satellite.twoline2satrec (tle_line_1, tle_line_2);
         var date = new Date();
         var position_and_velocity = satellite.propagate (satrec, date.getUTCFullYear(), date.getUTCMonth()+1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
@@ -783,7 +795,9 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', function ($http, 
         } else {
           path.addLatLng(pos);
         }
-      }, 1000);
+      }
+      run = $interval(calc, 1000);
+      calc();
 
       chooser.addOverlay(layer, 'ISS???');
       scope.$on('$destroy', function() {

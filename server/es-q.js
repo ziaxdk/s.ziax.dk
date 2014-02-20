@@ -1,8 +1,10 @@
 (function () {
   var deepExtend = require('deep-extend'),
+      async = require('async'),
       _ = require('lodash'),
       utils = require('./utils.js'),
-      es = require('./es.js');
+      es = require('./es.js'),
+      iss = require('./iss.js');
 
 
   function getQuery(q) {
@@ -151,6 +153,28 @@
         type: 'place',
         body: build('*', undefined, undefined, 5000)
       }, es.callback(arguments));
+    });
+
+    function peep1(done) {
+      es.client.search({
+        index: es.index,
+        type: 'place',
+        body: build('*', undefined, undefined, 5000)
+      }, function(err, data) {
+        if (err) return done(err);
+        done(null, data);
+      });
+    }
+    function peep2(done) {
+      iss.getTLE(function() {
+        done(null, arguments[1]);
+      });
+    }
+
+    app.get('/api/placeswithiss', function(req, res) {
+      async.parallel([ peep1, peep2 ], function(err, data) {
+        res.send(utils.ngSafe({ places: data[0], tle: data[1] }));
+      });
     });
 
     app.post('/api/places', function(req) {

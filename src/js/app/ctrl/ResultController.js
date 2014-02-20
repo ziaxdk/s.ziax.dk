@@ -7,7 +7,9 @@ module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', '
       ;
 
 
-  _t.result = ApiSearchResult.data;
+  _t.result = ApiSearchResult.data.places;
+  _t.tle = ApiSearchResult.data.tle;
+
   _t.apiType = ApiType.type;
   var facetTerms = _t.result.facets.tags.terms;
   var facetTypes = _t.result.facets.types.terms;
