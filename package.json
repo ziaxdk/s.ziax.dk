@@ -22,7 +22,8 @@
     "cheerio": "~0.13.1",
     "request": "~2.33.0",
     "bunyan": "~0.22.1",
-    "elasticsearch": "~1.5.4"
+    "elasticsearch": "~1.5.4",
+    "async": "~0.2.10"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -704,7 +704,7 @@ module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
           iss = L.marker([0, 0]).addTo(layer),
           uri = 'http://api.open-notify.org/iss-now.json?callback=JSON_CALLBACK',
           run = null,
-          cancel = false;
+          cancel = true;
 
       function grab() {
         if (cancel) return;
@@ -747,7 +747,7 @@ module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
         chooser.removeLayer(layer);
         map.removeLayer(layer);
       });
-      grab();
+      // grab();
     }
   };
 }]);
