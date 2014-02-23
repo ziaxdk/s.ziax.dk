@@ -16,7 +16,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       templateUrl: "/html/_new.html",
       resolve: {// TODO: Create mulitple GET
         Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }],
-        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] 
+        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
       },
       controller: "NewController",
       controllerAs: "NewCtrl"
@@ -40,6 +40,11 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       controller: "ResultController",
       controllerAs: "ResultCtrl",
       resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/placeswithiss', { cache: false }); }] }
+  });
+  $routeProvider.when('/flights', {
+      templateUrl: "/html/_flights.html",
+      controller: "FlightController",
+      controllerAs: "FlightCtrl"
   });
   $routeProvider.otherwise({
       redirectTo: "/"

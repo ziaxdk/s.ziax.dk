@@ -115,6 +115,21 @@
       </div>
     </div>
 
+    <div ng-if="NewCtrl.form.type == 'flight'">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="idMaps">Map</label>
+              <div style="border: 1px solid #666; height: 400px" z-map z-map-flights="{{NewCtrl.form.flights}}"></div>
+            </div>
+          </div>
+        </div>
+
+
+    </div>
+
+
     <div class="checkbox pull-right">
       <label>
         <input type="checkbox" name="authOnly" ng-model="NewCtrl.form.onlyAuth"> Auth only?

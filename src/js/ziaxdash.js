@@ -18,7 +18,7 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       templateUrl: "/html/_new.html",
       resolve: {// TODO: Create mulitple GET
         Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }],
-        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] 
+        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
       },
       controller: "NewController",
       controllerAs: "NewCtrl"
@@ -42,6 +42,11 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       controller: "ResultController",
       controllerAs: "ResultCtrl",
       resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/placeswithiss', { cache: false }); }] }
+  });
+  $routeProvider.when('/flights', {
+      templateUrl: "/html/_flights.html",
+      controller: "FlightController",
+      controllerAs: "FlightCtrl"
   });
   $routeProvider.otherwise({
       redirectTo: "/"
@@ -89,6 +94,11 @@ module.run(['$window', '$rootScope', '$templateCache', 'GlobalService',
       GlobalService.count = data.count;
     });
   });
+}]);
+
+module.controller('FlightController', [
+  function () {
+  var _t = this;
 }]);
 
 module.controller('IndexController', ['History', 'LocationService', '$location', '$scope',
@@ -150,8 +160,8 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
-  function (NewApiResult, Result, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
+module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'AirportService', 'Delayer', '$route',
+  function (NewApiResult, Result, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, AirportService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
   var initQ = $route.current.params.q;
@@ -161,6 +171,7 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
     onlyAuth: false,
     type: 'article'
   };
+  _t.form.flights = [];
   _t.bigMap = false;
   _t.mapSize = 's';
   _t.mapIcon = 'cutlery';
@@ -203,6 +214,16 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
           _t.form.header = data.title1 || data.title2 || data.title3; //link;
           _t.form.content = '"' + _t.form.url + '":' + _t.form.url + '\n\n' + (data.desc1 || data.desc2 || data.desc3);
         });
+      });
+    }
+    else if (/^([A-Z]{4})\-?([A-Z]{0,4})$/.test(q)) {
+      _t.form.type = 'flight';
+      var airports = q.split('-');
+      AirportService.get(airports[0]).then(function(data) {
+        _t.form.flights.push(data.data.source);
+      });
+      AirportService.get(airports[1]).then(function(data) {
+        _t.form.flights.push(data.data.source);
       });
     }
     else {
@@ -808,6 +829,38 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', functio
     }
   };
 }]);
+module.directive('zMapFlights', ['$parse',
+  function ($parse) {
+  
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    link: function(scope, element, attrs, zmap) {
+      var map = zmap.map,
+          chooser = zmap.chooser,
+          layer = L.featureGroup().addTo(map),
+          path = L.polyline([], { color: 'red', noClip: true }).addTo(map);
+
+      attrs.$observe('zMapFlights', function(v) {
+        v = $parse(v)(scope);
+        if (!v || !angular.isArray(v)) return;
+        layer.clearLayers();
+        path.setLatLngs([]);
+        angular.forEach(v, function(p) {
+          var ll = L.latLng([p.location[1], p.location[0]]);
+          L.marker(ll).addTo(layer);
+          path.addLatLng(ll);
+        });
+        if (v.length > 1)
+          map.fitBounds(layer.getBounds());
+      });
+
+      scope.$on('$destroy', function() {
+        map.removeLayer(layer);
+      });
+    }
+  };
+}]);
 
 module.directive('zMessage', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
   return {
@@ -1011,6 +1064,16 @@ module.filter('html', ['$sce', function ($sce) {
 module.filter('textile', ['$sce', function ($sce) {
   return function (val) {
     return !val ? "" : $sce.trustAsHtml(textile.parse(val));
+  };
+}]);
+
+module.service('AirportService', ['$http', function ($http) {
+  function get(code) {
+    return $http.get('/api/airport', { params: { code: code } });
+  }
+
+  return {
+    get: get
   };
 }]);
 

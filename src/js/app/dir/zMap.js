@@ -300,3 +300,35 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', functio
     }
   };
 }]);
+module.directive('zMapFlights', ['$parse',
+  function ($parse) {
+  
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    link: function(scope, element, attrs, zmap) {
+      var map = zmap.map,
+          chooser = zmap.chooser,
+          layer = L.featureGroup().addTo(map),
+          path = L.polyline([], { color: 'red', noClip: true }).addTo(map);
+
+      attrs.$observe('zMapFlights', function(v) {
+        v = $parse(v)(scope);
+        if (!v || !angular.isArray(v)) return;
+        layer.clearLayers();
+        path.setLatLngs([]);
+        angular.forEach(v, function(p) {
+          var ll = L.latLng([p.location[1], p.location[0]]);
+          L.marker(ll).addTo(layer);
+          path.addLatLng(ll);
+        });
+        if (v.length > 1)
+          map.fitBounds(layer.getBounds());
+      });
+
+      scope.$on('$destroy', function() {
+        map.removeLayer(layer);
+      });
+    }
+  };
+}]);

@@ -1,5 +1,5 @@
-module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'Delayer', '$route',
-  function (NewApiResult, Result, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, Delayer, $route) {
+module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'AirportService', 'Delayer', '$route',
+  function (NewApiResult, Result, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, AirportService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
   var initQ = $route.current.params.q;
@@ -9,6 +9,7 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
     onlyAuth: false,
     type: 'article'
   };
+  _t.form.flights = [];
   _t.bigMap = false;
   _t.mapSize = 's';
   _t.mapIcon = 'cutlery';
@@ -51,6 +52,16 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
           _t.form.header = data.title1 || data.title2 || data.title3; //link;
           _t.form.content = '"' + _t.form.url + '":' + _t.form.url + '\n\n' + (data.desc1 || data.desc2 || data.desc3);
         });
+      });
+    }
+    else if (/^([A-Z]{4})\-?([A-Z]{0,4})$/.test(q)) {
+      _t.form.type = 'flight';
+      var airports = q.split('-');
+      AirportService.get(airports[0]).then(function(data) {
+        _t.form.flights.push(data.data.source);
+      });
+      AirportService.get(airports[1]).then(function(data) {
+        _t.form.flights.push(data.data.source);
       });
     }
     else {
