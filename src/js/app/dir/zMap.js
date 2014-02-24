@@ -310,23 +310,25 @@ module.directive('zMapFlights', ['$parse',
       var map = zmap.map,
           chooser = zmap.chooser,
           layer = L.featureGroup().addTo(map),
-          path = L.polyline([], { color: 'red', noClip: true }).addTo(map);
+          markers = L.featureGroup().addTo(layer),
+          path = L.polyline([], { color: 'blue' }).addTo(layer);
 
       attrs.$observe('zMapFlights', function(v) {
         v = $parse(v)(scope);
         if (!v || !angular.isArray(v)) return;
-        layer.clearLayers();
+        markers.clearLayers();
         path.setLatLngs([]);
         angular.forEach(v, function(p) {
           var ll = L.latLng([p.location[1], p.location[0]]);
-          L.marker(ll).addTo(layer);
+          L.marker(ll).addTo(markers);
           path.addLatLng(ll);
         });
         if (v.length > 1)
           map.fitBounds(layer.getBounds());
       });
-
+      chooser.addOverlay(layer, 'Flight');
       scope.$on('$destroy', function() {
+        chooser.removeLayer(layer);
         map.removeLayer(layer);
       });
     }

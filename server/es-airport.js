@@ -6,10 +6,12 @@
 
   function routes(app) {
     app.get('/api/airport', function(req) {
-      es.client.get({
+      es.client.mget({
         index: 'aviation',
         type: 'airport',
-        id: req.query.code
+        body:{
+          ids: _.isArray(req.query.code) ? req.query.code : [req.query.code]
+        }
       }, es.callback(arguments));
     });
   }

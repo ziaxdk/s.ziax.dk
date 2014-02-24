@@ -54,14 +54,16 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
         });
       });
     }
-    else if (/^([A-Z]{4})\-?([A-Z]{0,4})$/.test(q)) {
+    // else if (/^([A-Z]{4})(\-?([A-Z]{0,4})*$)/.test(q)) {
+    else if (/^([A-Z]{4})(\-[A-Z]{4})+/.test(q)) {
       _t.form.type = 'flight';
       var airports = q.split('-');
-      AirportService.get(airports[0]).then(function(data) {
-        _t.form.flights.push(data.data.source);
-      });
-      AirportService.get(airports[1]).then(function(data) {
-        _t.form.flights.push(data.data.source);
+      AirportService.get(airports).then(function(data) {
+        angular.forEach(data.data.docs, function(d) {
+          if (d.found) {
+           _t.form.flights.push(d.source);
+          }
+        });
       });
     }
     else {
@@ -83,12 +85,13 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
       type: _t.form.type,
       icon: PlaceService.getPoi(_t.mapIcon).type,
       location: _t.form.location,
+      flights: _t.form.flights,
       tags: _t.form.tags||[],
       onlyAuth: _t.form.onlyAuth
     };
 
-    // console.log(obj);
-    // return;
+    console.log(obj);
+    return;
     if (obj.id) {
       DocumentService.update(obj).then(function () {
         MessageService.ok("Updated");
