@@ -5,13 +5,10 @@
       uri = 'http://spaceflight.nasa.gov/realdata/sightings/SSapplications/Post/JavaSSOP/orbit/ISS/SVPOST.html',
       cheerio = require('cheerio'),
       now = new Date(),
+      es = require('./es.js'),
       tle = null;
 
   function getTLE(done) {
-    if (new Date() - now < 86400 * 1000 && tle) {
-        return done(null, tle);
-    }
-    
     console.log('fetching...');
     utils.fetchUri(uri)
       .then(function(body) {
@@ -29,16 +26,37 @@
   }
 
   function routes(app) {
-    app.get('/api/iss', function (req, res) {
-      getTLE(function() {
-        res.send(utils.ngSafe(arguments[1]));
+    app.get('/api/iss', function(req, res) {
+        es.client.get({
+          index: 'core',
+          type: 'iss',
+          id: 'iss'
+        }, function(err, resp) {
+          if (err) throw err;
+          res.send(utils.ngSafe(resp._source));
+        });
+    });
+
+    app.put('/api/iss', function (req, res) {
+      getTLE(function(err, resp) {
+        es.client.index({
+          index: 'core',
+          type: 'iss',
+          id: 'iss',
+          body: {
+            tle: resp,
+            createdutc: new Date()
+          }
+        }, function(err, resp) {
+          if (err) throw err;
+          res.send("ok");
+        });
       });
     });
   }
 
   module.exports = {
-    routes: routes,
-    getTLE: getTLE
+    routes: routes
   };
 
 }());

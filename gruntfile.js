@@ -266,12 +266,18 @@ module.exports = function (grunt) {
       },
       backup: {
         prod2dev: {
-          indices: [ { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') } ],
+          indices: [
+            { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') },
+            { name: 'core', settings: grunt.file.readJSON('es/setup_core.json') }
+          ],
           src: Config.es.production,
           dest: Config.es.development
         },
         dev2prod: {
-          indices: [ { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') } ],
+          indices: [
+            { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') },
+            { name: 'core', settings: grunt.file.readJSON('es/setup_core.json') }
+          ],
           src: Config.es.development,
           dest: Config.es.production
         }

@@ -4,6 +4,7 @@ module.service('AirportService', ['$http', function ($http) {
   }
 
   return {
-    get: get
+    get: get,
+    
   };
 }]);

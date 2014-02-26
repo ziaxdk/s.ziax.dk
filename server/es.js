@@ -5,7 +5,7 @@
     , Config = require('./../_config.json')
     , LogClass = require('./bunyan.js')
     // , client = new elasticsearch.Client(process.env.NODE_ENV === 'production' ? deepExtend(Config.es.production) : deepExtend(Config.es.development, { log: LogClass }))
-    , client = new elasticsearch.Client(process.env.NODE_ENV === 'production' ? deepExtend(Config.es.production) : deepExtend(Config.es.development, { log: { level: 'trace' } }))
+    , client = new elasticsearch.Client(process.env.NODE_ENV === 'production' ? deepExtend(Config.es.production) : deepExtend(Config.es.development, { log: { level: 'error' } }))
     // , client = new elasticsearch.Client(process.env.NODE_ENV === 'production' ? deepExtend(Config.es.production) : deepExtend(Config.es.development, { /*log: { type: 'file', level: 'trace', path: 'es_log.json' }*/ }))
     // , client = new elasticsearch.Client(process.env.NODE_ENV === 'production' ? deepExtend(Config.es.production) : deepExtend(Config.es.development, { log: { type: 'tracer', level: 'trace', curlHost: 'localhost', curlPort: 9200 } }))
     , types = ['link', 'place', 'article']

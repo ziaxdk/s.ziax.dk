@@ -253,20 +253,22 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', functio
           layer = L.featureGroup().addTo(map),
           path = null,
           run = null,
-          iss = L.marker([0, 0]).addTo(layer);
+          iss = L.marker([0, 0]).addTo(layer),
+          tle_line_1 = "1 25544U 98067A   14050.52955885  .00016717  00000-0  10270-3 0  9004",
+          tle_line_2 = "2 25544  51.6500 322.8568 0003647 155.3472 204.7854 15.50497588 33075";
+
+      $http.get('/api/iss').then(startCalc, startCalc);
+
+      function startCalc(data) {
+        if (data) {
+          tle_line_1 = data.data.tle[0];
+          tle_line_2 = data.data.tle[1];
+        }
+        run = $interval(calc, 1000);
+        calc();
+      }
 
       // 20-02-2014
-      var tle_line_1 = "1 25544U 98067A   14050.52955885  .00016717  00000-0  10270-3 0  9004";
-      var tle_line_2 = "2 25544  51.6500 322.8568 0003647 155.3472 204.7854 15.50497588 33075";
-      var tle = attrs.zMapIss;
-      if (tle) {
-        var atle = $parse(tle)(scope);
-        if (angular.isArray(atle)) {
-          tle_line_1 = atle[0];
-          tle_line_2 = atle[1];
-          // console.log('tle parsed', tle_line_1, tle_line_2);
-        }
-      }
       // Lib: https://github.com/shashwatak/satellite-js
       function calc() {
         var satrec = satellite.twoline2satrec (tle_line_1, tle_line_2);
@@ -288,8 +290,6 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', functio
           path.addLatLng(pos);
         }
       }
-      run = $interval(calc, 1000);
-      calc();
 
       chooser.addOverlay(layer, 'ISS???');
       scope.$on('$destroy', function() {
