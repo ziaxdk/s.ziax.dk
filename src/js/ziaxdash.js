@@ -252,8 +252,8 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
       onlyAuth: _t.form.onlyAuth
     };
 
-    console.log(obj);
-    return;
+    // console.log(obj);
+    // return;
     if (obj.id) {
       DocumentService.update(obj).then(function () {
         MessageService.ok("Updated");

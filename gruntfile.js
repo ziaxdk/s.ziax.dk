@@ -295,7 +295,25 @@ module.exports = function (grunt) {
           }
         }
       }
+    },
+
+    protractor: {
+      options: {
+        configFile: "node_modules/protractor/referenceConf.js", // Default config file
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        noColor: false, // If true, protractor will not use colors in its output.
+        args: {
+          // Arguments passed to the command
+        }
+      },
+      prod: {
+        options: {
+          configFile: "protractor-conf.js", // Target-specific config file
+          args: {} // Target-specific arguments
+        }
+      },
     }
+
 
     // ,
     // karma: {
@@ -326,6 +344,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks("grunt-remove-logging");
   grunt.loadNpmTasks('grunt-template');
+  grunt.loadNpmTasks('grunt-protractor-runner');
   // grunt.loadTasks('lib/tasks/grunt-elasticsearch.js');
   grunt.loadTasks('lib/tasks');
 
@@ -343,6 +362,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dev', ['express:dev', /*'karma:unit:start',*/ 'watch']);
   grunt.registerTask('prod', ['express:prod', 'watch']);
+
+  grunt.registerTask('smoke', ['express:prod', 'protractor:prod']);
+
 
   grunt.registerTask('gitrev', function () {
     buildno = shelljs.exec('git rev-parse --short HEAD', { silent: true }).output.replace('\n', '');
