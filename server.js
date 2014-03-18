@@ -30,10 +30,9 @@
     require('./server/auth.js');
     require('./server/es.js').routes(app);
     require('./server/es-q.js').routes(app);
-    require('./server/es-airport.js').routes(app);
+    require('./server/es-aviation.js').routes(app);
     require('./server/es-document.js').routes(app);
     require('./server/scrape-prod.js').routes(app);
-    require('./server/iss.js').routes(app);
     require('./server/socketio.js');
   });
 
@@ -48,10 +47,9 @@
     require('./server/auth.js');
     require('./server/es.js').routes(app);
     require('./server/es-q.js').routes(app);
-    require('./server/es-airport.js').routes(app);
+    require('./server/es-aviation.js').routes(app);
     require('./server/es-document.js').routes(app);
     require('./server/scrape-prod.js').routes(app);
-    require('./server/iss.js').routes(app);
     require('./server/socketio.js');
   });
 

@@ -267,8 +267,8 @@ module.exports = function (grunt) {
       backup: {
         prod2dev: {
           indices: [
-            { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') },
-            { name: 'core', settings: grunt.file.readJSON('es/setup_core.json') }
+            { name: 'ziax',     settings: grunt.file.readJSON('es/setup.json') }
+            // { name: 'aviation', settings: grunt.file.readJSON('es/setup-aviation.json') }
           ],
           src: Config.es.production,
           dest: Config.es.development
@@ -280,6 +280,40 @@ module.exports = function (grunt) {
           ],
           src: Config.es.development,
           dest: Config.es.production
+        }
+      },
+      play: {
+        aviation: {
+          indices: [
+            { name: 'aviation', settings: grunt.file.readJSON('es/setup-aviation.json') }
+          ],
+          dest: Config.es.development
+        },
+        suggest: {
+          indices: [
+            { name: 'play', settings: grunt.file.readJSON('es/setup-play.json') }
+          ],
+          bulk: grunt.file.readJSON('es/bulk-play.json'),
+          dest: Config.es.development
+          // GET /play/_mapping
+          // GET /play/_settings
+          // GET /play/_search
+          // POST /play/_search?search_type=count
+          // {
+          //     "suggest": {
+          //         "my": {
+          //         "text": "a",
+          //             "completion": {
+          //                 "size": 10,
+          //                 "field": "suggest"
+          //             }
+          //         }
+          //     }
+          // }
+          // GET /_analyze?analyzer=keyword
+          // {
+          //     this is a test. I will not survive
+          // }
         }
       }
     },
@@ -308,10 +342,38 @@ module.exports = function (grunt) {
       },
       prod: {
         options: {
-          configFile: "protractor-conf.js", // Target-specific config file
+          configFile: "protractor-prod-conf.js", // Target-specific config file
           args: {} // Target-specific arguments
         }
       },
+      sauce: {
+        options: {
+          configFile: "protractor-prod-conf.js",
+          args: {
+            // seleniumAddress: 'http://ondemand.saucelabs.com/wd/hub',
+            // capabilities: {
+            //   name: 'Search! e2e tests',
+            //   username: 'ziaxdk',
+            //   accessKey: 'c0e42249-4167-406e-aa39-656895ab1387',
+            //   browserName: 'internet explorer',
+            //   version: '9',
+            //   platform: 'Windows 7'
+            // }
+            seleniumAddress: 'http://hub.browserstack.com/wd/hub',
+            capabilities: {
+              name: 'Search! e2e tests',
+              'browserstack.user': 'kenneth32',
+              'browserstack.key': '4YFa9e2BmsGq4jRCCc8s',
+              'browserName' : 'android',
+              'platform' : 'ANDROID',
+              'device' : 'HTC One X',
+              'browserstack.debug': true
+              // version: '9',
+              // platform: 'Windows 7'
+            }
+          }
+        }
+      }
     }
 
 

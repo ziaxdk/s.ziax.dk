@@ -1,7 +1,8 @@
 describe('bum', function() {
   beforeEach(function() {
     // browser.get('http://s.ziax.dk');
-    browser.get('http://localhost:8081');
+    console.log(this);
+    browser.get('http://s.ziax.dk');
   });
  
   it('should title bum', function() {

@@ -16,6 +16,7 @@
   },
 
   "mappings": {
+
     "article": {
       "dynamic": "strict",
       "properties": {
@@ -112,38 +113,6 @@
         }
       }
     },
-
-    "drive": {
-      "dynamic": "strict",
-
-      "properties": {
-        "header": {
-          "type": "string"
-        },
-        "content": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "string"
-        },
-        "createdutc": {
-          "type": "date"
-        },
-        "clicks": {
-          "type": "integer"
-        },
-        "geo": {
-          "type": "geo_point"
-        },
-        "ip": {
-          "type": "ip"
-          },
-        "onlyAuth": {
-          "type": "boolean"
-        }
-      }
-    },
-
 
     "history": {
       "_all": {

@@ -1,0 +1,26 @@
+[
+  { "index" : { "_index" : "play", "_type" : "type1", "_id": "1" } },
+  { "name": "angular1", "suggest": { "input": ["javascript", "angular"], "output": "angular on type1", "payload": { "type": "type1", "id": "1" } } },
+
+  { "index" : { "_index" : "play", "_type" : "type2", "_id": "1" } },
+  { "name": "angular2", "suggest": { "input": ["angular"], "output": "angular on type2", "payload": { "type": "type2", "id": "1" } } }
+]
+/*GET /play/_mapping
+GET /play/_settings
+GET /play/_search
+POST /play/_search?search_type=count
+{
+    "suggest": {
+        "my": {
+        "text": "a",
+            "completion": {
+                "size": 10,
+                "field": "suggest"
+            }
+        }
+    }
+}
+GET /_analyze?analyzer=keyword
+{
+    this is a test. I will not survive
+}*/

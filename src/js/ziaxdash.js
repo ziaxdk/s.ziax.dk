@@ -844,20 +844,20 @@ module.directive('zMapFlights', ['$parse',
           markers = L.featureGroup().addTo(layer),
           path = L.polyline([], { color: 'blue' }).addTo(layer);
 
-      attrs.$observe('zMapFlights', function(v) {
-        v = $parse(v)(scope);
-        if (!v || !angular.isArray(v)) return;
-        markers.clearLayers();
-        path.setLatLngs([]);
-        angular.forEach(v, function(p) {
-          var ll = L.latLng([p.location[1], p.location[0]]);
-          L.marker(ll).addTo(markers);
-          path.addLatLng(ll);
-        });
-        if (v.length > 1)
-          map.fitBounds(layer.getBounds());
-      });
-      chooser.addOverlay(layer, 'Flight');
+      // attrs.$observe('zMapFlights', function(v) {
+      //   v = $parse(v)(scope);
+      //   if (!v || !angular.isArray(v)) return;
+      //   markers.clearLayers();
+      //   path.setLatLngs([]);
+      //   angular.forEach(v, function(p) {
+      //     var ll = L.latLng([p.location[1], p.location[0]]);
+      //     L.marker(ll).addTo(markers);
+      //     path.addLatLng(ll);
+      //   });
+      //   if (v.length > 1)
+      //     map.fitBounds(layer.getBounds());
+      // });
+      chooser.addOverlay(layer, 'Flights');
       scope.$on('$destroy', function() {
         chooser.removeLayer(layer);
         map.removeLayer(layer);

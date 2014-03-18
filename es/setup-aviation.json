@@ -1,0 +1,51 @@
+{
+  "settings": {
+    "index" : {
+      "number_of_replicas": 0,
+      "number_of_shards": 1
+    }
+  },
+
+  "mappings": {
+
+    "airport" : {
+      "dynamic": "strict",
+
+      "properties" : {
+        "name": {
+          "type": "string"
+        },
+        "ident": {
+          "type": "string"
+        },
+        "iata": {
+          "type": "string"
+        },
+        "location" : {
+          "type" : "geo_point"
+        },
+        "suggest" : {
+          "type" : "completion",
+          "index_analyzer" : "simple",
+          "search_analyzer" : "simple",
+          "payloads" : true
+        }
+      }
+    },
+
+    "iss": {
+      "dynamic": "strict",
+
+      "properties": {
+        "tle": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "createdutc": {
+          "type": "date",
+          "index": "not_analyzed"
+        }
+      }
+    }
+  }
+}

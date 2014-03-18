@@ -3,8 +3,7 @@
       async = require('async'),
       _ = require('lodash'),
       utils = require('./utils.js'),
-      es = require('./es.js'),
-      iss = require('./iss.js');
+      es = require('./es.js');
 
 
   function getQuery(q) {
