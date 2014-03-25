@@ -147,6 +147,46 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
     console.log('b');
   };
 
+  // _t.suggest = [{dis: '1'}, {dis: '2'}, {dis: '3'}];
+  // _t.suggestIdx = -1;
+  // _t.suggestBackup = null;
+  // _t.keyDown = function(evt) {
+  //   console.log(evt.keyCode);
+  //   var code = evt.keyCode;
+  //   switch(code) {
+  //     case 27: // esc
+  //       _t.suggest = [];
+  //       _t.suggestIdx = -1;
+  //       if (!_t.suggestBackup) return;
+  //       _t.form.q = _t.suggestBackup;
+  //       _t.suggestBackup = null;
+  //       break;
+
+  //     case 40: // down
+  //       if (_t.suggestIdx == _t.suggest.length-1) return;
+  //       if (!_t.suggestBackup) _t.suggestBackup = _t.form.q;
+  //       var item = _t.suggest[++_t.suggestIdx];
+  //       //console.log('item', item);
+  //       _t.form.q = item.dis;
+  //       break;
+
+  //     case 38: // up
+  //       if (_t.suggestIdx == -1) return;
+  //       _t.suggestIdx--;
+  //       if (_t.suggestIdx == -1) {
+  //         _t.form.q = _t.suggestBackup;
+  //         _t.suggestBackup = null;
+  //       }
+  //       break;
+
+  //     case 13: // enter
+  //       if (_t.suggestIdx == -1 ) return;
+  //       console.log('do');
+  //       evt.preventDefault();
+  //       break;
+  //   }
+  // }
+
 
   $rootScope.$on('$routeChangeStart', function () {
     // ngProgress.start();
@@ -537,10 +577,11 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var t = this,
           map = L.map($element[0], { center: [0, 0], zoom: 12 }),
-          base1 = L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map),
+          base0 = L.tileLayer('https://{s}.tiles.mapbox.com/v3/ziaxdk.h6efc5a4/{z}/{x}/{y}.png', { attribution: '' }).addTo(map),
+          base1 = L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }),
           base2 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '' }),
           base3 = L.bingLayer("Alv2HutsIUPb_D2Jz0KdN37XixBdCph40lz8uMUNyUM2yp3IPg0oaiHn-J0ieMU4");
-          chooser = L.control.layers({ 'Modern': base1, 'Basic': base2, 'Bing': base3 }, {}, { position: 'bottomleft' }).addTo(map);
+          chooser = L.control.layers({ 'Mapbox': base0, 'Basic': base2, 'Bing': base3, 'Deprecate': base1 }, {}, { position: 'bottomleft' }).addTo(map);
 
       t.map = map;
       t.chooser = chooser;
@@ -1012,6 +1053,118 @@ module.directive('zSelect2', [function () {
     }
   };
 }]);
+
+module.directive('zSuggest', ['$parse', function ($parse) {
+  return {
+    restrict: 'A',
+    scope: { zSuggest: '=' },
+    template: 
+    '<div class="z-suggest" ng-show="data.length != 0">' +
+      '<ul>' +
+        '<li ng-repeat="d in data" ng-class="{selected: $index == index}">{{d.dis}}</li>' +
+      '</ul>' +
+    '</div>',
+    controller: ['$scope', '$element', '$attrs', function(scope, element, attrs) {
+        scope.data = [];
+        scope.index = -1;
+        scope.$watch('zSuggest', function(n) {
+          if (!n) return;
+          scope.data.push({dis:n});
+          console.log('val', n);
+        });
+
+        function reset() {
+          scope.index = -1;
+          scope.data = [];
+        }
+        function down() {
+          if (scope.data.length - 1 == scope.index) return;
+          ++scope.index;
+        }
+        function up() {
+          if (scope.index == -1) return;
+          --scope.index;
+        }
+  
+        angular.element(element).parent().find('input').on('keydown', function(evt) {
+          var code = evt.keyCode;
+          console.log('code', code);
+          switch(code) {
+            case 40: // down
+              down();
+              break;
+  
+            case 38: // up
+              up();
+              break;
+
+            case 27: // esc
+              reset();
+              break;
+
+            default:
+              break;
+          }
+          scope.$apply();
+        });
+      }
+    ]};
+}]);
+
+// module.directive('zuggest', ['$compile', function ($compile) {
+//   return {
+//     restrict: 'E',
+//     link: function(scope, element, attrs) {
+//       console.log('link');
+//     }
+    
+//   }
+// }]);
+
+// module.directive('zuggest', ['$compile', function ($compile) {
+//   return {
+//     restrict: 'E',
+//     scope: { },
+//     transclude: true,
+//     replace: true,
+//     template: '<div><div ng-transclude></div><div>*</div></div>',
+//     link: function(scope, element, attrs) {
+//       console.log('link');
+//     }
+//     // compile: function(tElement) {
+//     //   var html = $compile('<div class="z-suggest">' +
+//     //     '<ul>' +
+//     //     '<li ng-repeat="d in data" ng-class="{selected: $index==index}">{{d.d}}</li>' +
+//     //     '</ul>' +
+//     //     '</div>');
+
+//     //   return function link(scope, element, attrs) {
+//     //     tElement.after(html(scope));
+
+
+//     //     var data = [{d: '1'}, {d: '2'}, {d: '3'}, {d: '4'}];
+
+//     //     scope.data = data;
+//     //     scope.index = -1;
+
+//     //     tElement.on('keyup', function(evt) {
+//     //       var code =  evt.keyCode;
+//     //       console.log(code);
+//     //       switch(code) {
+//     //         case 40: // down
+//     //           console.log('down');
+//     //           scope.index++;
+//     //           break;
+//     //         case 38: // up
+//     //           if (scope.index == -1) return;
+//     //           scope.index--;
+//     //           break;
+//     //       }
+//     //     });
+//     //   };
+//     // }
+//   };
+// }]);
 
 module.factory('ApiTypeFactory', [function () {
   var apiType = function (type) {

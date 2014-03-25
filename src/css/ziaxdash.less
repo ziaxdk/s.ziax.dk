@@ -166,3 +166,20 @@ body {
   }
 }
 
+.z-suggest {
+  position: absolute;
+  border: 1px solid black;
+  background-color: white;
+  min-width: 200px;
+
+  ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+      &.selected {
+        background-color: blue;
+      }
+    }
+  }
+}

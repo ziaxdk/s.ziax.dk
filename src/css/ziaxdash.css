@@ -141,3 +141,16 @@ body {
   margin: 0px;
   min-width: 100px;
 }
+.z-suggest {
+  position: absolute;
+  border: 1px solid black;
+  background-color: white;
+  min-width: 200px;
+}
+.z-suggest ul {
+  padding: 0;
+  list-style: none;
+}
+.z-suggest ul li.selected {
+  background-color: blue;
+}

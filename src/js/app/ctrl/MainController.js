@@ -23,6 +23,46 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
     console.log('b');
   };
 
+  // _t.suggest = [{dis: '1'}, {dis: '2'}, {dis: '3'}];
+  // _t.suggestIdx = -1;
+  // _t.suggestBackup = null;
+  // _t.keyDown = function(evt) {
+  //   console.log(evt.keyCode);
+  //   var code = evt.keyCode;
+  //   switch(code) {
+  //     case 27: // esc
+  //       _t.suggest = [];
+  //       _t.suggestIdx = -1;
+  //       if (!_t.suggestBackup) return;
+  //       _t.form.q = _t.suggestBackup;
+  //       _t.suggestBackup = null;
+  //       break;
+
+  //     case 40: // down
+  //       if (_t.suggestIdx == _t.suggest.length-1) return;
+  //       if (!_t.suggestBackup) _t.suggestBackup = _t.form.q;
+  //       var item = _t.suggest[++_t.suggestIdx];
+  //       //console.log('item', item);
+  //       _t.form.q = item.dis;
+  //       break;
+
+  //     case 38: // up
+  //       if (_t.suggestIdx == -1) return;
+  //       _t.suggestIdx--;
+  //       if (_t.suggestIdx == -1) {
+  //         _t.form.q = _t.suggestBackup;
+  //         _t.suggestBackup = null;
+  //       }
+  //       break;
+
+  //     case 13: // enter
+  //       if (_t.suggestIdx == -1 ) return;
+  //       console.log('do');
+  //       evt.preventDefault();
+  //       break;
+  //   }
+  // }
+
 
   $rootScope.$on('$routeChangeStart', function () {
     // ngProgress.start();

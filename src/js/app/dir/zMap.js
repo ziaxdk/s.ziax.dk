@@ -6,10 +6,11 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var t = this,
           map = L.map($element[0], { center: [0, 0], zoom: 12 }),
-          base1 = L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }).addTo(map),
+          base0 = L.tileLayer('https://{s}.tiles.mapbox.com/v3/ziaxdk.h6efc5a4/{z}/{x}/{y}.png', { attribution: '' }).addTo(map),
+          base1 = L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }),
           base2 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '' }),
           base3 = L.bingLayer("Alv2HutsIUPb_D2Jz0KdN37XixBdCph40lz8uMUNyUM2yp3IPg0oaiHn-J0ieMU4");
-          chooser = L.control.layers({ 'Modern': base1, 'Basic': base2, 'Bing': base3 }, {}, { position: 'bottomleft' }).addTo(map);
+          chooser = L.control.layers({ 'Mapbox': base0, 'Basic': base2, 'Bing': base3, 'Deprecate': base1 }, {}, { position: 'bottomleft' }).addTo(map);
 
       t.map = map;
       t.chooser = chooser;
