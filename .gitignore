@@ -6,4 +6,5 @@ build/
 _config.json
 .ftppass
 es_log.json
+nginx/logs/
 *.pwd
