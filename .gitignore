@@ -7,3 +7,5 @@ _config.json
 .ftppass
 es_log.json
 *.pwd
+nginx/logs/
+
