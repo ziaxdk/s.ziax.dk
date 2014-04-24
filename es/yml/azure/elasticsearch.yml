@@ -1,0 +1,4 @@
+cluster.name: search
+node.name: "n1"
+path.data: /mnt/data
+discovery.zen.ping.multicast.enabled: false

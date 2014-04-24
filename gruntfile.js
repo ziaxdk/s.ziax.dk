@@ -244,26 +244,26 @@ module.exports = function (grunt) {
 
     // hhttps://github.com/elasticsearch/elasticsearch-js
     elasticsearch: {
-      setup: {
-        local: {
-          ignoreErrors: true,
-          config: Config.es.development,
-          tasks: [
-            { 'indices.deleteIndex': { _index: 'ziax'} },
-            { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
-            { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
-          ]
-        },
-        azure: {
-          ignoreErrors: true,
-          config: Config.es.deploy,
-          tasks: [
-            { 'indices.deleteIndex': { _index: 'ziax'} },
-            { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] }
-            // { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
-          ]
-        }
-      },
+      // setup: {
+      //   local: {
+      //     ignoreErrors: true,
+      //     config: Config.es.development,
+      //     tasks: [
+      //       { 'indices.deleteIndex': { _index: 'ziax'} },
+      //       { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] },
+      //       { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+      //     ]
+      //   },
+      //   azure: {
+      //     ignoreErrors: true,
+      //     config: Config.es.deploy,
+      //     tasks: [
+      //       { 'indices.deleteIndex': { _index: 'ziax'} },
+      //       { 'indices.createIndex': [{ _index: 'ziax' }, grunt.file.readJSON('es/setup.json') ] }
+      //       // { 'bulk': [{}, grunt.file.readJSON('es/data.json') ] }
+      //     ]
+      //   }
+      // },
       backup: {
         prod2dev: {
           indices: [
@@ -275,8 +275,8 @@ module.exports = function (grunt) {
         },
         dev2prod: {
           indices: [
-            { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') },
-            { name: 'core', settings: grunt.file.readJSON('es/setup_core.json') }
+            { name: 'ziax', settings: grunt.file.readJSON('es/setup.json') }
+            // { name: 'aviation', settings: grunt.file.readJSON('es/setup-aviation.json') }
           ],
           src: Config.es.development,
           dest: Config.es.production
