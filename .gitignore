@@ -8,4 +8,5 @@ _config.json
 es_log.json
 *.pwd
 nginx/logs/
+nginx/temp/
 
