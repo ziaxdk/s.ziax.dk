@@ -1,9 +1,9 @@
-module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
-  function (ApiType, ApiSearchResult, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
+module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', 'DelayerFactory', '$scope', '$http', '$location', '$route', '$timeout',
+  function (ApiType, ApiSearchResult, RestXQ, DelayerFactory, $scope, $http, $location, $route, $timeout) {
   var _t = this,
-      facetSearch = Delayer(500),
+      facetSearch = DelayerFactory(500),
       first = true,
-      starDelayer = Delayer(100)
+      starDelayer = DelayerFactory(100)
       ;
 
 

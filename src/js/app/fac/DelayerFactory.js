@@ -1,4 +1,4 @@
-module.factory('Delayer', ['$timeout', function ($timeout) {
+module.factory('DelayerFactory', ['$timeout', function ($timeout) {
   var delayer = function (delayInMs) {
     var canceler;
     return {

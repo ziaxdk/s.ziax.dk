@@ -77,10 +77,18 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
 }]);
 
-module.run(['$window', '$rootScope', '$templateCache', 'GlobalService',
-  function ($window, $rootScope, $templateCache, GlobalService) {
-  var location = $window.location;
-  var socket = io.connect('//' + location.hostname);
+module.constant('const', {
+  types: ['article', 'link', 'place', 'flight']
+});
+
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'const',
+  function ($window, $rootScope, $templateCache, GlobalService, consta) {
+  var location = $window.location,
+      socket = io.connect('//' + location.hostname);
+
+  $rootScope["const"] = {
+    types: consta.types
+  };
   
   socket.on('news', function (data) {
   });

@@ -2,7 +2,7 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
   return {
     restrict: 'A',
     // scope: {},
-    // priority: 1,
+    // priority: 1000,
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var t = this,
           map = L.map($element[0], { center: [0, 0], zoom: 12 }),
@@ -89,9 +89,11 @@ module.directive('zMapSizer', ['$compile', '$parse', '$rootScope', 'LeafletContr
       return function link(scope, element, attrs, zmap) {
         var map = zmap.map,
             bigG = $parse(attrs.zMapSizer),
-            bigS = bigG.assign;
+            bigS = bigG.assign,
+            control = LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-sizer'});
 
         nScope.setSize = function(size) {
+          // console.log('setSize', size);
           nScope.sizeAct = size;
           bigS(scope, size);
         };
@@ -101,10 +103,11 @@ module.directive('zMapSizer', ['$compile', '$parse', '$rootScope', 'LeafletContr
 
         nScope.groupSize = 'btn-group-sm';
         if (attrs.zMapSizerSize) nScope.groupSize = 'btn-group-' + attrs.zMapSizerSize;
-        map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-sizer'}));
+        map.addControl(control);
 
         scope.$on('$destroy', function() {
           nScope.$destroy();
+          map.removeControl(control);
         });
       };
     }

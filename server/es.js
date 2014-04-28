@@ -18,6 +18,10 @@
       res.send(utils.ngSafe(req.user));
     });
 
+    app.get('/api/types', function(req, res) {
+      res.send(utils.ngSafe(types));
+    })
+
     app.get('/api/history', function () {
       client.search({
         index: index,

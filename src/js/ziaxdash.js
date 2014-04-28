@@ -79,10 +79,18 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
 }]);
 
-module.run(['$window', '$rootScope', '$templateCache', 'GlobalService',
-  function ($window, $rootScope, $templateCache, GlobalService) {
-  var location = $window.location;
-  var socket = io.connect('//' + location.hostname);
+module.constant('const', {
+  types: ['article', 'link', 'place', 'flight']
+});
+
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'const',
+  function ($window, $rootScope, $templateCache, GlobalService, consta) {
+  var location = $window.location,
+      socket = io.connect('//' + location.hostname);
+
+  $rootScope["const"] = {
+    types: consta.types
+  };
   
   socket.on('news', function (data) {
   });
@@ -200,7 +208,189 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'AirportService', 'Delayer', '$route',
+module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService',
+  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService ) {
+    // Init
+    var id,
+        fnSave = angular.noop,
+        delayScraper = new DelayerFactory(2000),
+        clickType;
+
+
+    $scope.tags = NewApiResult;
+    $scope.form = {
+      // q: $route.current.params.q
+    };
+    $scope.meta = {};
+    $scope.meta.place = {
+      mapsize: 'm',
+      mapicon: PlaceService.getPoiDefault().type
+    };
+
+    // // Watchers
+    // if (Result && Result.data) {
+    //   setType(Result.data);
+    // }
+    // else {
+    //   $scope.$watch('form.q', function (q) {
+    //     if (!q) return;
+    //     if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(q)) {
+    //       setType('place');
+    //     }
+    //     else if (/^https?\:\/\//.test(q)) {
+    //       setType('link');
+    //       delayScraper.run(function () {
+    //         $http.get('/api/scrape', { params: { q: encodeURIComponent(q) } }).success(function (data) {
+    //           $scope.form.header = data.title1 || data.title2 || data.title3; //link;
+    //           $scope.form.content = '"' + $scope.form.q + '":' + $scope.form.q + '\n\n' + (data.desc1 || data.desc2 || data.desc3);
+    //         });
+    //       });
+    //     }
+    //     else {
+    //       setType('article');
+    //     }
+    //   });
+    // }
+    // 
+    $scope.$watch('form.input', function(n, o) {
+      if (clickType || n === o) return;
+      setContext(n);
+    });
+    $scope.setContext = function(type) {
+      clickType = type;
+      setContext(type);
+    };
+
+    $scope.submit = function() {
+      var obj = fnSave();
+      if (!angular.isArray(obj.tags)) obj.tags = obj.tags.split(',');
+      // console.log('submit', obj);
+      DocumentService.store(obj);
+    };
+    // $scope.setType = function(type) {
+    //   setType(type);
+    // };
+
+    if ($route.current.params.new) {
+      $scope.form.input = $route.current.params.new;
+    }
+
+
+    function setContext(type) {
+      var _meta = $scope.meta;
+      console.log('setContext', type, clickType);
+      if (_meta.type === clickType) {
+        clickType = _meta.type = undefined;
+        return;
+      }
+
+      switch (type) {
+        case 'article':
+          _meta.type = 'article';
+          break;
+        case 'place':
+          _meta.type = 'place';
+          break;
+        case 'link':
+          _meta.type = 'link';
+          break;
+        case 'flight':
+          _meta.type = 'flight';
+          break;
+      }
+    }
+
+
+
+
+    function setType(type) {
+      function copyMeta() {
+        var f = $scope.form;
+        return {
+          id: id,
+          type: _meta.type,
+          tags: f.tags||[],
+          onlyAuth: f.onlyAuth
+        };
+      }
+      var _meta = $scope.meta;
+
+      if (angular.isObject(type) && type.found) {
+        var obj = type.source;
+        id = type.id;
+
+        type = type.type;
+        $scope.form.tags = obj.tags.join();
+        switch(type) {
+          case 'article':
+            $scope.form.q = obj.header;
+            $scope.form.content = obj.content;
+            break;
+          case 'place':
+            $scope.form.q = obj.location.lat + ',' + obj.location.lon;
+            $scope.form.header =  obj.header;
+            $scope.form.content = obj.content;
+            _meta.place.mapicon = PlaceService.getPoi(obj.icon).type;
+            break;
+          case 'link':
+            $scope.form.q = obj.url;
+            $scope.form.header =  obj.header;
+            $scope.form.content = obj.content;
+            break;
+        }
+      }
+
+      if (_meta.type === type) return false;
+
+      // console.log('setting type', type);
+      switch (type) {
+        case 'article':
+          _meta.type = 'article';
+          $scope.preview = true;
+          $scope.template = 'html/_new_article.html';
+          fnSave = function() {
+            var sv = copyMeta();
+            sv.header = $scope.form.q;
+            sv.content = $scope.form.content;
+            return sv;
+          };
+          return true;
+        case 'place':
+          _meta.type = 'place';
+          $scope.preview = false;
+          $scope.template = 'html/_new_place.html';
+          fnSave = function() {
+            var sv = copyMeta();
+            sv.icon = PlaceService.getPoi(_meta.place.mapicon).type;
+            sv.header = $scope.form.header;
+            sv.content = $scope.form.content;
+            var loc = $scope.form.q.split(',');
+            sv.location = { lat: loc[0].trim(), lon: loc[1].trim() };
+            return sv;
+          };
+          return true;
+        case 'link':
+          _meta.type = 'link';
+          $scope.preview = true;
+          $scope.template = 'html/_new_link.html';
+          fnSave = function() {
+            var sv = copyMeta();
+            sv.url = $scope.form.q;
+            sv.header = $scope.form.header;
+            sv.content = $scope.form.content;
+            return sv;
+          };
+          return true;
+        case 'flight':
+          _meta.type = 'flight';
+          $scope.preview = false;
+          return true;
+      }
+    }
+
+}]);
+
+module.controller('NewController2', ['NewApiResult', 'Result', '$scope', '$http', 'RestDrive', 'DocumentService', 'PlaceService', 'MessageService', 'AirportService', 'Delayer', '$route',
   function (NewApiResult, Result, $scope, $http, RestDrive, DocumentService, PlaceService, MessageService, AirportService, Delayer, $route) {
   var lisLink, lisPlace, lisArticle;
   var _t = this, delayScraper = new Delayer(2000);
@@ -257,16 +447,8 @@ module.controller('NewController', ['NewApiResult', 'Result', '$scope', '$http',
       });
     }
     // else if (/^([A-Z]{4})(\-?([A-Z]{0,4})*$)/.test(q)) {
-    else if (/^([A-Z]{4})(\-[A-Z]{4})+/.test(q)) {
+    else if (/^\_f+/.test(q)) {
       _t.form.type = 'flight';
-      var airports = q.split('-');
-      AirportService.get(airports).then(function(data) {
-        angular.forEach(data.data.docs, function(d) {
-          if (d.found) {
-           _t.form.flights.push(d.source);
-          }
-        });
-      });
     }
     else {
       _t.form.type = 'article';
@@ -331,12 +513,12 @@ module.controller('PlacesController', ['ApiSearchResult',
 
 }]);
 
-module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', 'Delayer', '$scope', '$http', '$location', '$route', '$timeout',
-  function (ApiType, ApiSearchResult, RestXQ, Delayer, $scope, $http, $location, $route, $timeout) {
+module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', 'DelayerFactory', '$scope', '$http', '$location', '$route', '$timeout',
+  function (ApiType, ApiSearchResult, RestXQ, DelayerFactory, $scope, $http, $location, $route, $timeout) {
   var _t = this,
-      facetSearch = Delayer(500),
+      facetSearch = DelayerFactory(500),
       first = true,
-      starDelayer = Delayer(100)
+      starDelayer = DelayerFactory(100)
       ;
 
 
@@ -478,7 +660,22 @@ module.directive('ngFocusBlurClass', [function () {
   };
 }]);
 
-module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($parse, PlaceService) {
+module.directive('zIcons', [function() {
+  return {
+    scope: {
+      zIcons: '='
+    },
+    template: '<dash-leaflet-markers icon="zIcons">' +
+      '  <dash-leaflet-marker icon="cutlery"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="coffee"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="shopping-cart"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="eye"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="camera"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="home"></dash-leaflet-marker>' +
+      '</dash-leaflet-markers>'
+  };
+}])
+.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($parse, PlaceService) {
   var _iconG, _iconS;
   return {
     restrict: 'E',
@@ -490,7 +687,7 @@ module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($par
       this.setIcon = function (icon) {
         _iconS($scope, icon);
         // console.log(icon)
-      }
+      };
 
     }],
     link: function(scope, element, attrs) {
@@ -498,10 +695,9 @@ module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($par
       _iconS = _iconG.assign;
 
     }
-  }
-}]);
-
-module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($parse, PlaceService) {
+  };
+}])
+.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($parse, PlaceService) {
   var parent;
   return {
     restrict: 'E',
@@ -515,7 +711,7 @@ module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($pars
 
       $scope.click = function (icon) {
         parent.setIcon($scope.icon);
-      }
+      };
     }],
     link: function(scope, element, attrs, ctrl) {
       var poi = PlaceService.getPoi(attrs.icon);
@@ -523,7 +719,7 @@ module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($pars
       scope.color = poi.color;
       parent = ctrl;
     }
-  }
+  };
 }]);
 module.directive('ngSetFocus', [function () {
   return function (scope, element, attrs) {
@@ -573,7 +769,7 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
   return {
     restrict: 'A',
     // scope: {},
-    // priority: 1,
+    // priority: 1000,
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var t = this,
           map = L.map($element[0], { center: [0, 0], zoom: 12 }),
@@ -660,9 +856,11 @@ module.directive('zMapSizer', ['$compile', '$parse', '$rootScope', 'LeafletContr
       return function link(scope, element, attrs, zmap) {
         var map = zmap.map,
             bigG = $parse(attrs.zMapSizer),
-            bigS = bigG.assign;
+            bigS = bigG.assign,
+            control = LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-sizer'});
 
         nScope.setSize = function(size) {
+          // console.log('setSize', size);
           nScope.sizeAct = size;
           bigS(scope, size);
         };
@@ -672,10 +870,11 @@ module.directive('zMapSizer', ['$compile', '$parse', '$rootScope', 'LeafletContr
 
         nScope.groupSize = 'btn-group-sm';
         if (attrs.zMapSizerSize) nScope.groupSize = 'btn-group-' + attrs.zMapSizerSize;
-        map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-sizer'}));
+        map.addControl(control);
 
         scope.$on('$destroy', function() {
           nScope.$destroy();
+          map.removeControl(control);
         });
       };
     }
@@ -1181,7 +1380,7 @@ module.factory('ApiTypeFactory', [function () {
   return apiType;
 }]);
 
-module.factory('Delayer', ['$timeout', function ($timeout) {
+module.factory('DelayerFactory', ['$timeout', function ($timeout) {
   var delayer = function (delayInMs) {
     var canceler;
     return {
@@ -1235,17 +1434,24 @@ module.service('AirportService', ['$http', function ($http) {
   };
 }]);
 
-module.service('DocumentService', ['$http', function ($http) {
+module.service('DocumentService', ['$http', 'MessageService', function ($http, MessageService) {
   function save(document) {
     return $http.post('/api/document', document);
   }
   function update(document) {
     return $http.put('/api/document', document);
   }
+  function store(document) {
+    return $http.post('/api/document2', document).then(
+      function() { MessageService.ok('Ok'); },
+      function(err) { MessageService.err(err.status, err.data); }
+    );
+  }
 
   return {
     save: save,
-    update: update
+    update: update,
+    store: store
   };
 }]);
 
@@ -1253,7 +1459,8 @@ module.service('GlobalService', ['$http', function ($http) {
 
 
   return {
-    count: 0
+    count: 0,
+    types: []
   };
 }]);
 
@@ -1342,7 +1549,7 @@ module.service('PlaceService', [function () {
     while (len--) {
       if (cb(poi[len])) return poi[len];
     }
-  };
+  }
 
   var poi = [
       { name: 'cutlery', type: 'cutlery', color: 'cadetblue', title: 'Restaurant' },
@@ -1353,11 +1560,11 @@ module.service('PlaceService', [function () {
       { name: 'home', type: 'home', color: 'red', title: 'Hotel' }
     ],
   getPoi = function (name) {
-    return each(function (poi) { return poi.name === name });
+    return each(function (poi) { return poi.name === name; });
   };
   function getPoiDefault(name) {
-    var poi = getPoi(name);
-    return poi != null ? poi : { type:'spinner', color: 'darkpurple' };
+    var _poi = getPoi(name);
+    return _poi||poi[0];
   }
 
 

@@ -1,0 +1,32 @@
+<div class="form-group" ng-class="{'has-error': theForm.header.$invalid }">
+  <label for="idHeader">Header</label>
+  <input type="text" name="header" class="form-control" id="idHeader" ng-model="form.header" required>
+</div>
+
+<div ng-if="meta.place.mapsize == 'm'">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="idMaps">Map</label>
+        <div style="border: 1px solid #666; height: 400px" z-map z-map-sizer="meta.place.mapsize" z-map-sizer-size="xs" z-map-marker="form.q" z-map-marker-icon="{{meta.place.mapicon}}"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div z-icons="meta.place.mapicon"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group" ng-class="{'has-error': theForm.description.$invalid }">
+        <label for="idContent">Content</label>
+        <textarea name="description" class="form-control" id="idContent" placeholder="Enter content..." style="min-height: 200px" ng-model="form.content" required></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-if="meta.place.mapsize == 'l'">
+  <div z-map z-map-sizer="meta.place.mapsize" z-map-sizer-size="xs" z-map-marker="form.q" z-map-marker-icon="{{meta.place.mapicon}}" style="position: fixed; left: 0; right: 0; top: 50px; bottom: 24px"></div>
+</div>

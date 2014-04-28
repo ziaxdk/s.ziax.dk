@@ -1,4 +1,19 @@
-module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($parse, PlaceService) {
+module.directive('zIcons', [function() {
+  return {
+    scope: {
+      zIcons: '='
+    },
+    template: '<dash-leaflet-markers icon="zIcons">' +
+      '  <dash-leaflet-marker icon="cutlery"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="coffee"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="shopping-cart"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="eye"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="camera"></dash-leaflet-marker>' +
+      '  <dash-leaflet-marker icon="home"></dash-leaflet-marker>' +
+      '</dash-leaflet-markers>'
+  };
+}])
+.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($parse, PlaceService) {
   var _iconG, _iconS;
   return {
     restrict: 'E',
@@ -10,7 +25,7 @@ module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($par
       this.setIcon = function (icon) {
         _iconS($scope, icon);
         // console.log(icon)
-      }
+      };
 
     }],
     link: function(scope, element, attrs) {
@@ -18,10 +33,9 @@ module.directive('dashLeafletMarkers', ['$parse', 'PlaceService', function ($par
       _iconS = _iconG.assign;
 
     }
-  }
-}]);
-
-module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($parse, PlaceService) {
+  };
+}])
+.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($parse, PlaceService) {
   var parent;
   return {
     restrict: 'E',
@@ -35,7 +49,7 @@ module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($pars
 
       $scope.click = function (icon) {
         parent.setIcon($scope.icon);
-      }
+      };
     }],
     link: function(scope, element, attrs, ctrl) {
       var poi = PlaceService.getPoi(attrs.icon);
@@ -43,5 +57,5 @@ module.directive('dashLeafletMarker', ['$parse', 'PlaceService', function ($pars
       scope.color = poi.color;
       parent = ctrl;
     }
-  }
+  };
 }]);

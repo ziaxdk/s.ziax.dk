@@ -4,7 +4,7 @@ module.service('PlaceService', [function () {
     while (len--) {
       if (cb(poi[len])) return poi[len];
     }
-  };
+  }
 
   var poi = [
       { name: 'cutlery', type: 'cutlery', color: 'cadetblue', title: 'Restaurant' },
@@ -15,11 +15,11 @@ module.service('PlaceService', [function () {
       { name: 'home', type: 'home', color: 'red', title: 'Hotel' }
     ],
   getPoi = function (name) {
-    return each(function (poi) { return poi.name === name });
+    return each(function (poi) { return poi.name === name; });
   };
   function getPoiDefault(name) {
-    var poi = getPoi(name);
-    return poi != null ? poi : { type:'spinner', color: 'darkpurple' };
+    var _poi = getPoi(name);
+    return _poi||poi[0];
   }
 
 
