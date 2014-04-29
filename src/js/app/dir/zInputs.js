@@ -13,7 +13,7 @@ module.directive('zInputNew', ['const', function (Const) {
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
-            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': clickType === type, \'btn-default\': meta.type !== type}" ng-click="setContext(type)">{{type}}</button>' +
+            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': clickType === type, \'btn-default\': context !== type}" ng-click="setContext(type)">{{type}}</button>' +
           '</li>' +
         '</ul>' +
       '</div>',
@@ -21,6 +21,9 @@ module.directive('zInputNew', ['const', function (Const) {
       scope.form = { };
       scope.types = Const.types;
       scope.$watch('form.q', updateModel);
+      scope.$watch('context', function(v) {
+        console.log(v)
+      })
       
       scope.setContext = function(ctx) {
         if (ctx === scope.clickType) {

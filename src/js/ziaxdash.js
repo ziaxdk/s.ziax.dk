@@ -224,17 +224,23 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
 
     $scope.submit = function() {
       var f = $scope.form;
-      console.log('submit');
-      var obj = angular.extend(_type.storeFn(f), {
+      var save = angular.extend(_type.storeFn(f), {
         id: id,
         type: _type.name,
         tags: !f.tags ? [] : f.tags.split(','),
         onlyAuth: f.onlyAuth
       });
 
-      console.log('submit', obj);
-      // DocumentService.store(obj);
+      console.log('submit', save);
+      // DocumentService.store(save);
     };
+
+    if (Result && Result.data) {
+      // var _d = Result.data;
+      // var _type = TypeService.getType(_d.type);
+      // $scope.meta.type = _d.type;
+      // console.log(_type, $scope.meta.type);
+    }
 
     return;
     // Init
@@ -801,7 +807,7 @@ module.directive('zInputNew', ['const', function (Const) {
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
-            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': clickType === type, \'btn-default\': meta.type !== type}" ng-click="setContext(type)">{{type}}</button>' +
+            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': clickType === type, \'btn-default\': context !== type}" ng-click="setContext(type)">{{type}}</button>' +
           '</li>' +
         '</ul>' +
       '</div>',
@@ -809,6 +815,9 @@ module.directive('zInputNew', ['const', function (Const) {
       scope.form = { };
       scope.types = Const.types;
       scope.$watch('form.q', updateModel);
+      scope.$watch('context', function(v) {
+        console.log(v)
+      })
       
       scope.setContext = function(ctx) {
         if (ctx === scope.clickType) {

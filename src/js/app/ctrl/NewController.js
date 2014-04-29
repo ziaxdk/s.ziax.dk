@@ -14,17 +14,23 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
 
     $scope.submit = function() {
       var f = $scope.form;
-      console.log('submit');
-      var obj = angular.extend(_type.storeFn(f), {
+      var save = angular.extend(_type.storeFn(f), {
         id: id,
         type: _type.name,
         tags: !f.tags ? [] : f.tags.split(','),
         onlyAuth: f.onlyAuth
       });
 
-      console.log('submit', obj);
-      // DocumentService.store(obj);
+      console.log('submit', save);
+      // DocumentService.store(save);
     };
+
+    if (Result && Result.data) {
+      // var _d = Result.data;
+      // var _type = TypeService.getType(_d.type);
+      // $scope.meta.type = _d.type;
+      // console.log(_type, $scope.meta.type);
+    }
 
     return;
     // Init
