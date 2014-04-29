@@ -1,5 +1,32 @@
-module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService',
-  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService ) {
+module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService',
+  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService ) {
+    var id, _type;
+    $scope.meta = {};
+    $scope.form = {};
+    $scope.$watch('meta.type', function(val) {
+      _type = TypeService.getType(val);
+      if (!_type) return;
+      // console.log('_type', _type);
+      $scope.meta.type = _type.name;
+      $scope.template = _type.template;
+      $scope.preview = _type.preview;
+    });
+
+    $scope.submit = function() {
+      var f = $scope.form;
+      console.log('submit');
+      var obj = angular.extend(_type.storeFn(f), {
+        id: id,
+        type: _type.name,
+        tags: !f.tags ? [] : f.tags.split(','),
+        onlyAuth: f.onlyAuth
+      });
+
+      console.log('submit', obj);
+      // DocumentService.store(obj);
+    };
+
+    return;
     // Init
     var id,
         fnSave = angular.noop,
@@ -51,12 +78,6 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       setContext(type);
     };
 
-    $scope.submit = function() {
-      var obj = fnSave();
-      if (!angular.isArray(obj.tags)) obj.tags = obj.tags.split(',');
-      // console.log('submit', obj);
-      DocumentService.store(obj);
-    };
     // $scope.setType = function(type) {
     //   setType(type);
     // };

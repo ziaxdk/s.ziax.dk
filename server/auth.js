@@ -1,11 +1,11 @@
 (function () {
-  var passport = require('passport')
-    , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-    , RememberMeStrategy = require('passport-remember-me').Strategy
-    , _ = require('lodash')
-    , Users = require('./users.js')
-    , Config = require('./../_config.json')
-    , app = require('./../server.js').app;
+  var passport = require('passport'),
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+    RememberMeStrategy = require('passport-remember-me').Strategy,
+    _ = require('lodash'),
+    Users = require('./users.js'),
+    Config = require('./../_config.json'),
+    app = require('./../server.js').app;
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -25,7 +25,7 @@
   ));
 
   passport.use(new RememberMeStrategy(function(token, done) {
-      var _user = Users.getById(token)
+      var _user = Users.getById(token);
       if (!_user) return done(null, false);
       return done(null, _user);
     },
@@ -50,7 +50,7 @@
   app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) {
     res.cookie('remember_me', req.user.id , { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
     // console.log('req.user', req.user);
-    res.redirect('/'); 
+    res.redirect('/');
   });
 
   app.get('/api/auth/leave', function (req, res) {
@@ -61,5 +61,5 @@
   });
 
   module.exports = {
-  }
+  };
 }());

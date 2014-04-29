@@ -1,4 +1,4 @@
-<div class="form-group" ng-class="{'has-error': theForm.header.$invalid }">
+<div class="form-group" ng-class="{'has-error': formInput.header.$invalid }">
   <label for="idHeader">Header</label>
   <input type="text" name="header" class="form-control" id="idHeader" ng-model="form.header" required>
 </div>
@@ -19,7 +19,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="form-group" ng-class="{'has-error': theForm.description.$invalid }">
+      <div class="form-group" ng-class="{'has-error': formInput.description.$invalid }">
         <label for="idContent">Content</label>
         <textarea name="description" class="form-control" id="idContent" placeholder="Enter content..." style="min-height: 200px" ng-model="form.content" required></textarea>
       </div>
