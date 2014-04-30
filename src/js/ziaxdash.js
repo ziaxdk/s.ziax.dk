@@ -208,25 +208,20 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService',
-  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService ) {
-    var id, _type;
-    $scope.meta = {};
-    $scope.form = {};
+module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', '$timeout',
+  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, t ) {
+    var id, type;
+    $scope.meta = { type: 'article' };
+    $scope.form = { input: 'test'};
     $scope.$watch('meta.type', function(val) {
-      _type = TypeService.getType(val);
-      if (!_type) return;
-      // console.log('_type', _type);
-      $scope.meta.type = _type.name;
-      $scope.template = _type.template;
-      $scope.preview = _type.preview;
+      scopeType(TypeService.getType(val));
     });
 
     $scope.submit = function() {
       var f = $scope.form;
-      var save = angular.extend(_type.storeFn(f), {
+      var save = angular.extend(type.storeFn(f), {
         id: id,
-        type: _type.name,
+        type: type.name,
         tags: !f.tags ? [] : f.tags.split(','),
         onlyAuth: f.onlyAuth
       });
@@ -236,10 +231,19 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
     };
 
     if (Result && Result.data) {
-      // var _d = Result.data;
-      // var _type = TypeService.getType(_d.type);
-      // $scope.meta.type = _d.type;
-      // console.log(_type, $scope.meta.type);
+      return;
+      var _d = Result.data;
+      $scope.meta.type = _d.type;
+      id = _d.id;
+      TypeService.getType(_d.type).fetchFn($scope.form, _d.source);
+      $scope.form.tags = _d.source.tags||_d.source.tags.join();
+    }
+
+    function scopeType(obj) {
+      if (!obj) return;
+      $scope.meta.type = obj.name;
+      $scope.template = obj.template;
+      $scope.preview = obj.preview;
     }
 
     return;
@@ -807,17 +811,20 @@ module.directive('zInputNew', ['const', function (Const) {
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
-            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': clickType === type, \'btn-default\': context !== type}" ng-click="setContext(type)">{{type}}</button>' +
+            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': context === type, \'btn-default\': context !== type}" ng-click="setContext(type)" ng-disabled="edit">{{type}}</button>' +
           '</li>' +
         '</ul>' +
       '</div>',
     link: function(scope, element, attrs, ngModelCtrl) {
+      // ngModelCtrl.$render = function() {
+      //   console.log("render", ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue);
+
+      //   //Nothing to render...
+      // };
+      scope.edit = !!scope.context;
       scope.form = { };
       scope.types = Const.types;
       scope.$watch('form.q', updateModel);
-      scope.$watch('context', function(v) {
-        console.log(v)
-      })
       
       scope.setContext = function(ctx) {
         if (ctx === scope.clickType) {
@@ -834,10 +841,11 @@ module.directive('zInputNew', ['const', function (Const) {
       // };
 
       function updateModel(val) {
+        console.log('updateModel', val);
         ngModelCtrl.$setViewValue(val);
         // ngModelCtrl.$render();
         //   //Nothing to render...
-        if (!scope.clickType)
+        if (!scope.edit && !scope.clickType)
           parseContext(val);
       }
 
@@ -1689,6 +1697,10 @@ module.service('TypeService', ['$http', function ($http) {
           header: form.input,
           content: form.content
         };
+      },
+      fetchFn: function(form, data) {
+        form.input = data.header;
+        form.content = data.content;
       }
     },
     {

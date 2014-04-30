@@ -9,6 +9,10 @@ module.service('TypeService', ['$http', function ($http) {
           header: form.input,
           content: form.content
         };
+      },
+      fetchFn: function(form, data) {
+        form.input = data.header;
+        form.content = data.content;
       }
     },
     {

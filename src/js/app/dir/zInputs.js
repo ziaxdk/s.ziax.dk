@@ -13,17 +13,20 @@ module.directive('zInputNew', ['const', function (Const) {
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
-            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': clickType === type, \'btn-default\': context !== type}" ng-click="setContext(type)">{{type}}</button>' +
+            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': context === type, \'btn-default\': context !== type}" ng-click="setContext(type)" ng-disabled="edit">{{type}}</button>' +
           '</li>' +
         '</ul>' +
       '</div>',
     link: function(scope, element, attrs, ngModelCtrl) {
+      // ngModelCtrl.$render = function() {
+      //   console.log("render", ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue);
+
+      //   //Nothing to render...
+      // };
+      scope.edit = !!scope.context;
       scope.form = { };
       scope.types = Const.types;
       scope.$watch('form.q', updateModel);
-      scope.$watch('context', function(v) {
-        console.log(v)
-      })
       
       scope.setContext = function(ctx) {
         if (ctx === scope.clickType) {
@@ -40,10 +43,11 @@ module.directive('zInputNew', ['const', function (Const) {
       // };
 
       function updateModel(val) {
+        console.log('updateModel', val);
         ngModelCtrl.$setViewValue(val);
         // ngModelCtrl.$render();
         //   //Nothing to render...
-        if (!scope.clickType)
+        if (!scope.edit && !scope.clickType)
           parseContext(val);
       }
 
