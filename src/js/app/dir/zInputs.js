@@ -7,9 +7,9 @@ module.directive('zInputNew', ['const', function (Const) {
     require: 'ngModel',
     replace: true,
     template:
-      '<div>' +
-        '<div class="form-group" ng-class="{\'has-error\': formInput.q.$invalid }">' +
-          '<input type="text" class="form-control" placeholder="Enter something..." name="q" ng-model="form.q" required>' +
+      '<div ng-form="formQ">' +
+        '<div class="form-group" ng-class="{\'has-error\': formQ.q.$invalid }">' +
+          '<input type="text" class="form-control" placeholder="Enter something..." name="q" ng-model="form.q" ng-required="!edit">' +
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
@@ -18,11 +18,7 @@ module.directive('zInputNew', ['const', function (Const) {
         '</ul>' +
       '</div>',
     link: function(scope, element, attrs, ngModelCtrl) {
-      // ngModelCtrl.$render = function() {
-      //   console.log("render", ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue);
 
-      //   //Nothing to render...
-      // };
       scope.edit = !!scope.context;
       scope.form = { };
       scope.types = Const.types;
@@ -38,12 +34,12 @@ module.directive('zInputNew', ['const', function (Const) {
         }
       };
 
-      // ngModelCtrl.$render = function() {
-      //   //Nothing to render...
-      // };
+      ngModelCtrl.$render = function() {
+        scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue;
+      };
 
       function updateModel(val) {
-        console.log('updateModel', val);
+        // console.log('updateModel', val);
         ngModelCtrl.$setViewValue(val);
         // ngModelCtrl.$render();
         //   //Nothing to render...

@@ -1,18 +1,18 @@
-module.service('TypeService', ['$http', function ($http) {
+module.service('TypeService', [function () {
   var _types = [
     {
       name: 'article',
       template: 'html/_new_article.html',
       preview: true,
-      storeFn: function(form) {
+      storeFn: function() {
         return {
-          header: form.input,
-          content: form.content
+          header: this.input,
+          content: this.content
         };
       },
-      fetchFn: function(form, data) {
-        form.input = data.header;
-        form.content = data.content;
+      fetchFn: function(data) {
+        this.input = data.header;
+        this.content = data.content;
       }
     },
     {
@@ -20,9 +20,28 @@ module.service('TypeService', ['$http', function ($http) {
       template: 'html/_new_link.html',
       preview: true,
       storeFn: function() {
-        
+        return {
+          url: this.input,
+          header: this.header,
+          content: this.content
+        };
+      },
+      fetchFn: function(data) {
+        this.input = data.url;
+        this.header = data.header;
+        this.content = data.content;
       }
     }
+    // {
+    //   name: '_name_',
+    //   template: 'html/_new_(name).html',
+    //   preview: true,
+    //   storeFn: function() {
+    //   },
+    //   fetchFn: function(data) {
+        
+    //   }
+    // }
   ];
 
   function getType (name) {

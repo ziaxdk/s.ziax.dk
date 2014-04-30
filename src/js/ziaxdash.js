@@ -211,15 +211,15 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
 module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', '$timeout',
   function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, t ) {
     var id, type;
-    $scope.meta = { type: 'article' };
-    $scope.form = { input: 'test'};
+    $scope.meta = { };
+    $scope.form = { };
     $scope.$watch('meta.type', function(val) {
       scopeType(TypeService.getType(val));
     });
 
     $scope.submit = function() {
       var f = $scope.form;
-      var save = angular.extend(type.storeFn(f), {
+      var save = angular.extend(type.storeFn.call(f), {
         id: id,
         type: type.name,
         tags: !f.tags ? [] : f.tags.split(','),
@@ -231,16 +231,16 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
     };
 
     if (Result && Result.data) {
-      return;
       var _d = Result.data;
       $scope.meta.type = _d.type;
       id = _d.id;
-      TypeService.getType(_d.type).fetchFn($scope.form, _d.source);
-      $scope.form.tags = _d.source.tags||_d.source.tags.join();
+      TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
+      $scope.form.tags = angular.isArray(_d.source.tags) ? _d.source.tags.join() : _d.source.tags;
     }
 
     function scopeType(obj) {
       if (!obj) return;
+      type = obj;
       $scope.meta.type = obj.name;
       $scope.template = obj.template;
       $scope.preview = obj.preview;
@@ -805,9 +805,9 @@ module.directive('zInputNew', ['const', function (Const) {
     require: 'ngModel',
     replace: true,
     template:
-      '<div>' +
-        '<div class="form-group" ng-class="{\'has-error\': formInput.q.$invalid }">' +
-          '<input type="text" class="form-control" placeholder="Enter something..." name="q" ng-model="form.q" required>' +
+      '<div ng-form="formQ">' +
+        '<div class="form-group" ng-class="{\'has-error\': formQ.q.$invalid }">' +
+          '<input type="text" class="form-control" placeholder="Enter something..." name="q" ng-model="form.q" ng-required="!edit">' +
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
@@ -816,11 +816,7 @@ module.directive('zInputNew', ['const', function (Const) {
         '</ul>' +
       '</div>',
     link: function(scope, element, attrs, ngModelCtrl) {
-      // ngModelCtrl.$render = function() {
-      //   console.log("render", ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue);
 
-      //   //Nothing to render...
-      // };
       scope.edit = !!scope.context;
       scope.form = { };
       scope.types = Const.types;
@@ -836,12 +832,12 @@ module.directive('zInputNew', ['const', function (Const) {
         }
       };
 
-      // ngModelCtrl.$render = function() {
-      //   //Nothing to render...
-      // };
+      ngModelCtrl.$render = function() {
+        scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue;
+      };
 
       function updateModel(val) {
-        console.log('updateModel', val);
+        // console.log('updateModel', val);
         ngModelCtrl.$setViewValue(val);
         // ngModelCtrl.$render();
         //   //Nothing to render...
@@ -1686,21 +1682,21 @@ module.service('PlaceService', [function () {
   };
 }]);
 
-module.service('TypeService', ['$http', function ($http) {
+module.service('TypeService', [function () {
   var _types = [
     {
       name: 'article',
       template: 'html/_new_article.html',
       preview: true,
-      storeFn: function(form) {
+      storeFn: function() {
         return {
-          header: form.input,
-          content: form.content
+          header: this.input,
+          content: this.content
         };
       },
-      fetchFn: function(form, data) {
-        form.input = data.header;
-        form.content = data.content;
+      fetchFn: function(data) {
+        this.input = data.header;
+        this.content = data.content;
       }
     },
     {
@@ -1708,9 +1704,28 @@ module.service('TypeService', ['$http', function ($http) {
       template: 'html/_new_link.html',
       preview: true,
       storeFn: function() {
-        
+        return {
+          url: this.input,
+          header: this.header,
+          content: this.content
+        };
+      },
+      fetchFn: function(data) {
+        this.input = data.url;
+        this.header = data.header;
+        this.content = data.content;
       }
     }
+    // {
+    //   name: '_name_',
+    //   template: 'html/_new_(name).html',
+    //   preview: true,
+    //   storeFn: function() {
+    //   },
+    //   fetchFn: function(data) {
+        
+    //   }
+    // }
   ];
 
   function getType (name) {

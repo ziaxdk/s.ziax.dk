@@ -1,15 +1,15 @@
 module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', '$timeout',
   function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, t ) {
     var id, type;
-    $scope.meta = { type: 'article' };
-    $scope.form = { input: 'test'};
+    $scope.meta = { };
+    $scope.form = { };
     $scope.$watch('meta.type', function(val) {
       scopeType(TypeService.getType(val));
     });
 
     $scope.submit = function() {
       var f = $scope.form;
-      var save = angular.extend(type.storeFn(f), {
+      var save = angular.extend(type.storeFn.call(f), {
         id: id,
         type: type.name,
         tags: !f.tags ? [] : f.tags.split(','),
@@ -21,16 +21,16 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
     };
 
     if (Result && Result.data) {
-      return;
       var _d = Result.data;
       $scope.meta.type = _d.type;
       id = _d.id;
-      TypeService.getType(_d.type).fetchFn($scope.form, _d.source);
-      $scope.form.tags = _d.source.tags||_d.source.tags.join();
+      TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
+      $scope.form.tags = angular.isArray(_d.source.tags) ? _d.source.tags.join() : _d.source.tags;
     }
 
     function scopeType(obj) {
       if (!obj) return;
+      type = obj;
       $scope.meta.type = obj.name;
       $scope.template = obj.template;
       $scope.preview = obj.preview;
