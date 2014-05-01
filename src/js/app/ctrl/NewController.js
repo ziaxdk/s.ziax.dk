@@ -34,6 +34,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.meta.type = obj.name;
       $scope.template = obj.template;
       $scope.preview = obj.preview;
+      obj.initFn.call($scope.meta);
     }
 
     return;

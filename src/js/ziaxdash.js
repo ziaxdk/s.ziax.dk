@@ -244,6 +244,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.meta.type = obj.name;
       $scope.template = obj.template;
       $scope.preview = obj.preview;
+      obj.initFn.call($scope.meta);
     }
 
     return;
@@ -833,7 +834,7 @@ module.directive('zInputNew', ['const', function (Const) {
       };
 
       ngModelCtrl.$render = function() {
-        scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue;
+        scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? undefined : ngModelCtrl.$viewValue;
       };
 
       function updateModel(val) {
@@ -998,7 +999,7 @@ module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceServic
       var map = zmap.map,
           markerG = $parse(attrs.zMapMarker),
           markerS = markerG.assign,
-          pos = markerG(scope).split(','),
+          pos = [0 ,0],
           layer = L.featureGroup().addTo(map),
           marker = L.marker(pos, {
             draggable: true,
@@ -1007,6 +1008,12 @@ module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceServic
             click(e.target);
           })
           .addTo(layer);
+
+      scope.$watch(function() { return markerG(scope); }, function(val) {
+        var pos = val.split(',');
+        marker.setLatLng(pos);
+        map.panTo(pos);
+      })
 
       function click(e) {
         var ll = e.latlng||e.getLatLng();
@@ -1682,12 +1689,13 @@ module.service('PlaceService', [function () {
   };
 }]);
 
-module.service('TypeService', [function () {
+module.service('TypeService', ['PlaceService', function (PlaceService) {
   var _types = [
     {
       name: 'article',
       template: 'html/_new_article.html',
       preview: true,
+      initFn: angular.noop,
       storeFn: function() {
         return {
           header: this.input,
@@ -1703,6 +1711,7 @@ module.service('TypeService', [function () {
       name: 'link',
       template: 'html/_new_link.html',
       preview: true,
+      initFn: angular.noop,
       storeFn: function() {
         return {
           url: this.input,
@@ -1714,6 +1723,23 @@ module.service('TypeService', [function () {
         this.input = data.url;
         this.header = data.header;
         this.content = data.content;
+      }
+    },
+    {
+      name: 'place',
+      template: 'html/_new_place.html',
+      preview: true,
+      initFn: function() {
+        if (angular.isObject(this.place)) return;
+        this.place = {
+          mapsize: 'm',
+          mapicon: PlaceService.getPoiDefault().type
+        };
+      },
+      storeFn: function() {
+      },
+      fetchFn: function(data) {
+        
       }
     }
     // {

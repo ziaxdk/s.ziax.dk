@@ -125,7 +125,7 @@ module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceServic
       var map = zmap.map,
           markerG = $parse(attrs.zMapMarker),
           markerS = markerG.assign,
-          pos = markerG(scope).split(','),
+          pos = [0 ,0],
           layer = L.featureGroup().addTo(map),
           marker = L.marker(pos, {
             draggable: true,
@@ -134,6 +134,12 @@ module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceServic
             click(e.target);
           })
           .addTo(layer);
+
+      scope.$watch(function() { return markerG(scope); }, function(val) {
+        var pos = val.split(',');
+        marker.setLatLng(pos);
+        map.panTo(pos);
+      })
 
       function click(e) {
         var ll = e.latlng||e.getLatLng();

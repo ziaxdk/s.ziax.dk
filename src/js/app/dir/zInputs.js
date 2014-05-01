@@ -35,7 +35,7 @@ module.directive('zInputNew', ['const', function (Const) {
       };
 
       ngModelCtrl.$render = function() {
-        scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? '' : ngModelCtrl.$viewValue;
+        scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? undefined : ngModelCtrl.$viewValue;
       };
 
       function updateModel(val) {
