@@ -13,8 +13,8 @@ module.controller('IndexController', ['History', 'LocationService', '$location',
     _t.showInfo = !_t.showInfo;
   };
 
-  $scope.$watch(function () {return LocationService.coords; }, function (n) {
-    if (!n.hasFix) return;
-    console.log('latlon', n);
-  });
+  // $scope.$watch(function () {return LocationService.coords; }, function (n) {
+  //   if (!n.hasFix) return;
+  //   console.log('latlon', n);
+  // });
 }]);

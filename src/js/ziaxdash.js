@@ -83,15 +83,13 @@ module.constant('const', {
   types: ['article', 'link', 'place', 'flight']
 });
 
-module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'const',
-  function ($window, $rootScope, $templateCache, GlobalService, consta) {
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService',
+  function ( $window, $rootScope, $templateCache, GlobalService, LocationService ) {
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
 
-  $rootScope["const"] = {
-    types: consta.types
-  };
-  
+  LocationService.start();
+
   socket.on('news', function (data) {
   });
 
@@ -124,10 +122,10 @@ module.controller('IndexController', ['History', 'LocationService', '$location',
     _t.showInfo = !_t.showInfo;
   };
 
-  $scope.$watch(function () {return LocationService.coords; }, function (n) {
-    if (!n.hasFix) return;
-    console.log('latlon', n);
-  });
+  // $scope.$watch(function () {return LocationService.coords; }, function (n) {
+  //   if (!n.hasFix) return;
+  //   console.log('latlon', n);
+  // });
 }]);
 
 module.controller('MainController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'UserService', 'GlobalService', 'RestDrive', 
@@ -208,9 +206,10 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', '$timeout',
-  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, t ) {
-    var id, type;
+module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService',
+  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService ) {
+    var id,
+        type;
     $scope.meta = { };
     $scope.form = { };
     $scope.$watch('meta.type', function(val) {
@@ -219,7 +218,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
 
     $scope.submit = function() {
       var f = $scope.form;
-      var save = angular.extend(type.storeFn.call(f), {
+      var save = angular.extend(type.storeFn.call(f, $scope.meta), {
         id: id,
         type: type.name,
         tags: !f.tags ? [] : f.tags.split(','),
@@ -244,7 +243,9 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.meta.type = obj.name;
       $scope.template = obj.template;
       $scope.preview = obj.preview;
-      obj.initFn.call($scope.meta);
+      if (angular.isFunction(obj.initFn)) {
+        obj.initFn.call($scope.meta);
+      }
     }
 
     return;
@@ -1010,10 +1011,12 @@ module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceServic
           .addTo(layer);
 
       scope.$watch(function() { return markerG(scope); }, function(val) {
+        if (!val || !/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(val)) return;
         var pos = val.split(',');
+        if (!angular.isArray(pos) || pos.length !== 2) return;
         marker.setLatLng(pos);
         map.panTo(pos);
-      })
+      });
 
       function click(e) {
         var ll = e.latlng||e.getLatLng();
@@ -1608,11 +1611,12 @@ module.service('LeafletControlsService', [function () {
 }]);
 
 module.service('LocationService', ['$window', '$rootScope', function ($window, $rootScope) {
-	var coords = {
-    hasFix: false,
-    lat: 0, 
-    lon: 0
-  };
+	var watchId,
+      coords = {
+        hasFix: false,
+        lat: 0,
+        lon: 0
+      };
 	
   function whenLocated (position) {
     var c = position.coords;
@@ -1622,18 +1626,31 @@ module.service('LocationService', ['$window', '$rootScope', function ($window, $
       coords.lat = c.latitude;
       coords.lon = c.longitude;
     });
-	};
-
-	if (navigator.geolocation) {
-		// navigator.geolocation.getCurrentPosition(whenLocated);
-		navigator.geolocation.watchPosition(whenLocated);
 	}
-	else {
-		console.log('location not supported');
-	};
+
+  function start() {
+    if (watchId) return;
+    if (navigator.geolocation) {
+      // navigator.geolocation.getCurrentPosition(whenLocated);
+      watchId = navigator.geolocation.watchPosition(whenLocated);
+    }
+    else {
+      console.log('location not supported');
+    }
+  }
+
+  function stop() {
+    if (!watchId) return;
+    navigator.geolocation.clearWatch(watchId);
+    watchId = undefined;
+  }
+
+
 
 	return {
-		coords: coords
+		coords: coords,
+    start: start,
+    stop: stop
 	};
 }]);
 
@@ -1692,6 +1709,10 @@ module.service('PlaceService', [function () {
 module.service('TypeService', ['PlaceService', function (PlaceService) {
   var _types = [
     {
+      parser: /undefined/,
+      name: undefined
+    },
+    {
       name: 'article',
       template: 'html/_new_article.html',
       preview: true,
@@ -1708,6 +1729,7 @@ module.service('TypeService', ['PlaceService', function (PlaceService) {
       }
     },
     {
+      parser: /^https?\:\/\//,
       name: 'link',
       template: 'html/_new_link.html',
       preview: true,
@@ -1726,22 +1748,47 @@ module.service('TypeService', ['PlaceService', function (PlaceService) {
       }
     },
     {
+      parser: /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/,
       name: 'place',
       template: 'html/_new_place.html',
       preview: true,
       initFn: function() {
-        if (angular.isObject(this.place)) return;
+        // if (angular.isObject(this.place)) return;
+        // console.log('called');
         this.place = {
           mapsize: 'm',
           mapicon: PlaceService.getPoiDefault().type
         };
       },
+      storeFn: function(meta) {
+        var loc = this.input.split(',');
+        return {
+          header: this.header,
+          content: this.content,
+          location: { lat: loc[0].trim(), lon: loc[1].trim() },
+          icon: PlaceService.getPoi(meta.place.mapicon).type
+        };
+      },
+      fetchFn: function(data) {
+        this.input = data.location.lat + ',' + data.location.lon;
+        this.header = data.header;
+        this.content = data.content;
+      }
+    },
+    {
+      name: 'flight',
+      template: 'html/_new_flight.html',
+      preview: true,
       storeFn: function() {
+        return {
+
+        };
       },
       fetchFn: function(data) {
         
       }
     }
+
     // {
     //   name: '_name_',
     //   template: 'html/_new_(name).html',

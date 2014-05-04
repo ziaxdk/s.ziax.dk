@@ -1,6 +1,7 @@
-module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', '$timeout',
-  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, t ) {
-    var id, type;
+module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService',
+  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService ) {
+    var id,
+        type;
     $scope.meta = { };
     $scope.form = { };
     $scope.$watch('meta.type', function(val) {
@@ -9,7 +10,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
 
     $scope.submit = function() {
       var f = $scope.form;
-      var save = angular.extend(type.storeFn.call(f), {
+      var save = angular.extend(type.storeFn.call(f, $scope.meta), {
         id: id,
         type: type.name,
         tags: !f.tags ? [] : f.tags.split(','),
@@ -34,7 +35,9 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.meta.type = obj.name;
       $scope.template = obj.template;
       $scope.preview = obj.preview;
-      obj.initFn.call($scope.meta);
+      if (angular.isFunction(obj.initFn)) {
+        obj.initFn.call($scope.meta);
+      }
     }
 
     return;

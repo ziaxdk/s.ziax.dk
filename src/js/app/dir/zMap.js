@@ -136,10 +136,12 @@ module.directive('zMapMarker', ['$compile', '$parse', '$rootScope', 'PlaceServic
           .addTo(layer);
 
       scope.$watch(function() { return markerG(scope); }, function(val) {
+        if (!val || !/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(val)) return;
         var pos = val.split(',');
+        if (!angular.isArray(pos) || pos.length !== 2) return;
         marker.setLatLng(pos);
         map.panTo(pos);
-      })
+      });
 
       function click(e) {
         var ll = e.latlng||e.getLatLng();

@@ -81,15 +81,13 @@ module.constant('const', {
   types: ['article', 'link', 'place', 'flight']
 });
 
-module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'const',
-  function ($window, $rootScope, $templateCache, GlobalService, consta) {
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService',
+  function ( $window, $rootScope, $templateCache, GlobalService, LocationService ) {
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
 
-  $rootScope["const"] = {
-    types: consta.types
-  };
-  
+  LocationService.start();
+
   socket.on('news', function (data) {
   });
 

@@ -1,6 +1,10 @@
 module.service('TypeService', ['PlaceService', function (PlaceService) {
   var _types = [
     {
+      parser: /undefined/,
+      name: undefined
+    },
+    {
       name: 'article',
       template: 'html/_new_article.html',
       preview: true,
@@ -17,6 +21,7 @@ module.service('TypeService', ['PlaceService', function (PlaceService) {
       }
     },
     {
+      parser: /^https?\:\/\//,
       name: 'link',
       template: 'html/_new_link.html',
       preview: true,
@@ -35,22 +40,47 @@ module.service('TypeService', ['PlaceService', function (PlaceService) {
       }
     },
     {
+      parser: /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/,
       name: 'place',
       template: 'html/_new_place.html',
       preview: true,
       initFn: function() {
-        if (angular.isObject(this.place)) return;
+        // if (angular.isObject(this.place)) return;
+        // console.log('called');
         this.place = {
           mapsize: 'm',
           mapicon: PlaceService.getPoiDefault().type
         };
       },
+      storeFn: function(meta) {
+        var loc = this.input.split(',');
+        return {
+          header: this.header,
+          content: this.content,
+          location: { lat: loc[0].trim(), lon: loc[1].trim() },
+          icon: PlaceService.getPoi(meta.place.mapicon).type
+        };
+      },
+      fetchFn: function(data) {
+        this.input = data.location.lat + ',' + data.location.lon;
+        this.header = data.header;
+        this.content = data.content;
+      }
+    },
+    {
+      name: 'flight',
+      template: 'html/_new_flight.html',
+      preview: true,
       storeFn: function() {
+        return {
+
+        };
       },
       fetchFn: function(data) {
         
       }
     }
+
     // {
     //   name: '_name_',
     //   template: 'html/_new_(name).html',
