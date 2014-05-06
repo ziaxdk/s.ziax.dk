@@ -59,8 +59,8 @@ module.exports = function (grunt) {
         files: {
           'build/src/js/<%= buildno %>.min.js': [
             'build/src/js/lib/satellite.min.js',
-            'build/src/js/lib/jquery-2.0.3.min.js',
-            'build/src/js/lib/select2.min.js',
+            // 'build/src/js/lib/jquery-2.0.3.min.js',
+            // 'build/src/js/lib/select2.min.js',
             'build/src/js/lib/angular.min.js',
             'build/src/js/lib/angular-route.min.js',
             'build/src/js/lib/angular-resource.min.js',
@@ -173,14 +173,21 @@ module.exports = function (grunt) {
       }
     },
     removelogging: {
-      dist: {
-        src: "build/src/js/ziaxdash.all.min.js",
-        dest: "build/src/js/ziaxdash.all.min.js",
-
+      build: {
+        // src: "dist/**/*.js" // Each file will be overwritten with the output!
+        src: ['build/src/js/*.js'/*, 'build/src/js/lib-ext/*.js'*/],
         options: {
-          // see below for options. this is optional.
+
         }
       }
+      // dist: {
+      //   src: "build/src/js/ziaxdash.all.min.js",
+      //   dest: "build/src/js/ziaxdash.all.min.js",
+
+      //   options: {
+      //     // see below for options. this is optional.
+      //   }
+      // }
     },
 
 
@@ -418,7 +425,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build_css', [ 'less:build', 'cssmin:build', 'concat:build_css' ]);
   grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
-  grunt.registerTask('build', ['clean:build', 'gitrev', 'copy:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', /*'removelogging:dist',*/ 'clean:build_post', 'conftransform:build' ]);
+  grunt.registerTask('build', ['clean:build', 'gitrev', 'copy:build', 'concat:build_dev', 'removelogging:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', 'clean:build_post', 'conftransform:build' ]);
 
   grunt.registerTask('deploy', ['build', 'clean:deploy', 'compress', 'ftp-deploy']);
 

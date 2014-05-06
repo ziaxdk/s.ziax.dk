@@ -24,7 +24,7 @@ module.directive('zIcons', [function() {
       // console.log('done');
       this.setIcon = function (icon) {
         _iconS($scope, icon);
-        // console.log(icon)
+        // console.log(icon);
       };
 
     }],

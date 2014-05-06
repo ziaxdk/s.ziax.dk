@@ -1,8 +1,11 @@
-module.directive('zInputNew', ['const', function (Const) {
+module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactory', '$http',
+  function ( TypeService, LocationService, DelayerFactory, $http ) {
   return {
     restrict: 'A',
     scope: {
-      context: '='
+      context: '=',
+      header: '=',
+      content: '='
     },
     require: 'ngModel',
     replace: true,
@@ -18,10 +21,11 @@ module.directive('zInputNew', ['const', function (Const) {
         '</ul>' +
       '</div>',
     link: function(scope, element, attrs, ngModelCtrl) {
+      var delayScraper = new DelayerFactory(2000);
 
       scope.edit = !!scope.context;
       scope.form = { };
-      scope.types = Const.types;
+      scope.types = TypeService.types();
       scope.$watch('form.q', updateModel);
       
       scope.setContext = function(ctx) {
@@ -31,6 +35,7 @@ module.directive('zInputNew', ['const', function (Const) {
         }
         else {
           scope.context = scope.clickType = ctx;
+          // console.log('click', LocationService.coords);
         }
       };
 
@@ -57,13 +62,12 @@ module.directive('zInputNew', ['const', function (Const) {
         }
         else if (/^https?\:\/\//.test(val)) {
           scope.context = 'link';
-          // setType('link');
-          // delayScraper.run(function () {
-          //   $http.get('/api/scrape', { params: { q: encodeURIComponent(q) } }).success(function (data) {
-          //     $scope.form.header = data.title1 || data.title2 || data.title3; //link;
-          //     $scope.form.content = '"' + $scope.form.q + '":' + $scope.form.q + '\n\n' + (data.desc1 || data.desc2 || data.desc3);
-          //   });
-          // });
+          delayScraper.run(function () {
+            $http.get('/api/scrape', { params: { q: encodeURIComponent(val) } }).success(function (data) {
+              scope.header = data.title1 || data.title2 || data.title3 || '';
+              scope.content = '"' + val + '":' + val + '\n\n' + (data.desc1 || data.desc2 || data.desc3 || '');
+            });
+          });
         }
         else
         {

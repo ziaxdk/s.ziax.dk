@@ -77,14 +77,14 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
 }]);
 
-module.constant('const', {
-  types: ['article', 'link', 'place', 'flight']
-});
-
 module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService',
   function ( $window, $rootScope, $templateCache, GlobalService, LocationService ) {
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
+
+  $rootScope.$on('$destroy', function() {
+    LocationService.stop();
+});
 
   LocationService.start();
 
