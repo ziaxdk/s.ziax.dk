@@ -21,7 +21,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       });
 
       console.log('submit', save);
-      // DocumentService.store(save);
+      DocumentService.store(save);
     };
 
     if (Result && Result.data) {
