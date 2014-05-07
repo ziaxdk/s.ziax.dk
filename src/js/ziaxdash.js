@@ -41,7 +41,13 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       templateUrl: "/html/_result.html",
       controller: "ResultController",
       controllerAs: "ResultCtrl",
-      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
+      resolve: {
+        ApiType: ['ApiTypeFactory', function(f) { return f('places'); }],
+        ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }],
+        EnsureSatelliteJs: ['AsyncJsFactory', function(AsyncJsFactory) {
+          return AsyncJsFactory('/js/lib/satellite.min.js', window.satellite);
+        }]
+      }
   });
   $routeProvider.when('/flights', {
       templateUrl: "/html/_flights.html",
@@ -229,7 +235,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       });
 
       console.log('submit', save);
-      // DocumentService.store(save);
+      DocumentService.store(save);
     };
 
     if (Result && Result.data) {
@@ -612,10 +618,9 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
       var t = this,
           map = L.map($element[0], { center: [0, 0], zoom: 12 }),
           base0 = L.tileLayer('https://{s}.tiles.mapbox.com/v3/ziaxdk.h6efc5a4/{z}/{x}/{y}.png', { attribution: '' }).addTo(map),
-          base1 = L.tileLayer("http://{s}.tile.cloudmade.com/7900B8C7F3074FD18E325AD6A60C33B7/997/256/{z}/{x}/{y}.png",{ attribution:'' }),
           base2 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '' }),
           base3 = L.bingLayer("Alv2HutsIUPb_D2Jz0KdN37XixBdCph40lz8uMUNyUM2yp3IPg0oaiHn-J0ieMU4");
-          chooser = L.control.layers({ 'Mapbox': base0, 'Basic': base2, 'Bing': base3, 'Deprecate': base1 }, {}, { position: 'bottomleft' }).addTo(map);
+          chooser = L.control.layers({ 'Mapbox': base0, 'Basic': base2, 'Bing': base3 }, {}, { position: 'bottomleft' }).addTo(map);
 
       t.map = map;
       t.chooser = chooser;
@@ -865,6 +870,7 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', functio
     restrict: 'A',
     require: 'zMap',
     link: function(scope, element, attrs, zmap) {
+      if (!window.satellite) return;
       var map = zmap.map,
           chooser = zmap.chooser,
           layer = L.featureGroup().addTo(map),
@@ -1224,6 +1230,46 @@ module.factory('ApiTypeFactory', [function () {
     };
   };
   return apiType;
+}]);
+
+module.factory('AsyncJsFactory', [ '$q', '$timeout',  function ( $q, $timeout ) {
+  // var delayer = function (delayInMs) {
+  //   var canceler;
+  //   return {
+  //     run: function (actionToExecute) {
+  //       if (canceler) $timeout.cancel(canceler);
+  //       canceler = $timeout(actionToExecute, delayInMs);
+  //     }
+  //   };
+  // };
+  // return delayer;
+  // 
+  
+  var ctor = function(url, isLoaded) {
+    var deferred = $q.defer(),
+        script = document.createElement('script'),
+        head = document.getElementsByTagName('head')[0];
+
+    if (isLoaded) {
+      deferred.resolve(true);
+      return;
+    }
+
+    script.src = url;
+    script.onerror = function() { deferred.resolve(false); };
+    script.onload = script.onreadystatechange = function() {
+      // var rs = this.readyState;
+      // if (rs && rs != 'complete' && rs != 'loaded') {
+      //   deferred.resolve(false);
+      //   return;
+      // }
+      deferred.resolve(true);
+    };
+    head.appendChild(script);
+
+    return deferred.promise;
+  };
+  return ctor;
 }]);
 
 module.factory('DelayerFactory', ['$timeout', function ($timeout) {

@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     // Build
     clean: {
       build: ["build/*"],
-      build_post: [ 'build/src/js/lib/**/*', 'build/src/js/app/**/*' ],
+      build_post: [ 'build/src/js/lib/**/*', '!build/src/js/lib/satellite.min.js', 'build/src/js/app/**/*' ],
       deploy: ["zip/*"]
     },
     less: {
@@ -58,7 +58,7 @@ module.exports = function (grunt) {
       build_js: {
         files: {
           'build/src/js/<%= buildno %>.min.js': [
-            'build/src/js/lib/satellite.min.js',
+            // 'build/src/js/lib/satellite.min.js',
             // 'build/src/js/lib/jquery-2.0.3.min.js',
             // 'build/src/js/lib/select2.min.js',
             'build/src/js/lib/angular.min.js',

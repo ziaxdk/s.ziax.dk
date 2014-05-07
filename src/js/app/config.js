@@ -39,7 +39,13 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
       templateUrl: "/html/_result.html",
       controller: "ResultController",
       controllerAs: "ResultCtrl",
-      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('places'); }], ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }] }
+      resolve: {
+        ApiType: ['ApiTypeFactory', function(f) { return f('places'); }],
+        ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }],
+        EnsureSatelliteJs: ['AsyncJsFactory', function(AsyncJsFactory) {
+          return AsyncJsFactory('/js/lib/satellite.min.js', window.satellite);
+        }]
+      }
   });
   $routeProvider.when('/flights', {
       templateUrl: "/html/_flights.html",
