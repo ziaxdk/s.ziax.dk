@@ -130,17 +130,17 @@ function routes(app) {
         type = save.type;
     
     save.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    save.createdutc = new Date();
-    save.clicks = 0;
-
     delete save.type;
 
     if (save.id) {
       var id = save.id;
       delete save.id;
+      save.updatedutc = new Date();
       es.client.update({ index: es.index, type: type, id: id, body: { doc: save } }, es.callback(arguments));
     }
     else {
+      save.clicks = 0;
+      save.createdutc = new Date();
       es.client.index({ index: es.index, type: type, body: save }, es.callback(arguments));
     }
   });

@@ -32,6 +32,9 @@
         "createdutc": {
           "type": "date"
         },
+        "updatedutc": {
+          "type": "date"
+        },
         "clicks": {
           "type": "integer"
         },
@@ -59,6 +62,9 @@
           "type": "string"
         },
         "createdutc": {
+          "type": "date"
+        },
+        "updatedutc": {
           "type": "date"
         },
         "url": {
@@ -89,6 +95,9 @@
         },
         "tags": {
           "type": "string"
+        },
+        "updatedutc": {
+          "type": "date"
         },
         "createdutc": {
           "type": "date"
