@@ -5,8 +5,45 @@
       utils = require('./utils.js'),
       es = require('./es.js');
 
+  function getQuery_Root(q, onlyAuth) {
+    var root = {
+      "query": {
+        "filtered": {
+          "query": getQuery(q),
+          "filter": {
+            "or": {
+              "filters": [
+                getQuery_Root_Filters(false),
+                getQuery_Root_Filters(true && onlyAuth)
+                // {
+                //   "term": {
+                //     "onlyAuth": true
+                //   }
+                // },
+                // {
+                //   "term": {
+                //     "onlyAuth": false
+                //   }
+                // }
+              ]
+            }
+          }
+        }
+      }
+    };
+    // console.log(onlyAuth, root.query.filtered.filter.or.filters)
+    return root;
+  }
 
-  function getQuery(q) {
+  function getQuery_Root_Filters(onlyAuth) {
+    return {
+      "term": {
+        "onlyAuth": onlyAuth
+      }
+    };
+  }
+
+  function getQueryBody_MultiMatch(q) {
     return {
       "multi_match": {
         "query": q,
@@ -19,35 +56,32 @@
     };
   }
 
-  function getAll() {
+  function getQueryBody_MatchAll() {
     return {
       "match_all": {}
     };
   }
 
-
-  function getScope(q, tags) {
+  function getQuery(q) {
     return {
-      "query": {
-        "function_score": {
-          "query": q === '*' ? getAll() : getQuery(q),
-          "functions": [
-            {
-              "filter": {
-                "term": {
-                  "star": true
-                }
-              },
-              "boost_factor": 1000
-            },
-            {
-              "script_score":
-              {
-                "script": "_score * doc['clicks'].value"
+      "function_score": {
+        "query": q === '*' ? getQueryBody_MatchAll() : getQueryBody_MultiMatch(q),
+        "functions": [
+          {
+            "filter": {
+              "term": {
+                "star": true
               }
+            },
+            "boost_factor": 1000
+          },
+          {
+            "script_score":
+            {
+              "script": "_score * doc['clicks'].value"
             }
-          ]
-        }
+          }
+        ]
       }
     };
   }
@@ -105,8 +139,9 @@
     };
   }
 
-  function build (q, tags, idx, size) {
-    var query = getScope(q, tags);
+  function build (q, tags, idx, size, onlyAuth) {
+    // var query = getQuery(q);
+    var query = getQuery_Root(q, onlyAuth);
     deepExtend(query, getFacets());
     deepExtend(query, addFilters(tags));
     deepExtend(query, addFacetFilters(tags));
@@ -150,7 +185,7 @@
       es.client.search({
         index: es.index,
         type: 'place',
-        body: build('*', undefined, undefined, 5000)
+        body: build('*', undefined, undefined, 5000, !!req.user)
       }, es.callback(arguments));
     });
 
@@ -181,7 +216,7 @@
       es.client.search({
         index: es.index,
         type: 'place',
-        body: build('*', data.facets.tags, undefined, 5000)
+        body: build('*', data.facets.tags, undefined, 5000, !!req.user)
       }, es.callback(arguments));
     });
 
@@ -191,7 +226,7 @@
       es.client.search({
         index: es.index,
         type: qObject.type,
-        body: build(qObject.q, null)
+        body: build(qObject.q, null, 0, 10, !!req.user)
       }, es.callback(arguments));
       es.client.index({ index: es.index, type: 'history', body: { q: req.query.q, q2: req.query.q, createdutc: new Date() }}, function (err, data) { });
     });
@@ -202,7 +237,7 @@
       es.client.search({
         index: es.index,
         type: qObject.type,
-        body: build(qObject.q, data.facets.tags, data.pager.idx)
+        body: build(qObject.q, data.facets.tags, data.pager.idx, 10, !!req.user)
       }, es.callback(arguments));
     });
 

@@ -19,6 +19,7 @@
         <button class="btn btn-sm" ng-class="{'btn-default': !hit.selected, 'btn-primary': hit.selected}" ng-disabled="hit.disabled" ng-click="ResultCtrl.facet(hit)">{{hit.term}} <i class="badge">{{hit.count}}</i></button>
       </li>
     </ul>
+          
 
     <div class="list-group">
       <div class="list-group-item hit" ng-repeat="hit in ResultCtrl.result.hits.hits track by hit.id">
@@ -32,7 +33,7 @@
           </a>
         </div>
         <a href="javascript:;" ng-click="ResultCtrl.show(hit)">
-          <h4 class="list-group-item-heading">{{hit.source.header}}</h4>
+          <h4 class="list-group-item-heading"><span class="fa fa-lock" ng-show="hit.source.onlyAuth">&nbsp;</span>{{hit.source.header}}</h4>
         </a>
 
         <p class="list-group-item-text">{{hit.source.content|textile|html:45}}</p>

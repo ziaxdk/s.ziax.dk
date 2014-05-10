@@ -29,6 +29,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.meta.type = _d.type;
       id = _d.id;
       TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
+      $scope.form.onlyAuth = _d.source.onlyAuth;
       $scope.form.tags = angular.isArray(_d.source.tags) ? _d.source.tags.join() : _d.source.tags;
     }
 
