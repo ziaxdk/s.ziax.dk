@@ -8,8 +8,14 @@
             "tokenizer": "keyword",
             "filter": [ "lowercase" ]
           }
+        },
+        "filter": {
+          "z_compound": {
+            "type": "dictionary_decompounder",
+            "word_list": ["fotboll", "fot", "lag", "boll"],
+            "min_subword_size": 2
+          }          
         }
-
       }
     }
 
