@@ -38,12 +38,19 @@
       data.forEach(function(b) {
         var j = JSON.parse(b);
         // bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: parseInt(j.id) } });
-        bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: j.ident } });
+        // bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: j.ident } });
+        bulk.push({ index:  { _index: 'ziax', _type: 'airport', _id: j.ident } });
         bulk.push({
-          name: j.name,
-          ident: j.ident,
-          iata: j.iata_code,
-          location: [ parseFloat(j.longitude_deg), parseFloat(j.latitude_deg)],
+          header: j.name,
+          airport_ident: j.ident,
+          airport_iata: j.iata_code,
+          location: {
+            lat: parseFloat(j.latitude_deg),
+            lon: parseFloat(j.longitude_deg)
+          },
+          onlyAuth: false,
+          clicks: 0,
+          createdutc: new Date(),
           suggest: {
             input: [ j.ident, j.name ],
             output: j.name

@@ -19,4 +19,8 @@
   <div ng-if="ShowCtrl.Result.type == 'place'">
     <div z-map z-map-markers="{{[ShowCtrl.Result]}}" style="height: 500px"></div>
   </div>
+
+  <div ng-if="ShowCtrl.Result.type == 'airport'">
+    <div z-map z-map-markers="{{[ShowCtrl.Result]}}" z-map-markers-icon="plane" style="height: 500px"></div>
+  </div>
 </div>

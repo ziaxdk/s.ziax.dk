@@ -44,7 +44,7 @@ module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceSe
           layers.clearLayers();
           angular.forEach(angular.fromJson(places), function(hit) {
             var place = hit.source,
-                poi = PlaceService.getPoiDefault(place.icon),
+                poi = attrs.zMapMarkersIcon ? { type: attrs.zMapMarkersIcon, color: 'cadetblue' } : PlaceService.getPoiDefault(place.icon),
                 marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
                   .on('click', function() { scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
                   .on('mouseover', function() { marker.openPopup(); })

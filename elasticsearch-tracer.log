@@ -1,0 +1,18 @@
+# INFO: 2014-05-13T17:27:37Z
+# Adding connection to http://localhost:9200/
+
+# DEBUG: 2014-05-13T17:27:39Z
+# starting request { method: 'POST',
+#   path: '/ziax/link%2Cplace%2Carticle/_count',
+#   query: {} }
+# 
+
+# TRACE: 2014-05-13T17:27:39Z
+# http://localhost:9200
+curl 'http://localhost:9200/ziax/link%2Cplace%2Carticle/_count?pretty=true' -XPOST
+# -> 200
+# {"count":63,"_shards":{"total":5,"successful":5,"failed":0}}
+
+# INFO: 2014-05-13T17:27:39Z
+# Request complete
+
