@@ -1,0 +1,36 @@
+
+  {
+    "airport" : {
+      "dynamic": "strict",
+
+      "properties" : {
+        "header": {
+          "type": "string"
+        },
+        "airport_ident": {
+          "type": "string"
+        },
+        "airport_iata": {
+          "type": "string"
+        },
+        "location" : {
+          "type" : "geo_point"
+        },
+        "onlyAuth": {
+          "type": "boolean"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "clicks": {
+          "type": "integer"
+        },
+        "suggest" : {
+          "type" : "completion",
+          "index_analyzer" : "simple",
+          "search_analyzer" : "simple",
+          "payloads" : true
+        }
+      }
+    }
+}

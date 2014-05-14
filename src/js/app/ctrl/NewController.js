@@ -17,7 +17,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
         id: id,
         type: type.name,
         tags: !f.tags ? [] : f.tags.split(','),
-        onlyAuth: f.onlyAuth
+        onlyAuth: !!f.onlyAuth
       });
 
       console.log('submit', save);
