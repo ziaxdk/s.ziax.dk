@@ -13,6 +13,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
 
     $scope.submit = function() {
       var f = $scope.form;
+      console.log('$scope.form', f);
       var save = angular.extend(type.storeFn.call(f, $scope.meta), {
         id: id,
         type: type.name,
@@ -20,7 +21,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
         onlyAuth: !!f.onlyAuth
       });
 
-      console.log('submit', save);
+      // console.log('submit', save);
       DocumentService.store(save);
     };
 
@@ -40,7 +41,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.template = obj.template;
       $scope.preview = obj.preview;
       if (angular.isFunction(obj.initFn)) {
-        obj.initFn.call($scope.meta);
+        obj.initFn.call($scope.meta, $scope);
       }
     }
 

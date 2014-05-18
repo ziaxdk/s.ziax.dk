@@ -16,6 +16,12 @@
 
   <p ng-bind-html="ShowCtrl.Result.source.content|textile"></p>
 
+  <div ng-if="ShowCtrl.Result.type == 'airport'">
+    <p>ICAO: <span>{{ShowCtrl.Result.source.airport_ident}}</span></p>
+    <p>IATA: <span>{{ShowCtrl.Result.source.airport_iata}}</span></p>
+    <p>Name: <span>{{ShowCtrl.Result.source.header}}</span></p>
+  </div>
+
   <div ng-if="ShowCtrl.Result.type == 'place'">
     <div z-map z-map-markers="{{[ShowCtrl.Result]}}" style="height: 500px"></div>
   </div>

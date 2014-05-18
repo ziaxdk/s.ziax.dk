@@ -24,14 +24,49 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
   };
 }]);
 
+module.directive('zMapMarkersConnect', [function() {
+  return {
+    link: 'A',
+    require: [ 'zMapMarkers', 'zMap' ],
+    priority: 10,
+    link: function(scope, elemment, attrs, ctrls) {
+      var map = ctrls[1].map,
+          lines;
+
+      scope.$on('$destroy', function() {
+        if (lines)
+          map.removeLayer(lines);
+      });
+
+      attrs.$observe('zMapMarkers', function(m) {
+        if (lines) {
+          map.removeLayer(lines);
+        }
+        var ll = [];
+        angular.forEach(angular.fromJson(m), function(d) {
+          ll.push(d.source.location);
+        });
+        if (ll.length < 2) return;
+        lines = L.polyline(ll, {color: 'red'}).addTo(map);
+      });
+
+      function reset() {
+
+      }
+    }
+  };
+}]);
+
 module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceService',
   function ($compile, $rootScope, $location, PlaceService) {
 
   return {
     restrict: 'A',
     require: 'zMap',
-    // priority: 2,
+    priority: 20,
     // scope: true,
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+    }],
     compile: function() {
       var nScope = $rootScope.$new();
 
@@ -41,6 +76,7 @@ module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceSe
             layers = L.featureGroup().addTo(map);
 
         attrs.$observe('zMapMarkers', function(places) {
+          var hasData = false;
           layers.clearLayers();
           angular.forEach(angular.fromJson(places), function(hit) {
             var place = hit.source,
@@ -51,9 +87,11 @@ module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceSe
                   .on('mouseout', function() { marker.closePopup(); })
                   .bindPopup(hit.source.header, { closeButton: false })
                   .addTo(layers);
+            hasData = true;
 
           });
-          map.fitBounds(layers.getBounds());
+          if (hasData)
+            map.fitBounds(layers.getBounds());
         });
 
         chooser.addOverlay(layers, 'Places');
@@ -195,6 +233,7 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
     }
   };
 }]);
+
 module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
   return {
     restrict: 'A',
@@ -269,7 +308,7 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', functio
           tle_line_1 = "1 25544U 98067A   14050.52955885  .00016717  00000-0  10270-3 0  9004",
           tle_line_2 = "2 25544  51.6500 322.8568 0003647 155.3472 204.7854 15.50497588 33075";
 
-      $http.get('/api/iss').then(startCalc, startCalc);
+      $http.get('/api/iss').then(startCalc, angular.noop);
 
       function startCalc(data) {
         if (data) {

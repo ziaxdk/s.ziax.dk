@@ -6,6 +6,30 @@ module.service('TypeService', [ 'PlaceService',
       name: undefined
     },
     {
+      name: 'flight',
+      template: 'html/_new_flight.html',
+      preview: true,
+      initFn: function(scope) {
+        this.airports = [];
+        this.mapsize = 'm';
+      },
+      storeFn: function(meta) {
+        var _airports = [];
+        angular.forEach(meta.airports, function(a) {
+          _airports.push({ airport_icao: a.id, airport_iata: a.source.airport_iata, name: a.source.header, location: a.source.location });
+        });
+        return {
+          header: this.input,
+          content: this.content,
+          date: this.date,
+          airports: _airports
+        };
+      },
+      fetchFn: function(data) {
+        
+      }
+    },
+    {
       parser: /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/,
       name: 'place',
       template: 'html/_new_place.html',
@@ -67,20 +91,7 @@ module.service('TypeService', [ 'PlaceService',
         this.input = data.header;
         this.content = data.content;
       }
-    }/*,
-    {
-      name: 'flight',
-      template: 'html/_new_flight.html',
-      preview: true,
-      storeFn: function() {
-        return {
-
-        };
-      },
-      fetchFn: function(data) {
-        
-      }
-    }*/
+    }
 
     // {
     //   name: '_name_',

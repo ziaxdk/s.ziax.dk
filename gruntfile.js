@@ -274,7 +274,11 @@ module.exports = function (grunt) {
       backup: {
         prod2dev: {
           indices: [
-            { name: 'ziax',     settings: grunt.file.readJSON('es/setup.json') }
+            {
+              name: 'ziax',
+              settings: grunt.file.readJSON('es/setup.json'),
+              // ignoreData: [ 'airport' ] TODO: Need to be implemented
+            }
             // { name: 'aviation', settings: grunt.file.readJSON('es/setup-aviation.json') }
           ],
           src: Config.es.production,

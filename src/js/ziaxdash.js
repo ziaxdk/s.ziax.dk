@@ -227,6 +227,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
 
     $scope.submit = function() {
       var f = $scope.form;
+      console.log('$scope.form', f);
       var save = angular.extend(type.storeFn.call(f, $scope.meta), {
         id: id,
         type: type.name,
@@ -234,7 +235,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
         onlyAuth: !!f.onlyAuth
       });
 
-      console.log('submit', save);
+      // console.log('submit', save);
       DocumentService.store(save);
     };
 
@@ -254,7 +255,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.template = obj.template;
       $scope.preview = obj.preview;
       if (angular.isFunction(obj.initFn)) {
-        obj.initFn.call($scope.meta);
+        obj.initFn.call($scope.meta, $scope);
       }
     }
 
@@ -609,6 +610,88 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
       }
     }
   };
+}])
+.directive('zAirport', ['DelayerFactory', 'ApiTypeFactory', '$http',
+  function(DelayerFactory, ApiTypeFactory, $http) {
+  // Runs during compile
+  return {
+    // name: '',
+    // priority: 1,
+    // terminal: true,
+    scope: {
+      zAirport: '=',
+      zAirportRoute: '=',
+    }, // {} = isolate, true = child, false/undefined = no change
+    // controller: function($scope, $element, $attrs, $transclude) {},
+    // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+    // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+    template: '<div>' +
+    '<div class="form-group">' +
+      '<label for="idAirport">Airport</label>' +
+      '<input type="text" name="airport" class="form-control" id="idAirport" ng-model="form.q">' +
+    '</div>' +
+    '<div class="form-group">' +
+      '<div class="list-group" style="position: absolute; z-index: 50000; border: 1px solid black; background-color: white" ng-show="results">' +
+        '<table class="table table-striped table-hover">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>#</th>' +
+              '<th>IATA</th>' +
+              '<th>ICAO</th>' +
+              '<th>Name</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>' +
+            '<tr ng-repeat="a in results track by a.id" ng-click="select(a)">' +
+              '<td>{{$index+1}}</td>' +
+              '<td>{{a.source.airport_iata}}</td>' +
+              '<td>{{a.id}}</td>' +
+              '<td>{{a.source.header}}</td>' +
+            '</tr>' +
+          '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+    '</div>',
+    // templateUrl: '',
+    replace: true,
+    // transclude: true,
+    // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+    link: function(scope, iElm, iAttrs, controller) {
+      var delayScraper = new DelayerFactory(700),
+          uri = ApiTypeFactory('search').uri;
+
+      scope.form = { };
+      scope.results = [];
+
+      scope.$watch('form.q', updateModel);
+
+      scope.select = function(airport) {
+        scope.zAirport.push(airport);
+        scope.results = [];
+        var _text = [];
+        angular.forEach(scope.zAirport, function(v) {
+          var s = v.source;
+          _text.push( s.airport_iata ? s.airport_iata : s.airport_ident );
+        });
+        scope.zAirportRoute = _text.join('-');
+        scope.form.q = undefined;
+      };
+
+      function updateModel(n) {
+        if (!n) {
+          scope.results = [];
+          return;
+        }
+        delayScraper.run(function () {
+          //TODO: Refactor this (with ResultController) into factory....
+          $http.post(uri, { q: n, facets: { tags: { terms: [], operator: 'or' } }, types: 'airport', pager: { idx: 0 } }).success(function (data) {
+            scope.results = data.hits.hits;
+          });
+        });
+      }
+    }
+  };
 }]);
 module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
   return {
@@ -636,14 +719,49 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
   };
 }]);
 
+module.directive('zMapMarkersConnect', [function() {
+  return {
+    link: 'A',
+    require: [ 'zMapMarkers', 'zMap' ],
+    priority: 10,
+    link: function(scope, elemment, attrs, ctrls) {
+      var map = ctrls[1].map,
+          lines;
+
+      scope.$on('$destroy', function() {
+        if (lines)
+          map.removeLayer(lines);
+      });
+
+      attrs.$observe('zMapMarkers', function(m) {
+        if (lines) {
+          map.removeLayer(lines);
+        }
+        var ll = [];
+        angular.forEach(angular.fromJson(m), function(d) {
+          ll.push(d.source.location);
+        });
+        if (ll.length < 2) return;
+        lines = L.polyline(ll, {color: 'red'}).addTo(map);
+      });
+
+      function reset() {
+
+      }
+    }
+  };
+}]);
+
 module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceService',
   function ($compile, $rootScope, $location, PlaceService) {
 
   return {
     restrict: 'A',
     require: 'zMap',
-    // priority: 2,
+    priority: 20,
     // scope: true,
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+    }],
     compile: function() {
       var nScope = $rootScope.$new();
 
@@ -653,6 +771,7 @@ module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceSe
             layers = L.featureGroup().addTo(map);
 
         attrs.$observe('zMapMarkers', function(places) {
+          var hasData = false;
           layers.clearLayers();
           angular.forEach(angular.fromJson(places), function(hit) {
             var place = hit.source,
@@ -663,9 +782,11 @@ module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceSe
                   .on('mouseout', function() { marker.closePopup(); })
                   .bindPopup(hit.source.header, { closeButton: false })
                   .addTo(layers);
+            hasData = true;
 
           });
-          map.fitBounds(layers.getBounds());
+          if (hasData)
+            map.fitBounds(layers.getBounds());
         });
 
         chooser.addOverlay(layers, 'Places');
@@ -807,6 +928,7 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
     }
   };
 }]);
+
 module.directive('zMapIss2', ['$http', '$timeout', function ($http, $timeout) {
   return {
     restrict: 'A',
@@ -881,7 +1003,7 @@ module.directive('zMapIss', ['$http', '$timeout', '$interval', '$parse', functio
           tle_line_1 = "1 25544U 98067A   14050.52955885  .00016717  00000-0  10270-3 0  9004",
           tle_line_2 = "2 25544  51.6500 322.8568 0003647 155.3472 204.7854 15.50497588 33075";
 
-      $http.get('/api/iss').then(startCalc, startCalc);
+      $http.get('/api/iss').then(startCalc, angular.noop);
 
       function startCalc(data) {
         if (data) {
@@ -1218,6 +1340,27 @@ module.directive('zSuggest', ['$parse', function ($parse) {
 //   };
 // }]);
 
+// module.directive('zRegEx', [function(){
+//   // Runs during compile
+//   return {
+//     // name: '',
+//     // priority: 1,
+//     // terminal: true,
+//     // scope: {}, // {} = isolate, true = child, false/undefined = no change
+//     // controller: function($scope, $element, $attrs, $transclude) {},
+//     require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+//     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+//     // template: '',
+//     // templateUrl: '',
+//     // replace: true,
+//     // transclude: true,
+//     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+//     link: function(scope, iElm, iAttrs, ngModel) {
+//       console.log('lini', iAttrs.zRegEx);
+      
+//     }
+//   };
+// }]);
 module.factory('ApiTypeFactory', [function () {
   var apiType = function (type) {
     if (type === 'places') return {
@@ -1491,6 +1634,30 @@ module.service('TypeService', [ 'PlaceService',
       name: undefined
     },
     {
+      name: 'flight',
+      template: 'html/_new_flight.html',
+      preview: true,
+      initFn: function(scope) {
+        this.airports = [];
+        this.mapsize = 'm';
+      },
+      storeFn: function(meta) {
+        var _airports = [];
+        angular.forEach(meta.airports, function(a) {
+          _airports.push({ airport_icao: a.id, airport_iata: a.source.airport_iata, name: a.source.header, location: a.source.location });
+        });
+        return {
+          header: this.input,
+          content: this.content,
+          date: this.date,
+          airports: _airports
+        };
+      },
+      fetchFn: function(data) {
+        
+      }
+    },
+    {
       parser: /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/,
       name: 'place',
       template: 'html/_new_place.html',
@@ -1552,20 +1719,7 @@ module.service('TypeService', [ 'PlaceService',
         this.input = data.header;
         this.content = data.content;
       }
-    }/*,
-    {
-      name: 'flight',
-      template: 'html/_new_flight.html',
-      preview: true,
-      storeFn: function() {
-        return {
-
-        };
-      },
-      fetchFn: function(data) {
-        
-      }
-    }*/
+    }
 
     // {
     //   name: '_name_',

@@ -132,6 +132,9 @@ function routes(app) {
     save.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     delete save.type;
 
+    // console.log(save);
+    // res.send(save);
+    // return;
     if (save.id) {
       var id = save.id;
       delete save.id;

@@ -128,6 +128,58 @@
         }
       }
     },
+    "flight": {
+      "dynamic": "strict",
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "updatedutc": {
+          "type": "date"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "clicks": {
+          "type": "integer"
+        },
+        "ip": {
+          "type": "ip"
+        },
+        "onlyAuth": {
+          "type": "boolean"
+        },
+        "star": {
+          "type": "boolean"
+        },
+        "date": {
+          "type": "date",
+          "format" : "YYYY-MM-dd"
+        },
+        "airports": {
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "airport_iata": {
+              "type": "string"
+            },
+            "airport_icao": {
+              "type": "string"
+            },
+            "location": {
+              "type": "geo_point"
+            }
+          }
+        }
+      }
+    },
 
     "airport" : {
       "dynamic": "strict",
