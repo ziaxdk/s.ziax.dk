@@ -494,20 +494,20 @@ module.directive('ngSetFocus', [function () {
   };
 }]);
 
-module.directive('dashAheadInput', [function () {
-  return function(scope, element, attrs) {
-    console.log('link');
-  };
-}]);
+// module.directive('dashAheadInput', [function () {
+//   return function(scope, element, attrs) {
+//     console.log('link');
+//   };
+// }]);
 
-module.directive('dashAhead', [function () {
-  return {
-    restrict: 'E',
-    link: function (scope, element, attrs, ctrl) {
-      console.log(arguments);
-    }
-  }
-}]);
+// module.directive('dashAhead', [function () {
+//   return {
+//     restrict: 'E',
+//     link: function (scope, element, attrs, ctrl) {
+//       console.log(arguments);
+//     }
+//   }
+// }]);
 
 module.directive('ngxToggleButton', [function () {
   return {
@@ -611,8 +611,8 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     }
   };
 }])
-.directive('zAirport', ['DelayerFactory', 'ApiTypeFactory', '$http',
-  function(DelayerFactory, ApiTypeFactory, $http) {
+.directive('zAirport', ['DelayerFactory', 'ApiTypeFactory', '$http', '$parse',
+  function(DelayerFactory, ApiTypeFactory, $http, $parse) {
   // Runs during compile
   return {
     // name: '',
@@ -621,6 +621,7 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     scope: {
       zAirport: '=',
       zAirportRoute: '=',
+      zAirportPreview: '=?',
     }, // {} = isolate, true = child, false/undefined = no change
     // controller: function($scope, $element, $attrs, $transclude) {},
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
@@ -628,7 +629,7 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     template: '<div>' +
     '<div class="form-group">' +
       '<label for="idAirport">Airport</label>' +
-      '<input type="text" name="airport" class="form-control" id="idAirport" ng-model="form.q">' +
+      '<input type="text" name="airport" class="form-control" id="idAirport" ng-model="form.q" ng-keydown="keyDown($event)">' +
     '</div>' +
     '<div class="form-group">' +
       '<div class="list-group" style="position: absolute; z-index: 50000; border: 1px solid black; background-color: white" ng-show="results">' +
@@ -642,11 +643,14 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
             '</tr>' +
           '</thead>' +
           '<tbody>' +
-            '<tr ng-repeat="a in results track by a.id" ng-click="select(a)">' +
+            '<tr ng-repeat="a in results track by a.id" ng-click="select(a)" ng-class="{active: $index === index}" ng-mouseover="preview(a)">' +
               '<td>{{$index+1}}</td>' +
               '<td>{{a.source.airport_iata}}</td>' +
               '<td>{{a.id}}</td>' +
               '<td>{{a.source.header}}</td>' +
+            '</tr>' +
+            '<tr ng-show="total > 10">' +
+              '<td colspan="4">Total {{total}}</td>' +
             '</tr>' +
           '</tbody>' +
         '</table>' +
@@ -659,24 +663,78 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function(scope, iElm, iAttrs, controller) {
       var delayScraper = new DelayerFactory(700),
+          delayPreview = new DelayerFactory(1000),
           uri = ApiTypeFactory('search').uri;
 
-      scope.form = { };
       scope.results = [];
+      reset();
 
       scope.$watch('form.q', updateModel);
 
-      scope.select = function(airport) {
-        scope.zAirport.push(airport);
+      scope.select = select;
+
+      scope.keyDown = function(e) {
+        if (scope.results.length === 0) return;
+        var code = e.keyCode;
+        // console.log('code', code);
+        switch(code) {
+          case 40: // down
+            nav(+1, e);
+            break;
+
+          case 38: // up
+            nav(-1, e);
+            break;
+
+          case 27: // esc
+            nav(0, e);
+            break;
+
+          case 13: // Return
+            sel(e);
+            break;
+        }
+      };
+
+      scope.preview = function(airport) {
+        delayPreview.run(function() {
+          scope.zAirportPreview = airport.source.location;
+        });
+      };
+
+      function sel(e) {
+        e.preventDefault();
+        select(scope.results[scope.index]);
+      }
+
+      function nav(count, e) {
+        e.preventDefault();
+        if (count === 0) {
+          reset();
+          scope.results = [];
+          return;
+        }
+        if ((scope.index + count) === -1 || (scope.index + count) === scope.results.length) return;
+        scope.index = scope.index + count;
+      }
+
+      function reset() {
+        scope.form = { };
+        scope.index = -1;
         scope.results = [];
+        scope.total = 0;
+      }
+
+      function select(airport) {
+        scope.zAirport.push(airport);
         var _text = [];
         angular.forEach(scope.zAirport, function(v) {
           var s = v.source;
           _text.push( s.airport_iata ? s.airport_iata : s.airport_ident );
         });
         scope.zAirportRoute = _text.join('-');
-        scope.form.q = undefined;
-      };
+        reset();
+      }
 
       function updateModel(n) {
         if (!n) {
@@ -687,6 +745,7 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
           //TODO: Refactor this (with ResultController) into factory....
           $http.post(uri, { q: n, facets: { tags: { terms: [], operator: 'or' } }, types: 'airport', pager: { idx: 0 } }).success(function (data) {
             scope.results = data.hits.hits;
+            scope.total = data.hits.total;
           });
         });
       }
@@ -752,6 +811,80 @@ module.directive('zMapMarkersConnect', [function() {
   };
 }]);
 
+module.directive('zMapTypes', ['$compile', '$rootScope', '$location', 'PlaceService',
+  function ($compile, $rootScope, $location, PlaceService) {
+
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    priority: 20,
+    // scope: true,
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+    }],
+    compile: function() {
+      var nScope = $rootScope.$new();
+
+      return function link(scope, element, attrs, zmap) {
+        var map = zmap.map,
+            chooser = zmap.chooser,
+            layerPlaces = L.featureGroup().addTo(map),
+            layerFlights = L.featureGroup().addTo(map);
+        
+        // var layerFlights = L.layerGroup().addTo(map);
+
+        attrs.$observe('zMapTypes', function(places) {
+          // var hasData = false;
+          layerPlaces.clearLayers();
+          layerFlights.clearLayers();
+          var _flights = [];
+          angular.forEach(angular.fromJson(places), function(hit) {
+            if (hit.type == 'place') {
+              var place = hit.source,
+                  poi = attrs.zMapMarkersIcon ? { type: attrs.zMapMarkersIcon, color: 'cadetblue' } : PlaceService.getPoiDefault(place.icon),
+                  marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
+                    .on('click', function() { scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
+                    .on('mouseover', function() { marker.openPopup(); })
+                    .on('mouseout', function() { marker.closePopup(); })
+                    .bindPopup(hit.source.header, { closeButton: false })
+                    .addTo(layerPlaces);
+              hasData = true;
+            }
+            else if (hit.type == 'flight') {
+              var _coords = [];
+              angular.forEach(hit.source.airports, function(a) {
+                _coords.push(L.latLng(a.location));
+                var marker = L.marker(a.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-plane', markerColor: 'cadetblue', prefix: 'fa' }) })
+                  .on('mouseover', function() { marker.openPopup(); })
+                  .on('mouseout', function() { marker.closePopup(); })
+                  .bindPopup(a.name, { closeButton: false })
+                  .addTo(layerFlights);
+
+
+              });
+              _flights.push(_coords);
+            }
+          });
+          if (_flights.length !== 0) {
+            L.multiPolyline(_flights).addTo(layerFlights);
+          }
+          if (hasData)
+            map.fitBounds(layerPlaces.getBounds());
+        });
+
+        chooser.addOverlay(layerPlaces, 'Places');
+        chooser.addOverlay(layerFlights, 'Flights');
+
+        scope.$on('$destroy', function() {
+          chooser.removeLayer(layerPlaces);
+          map.removeLayer(layerPlaces);
+          chooser.removeLayer(layerFlights);
+          map.removeLayer(layerFlights);
+          nScope.$destroy();
+        });
+      };
+    }
+  };
+}]);
 module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceService',
   function ($compile, $rootScope, $location, PlaceService) {
 
@@ -925,6 +1058,21 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
           nScope.$destroy();
         });
       };
+    }
+  };
+}]);
+module.directive('zMapPanTo', [function () {
+  
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    link: function(scope, element, attrs, zmap) {
+      var map = zmap.map;
+      attrs.$observe('zMapPanTo', function(v) {
+        if (!v) return;
+        var ll = angular.fromJson(v);
+        map.panTo(ll);
+      });
     }
   };
 }]);
@@ -1228,117 +1376,117 @@ module.directive('zSelect2', [function () {
   };
 }]);
 
-module.directive('zSuggest', ['$parse', function ($parse) {
-  return {
-    restrict: 'A',
-    scope: { zSuggest: '=' },
-    template: 
-    '<div class="z-suggest" ng-show="data.length != 0">' +
-      '<ul>' +
-        '<li ng-repeat="d in data" ng-class="{selected: $index == index}">{{d.dis}}</li>' +
-      '</ul>' +
-    '</div>',
-    controller: ['$scope', '$element', '$attrs', function(scope, element, attrs) {
-        scope.data = [];
-        scope.index = -1;
-        scope.$watch('zSuggest', function(n) {
-          if (!n) return;
-          scope.data.push({dis:n});
-          console.log('val', n);
-        });
-
-        function reset() {
-          scope.index = -1;
-          scope.data = [];
-        }
-        function down() {
-          if (scope.data.length - 1 == scope.index) return;
-          ++scope.index;
-        }
-        function up() {
-          if (scope.index == -1) return;
-          --scope.index;
-        }
-  
-        angular.element(element).parent().find('input').on('keydown', function(evt) {
-          var code = evt.keyCode;
-          console.log('code', code);
-          switch(code) {
-            case 40: // down
-              down();
-              break;
-  
-            case 38: // up
-              up();
-              break;
-
-            case 27: // esc
-              reset();
-              break;
-
-            default:
-              break;
-          }
-          scope.$apply();
-        });
-      }
-    ]};
-}]);
-
-// module.directive('zuggest', ['$compile', function ($compile) {
+// module.directive('zSuggest', ['$parse', function ($parse) {
 //   return {
-//     restrict: 'E',
-//     link: function(scope, element, attrs) {
-//       console.log('link');
-//     }
+//     restrict: 'A',
+//     scope: { zSuggest: '=' },
+//     template: 
+//     '<div class="z-suggest" ng-show="data.length != 0">' +
+//       '<ul>' +
+//         '<li ng-repeat="d in data" ng-class="{selected: $index == index}">{{d.dis}}</li>' +
+//       '</ul>' +
+//     '</div>',
+//     controller: ['$scope', '$element', '$attrs', function(scope, element, attrs) {
+//         scope.data = [];
+//         scope.index = -1;
+//         scope.$watch('zSuggest', function(n) {
+//           if (!n) return;
+//           scope.data.push({dis:n});
+//           console.log('val', n);
+//         });
+
+//         function reset() {
+//           scope.index = -1;
+//           scope.data = [];
+//         }
+//         function down() {
+//           if (scope.data.length - 1 == scope.index) return;
+//           ++scope.index;
+//         }
+//         function up() {
+//           if (scope.index == -1) return;
+//           --scope.index;
+//         }
+  
+//         angular.element(element).parent().find('input').on('keydown', function(evt) {
+//           var code = evt.keyCode;
+//           console.log('code', code);
+//           switch(code) {
+//             case 40: // down
+//               down();
+//               break;
+  
+//             case 38: // up
+//               up();
+//               break;
+
+//             case 27: // esc
+//               reset();
+//               break;
+
+//             default:
+//               break;
+//           }
+//           scope.$apply();
+//         });
+//       }
+//     ]};
+// }]);
+
+// // module.directive('zuggest', ['$compile', function ($compile) {
+// //   return {
+// //     restrict: 'E',
+// //     link: function(scope, element, attrs) {
+// //       console.log('link');
+// //     }
     
-//   }
-// }]);
+// //   }
+// // }]);
 
-// module.directive('zuggest', ['$compile', function ($compile) {
-//   return {
-//     restrict: 'E',
-//     scope: { },
-//     transclude: true,
-//     replace: true,
-//     template: '<div><div ng-transclude></div><div>*</div></div>',
-//     link: function(scope, element, attrs) {
-//       console.log('link');
-//     }
-//     // compile: function(tElement) {
-//     //   var html = $compile('<div class="z-suggest">' +
-//     //     '<ul>' +
-//     //     '<li ng-repeat="d in data" ng-class="{selected: $index==index}">{{d.d}}</li>' +
-//     //     '</ul>' +
-//     //     '</div>');
+// // module.directive('zuggest', ['$compile', function ($compile) {
+// //   return {
+// //     restrict: 'E',
+// //     scope: { },
+// //     transclude: true,
+// //     replace: true,
+// //     template: '<div><div ng-transclude></div><div>*</div></div>',
+// //     link: function(scope, element, attrs) {
+// //       console.log('link');
+// //     }
+// //     // compile: function(tElement) {
+// //     //   var html = $compile('<div class="z-suggest">' +
+// //     //     '<ul>' +
+// //     //     '<li ng-repeat="d in data" ng-class="{selected: $index==index}">{{d.d}}</li>' +
+// //     //     '</ul>' +
+// //     //     '</div>');
 
-//     //   return function link(scope, element, attrs) {
-//     //     tElement.after(html(scope));
+// //     //   return function link(scope, element, attrs) {
+// //     //     tElement.after(html(scope));
 
 
-//     //     var data = [{d: '1'}, {d: '2'}, {d: '3'}, {d: '4'}];
+// //     //     var data = [{d: '1'}, {d: '2'}, {d: '3'}, {d: '4'}];
 
-//     //     scope.data = data;
-//     //     scope.index = -1;
+// //     //     scope.data = data;
+// //     //     scope.index = -1;
 
-//     //     tElement.on('keyup', function(evt) {
-//     //       var code =  evt.keyCode;
-//     //       console.log(code);
-//     //       switch(code) {
-//     //         case 40: // down
-//     //           console.log('down');
-//     //           scope.index++;
-//     //           break;
-//     //         case 38: // up
-//     //           if (scope.index == -1) return;
-//     //           scope.index--;
-//     //           break;
-//     //       }
-//     //     });
-//     //   };
-//     // }
-//   };
-// }]);
+// //     //     tElement.on('keyup', function(evt) {
+// //     //       var code =  evt.keyCode;
+// //     //       console.log(code);
+// //     //       switch(code) {
+// //     //         case 40: // down
+// //     //           console.log('down');
+// //     //           scope.index++;
+// //     //           break;
+// //     //         case 38: // up
+// //     //           if (scope.index == -1) return;
+// //     //           scope.index--;
+// //     //           break;
+// //     //       }
+// //     //     });
+// //     //   };
+// //     // }
+// //   };
+// // }]);
 
 // module.directive('zRegEx', [function(){
 //   // Runs during compile
@@ -1640,6 +1788,7 @@ module.service('TypeService', [ 'PlaceService',
       initFn: function(scope) {
         this.airports = [];
         this.mapsize = 'm';
+        this.goto = undefined;
       },
       storeFn: function(meta) {
         var _airports = [];

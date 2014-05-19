@@ -57,6 +57,80 @@ module.directive('zMapMarkersConnect', [function() {
   };
 }]);
 
+module.directive('zMapTypes', ['$compile', '$rootScope', '$location', 'PlaceService',
+  function ($compile, $rootScope, $location, PlaceService) {
+
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    priority: 20,
+    // scope: true,
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+    }],
+    compile: function() {
+      var nScope = $rootScope.$new();
+
+      return function link(scope, element, attrs, zmap) {
+        var map = zmap.map,
+            chooser = zmap.chooser,
+            layerPlaces = L.featureGroup().addTo(map),
+            layerFlights = L.featureGroup().addTo(map);
+        
+        // var layerFlights = L.layerGroup().addTo(map);
+
+        attrs.$observe('zMapTypes', function(places) {
+          // var hasData = false;
+          layerPlaces.clearLayers();
+          layerFlights.clearLayers();
+          var _flights = [];
+          angular.forEach(angular.fromJson(places), function(hit) {
+            if (hit.type == 'place') {
+              var place = hit.source,
+                  poi = attrs.zMapMarkersIcon ? { type: attrs.zMapMarkersIcon, color: 'cadetblue' } : PlaceService.getPoiDefault(place.icon),
+                  marker = L.marker(place.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-' + poi.type, markerColor: poi.color, prefix: 'fa' }) })
+                    .on('click', function() { scope.$evalAsync(function() { $location.path('/show/' + hit.type + '/' + encodeURIComponent(hit.id)); }); })
+                    .on('mouseover', function() { marker.openPopup(); })
+                    .on('mouseout', function() { marker.closePopup(); })
+                    .bindPopup(hit.source.header, { closeButton: false })
+                    .addTo(layerPlaces);
+              hasData = true;
+            }
+            else if (hit.type == 'flight') {
+              var _coords = [];
+              angular.forEach(hit.source.airports, function(a) {
+                _coords.push(L.latLng(a.location));
+                var marker = L.marker(a.location, { icon: L.AwesomeMarkers.icon({ icon: 'fa-plane', markerColor: 'cadetblue', prefix: 'fa' }) })
+                  .on('mouseover', function() { marker.openPopup(); })
+                  .on('mouseout', function() { marker.closePopup(); })
+                  .bindPopup(a.name, { closeButton: false })
+                  .addTo(layerFlights);
+
+
+              });
+              _flights.push(_coords);
+            }
+          });
+          if (_flights.length !== 0) {
+            L.multiPolyline(_flights).addTo(layerFlights);
+          }
+          if (hasData)
+            map.fitBounds(layerPlaces.getBounds());
+        });
+
+        chooser.addOverlay(layerPlaces, 'Places');
+        chooser.addOverlay(layerFlights, 'Flights');
+
+        scope.$on('$destroy', function() {
+          chooser.removeLayer(layerPlaces);
+          map.removeLayer(layerPlaces);
+          chooser.removeLayer(layerFlights);
+          map.removeLayer(layerFlights);
+          nScope.$destroy();
+        });
+      };
+    }
+  };
+}]);
 module.directive('zMapMarkers', ['$compile', '$rootScope', '$location', 'PlaceService',
   function ($compile, $rootScope, $location, PlaceService) {
 
@@ -230,6 +304,21 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
           nScope.$destroy();
         });
       };
+    }
+  };
+}]);
+module.directive('zMapPanTo', [function () {
+  
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    link: function(scope, element, attrs, zmap) {
+      var map = zmap.map;
+      attrs.$observe('zMapPanTo', function(v) {
+        if (!v) return;
+        var ll = angular.fromJson(v);
+        map.panTo(ll);
+      });
     }
   };
 }]);

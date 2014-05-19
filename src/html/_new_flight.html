@@ -1,8 +1,8 @@
-<div z-airport="meta.airports" z-airport-route="form.input"></div>
+<div z-airport="meta.airports" z-airport-route="form.input" z-airport-preview="meta.goto"></div>
 
 <div class="form-group">
   <label for="idMaps">Map</label>
-  <div style="border: 1px solid #666; height: 400px" z-map z-map-sizer="meta.mapsize" z-map-sizer-size="xs" z-map-markers="{{meta.airports}}" z-map-markers-connect="true" z-map-markers-icon="plane"></div>
+  <div style="border: 1px solid #666; height: 400px" z-map z-map-markers="{{meta.airports}}" z-map-markers-connect="true" z-map-markers-icon="plane" z-map-pan-to="{{meta.goto}}"></div>
 </div>
 
 <div class="form-group" ng-class="{'has-error': formInput.date.$invalid }">

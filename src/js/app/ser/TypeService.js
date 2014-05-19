@@ -12,6 +12,7 @@ module.service('TypeService', [ 'PlaceService',
       initFn: function(scope) {
         this.airports = [];
         this.mapsize = 'm';
+        this.goto = undefined;
       },
       storeFn: function(meta) {
         var _airports = [];

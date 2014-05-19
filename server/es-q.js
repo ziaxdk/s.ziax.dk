@@ -185,7 +185,7 @@ function routes(app) {
   app.get('/api/places', function(req) {
     es.client.search({
       index: es.index,
-      type: 'place',
+      type: [ 'place', 'flight' ],
       body: build('*', undefined, undefined, 5000, !!req.user)
     }, es.callback(arguments));
   });
