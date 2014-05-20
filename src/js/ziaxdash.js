@@ -643,7 +643,7 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
             '</tr>' +
           '</thead>' +
           '<tbody>' +
-            '<tr ng-repeat="a in results track by a.id" ng-click="select(a)" ng-class="{active: $index === index}" ng-mouseover="preview(a)">' +
+            '<tr ng-repeat="a in results track by a.id" ng-click="select(a)" ng-class="{active: $index === index}" ng-mouseenter="preview(a)">' +
               '<td>{{$index+1}}</td>' +
               '<td>{{a.source.airport_iata}}</td>' +
               '<td>{{a.id}}</td>' +
@@ -726,6 +726,7 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
       }
 
       function select(airport) {
+        delayPreview.cancel();
         scope.zAirport.push(airport);
         var _text = [];
         angular.forEach(scope.zAirport, function(v) {
@@ -1571,6 +1572,11 @@ module.factory('DelayerFactory', ['$timeout', function ($timeout) {
       run: function (actionToExecute) {
         if (canceler) $timeout.cancel(canceler);
         canceler = $timeout(actionToExecute, delayInMs);
+      },
+      cancel: function() {
+        if (!canceler) return;
+        $timeout.cancel(canceler);
+        canceler = undefined;
       }
     };
   };
