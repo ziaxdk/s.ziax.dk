@@ -49,9 +49,7 @@ function getQueryBody_MultiMatch(q) {
       "fields": [
         "header^4",
         "content^3",
-        "tags^2",
-        "airport_ident",
-        "airport_iata"
+        "tags^2"
       ]
     }
   };

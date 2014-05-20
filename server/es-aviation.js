@@ -38,8 +38,8 @@
       data.forEach(function(b) {
         var j = JSON.parse(b);
         // bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: parseInt(j.id) } });
-        // bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: j.ident } });
-        bulk.push({ index:  { _index: 'ziax', _type: 'airport', _id: j.ident } });
+        bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: j.ident } });
+        // bulk.push({ index:  { _index: 'ziax', _type: 'airport', _id: j.ident } });
         bulk.push({
           header: j.name,
           airport_ident: j.ident,
@@ -87,6 +87,40 @@
     });
 
     app.put('/api/airport', fetchAirports);
+
+    app.post('/api/airport', function(req, res) {
+      var q = req.body.q;
+      es.client.search({
+        index: 'aviation',
+        type: 'airport',
+        body: {
+          "query": {
+              "match_all": {}
+          },
+          "filter": {
+              "or": {
+                 "filters": [
+                      {
+                          "prefix": {
+                              "airport_iata": q.toUpperCase()
+                          }
+                      },
+                      {
+                          "prefix": {
+                              "airport_ident": q.toUpperCase()
+                          }
+                      },
+                      {
+                          "term": {
+                             "header": q
+                          }
+                      }
+                 ]
+              }
+          }
+        }
+      }, es.callback(arguments));
+    });
 
 
     // ISS

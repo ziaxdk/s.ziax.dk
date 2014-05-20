@@ -206,11 +206,13 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
       function updateModel(n) {
         if (!n) {
           scope.results = [];
+          delayScraper.cancel();
           return;
         }
         delayScraper.run(function () {
           //TODO: Refactor this (with ResultController) into factory....
-          $http.post(uri, { q: n, facets: { tags: { terms: [], operator: 'or' } }, types: 'airport', pager: { idx: 0 } }).success(function (data) {
+          // $http.post(uri, { q: n, facets: { tags: { terms: [], operator: 'or' } }, types: 'airport', pager: { idx: 0 } }).success(function (data) {
+          $http.post('/api/airport', { q: n}).success(function(data) {
             scope.results = data.hits.hits;
             scope.total = data.hits.total;
           });
