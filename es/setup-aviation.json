@@ -26,6 +26,10 @@
         "location" : {
           "type" : "geo_point"
         },
+        "country": {
+          "type": "string",
+          "analyzer": "simple"
+        },
         "onlyAuth": {
           "type": "boolean"
         },

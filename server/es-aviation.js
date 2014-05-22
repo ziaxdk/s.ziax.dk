@@ -1,6 +1,7 @@
 (function () {
   var fs = require('fs'),
       csv = require("csv-streamify"),
+      ASync = require('async'),
       utils = require('./utils.js'),
       bulkstream = require('./bulk-stream.js'),
       nullstream = require('./null-stream.js'),
@@ -33,48 +34,77 @@
 
 
   function fetchAirports(req, res) {
-    function dobulk(data, done) {
-      var bulk = [];
-      data.forEach(function(b) {
-        var j = JSON.parse(b);
-        // bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: parseInt(j.id) } });
-        bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: j.ident } });
-        // bulk.push({ index:  { _index: 'ziax', _type: 'airport', _id: j.ident } });
-        bulk.push({
-          header: j.name,
-          airport_ident: j.ident,
-          airport_iata: j.iata_code,
-          location: {
-            lat: parseFloat(j.latitude_deg),
-            lon: parseFloat(j.longitude_deg)
-          },
-          onlyAuth: false,
-          clicks: 0,
-          createdutc: new Date(),
-          suggest: {
-            input: [ j.ident, j.name ],
-            output: j.name
-          }
-        });
+
+    function _fetchCountries(done) {
+      var _countryObj = {};
+      var bulk = bulkstream({ size: 40000 }, createCountries);
+      bulk.on('end', function() {
+        done(null, _countryObj);
       });
 
-      es.client.bulk({ body: bulk }, function(err, response, status) {
-        if (err) done(err);
+      request('http://ourairports.com/data/countries.csv')
+        .pipe(csv({objectMode: false, columns: true}))
+        .pipe(bulk)
+        .pipe(nullstream());
+
+      function createCountries(data, done) {
+        data.forEach(function(b) {
+          var c = JSON.parse(b);
+          if (_countryObj[c.code]) throw "exists";
+          _countryObj[c.code] = c;
+        });
+        done();
+      }
+    }
+    function _fetchAirports(country, done) {
+      var bulk = bulkstream({ size: 40000 }, dobulk);
+      bulk.on('end', function() {
         done();
       });
 
+      function dobulk(data, done) {
+        var bulk = [];
+        data.forEach(function(b) {
+          var j = JSON.parse(b);
+          // bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: parseInt(j.id) } });
+          bulk.push({ index:  { _index: 'aviation', _type: 'airport', _id: j.ident } });
+          // bulk.push({ index:  { _index: 'ziax', _type: 'airport', _id: j.ident } });
+          bulk.push({
+            header: j.name,
+            airport_ident: j.ident,
+            airport_iata: j.iata_code,
+            location: {
+              lat: parseFloat(j.latitude_deg),
+              lon: parseFloat(j.longitude_deg)
+            },
+            country: country[j.iso_country].name,
+            onlyAuth: false,
+            clicks: 0,
+            createdutc: new Date(),
+            suggest: {
+              input: [ j.ident, j.name ],
+              output: j.name
+            }
+          });
+        });
+
+        es.client.bulk({ body: bulk }, function(err, response, status) {
+          if (err) done(err);
+          done();
+        });
+      }
+
+      request('http://www.ourairports.com/data/airports.csv')
+        .pipe(csv({objectMode: false, columns: true}))
+        .pipe(bulk)
+        .pipe(nullstream());
     }
-    var bulk = bulkstream({ size: 40000 }, dobulk);
-    bulk.on('end', function() {
+       
+    ASync.waterfall([_fetchCountries, _fetchAirports], function(err, results) {
+      if (err) res.send(err);
       res.send('ok');
     });
-
-    request('http://www.ourairports.com/data/airports.csv')
-      .pipe(csv({objectMode: false, columns: true}))
-      .pipe(bulk)
-      .pipe(nullstream());
     }
-
   function routes(app) {
     app.get('/api/airport', function(req) {
       es.client.mget({
@@ -108,6 +138,11 @@
                       {
                           "prefix": {
                               "airport_ident": q.toUpperCase()
+                          }
+                      },
+                      {
+                          "term": {
+                             "country": q
                           }
                       },
                       {
