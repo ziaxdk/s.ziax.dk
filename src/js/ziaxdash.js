@@ -1041,27 +1041,42 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
     restrict: 'A',
     require: 'zMap',
     compile: function() {
-      var html = $compile('<div class="leaflet-control-layers z-map-tags-control"><div class="list-group"><a ng-class="{active: tag.selected}" href="javascript:;" ng-click="facet(tag)" ng-repeat="tag in tags track by tag.term" class="list-group-item"><span class="badge">{{tag.count}}</span>{{tag.term}}</a></div></div>'),
-          nScope = $rootScope.$new();
+      var _t = '<div class="leaflet-control-layers z-map-tags-control">' +
+        '<a href="javascript:;" ng-click="flip()" ng-hide="show" style="width: 20px; display: block; text-align: center">' +
+          '<i class="fa fa-tags"></i>' +
+        '</a>' +
+        '<div class="list-group" ng-show="show">' +
+          '<a ng-class="{active: tag.selected}" href="javascript:;" ng-click="facet(tag)" ng-repeat="tag in tags track by tag.term" class="list-group-item">' +
+            '<span class="badge">{{tag.count}}</span>{{tag.term}}' +
+          '</a>' +
+          '<a href="javascript:;" class="list-group-item" ng-click="flip()" style="text-align: center">' +
+            '<span><i class="fa fa-tags"></i></span>' +
+          '</a>' +
+        '</div>' +
+      '</div>',
+          html = $compile(_t);
 
-      return function link(scope, element, attrs, zmap) {
+      return function link(nScope, element, attrs, zmap) {
         var map = zmap.map;
-        nScope.tags = [];
-
-        nScope.facet = function(hit) {
-          scope.$eval(attrs.zMapTagsControlCb, {hit: hit});
-        };
-
-        scope.$watch(function () { return scope.$eval(attrs.zMapTagsControl); }, function (value) {
-          nScope.tags = value;
-        });
-        
         map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-tags-select', position: 'bottomright'}));
-        scope.$on('$destroy', function() {
-          nScope.$destroy();
-        });
       };
-    }
+    },
+    controller: ['$scope', '$attrs', function($scope, $attrs) {
+      $scope.flip = function() {
+        $scope.show = !$scope.show;
+      };
+
+      $scope.tags = [];
+      $scope.show = false;
+
+      $scope.facet = function(hit) {
+        $scope.$eval($attrs.zMapTagsControlCb, { hit: hit });
+      };
+
+      $scope.$watch(function () { return $scope.$eval($attrs.zMapTagsControl); }, function (value) {
+        $scope.tags = value;
+      });
+    }]
   };
 }]);
 module.directive('zMapPanTo', [function () {
