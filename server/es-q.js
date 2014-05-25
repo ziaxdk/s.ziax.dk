@@ -214,7 +214,7 @@ function routes(app) {
     var data = req.body;
     es.client.search({
       index: es.index,
-      type: 'place',
+      type: [ 'place', 'flight' ],
       body: build('*', data.facets.tags, undefined, 5000, !!req.user)
     }, es.callback(arguments));
   });

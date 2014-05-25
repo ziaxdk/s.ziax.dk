@@ -783,11 +783,11 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
 
 module.directive('zMapMarkersConnect', [function() {
   return {
-    link: 'A',
-    require: [ 'zMapMarkers', 'zMap' ],
+    restrict: 'A',
+    require: [ 'zMap' ],
     priority: 10,
-    link: function(scope, elemment, attrs, ctrls) {
-      var map = ctrls[1].map,
+    link: function(scope, elemment, attrs, zmap) {
+      var map = zmap.map,
           lines;
 
       scope.$on('$destroy', function() {
