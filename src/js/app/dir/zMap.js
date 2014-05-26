@@ -13,6 +13,7 @@ module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($pars
 
       t.map = map;
       t.chooser = chooser;
+      t.layers = { 'Mapbox': base0, 'Basic': base2, 'Bing': base3 }, {}, { position: 'bottomleft' };
 
       $scope.$on('$destroy', function() {
         map.remove();
@@ -299,29 +300,71 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
       '</div>',
           html = $compile(_t);
 
-      return function link(nScope, element, attrs, zmap) {
-        var map = zmap.map;
-        map.addControl(LeafletControlsService.leafletControl({html: html, scope: nScope, className: 'z-map-tags-select', position: 'bottomright'}));
-      };
-    },
-    controller: ['$scope', '$attrs', function($scope, $attrs) {
-      $scope.flip = function() {
-        $scope.show = !$scope.show;
-      };
+      return function link(scope, element, attrs, zmap) {
+        var map = zmap.map,
+            _scope = scope.$new(),
+            ctrl = LeafletControlsService.leafletControl({html: html, scope: _scope, className: 'z-map-tags-select', position: 'bottomright'});
+        map.addControl(ctrl);
 
-      $scope.tags = [];
-      $scope.show = false;
+        _scope.flip = function() {
+          _scope.show = !_scope.show;
+        };
 
-      $scope.facet = function(hit) {
-        $scope.$eval($attrs.zMapTagsControlCb, { hit: hit });
+        _scope.tags = [];
+        _scope.show = false;
+
+        _scope.facet = function(hit) {
+          _scope.$eval($attrs.zMapTagsControlCb, { hit: hit });
+        };
+
+        _scope.$watch(function () { return _scope.$eval(attrs.zMapTagsControl); }, function (value) {
+          _scope.tags = value;
+        });
+
+        scope.$on('$destroy', function() {
+          map.removeControl(ctrl);
+          _scope.$destroy();
+        });
       };
-
-      $scope.$watch(function () { return $scope.$eval($attrs.zMapTagsControl); }, function (value) {
-        $scope.tags = value;
-      });
-    }]
+    }
   };
 }]);
+module.directive('zMapChooser', ['$compile', 'LeafletControlsService',
+  function ($compile, LeafletControlsService) {
+  return {
+    restrict: 'A',
+    require: 'zMap',
+    compile: function() {
+      var _t = '<div class="leaflet-control-layers z-map-chooser">' +
+        '<a href="javascript:;" ng-click="flip()" ng-hide="show" style="width: 20px; display: block; text-align: center">' +
+          '<i class="fa fa-globe"></i>' +
+        '</a>' +
+        '<div class="list-group" ng-show="show">123' +
+        '</div>' +
+      '</div>',
+          html = $compile(_t);
+
+      return function link(scope, element, attrs, zmap) {
+        var map = zmap.map,
+            _scope = scope.$new(),
+            ctrl = LeafletControlsService.leafletControl({html: html, scope: _scope, className: 'z-map-chooser', position: 'bottomleft'});
+
+        map.addControl(ctrl);
+        _scope.flip = function() {
+          _scope.show = !_scope.show;
+        };
+        _scope.show = false;
+
+        console.log(zmap.layers);
+
+        scope.$on('$destroy', function() {
+          map.removeControl(ctrl);
+          _scope.$destroy();
+        });
+      };
+    }
+  };
+}])
 module.directive('zMapPanTo', [function () {
   
   return {
