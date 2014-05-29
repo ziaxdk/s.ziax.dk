@@ -59,6 +59,7 @@
     "grunt-template": "~0.2.2",
     "selenium-webdriver": "~2.32.1",
     "protractor": "^0.19.0",
-    "grunt-protractor-runner": "^0.2.3"
+    "grunt-protractor-runner": "^0.2.3",
+    "gulp": "^3.6.2"
   }
 }
