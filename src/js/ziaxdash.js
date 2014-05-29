@@ -1071,7 +1071,7 @@ module.directive('zMapTagsControl', ['$compile', '$rootScope', 'LeafletControlsS
         _scope.show = false;
 
         _scope.facet = function(hit) {
-          _scope.$eval($attrs.zMapTagsControlCb, { hit: hit });
+          _scope.$eval(attrs.zMapTagsControlCb, { hit: hit });
         };
 
         _scope.$watch(function () { return _scope.$eval(attrs.zMapTagsControl); }, function (value) {
@@ -1121,7 +1121,7 @@ module.directive('zMapChooser', ['$compile', 'LeafletControlsService',
       };
     }
   };
-}])
+}]);
 module.directive('zMapPanTo', [function () {
   
   return {

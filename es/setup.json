@@ -180,6 +180,71 @@
         }
       }
     },
+    "gaz": {
+      "dynamic": "strict",
+      "properties": {
+        "purchaseDateUtc": {
+          "type": "date"
+        },
+        "price": {
+          "type": "double"
+        },
+        "units": {
+          "type": "double"
+        },
+        "odometer": {
+          "type": "integer"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "updatedutc": {
+          "type": "date"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "location": {
+          "type": "geo_point"
+        },
+        "station": {
+          "dynamic": "strict",
+          "properties" : {
+            "name": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "zipCode": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "location" : {
+              "type" : "geo_point"
+            },
+            "country": {
+              "type": "string",
+              "analyzer": "simple"
+            }
+          }
+        },
+        "clicks": {
+          "type": "integer"
+        },
+        "ip": {
+          "type": "ip"
+        },
+        "onlyAuth": {
+          "type": "boolean"
+        },
+        "star": {
+          "type": "boolean"
+        }
+      }
+    },
 
     "history": {
       "_all": {

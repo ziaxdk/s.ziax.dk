@@ -1,0 +1,47 @@
+{
+  "settings": {
+    "index" : {
+      "number_of_replicas": 0,
+      "number_of_shards": 1
+    }
+  },
+
+  "mappings": {
+
+    "station" : {
+      "dynamic": "strict",
+
+      "properties" : {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "location" : {
+          "type" : "geo_point"
+        },
+        "country": {
+          "type": "string",
+          "analyzer": "simple"
+        },
+        "onlyAuth": {
+          "type": "boolean"
+        },
+        "createdutc": {
+          "type": "date"
+        },
+        "clicks": {
+          "type": "integer"
+        }
+      }
+    }
+
+  }
+}
