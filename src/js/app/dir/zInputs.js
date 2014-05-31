@@ -228,7 +228,7 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     template: '<div>' +
       '<label for="idStation"><a href="javascript:;" ng-click="toggle()">Station</a></label>' +
       '<div ng-if="!bToggle">' +
-        '<select class="form-control" ng-model="$parent.station" ng-options="station.id as station.source.name for station in stations"></select>' +
+        '<select class="form-control" ng-model="$parent.station" ng-options="station.id as station.display for station in stations"></select>' +
       '</div>' +
       '<div ng-if="bToggle">' +
         '<div z-map z-map-marker="location" z-map-marker-icon="tint" style="height: 300px"></div>' +
@@ -247,11 +247,17 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
 
       var watcher = $scope.$watch(function() { return GPS.coords; }, function(val) {
         if (!val || !val.hasFix) return;
+        console.log('pos', val);
         $scope.location = val.lat + ', ' + val.lon;
         GazService.stationsNear(val).success(function(es) {
           $scope.stations = es.hits.hits;
-          $scope.station = $scope.stations[0].id;
-          $scope.stations.push({ id: 'new', sort: [0], source: { name: 'new' } });
+          if ($scope.stations.length !== 0) {
+            $scope.station = $scope.stations[0].id;
+            angular.forEach($scope.stations, function(v) {
+              v.display = v.source.name + ' (' + v.sort[0].toFixed(2) + ')';
+            });
+          }
+          $scope.stations.push({ id: 'new', display: 'new...'});
 
 
 
