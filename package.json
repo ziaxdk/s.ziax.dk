@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-http": "~0.1.0",
     "grunt-contrib-compress": "~0.5.2",
     "grunt-ftp-deploy": "0.0.10",
     "grunt-contrib-watch": "~0.5.3",
@@ -60,6 +59,7 @@
     "selenium-webdriver": "~2.32.1",
     "protractor": "^0.19.0",
     "grunt-protractor-runner": "^0.2.3",
-    "gulp": "^3.6.2"
+    "gulp": "^3.6.2",
+    "grunt-http": "^1.4.0"
   }
 }

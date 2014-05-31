@@ -1,0 +1,576 @@
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-09-05T00:00:00.000Z", "units": 13.77000, "price": 7.54000, "odometer" : 23497,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-09-18T00:00:00.000Z", "units": 19.72000, "price": 7.55000, "odometer" : 23875,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-03-28T00:00:00.000Z", "units": 22.21000, "price": 7.86000, "odometer" : 24275,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-06-08T00:00:00.000Z", "units": 24.04000, "price": 9.09000, "odometer" : 24696,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-07-09T00:00:00.000Z", "units": 18.58000, "price": 9.59000, "odometer" : 25022,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-08-02T00:00:00.000Z", "units": 22.82000, "price": 9.75000, "odometer" : 25436,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-08-02T00:00:00.000Z", "units": 22.91000, "price": 9.60000, "odometer" : 25850,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-08-05T00:00:00.000Z", "units": 19.59000, "price": 9.68000, "odometer" : 26167,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-08-19T00:00:00.000Z", "units": 22.03000, "price": 9.76000, "odometer" : 26551,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-09-23T00:00:00.000Z", "units": 21.68000, "price": 10.19000, "odometer" : 26973,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2005-10-08T00:00:00.000Z", "units": 20.70000, "price": 8.94000, "odometer" : 27348,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-04-15T00:00:00.000Z", "units": 23.15000, "price": 10.39000, "odometer" : 27777,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-05-05T00:00:00.000Z", "units": 15.99000, "price": 10.37000, "odometer" : 28037,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-05-06T00:00:00.000Z", "units": 18.42000, "price": 9.92000, "odometer" : 28373,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-18T00:00:00.000Z", "units": 21.96000, "price": 9.85000, "odometer" : 28746,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2001-09-07T00:00:00.000Z", "units": 19.91000, "price": 8.68000, "odometer" : 4,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2001-09-07T00:00:00.000Z", "units": 17.67000, "price": 8.45000, "odometer" : 365,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2001-10-06T00:00:00.000Z", "units": 18.91000, "price": 7.71000, "odometer" : 712,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2001-10-13T00:00:00.000Z", "units": 19.91000, "price": 7.72000, "odometer" : 1075,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2001-10-20T00:00:00.000Z", "units": 20.84000, "price": 7.57000, "odometer" : 1465,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-03-22T00:00:00.000Z", "units": 5.00000, "price": 8.18000, "odometer" : 1803,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-03-22T00:00:00.000Z", "units": 18.49000, "price": 7.91000, "odometer" : 1881,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-04-01T00:00:00.000Z", "units": 20.88000, "price": 8.18000, "odometer" : 2296,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-04-20T00:00:00.000Z", "units": 22.03000, "price": 8.23000, "odometer" : 2712,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-04-27T00:00:00.000Z", "units": 19.86000, "price": 8.30000, "odometer" : 3088,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-04-30T00:00:00.000Z", "units": 22.33000, "price": 8.10000, "odometer" : 3447,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-06-08T00:00:00.000Z", "units": 19.49000, "price": 7.94000, "odometer" : 4219,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-06-22T00:00:00.000Z", "units": 22.71000, "price": 8.07000, "odometer" : 4642,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-07-13T00:00:00.000Z", "units": 20.43000, "price": 8.04000, "odometer" : 5036,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-07-20T00:00:00.000Z", "units": 25.58000, "price": 8.08000, "odometer" : 5528,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-05-04T00:00:00.000Z", "units": 22.33000, "price": 8.10000, "odometer" : 3890,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-06T00:00:00.000Z", "units": 20.77000, "price": 8.12000, "odometer" : 5936,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-07T00:00:00.000Z", "units": 20.11000, "price": 7.89000, "odometer" : 6330,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-08T00:00:00.000Z", "units": 21.42000, "price": 7.81000, "odometer" : 6738,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-09T00:00:00.000Z", "units": 21.28000, "price": 7.81000, "odometer" : 7148,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-09T00:00:00.000Z", "units": 18.54000, "price": 7.73000, "odometer" : 7525,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-11T00:00:00.000Z", "units": 19.05000, "price": 7.82000, "odometer" : 7872,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-11T00:00:00.000Z", "units": 20.77000, "price": 8.62000, "odometer" : 8282,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-12T00:00:00.000Z", "units": 19.55000, "price": 9.74000, "odometer" : 8675,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-14T00:00:00.000Z", "units": 23.85000, "price": 9.77000, "odometer" : 9136,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-15T00:00:00.000Z", "units": 18.40000, "price": 9.22000, "odometer" : 9517,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-16T00:00:00.000Z", "units": 22.17000, "price": 9.47000, "odometer" : 9986,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-17T00:00:00.000Z", "units": 21.34000, "price": 9.29000, "odometer" : 10424,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-17T00:00:00.000Z", "units": 23.33000, "price": 8.73000, "odometer" : 10912,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-20T00:00:00.000Z", "units": 24.63000, "price": 9.50000, "odometer" : 11377,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-20T00:00:00.000Z", "units": 16.16000, "price": 8.86000, "odometer" : 11728,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-20T00:00:00.000Z", "units": 17.22000, "price": 7.74000, "odometer" : 12075,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-08-28T00:00:00.000Z", "units": 24.55000, "price": 8.12000, "odometer" : 12509,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-10-01T00:00:00.000Z", "units": 22.21000, "price": 8.22000, "odometer" : 12932,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2002-10-11T00:00:00.000Z", "units": 13.86000, "price": 7.77000, "odometer" : 13204,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-03-27T00:00:00.000Z", "units": 16.82000, "price": 7.80000, "odometer" : 13535,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-04-20T00:00:00.000Z", "units": 21.28000, "price": 7.75000, "odometer" : 13936,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-05-08T00:00:00.000Z", "units": 23.04000, "price": 7.52000, "odometer" : 14348,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-06-01T00:00:00.000Z", "units": 13.64000, "price": 7.24000, "odometer" : 15050,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-07-13T00:00:00.000Z", "units": 21.45000, "price": 7.85000, "odometer" : 15445,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-07-19T00:00:00.000Z", "units": 14.75000, "price": 7.49000, "odometer" : 15760,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-05-28T00:00:00.000Z", "units": 20.93000, "price": 7.60000, "odometer" : 14778,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-08-11T00:00:00.000Z", "units": 23.88000, "price": 7.82000, "odometer" : 16218,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-08-12T00:00:00.000Z", "units": 22.91000, "price": 8.20000, "odometer" : 16641,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-08-14T00:00:00.000Z", "units": 20.23000, "price": 8.23000, "odometer" : 17040,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-08-25T00:00:00.000Z", "units": 23.13000, "price": 8.06000, "odometer" : 17477,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-09-04T00:00:00.000Z", "units": 22.60000, "price": 7.77000, "odometer" : 17901,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-09-14T00:00:00.000Z", "units": 21.28000, "price": 7.63000, "odometer" : 18330,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2003-10-04T00:00:00.000Z", "units": 22.65000, "price": 7.45000, "odometer" : 18775,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-03-31T00:00:00.000Z", "units": 21.48000, "price": 8.03000, "odometer" : 19212,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-04-16T00:00:00.000Z", "units": 21.27000, "price": 8.48000, "odometer" : 19584,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-04-18T00:00:00.000Z", "units": 21.19000, "price": 8.14000, "odometer" : 19999,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-05-09T00:00:00.000Z", "units": 22.81000, "price": 8.38000, "odometer" : 20429,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-06-20T00:00:00.000Z", "units": 22.83000, "price": 8.15000, "odometer" : 20869,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-07-18T00:00:00.000Z", "units": 23.33000, "price": 8.77000, "odometer" : 21332,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-07-24T00:00:00.000Z", "units": 18.59000, "price": 8.57000, "odometer" : 21702,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-08-14T00:00:00.000Z", "units": 14.62000, "price": 8.42000, "odometer" : 21978,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-08-28T00:00:00.000Z", "units": 25.19000, "price": 8.84000, "odometer" : 22448,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-08-28T00:00:00.000Z", "units": 20.73000, "price": 8.51000, "odometer" : 22829,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2004-09-04T00:00:00.000Z", "units": 19.56000, "price": 8.49000, "odometer" : 23217,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-21T00:00:00.000Z", "units": 23.43000, "price": 10.73000, "odometer" : 29129,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-21T00:00:00.000Z", "units": 18.04000, "price": 10.66000, "odometer" : 29422,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-21T00:00:00.000Z", "units": 16.88000, "price": 10.73000, "odometer" : 29711,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-22T00:00:00.000Z", "units": 18.99000, "price": 9.15000, "odometer" : 30024,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-22T00:00:00.000Z", "units": 20.40000, "price": 8.71000, "odometer" : 30404,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-23T00:00:00.000Z", "units": 19.76000, "price": 10.58000, "odometer" : 30768,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-23T00:00:00.000Z", "units": 18.27000, "price": 10.39000, "odometer" : 31092,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-23T00:00:00.000Z", "units": 20.02000, "price": 10.92000, "odometer" : 31405,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-07-23T00:00:00.000Z", "units": 19.15000, "price": 10.51000, "odometer" : 31677,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-08-04T00:00:00.000Z", "units": 23.07000, "price": 10.36000, "odometer" : 32031,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-09-13T00:00:00.000Z", "units": 18.62000, "price": 8.88000, "odometer" : 32354,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2006-09-15T00:00:00.000Z", "units": 21.56000, "price": 9.16000, "odometer" : 32758,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-04-01T00:00:00.000Z", "units": 17.63000, "price": 9.74000, "odometer" : 33076,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-04-05T00:00:00.000Z", "units": 18.14000, "price": 8.43000, "odometer" : 33397,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-06-06T00:00:00.000Z", "units": 22.93000, "price": 9.05000, "odometer" : 33808,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-09-09T00:00:00.000Z", "units": 21.59000, "price": 10.11000, "odometer" : 34216,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-09-28T00:00:00.000Z", "units": 42.37000, "price": 8.62000, "odometer" : 57,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-10-05T00:00:00.000Z", "units": 36.89000, "price": 7.69000, "odometer" : 687,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-10-13T00:00:00.000Z", "units": 43.65000, "price": 6.87000, "odometer" : 1450, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-10-27T00:00:00.000Z", "units": 44.00000, "price": 7.97000, "odometer" : 2154,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-11-10T00:00:00.000Z", "units": 41.80000, "price": 7.18000, "odometer" : 2818, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-11-18T00:00:00.000Z", "units": 39.55000, "price": 8.59000, "odometer" : 3439,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-12-01T00:00:00.000Z", "units": 42.94000, "price": 9.01000, "odometer" : 4084,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-12-18T00:00:00.000Z", "units": 44.00000, "price": 9.15000, "odometer" : 4678,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2007-12-29T00:00:00.000Z", "units": 41.60000, "price": 7.21000, "odometer" : 5298, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2008-01-13T00:00:00.000Z", "units": 47.60000, "price": 8.98000, "odometer" : 5865,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2008-01-24T00:00:00.000Z", "units": 38.59000, "price": 9.09000, "odometer" : 6396,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2008-02-05T00:00:00.000Z", "units": 39.97000, "price": 8.04000, "odometer" : 6892,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 7561, "price": 9.79000, "purchaseDateUtc" : "2008-02-16T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 42.85000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2008-03-13T00:00:00.000Z", "units": 19.22000, "price": 10.05000, "odometer" : 34609,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 8174, "price": 9.64000, "purchaseDateUtc" : "2008-03-21T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 41.02000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 8775, "price": 10.21000, "purchaseDateUtc" : "2008-04-02T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 41.09000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 9419, "price": 9.69000, "purchaseDateUtc" : "2008-04-14T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 40.82000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 10092, "price": 9.89000, "purchaseDateUtc" : "2008-04-27T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 40.06000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 10647, "price": 9.84000, "purchaseDateUtc" : "2008-05-05T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 34.01000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 34861, "price": 11.21000, "purchaseDateUtc" : "2008-05-11T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 18.13000, "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 35223, "price": 11.13000, "purchaseDateUtc" : "2008-05-11T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 20.68000, "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 11372, "price": 11.55000, "purchaseDateUtc" : "2008-05-17T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 43.04000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 35587, "price": 11.19000, "purchaseDateUtc" : "2008-05-13T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 22.11000, "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 12067, "price": 11.29000, "purchaseDateUtc" : "2008-05-24T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 43.82000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 12583, "price": 10.24000, "purchaseDateUtc" : "2008-06-03T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 32.28000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 13356, "price": 11.56000, "purchaseDateUtc" : "2008-06-14T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 45.03000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 14084, "price": 11.45000, "purchaseDateUtc" : "2008-06-26T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 44.44000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 14841, "price": 11.13000, "purchaseDateUtc" : "2008-07-14T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 44.32000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 15381, "price": 10.19000, "purchaseDateUtc" : "2008-07-25T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 32.01000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 16189, "price": 11.05000, "purchaseDateUtc" : "2008-07-27T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 45.74000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 16813, "price": 10.76000, "purchaseDateUtc" : "2008-08-02T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 40.47000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 17350, "price": 9.49000, "purchaseDateUtc" : "2008-08-15T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 32.04000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 35948, "price": 11.09000, "purchaseDateUtc" : "2008-08-17T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 19.94000, "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 18146, "price": 10.70000, "purchaseDateUtc" : "2008-08-30T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 45.51000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 18635, "price": 9.79000, "purchaseDateUtc" : "2008-09-11T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 31.37000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 19205, "price": 9.69000, "purchaseDateUtc" : "2008-09-18T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 33.22000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 36330, "price": 10.13000, "purchaseDateUtc" : "2008-09-21T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 21.15000, "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 19742, "price": 9.14000, "purchaseDateUtc" : "2008-10-10T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 33.30000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 20340, "price": 8.39000, "purchaseDateUtc" : "2008-10-23T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 37.27000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 20871, "price": 8.49000, "purchaseDateUtc" : "2008-10-30T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 33.32000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 21471, "price": 8.09000, "purchaseDateUtc" : "2008-11-11T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 38.19000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 22223, "price": 8.54000, "purchaseDateUtc" : "2008-11-23T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 45.14000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 22929, "price": 8.08000, "purchaseDateUtc" : "2008-12-07T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 46.72000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 23543, "price": 7.43000, "purchaseDateUtc" : "2008-12-17T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 41.71000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 24245, "price": 7.69000, "purchaseDateUtc" : "2008-12-28T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 44.74000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 24795, "price": 7.51000, "purchaseDateUtc" : "2009-01-11T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 39.75000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 25419, "price": 7.79000, "purchaseDateUtc" : "2009-01-23T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 43.37000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 27746, "price": 7.73000, "purchaseDateUtc" : "2009-02-12T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 40.85000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 28132, "price": 6.87000, "purchaseDateUtc" : "2009-02-21T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 28.07000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 27154, "price": 7.09000, "purchaseDateUtc" : "2009-02-02T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 34.12000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 26098, "price": 7.69000, "purchaseDateUtc" : "2009-01-25T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 39.77000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 26525, "price": 7.18000, "purchaseDateUtc" : "2009-01-30T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 28.01000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 28825, "price": 7.02000, "purchaseDateUtc" : "2009-03-06T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 45.69000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 29436, "price": 7.02000, "purchaseDateUtc" : "2009-03-14T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 36.59000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 30070, "price": 7.19000, "purchaseDateUtc" : "2009-03-25T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 39.07000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 30680, "price": 7.62000, "purchaseDateUtc" : "2009-04-01T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 40.28000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 31201, "price": 7.00000, "purchaseDateUtc" : "2009-04-08T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 31.81000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 31909, "price": 7.19000, "purchaseDateUtc" : "2009-04-22T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 39.87000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 32584, "price": 7.43000, "purchaseDateUtc" : "2009-05-03T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 40.04000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 33424, "price": 7.99000, "purchaseDateUtc" : "2009-05-18T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 46.57000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 34025, "price": 7.41000, "purchaseDateUtc" : "2009-06-02T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 34.11000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 34694, "price": 7.88000, "purchaseDateUtc" : "2009-06-17T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 37.87000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 35465, "price": 7.92000, "purchaseDateUtc" : "2009-06-26T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 42.23000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 36680, "price": 10.03000, "purchaseDateUtc" : "2009-07-05T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 20.67000, "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 36166, "price": 7.63000, "purchaseDateUtc" : "2009-07-06T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 38.11000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 36857, "price": 7.64000, "purchaseDateUtc" : "2009-07-21T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 38.85000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 37685, "price": 8.39000, "purchaseDateUtc" : "2009-07-30T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 44.41000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 38497, "price": 8.20000, "purchaseDateUtc" : "2009-08-04T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 43.71000, "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{ "odometer" : 37070, "price": 10.25000, "purchaseDateUtc" : "2009-08-07T00:00:00.000Z", "tags" : [ "Miracle" ], "units": 21.44000, "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-07-19T08:31:00.000Z", "units": 46.36000, "price": 10.22000, "odometer" : 101289, "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-08-23T00:00:00.000Z", "units": 45.19000, "price": 8.38000, "odometer" : 39268,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-09-13T00:00:00.000Z", "units": 42.25000, "price": 8.33000, "odometer" : 39984,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-09-26T00:00:00.000Z", "units": 45.62000, "price": 7.73000, "odometer" : 40807,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-10-11T00:00:00.000Z", "units": 43.85000, "price": 8.60000, "odometer" : 41558,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-10-20T00:00:00.000Z", "units": 44.22000, "price": 7.86000, "odometer" : 42338,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-11-13T00:00:00.000Z", "units": 42.05000, "price": 7.88000, "odometer" : 43037,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-11-29T00:00:00.000Z", "units": 43.45000, "price": 7.76000, "odometer" : 43764,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-12-12T00:00:00.000Z", "units": 43.98000, "price": 0.00000, "odometer" : 44446, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2009-12-28T00:00:00.000Z", "units": 45.54000, "price": 0.00000, "odometer" : 45157, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-01-15T00:00:00.000Z", "units": 41.67000, "price": 8.51000, "odometer" : 45774,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-01-17T00:00:00.000Z", "units": 41.58000, "price": 8.74000, "odometer" : 46574, "tags" : [ "Skitur" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-01-23T00:00:00.000Z", "units": 46.78000, "price": 8.51000, "odometer" : 47328, "tags" : [ "Skitur" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-02-06T00:00:00.000Z", "units": 43.54000, "price": 8.80000, "odometer" : 47905,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-02-22T00:00:00.000Z", "units": 44.78000, "price": 8.55000, "odometer" : 48553,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-03-13T00:00:00.000Z", "units": 45.69000, "price": 9.51000, "odometer" : 49185,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-04-04T00:00:00.000Z", "units": 46.63000, "price": 8.58000, "odometer" : 49945,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-04-07T00:00:00.000Z", "units": 20.99000, "price": 10.42000, "odometer" : 37407,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-04-23T00:00:00.000Z", "units": 44.55000, "price": 8.97000, "odometer" : 50627,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-11T00:00:00.000Z", "units": 40.90000, "price": 8.76000, "odometer" : 51291,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-12T00:00:00.000Z", "units": 19.23000, "price": 11.08000, "odometer" : 37766, "location": { "lat" : 55.4425139498412, "lon" : 11.5658891201019 }, "tags" : [ "Fjordhunting 2010" ], "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "OK", "address" : "Nordmarksvej 6", "zipCode" : "4180", "city" : "Sorø", "location": { "lat" : 55.4425139498412, "lon" : 11.5658891201019 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-13T00:00:00.000Z", "units": 24.36000, "price": 12.87000, "odometer" : 38177, "location": { "lat" : 58.1470730273449, "lon" : 7.98612227688682 }, "tags" : [ "Fjordhunting 2010" ], "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Shell", "address" : "Vestre Strandgate 59", "zipCode" : "4612", "city" : "Kristiansand S", "location": { "lat" : 58.1470730273449, "lon" : 7.98612227688682 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-14T00:00:00.000Z", "units": 20.55000, "price": 12.58000, "odometer" : 38604, "location": { "lat" : 59.7634193468387, "lon" : 5.45687913894653 }, "tags" : [ "Fjordhunting 2010" ], "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "YX", "address" : "Rundehaugen 15", "zipCode" : "5412", "city" : "Stord", "location": { "lat" : 59.7634193468387, "lon" : 5.45687913894653 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-15T00:00:00.000Z", "units": 19.14000, "price": 12.78000, "odometer" : 39009, "location": { "lat" : 61.5747903422354, "lon" : 6.48306274223262 }, "tags" : [ "Fjordhunting 2010" ], "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Esso", "address" : " Ola Fugle", "zipCode" : "6843", "city" : "Skei", "location": { "lat" : 61.5747903422354, "lon" : 6.48306274223262 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-16T00:00:00.000Z", "units": 19.03000, "price": 12.79000, "odometer" : 39412, "location": { "lat" : 58.2304263841842, "lon" : 11.9094371795654 }, "tags" : [ "Fjordhunting 2010" ], "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Shell", "address" : "Ulvesundsvagen 7", "zipCode" : "45930", "city" : "Ljungskile", "location": { "lat" : 58.2304263841842, "lon" : 11.9094371795654 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-16T00:00:00.000Z", "units": 21.40000, "price": 10.53000, "odometer" : 39824, "location": { "lat" : 61.1158111844567, "lon" : 10.4470109939575 }, "tags" : [ "Fjordhunting 2010" ], "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Statoil", "address" : "Strandpromenaden 90", "zipCode" : "2609", "city" : "Lillehammer", "location": { "lat" : 61.1158111844567, "lon" : 10.4470109939575 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-19T00:00:00.000Z", "units": 22.22000, "price": 10.50000, "odometer" : 40203,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-05-29T00:00:00.000Z", "units": 45.52000, "price": 9.65000, "odometer" : 52011,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-06-06T00:00:00.000Z", "units": 20.67000, "price": 11.15000, "odometer" : 40556,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-06-06T00:00:00.000Z", "units": 21.66000, "price": 10.26000, "odometer" : 40940,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-06-19T00:00:00.000Z", "units": 43.34000, "price": 8.70000, "odometer" : 52741,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-07-03T00:00:00.000Z", "units": 46.14000, "price": 8.58000, "odometer" : 53516,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-07-19T00:00:00.000Z", "units": 36.15000, "price": 8.17000, "odometer" : 54162,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-08-07T00:00:00.000Z", "units": 45.34000, "price": 9.52000, "odometer" : 54931,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-08-15T00:00:00.000Z", "units": 37.93000, "price": 8.88000, "odometer" : 55637,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-08-22T00:00:00.000Z", "units": 20.09000, "price": 10.78000, "odometer" : 41311,  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-09-07T00:00:00.000Z", "units": 43.49000, "price": 9.17000, "odometer" : 56401, "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-09-29T00:00:00.000Z", "units": 44.80000, "price": 9.59000, "odometer" : 57106, "location": { "lat" : 55.6501668691635, "lon" : 12.2024685144424 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Roskildevej 335", "zipCode" : "2640", "city" : "Hedehusene", "location": { "lat" : 55.6501668691635, "lon" : 12.2024685144424 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-10-08T00:00:00.000Z", "units": 42.74000, "price": 9.51000, "odometer" : 57841, "location": { "lat" : 55.6502258777618, "lon" : 12.2026830911636 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Roskildevej 335", "zipCode" : "2640", "city" : "Hedehusene", "location": { "lat" : 55.6501668691635, "lon" : 12.2024685144424 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-10-28T00:00:00.000Z", "units": 43.85000, "price": 8.33000, "odometer" : 58539, "location": { "lat" : 55.6617057323456, "lon" : 12.3400336503983 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-11-11T00:00:00.000Z", "units": 45.29000, "price": 8.61000, "odometer" : 59271, "location": { "lat" : 55.6615769863129, "lon" : 12.3404359817505 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-11-25T00:00:00.000Z", "units": 42.84000, "price": 8.36000, "odometer" : 59952, "location": { "lat" : 55.6615877151489, "lon" : 12.340532541275 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-12-23T00:00:00.000Z", "units": 43.50000, "price": 10.22000, "odometer" : 61205,  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2010-12-06T00:00:00.000Z", "units": 41.06000, "price": 8.83000, "odometer" : 60564, "location": { "lat" : 55.661609172821, "lon" : 12.3406559228897 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-01-12T00:00:00.000Z", "units": 44.25000, "price": 9.13000, "odometer" : 61914, "location": { "lat" : 55.6615501642227, "lon" : 12.340167760849 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-01-27T00:00:00.000Z", "units": 41.09000, "price": 9.51000, "odometer" : 62576, "location": { "lat" : 55.6615823507309, "lon" : 12.3402589559555 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-02-10T00:00:00.000Z", "units": 43.78000, "price": 9.75000, "odometer" : 63266, "location": { "lat" : 55.6615877151489, "lon" : 12.3404681682587 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-02-18T00:00:00.000Z", "units": 29.11000, "price": 7.00000, "odometer" : 63700, "location": { "lat" : 54.7669422626495, "lon" : 11.8817728757858 }, "tags" : [ "Tage", "Wagrain 2011" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "OK", "address" : "Vesterskovvej 27", "zipCode" : "4800", "city" : "Nykøbing F", "location": { "lat" : 54.7669422626495, "lon" : 11.8817728757858 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-02-19T00:00:00.000Z", "units": 42.27000, "price": 7.00000, "odometer" : 64512, "location": { "lat" : 48.1242799758911, "lon" : 11.7579084634781 }, "tags" : [ "Tage", "Wagrain 2011" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Unknown", "address" : "Unknown", "zipCode" : "1234", "city" : "Unknown", "location": { "lat" : 48.1242799758911, "lon" : 11.7579084634781 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-02-26T00:00:00.000Z", "units": 37.50000, "price": 7.00000, "odometer" : 65242, "location": { "lat" : 50.0564682483673, "lon" : 11.6103655099869 }, "tags" : [ "Tage", "Wagrain 2011" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Unknown", "address" : "Unknown", "zipCode" : "1234", "city" : "Unknown", "location": { "lat" : 50.0564682483673, "lon" : 11.6103655099869 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-03-03T00:00:00.000Z", "units": 47.09000, "price": 7.00000, "odometer" : 66087, "location": { "lat" : 55.634581, "lon" : 12.253253 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Statoil", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-03-23T00:00:00.000Z", "units": 45.63000, "price": 10.46000, "odometer" : 66837, "location": { "lat" : 55.6616145372391, "lon" : 12.3404198884964 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-04-01T00:00:00.000Z", "units": 23.03000, "price": 11.33000, "odometer" : 41737, "location": { "lat" : 55.6617593765259, "lon" : 12.3402696847916 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-04-12T00:00:00.000Z", "units": 42.84000, "price": 10.34000, "odometer" : 67597, "location": { "lat" : 55.6615662574768, "lon" : 12.340162396431 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-04-24T00:00:00.000Z", "units": 21.22000, "price": 11.67000, "odometer" : 42152, "location": { "lat" : 54.8690915107727, "lon" : 11.7410963773727 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "OK", "address" : "Guldborgvej 189", "zipCode" : "4862", "city" : "Guldborg", "location": { "lat" : 54.8690915107727, "lon" : 11.7410963773727 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-05-08T00:00:00.000Z", "units": 43.78000, "price": 10.59000, "odometer" : 68353, "location": { "lat" : 55.6502190621029, "lon" : 12.2027282543182 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Roskildevej 335", "zipCode" : "2640", "city" : "Hedehusene", "location": { "lat" : 55.6501668691635, "lon" : 12.2024685144424 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-05-26T00:00:00.000Z", "units": 43.86000, "price": 10.70000, "odometer" : 69144, "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-06-10T00:00:00.000Z", "units": 21.29000, "price": 11.39000, "odometer" : 42552, "location": { "lat" : 55.6602895259857, "lon" : 12.2842597961426 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-07-06T00:00:00.000Z", "units": 45.23000, "price": 9.72000, "odometer" : 70812, "location": { "lat" : 55.660343170166, "lon" : 12.284340262413 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-06-25T00:00:00.000Z", "units": 45.50000, "price": 10.09000, "odometer" : 69953, "location": { "lat" : 55.6603646278381, "lon" : 12.2843027114868 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-07-21T00:00:00.000Z", "units": 42.39000, "price": 10.29000, "odometer" : 71613, "location": { "lat" : 55.6602638503142, "lon" : 12.2843264169693 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-08-17T00:00:00.000Z", "units": 43.13000, "price": 9.82000, "odometer" : 72298, "location": { "lat" : 55.6616628170013, "lon" : 12.3404413461685 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-08-26T00:00:00.000Z", "units": 22.07000, "price": 11.77000, "odometer" : 42984, "location": { "lat" : 55.6616306304932, "lon" : 12.3403018712997 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-10-06T00:00:00.000Z", "units": 40.49000, "price": 9.63000, "odometer" : 73924, "location": { "lat" : 55.6592273712158, "lon" : 12.3512184619904 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell Express", "address" : "Albertslundvej 21", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6592273712158, "lon" : 12.3512184619904 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-09-20T00:00:00.000Z", "units": 47.10000, "price": 10.34000, "odometer" : 73232, "location": { "lat" : 55.6615340709686, "lon" : 12.3404842615128 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-10-29T00:00:00.000Z", "units": 41.24000, "price": 11.13000, "odometer" : 74704, "location": { "lat" : 55.6615447998047, "lon" : 12.3403823375702 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-11-25T00:00:00.000Z", "units": 37.80000, "price": 9.85000, "odometer" : 76200, "location": { "lat" : 55.659259557724, "lon" : 12.3514008522034 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell Express", "address" : "Albertslundvej 21", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6592273712158, "lon" : 12.3512184619904 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-11-15T00:00:00.000Z", "units": 46.32000, "price": 10.13000, "odometer" : 75548, "location": { "lat" : 55.659254193306, "lon" : 12.3512774705887 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell Express", "address" : "Albertslundvej 21", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6592273712158, "lon" : 12.3512184619904 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-12-10T00:00:00.000Z", "units": 43.21000, "price": 9.85000, "odometer" : 76953, "location": { "lat" : 55.6615877151489, "lon" : 12.3404037952423 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2011-12-27T00:00:00.000Z", "units": 42.93000, "price": 9.85000, "odometer" : 77688, "location": { "lat" : 55.6616199016571, "lon" : 12.3402804136276 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-01-20T00:00:00.000Z", "units": 38.57000, "price": 10.75000, "odometer" : 78299, "location": { "lat" : 55.6602668763761, "lon" : 12.2846214599609 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-02-04T00:00:00.000Z", "units": 43.17000, "price": 10.65000, "odometer" : 78997, "location": { "lat" : 55.6602487200015, "lon" : 12.2843639678955 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-02-17T00:00:00.000Z", "units": 39.85000, "price": 9.99000, "odometer" : 79593, "location": { "lat" : 54.7761905193329, "lon" : 11.5131193399429 }, "tags" : [ "Tage", "Zell am See 2012" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Østre Landevej 21", "zipCode" : "5963", "city" : "Maribo", "location": { "lat" : 54.7761905193329, "lon" : 11.5131193399429 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-02-18T00:00:00.000Z", "units": 44.21000, "price": 9.98000, "odometer" : 80446, "location": { "lat" : 49.0463537720531, "lon" : 11.3367882370949 }, "tags" : [ "Tage", "Zell am See 2012" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Zur Achmühle 9", "zipCode" : "91171", "city" : "Greding", "location": { "lat" : 49.0463537720531, "lon" : 11.3367882370949 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-02-24T00:00:00.000Z", "units": 27.47000, "price": 9.99000, "odometer" : 80871, "location": { "lat" : 47.2962766885757, "lon" : 12.7960681915283 }, "tags" : [ "Tage", "Zell am See 2012" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Brucker Bundesstraße 57", "zipCode" : "5700", "city" : "Zell am See", "location": { "lat" : 47.2962766885757, "lon" : 12.7960681915283 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-02-25T00:00:00.000Z", "units": 36.00000, "price": 9.99000, "odometer" : 81579, "location": { "lat" : 51.4875715970993, "lon" : 9.87675726413727 }, "tags" : [ "Tage", "Zell am See 2012" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Niedersachsen", "zipCode" : "37124", "city" : "Rosdorf", "location": { "lat" : 51.4875715970993, "lon" : 9.87675726413727 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-03-02T00:00:00.000Z", "units": 43.14000, "price": 10.36000, "odometer" : 82269, "location": { "lat" : 55.6615072488785, "lon" : 12.3402804136276 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-03-13T00:00:00.000Z", "units": 44.96000, "price": 10.78000, "odometer" : 83035, "location": { "lat" : 55.6615179777145, "lon" : 12.3400604724884 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-03-15T00:00:00.000Z", "units": 22.05000, "price": 12.83000, "odometer" : 43379, "location": { "lat" : 55.6591147184372, "lon" : 12.3514705896378 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Shell Express", "address" : "Albertslundvej 21", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6592273712158, "lon" : 12.3512184619904 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-03-27T00:00:00.000Z", "units": 43.24000, "price": 10.93000, "odometer" : 83756, "location": { "lat" : 55.6592059135437, "lon" : 12.351513504982 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell Express", "address" : "Albertslundvej 21", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6592273712158, "lon" : 12.3512184619904 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-04-09T00:00:00.000Z", "units": 45.95000, "price": 11.94000, "odometer" : 84556, "location": { "lat" : 55.6601715087891, "lon" : 12.2841793298721 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-05-04T00:00:00.000Z", "units": 44.35000, "price": 11.54000, "odometer" : 85316, "location": { "lat" : 55.3974866867065, "lon" : 11.3412970304489 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Slagelse", "address" : "Mariendals Alle 29", "zipCode" : "4200", "city" : "Slagelse", "location": { "lat" : 55.3974866867065, "lon" : 11.3412970304489 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-05-19T00:00:00.000Z", "units": 20.79000, "price": 12.41000, "odometer" : 43768, "location": { "lat" : 55.9670323133469, "lon" : 9.74724948406219 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Statoil", "address" : "Vestbirkvej 14", "zipCode" : "8752", "city" : "Østbirk", "location": { "lat" : 55.9670323133469, "lon" : 9.74724948406219 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-05-27T00:00:00.000Z", "units": 47.36000, "price": 10.82000, "odometer" : 86196, "location": { "lat" : 55.4424673318863, "lon" : 11.5656369924545 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "OK", "address" : "Nordmarksvej 6", "zipCode" : "4180", "city" : "Sorø", "location": { "lat" : 55.4425139498412, "lon" : 11.5658891201019 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-06-07T00:00:00.000Z", "units": 34.27000, "price": 9.90000, "odometer" : 86792, "location": { "lat" : 55.6810283660889, "lon" : 12.2549378871918 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "OK Sengeløse", "address" : "Landsbygaden 23", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.6810283660889, "lon" : 12.2549378871918 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-06-23T00:00:00.000Z", "units": 45.59000, "price": 10.88000, "odometer" : 87612, "location": { "lat" : 55.5727207660675, "lon" : 12.2322034835815 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "OK Karlslunde", "address" : "Karlslunde Landevej 9", "zipCode" : "2690", "city" : "Karlslunde", "location": { "lat" : 55.5727207660675, "lon" : 12.2322034835815 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-07-07T00:00:00.000Z", "units": 21.82000, "price": 12.76000, "odometer" : 44165, "location": { "lat" : 55.64304292202, "lon" : 12.1191591024399 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "JET Roskilde", "address" : "Københavnsvej 141", "zipCode" : "4000", "city" : "Roskilde", "location": { "lat" : 55.64304292202, "lon" : 12.1191591024399 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-07-11T00:00:00.000Z", "units": 41.75000, "price": 9.93000, "odometer" : 88408, "location": { "lat" : 55.6615555286407, "lon" : 12.3404520750046 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-07-29T00:00:00.000Z", "units": 40.40000, "price": 10.07000, "odometer" : 89184, "location": { "lat" : 55.4152053594589, "lon" : 11.3994956016541 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Slagelse", "address" : "Sorøvej 37", "zipCode" : "4200", "city" : "Slagelse", "location": { "lat" : 55.4152053594589, "lon" : 11.3994956016541 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-08-25T00:00:00.000Z", "units": 38.08000, "price": 10.67000, "odometer" : 89881, "location": { "lat" : 55.6615608930588, "lon" : 12.3402750492096 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-09-25T00:00:00.000Z", "units": 43.79000, "price": 10.57000, "odometer" : 90689, "location": { "lat" : 55.6616520881653, "lon" : 12.3403340578079 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-10-13T00:00:00.000Z", "units": 29.44000, "price": 9.99000, "odometer" : 91146, "location": { "lat" : 55.6176906824112, "lon" : 12.3458701372147 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell Ishøj.", "address" : "Parkvej 2", "zipCode" : "2635", "city" : "Ishøj", "location": { "lat" : 55.6176906824112, "lon" : 12.3458701372147 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-11-01T00:00:00.000Z", "units": 36.74000, "price": 9.99000, "odometer" : 91760, "location": { "lat" : 55.63464306, "lon" : 12.25351255 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-11-18T00:00:00.000Z", "units": 46.02000, "price": 10.71000, "odometer" : 92585, "location": { "lat" : 55.66041765, "lon" : 12.28412218 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-12-01T00:00:00.000Z", "units": 34.62000, "price": 8.00000, "odometer" : 93348, "location": { "lat" : 55.63460273, "lon" : 12.25341779 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-12-19T00:00:00.000Z", "units": 45.87000, "price": 10.40000, "odometer" : 93890, "location": { "lat" : 55.66171304, "lon" : 12.34053428 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2012-12-30T00:00:00.000Z", "units": 29.80000, "price": 8.00000, "odometer" : 94363, "location": { "lat" : 55.63460273, "lon" : 12.25341779 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-01-17T00:00:00.000Z", "units": 44.07000, "price": 10.57000, "odometer" : 95107, "location": { "lat" : 55.6616145372391, "lon" : 12.3404198884964 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-02-07T17:43:00.000Z", "units": 42.05000, "price": 8.00000, "odometer" : 95730, "location": { "lat" : 55.63460273, "lon" : 12.25341779 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-03-11T15:32:16.142Z", "units": 46.99, "price": 8, "odometer" : 96430, "location": { "lat" : 55.63454575713252, "lon" : 12.25345963977455 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-03-26T10:08:29.603Z", "units": 18.74, "price": 10.68, "odometer" : 97198, "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.6602063550948, "lon" : 12.284278137207 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-04-02T18:37:41.464Z", "units": 44.53, "price": 8, "odometer" : 97421, "location": { "lat" : 55.63452231172742, "lon" : 12.25369276779952 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-04-19T14:22:26.609Z", "units": 43.72, "price": 9.87, "odometer" : 98201, "location": { "lat" : 55.66155817881216, "lon" : 12.340153120959 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-04-21T13:01:02.034Z", "units": 20.95, "price": 11.82, "odometer" : 44563, "location": { "lat" : 55.59607244711951, "lon" : 12.17664874116801 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Uno-X", "address" : "Bøgevej 1", "zipCode" : "4030", "city" : "Tune", "location": { "lat" : 55.59607244711951, "lon" : 12.17664874116801 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-05-09T11:42:11.793Z", "units": 46.86, "price": 10.35, "odometer" : 99009, "location": { "lat" : 55.6428408, "lon" : 12.11984150000001 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Roskilde", "address" : "Københavnsvej 141", "zipCode" : "4000", "city" : "Roskilde", "location": { "lat" : 55.64304292202, "lon" : 12.1191591024399 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-05-31T14:14:03.419Z", "units": 21.72, "price": 11.92, "odometer" : 44999, "location": { "lat" : 55.65937983445889, "lon" : 12.35158414470601 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Shell Express", "address" : "Albertslundvej 21", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6592273712158, "lon" : 12.3512184619904 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-06-03T19:35:54.393Z", "units": 37.47, "price": 8, "odometer" : 99608, "location": { "lat" : 55.63424298208639, "lon" : 12.25307485260021 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-06-24T14:15:00.761Z", "units": 45.88, "price": 10.23, "odometer" : 100450, "location": { "lat" : 55.66155817881216, "lon" : 12.340153120959 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location": { "lat" : 55.6615716218948, "lon" : 12.3402696847916 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-07-28T14:40:33.628Z", "units": 21.13, "price": 12.05, "odometer" : 45426, "location": { "lat" : 55.70881420084594, "lon" : 11.71990904091926 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "UNO-X", "address" : "Roskildevej 21", "zipCode" : "4300", "city" : "Holbæk", "location": { "lat" : 55.708814, "lon" : 11.719909 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-07-30T16:57:13.404Z", "units": 38.80, "price": 9.93, "odometer" : 102015, "location": { "lat" : 55.41520842634319, "lon" : 11.39947518924898 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Slagelse", "address" : "Sorøvej 37", "zipCode" : "4200", "city" : "Slagelse", "location": { "lat" : 55.4152053594589, "lon" : 11.3994956016541 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-08-09T10:08:13.992Z", "units": 46.59, "price": 10.54, "odometer" : 102905, "location": { "lat" : 55.64299759419281, "lon" : 12.11897048277552 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "JET Roskilde", "address" : "Københavnsvej 141", "zipCode" : "4000", "city" : "Roskilde", "location": { "lat" : 55.64304292202, "lon" : 12.1191591024399 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-08-29T18:49:06.682Z", "units": 45.76, "price": 8, "odometer" : 103680, "location": { "lat" : 55.63458086866992, "lon" : 12.2533772446818 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-09-26T14:16:11.161Z", "units": 45.08, "price": 9.9, "odometer" : 104471, "location": { "lat" : 55.6515249061739, "lon" : 12.29963410056069 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-10-11T13:13:28.144Z", "units": 44.77, "price": 9.99, "odometer" : 105242, "location": { "lat" : 55.6513775, "lon" : 12.3000585 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-10-24T16:49:28.144Z", "units": 47.22, "price": 9.97, "odometer" : 106032, "location": { "lat" : 55.6513775, "lon" : 12.3000585 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-11-11T15:07:08.545Z", "units": 41.39, "price": 9.84, "odometer" : 106763, "location": { "lat" : 55.65165596958, "lon" : 12.29978102335643 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-12-01T12:50:01.804Z", "units": 47.67, "price": 10.09, "odometer" : 107564, "location": { "lat" : 55.65155489362296, "lon" : 12.29924604822694 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2013-12-31T10:46:32.212Z", "units": 48.24, "price": 8, "odometer" : 108314, "location": { "lat" : 55.63458730524034, "lon" : 12.253382441631 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-01-20T15:39:28.280Z", "units": 46.62, "price": 9.82, "odometer" : 109131, "location": { "lat" : 55.65166412301366, "lon" : 12.29968852020605 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-02-02T12:30:28.280Z", "units": 46.32, "price": 9.94, "odometer" : 109865, "location": { "lat" : 55.629494, "lon" : 12.282441 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "1-2-3", "address" : "Torslundevej 2", "zipCode" : "2635", "city" : "Ishøj", "location": { "lat" : 55.629494, "lon" : 12.282441 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-02-24T18:05:28.391Z", "units": 41.14, "price": 9.92, "odometer" : 110533, "location": { "lat" : 55.62959159215193, "lon" : 12.28262751318585 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "1-2-3", "address" : "Torslundevej 2", "zipCode" : "2635", "city" : "Ishøj", "location": { "lat" : 55.629494, "lon" : 12.282441 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-03-14T17:06:32.496Z", "units": 41.93, "price": 8, "odometer" : 111209, "location": { "lat" : 55.63470205841094, "lon" : 12.25347449218193 }, "tags" : [ "Tage" ], "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-03-23T14:41:28.762Z", "units": 22.47, "price": 11.27, "odometer" : 45852, "location": { "lat" : 55.65157974614441, "lon" : 12.29971032198391 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-03-29T14:58:30.219Z", "units": 44.20, "price": 9.87, "odometer" : 112003, "location": { "lat" : 55.65161832201391, "lon" : 12.29987745357671 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-04-14T13:17:39.895Z", "units": 45.35, "price": 9.82, "odometer" : 112817, "location": { "lat" : 55.65153853836641, "lon" : 12.29981785199317 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-04-27T08:21:15.522Z", "units": 21.06, "price": 11.81, "odometer" : 46242, "location": { "lat" : 55.65154381902425, "lon" : 12.29986480281747 },  "vehicle" : {  "vendor" : "Honda", "model" : "ST1100" }, "station" : {  "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.651524, "lon" : 12.299634 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-05-03T09:38:14.189Z", "units": 42.74, "price": 9.59, "odometer" : 113578, "location": { "lat" : 55.64556835286053, "lon" : 12.27963168387903 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Ingo", "address" : "Blekinge Boulevard 4", "zipCode" : "2630", "city" : "Tåstrup", "location": { "lat" : 55.64556835286053, "lon" : 12.27963168387903 } } }
+{ "index" : { "_index" : "ziax", "_type" : "gaz" } }
+{  "purchaseDateUtc" : "2014-05-13T20:22:00.000Z", "units": 47.66, "price": 8, "odometer" : 114498, "location": { "lat" : 55.634581, "lon" : 12.253253 },  "vehicle" : {  "vendor" : "Volvo", "model" : "V50" }, "station" : {  "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location": { "lat" : 55.634581, "lon" : 12.253253 } } }

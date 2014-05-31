@@ -1,64 +1,64 @@
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "OK", "address" : "Nordmarksvej 6", "zipCode" : "4180", "city" : "Sorø", "location" : { "lat": 55.4425139498412, "lon": 11.5658891201019 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Vestre Strandgate 59", "zipCode" : "4612", "city" : "Kristiansand S", "location" : { "lat": 58.1470730273449, "lon": 7.98612227688682 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "YX", "address" : "Rundehaugen 15", "zipCode" : "5412", "city" : "Stord", "location" : { "lat": 59.7634193468387, "lon": 5.45687913894653 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Esso", "address" : " Ola Fugle", "zipCode" : "6843", "city" : "Skei", "location" : { "lat": 61.5747903422354, "lon": 6.48306274223262 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Ulvesundsvagen 7", "zipCode" : "45930", "city" : "Ljungskile", "location" : { "lat": 58.2304263841842, "lon": 11.9094371795654 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Statoil", "address" : "Strandpromenaden 90", "zipCode" : "2609", "city" : "Lillehammer", "location" : { "lat": 61.1158111844567, "lon": 10.4470109939575 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "JET Albertslund", "address" : "Roskildevej / Holsbjergvej 35", "zipCode" : "2620", "city" : "Albertslund", "location" : { "lat": 55.6615716218948, "lon": 12.3402696847916 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Roskildevej 335", "zipCode" : "2640", "city" : "Hedehusene", "location" : { "lat": 55.6501668691635, "lon": 12.2024685144424 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "OK", "address" : "Vesterskovvej 27", "zipCode" : "4800", "city" : "Nykøbing F", "location" : { "lat": 54.7669422626495, "lon": 11.8817728757858 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Unknown", "address" : "Unknown", "zipCode" : "1234", "city" : "Unknown", "location" : { "lat": 48.1242799758911, "lon": 11.7579084634781 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Unknown", "address" : "Unknown", "zipCode" : "1234", "city" : "Unknown", "location" : { "lat": 50.0564682483673, "lon": 11.6103655099869 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Statoil", "address" : "Letlands Alle ", "zipCode" : "2630", "city" : "Taastrup", "location" : { "lat": 55.634481, "lon": 12.253253 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "OK", "address" : "Guldborgvej 189", "zipCode" : "4862", "city" : "Guldborg", "location" : { "lat": 54.8690915107727, "lon": 11.7410963773727 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "UNO-X", "address" : "Mårkærvej 15 A", "zipCode" : "2630", "city" : "Taastrup", "location" : { "lat": 55.6602063550948, "lon": 12.284278137207 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell Express", "address" : "Albertslundvej 21", "zipCode" : "2620", "city" : "Albertslund", "location" : { "lat": 55.6592273712158, "lon": 12.3512184619904 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Østre Landevej 21", "zipCode" : "5963", "city" : "Maribo", "location" : { "lat": 54.7761905193329, "lon": 11.5131193399429 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Zur Achmühle 9", "zipCode" : "91171", "city" : "Greding", "location" : { "lat": 49.0463537720531, "lon": 11.3367882370949 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Brucker Bundesstraße 57", "zipCode" : "5700", "city" : "Zell am See", "location" : { "lat": 47.2962766885757, "lon": 12.7960681915283 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Niedersachsen", "zipCode" : "37124", "city" : "Rosdorf", "location" : { "lat": 51.4875715970993, "lon": 9.87675726413727 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "JET Slagelse", "address" : "Mariendals Alle 29", "zipCode" : "4200", "city" : "Slagelse", "location" : { "lat": 55.3974866867065, "lon": 11.3412970304489 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Statoil", "address" : "Vestbirkvej 14", "zipCode" : "8752", "city" : "Østbirk", "location" : { "lat": 55.9670323133469, "lon": 9.74724948406219 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "OK Sengeløse", "address" : "Landsbygaden 23", "zipCode" : "2630", "city" : "Tåstrup", "location" : { "lat": 55.6810283660889, "lon": 12.2549378871918 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "OK Karlslunde", "address" : "Karlslunde Landevej 9", "zipCode" : "2690", "city" : "Karlslunde", "location" : { "lat": 55.5727207660675, "lon": 12.2322034835815 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "JET Roskilde", "address" : "Københavnsvej 141", "zipCode" : "4000", "city" : "Roskilde", "location" : { "lat": 55.64304292202, "lon": 12.1191591024399 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "JET Slagelse", "address" : "Sorøvej 37", "zipCode" : "4200", "city" : "Slagelse", "location" : { "lat": 55.4152053594589, "lon": 11.3994956016541 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell Ishøj.", "address" : "Parkvej 2", "zipCode" : "2635", "city" : "Ishøj", "location" : { "lat": 55.6176906824112, "lon": 12.3458701372147 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Uno-X", "address" : "Bøgevej 1", "zipCode" : "4030", "city" : "Tune", "location" : { "lat": 55.59607244711951, "lon": 12.17664874116801 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Shell", "address" : "Letlands Alle", "zipCode" : "2630", "city" : "Taastrup", "location" : { "lat": 55.634581, "lon": 12.253253 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "UNO-X", "address" : "Roskildevej 21", "zipCode" : "4300", "city" : "Holbæk", "location" : { "lat": 55.708814, "lon": 11.719909 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Haahr", "address" : "Tåstrup Torv", "zipCode" : "2630", "city" : "Tåstrup", "location" : { "lat": 55.651524, "lon": 12.299634 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "1-2-3", "address" : "Torslundevej 2", "zipCode" : "2635", "city" : "Ishøj", "location" : { "lat": 55.629494, "lon": 12.282441 } }
-{ "index" : { "_index" : "station", "_type" : "station" } }
+{ "index" : { "_index" : "gaz", "_type" : "station" } }
 { "name" : "Ingo", "address" : "Blekinge Boulevard 4", "zipCode" : "2630", "city" : "Tåstrup", "location" : { "lat": 55.64556835286053, "lon": 12.27963168387903 } }

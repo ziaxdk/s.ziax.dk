@@ -1,5 +1,5 @@
-module.service('TypeService', [ 'PlaceService',
-  function ( PlaceService ) {
+module.service('TypeService', [ 'GPS', 'PlaceService', 'GazService', '$filter',
+  function ( GPS, PlaceService, GazService, $filter ) {
   var _types = [
     {
       parser: /undefined/,
@@ -24,6 +24,33 @@ module.service('TypeService', [ 'PlaceService',
           content: this.content,
           date: this.date,
           airports: _airports
+        };
+      },
+      fetchFn: function(data) {
+        
+      }
+    },
+    {
+      name: 'gaz',
+      template: 'html/_new_gaz.html',
+      preview: true,
+      initFn: function(scope) {
+        var _t = this;
+        scope.form.purchaseDate = $filter("date")(Date.now(), 'yyyy-MM-dd');
+        scope.disable = true;
+        GazService.vehicles().then(function(resp) { _t.vehicles = resp.data.hits.hits; scope.form.vehicle = _t.vehicles[0].id; });
+      },
+      storeFn: function(meta) {
+        console.log(this);
+        var location = GPS.coords.hasFix ? { lat: GPS.coords.lat, lon: GPS.coords.lon } : { lat: 0, lon: 0 };
+        return {
+          vehicle: this.vehicle,
+          purchaseDateUtc: new Date(this.purchaseDate),
+          odometer: this.odometer,
+          units: this.units,
+          price: this.price,
+          station: this.station,
+          location: location
         };
       },
       fetchFn: function(data) {

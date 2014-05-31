@@ -1,0 +1,4 @@
+{ "index" : { "_index" : "gaz", "_type" : "vehicle", "_id": "st1100" } }
+{ "vendor" : "Honda", "model" : "ST1100", "fuelType" : "Benzin", "year": 2001, "usedBy": [ 1001 ] }
+{ "index" : { "_index" : "gaz", "_type" : "vehicle", "_id": "v50" } }
+{ "vendor" : "Volvo", "model" : "V50", "fuelType" : "Diesel", "year": 2007, "usedBy": [ 1001 ] }

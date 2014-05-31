@@ -1,7 +1,141 @@
 (function () {
 var module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);
+module.provider('GPS', function() {
+  var _intervalMilli;
+  
+  this.intervalVariable = function(value) {
+    _intervalMilli = value;
+  },
+
+  this.$get = ['$interval', '$rootScope', function ($interval, $rootScope) {
+    var watchId,
+        intervalId,
+        updated = false,
+        oldCoords,
+        coords = {
+          hasFix: false,
+          lat: 0,
+          lon: 0
+        };
+  
+  function whenLocated (position) {
+    if (updated || (oldCoords && oldCoords.latitude == position.latitude && oldCoords.longitude == position.longitude)) return;
+    console.log('Updated', position);
+    // angular.extend($rootScope[_rootScopeName], coords, { hasFix: true });
+    // angular.extend(coords, position, { hasFix: true });
+    coords.lat = position.coords.latitude;
+    coords.lon = position.coords.longitude;
+    coords.hasFix = true;
+    $rootScope.$apply();
+    updated = true;
+    oldCoords = coords;
+  }
+
+  function start() {
+    if (watchId) return;
+    if (navigator.geolocation) {
+      // navigator.geolocation.getCurrentPosition(whenLocated);
+      intervalId = $interval(function() { updated = false; }, _intervalMilli || 5000);
+      watchId = navigator.geolocation.watchPosition(whenLocated);
+      console.log('GPS start');
+    }
+    else {
+      console.log('location not supported');
+    }
+  }
+
+  function stop() {
+    if (!watchId) return;
+    navigator.geolocation.clearWatch(watchId);
+    watchId = undefined;
+    $interval.cancel(intervalId);
+    intervalId = undefined;
+      console.log('GPS stop');
+  }
+
+  function reset() {
+    updated = false;
+  }
+
+
+
+  return {
+    coords: coords,
+    start: start,
+    stop: stop,
+    reset: reset
+  };
+}]});
+
+
+
+// module.provider('GPS123', function() {
+//   var _rootScopeName, _intervalMilli;
+  
+//   this.rootScopeVariable = function(name) {
+//     _rootScopeName = name;
+//   },
+//   this.intervalVariable = function(value) {
+//     _intervalMilli = value;
+//   },
+
+//   this.$get = ['$rootScope', '$interval', function($rootScope, $interval) {
+//     var watchId,
+//         intervalId,
+//         updated = false,
+//         oldCoords;
+
+
+//     function startGps() {
+//       console.log('Starting GPS');
+//       if (watchId) return;
+//       $rootScope[_rootScopeName] = { hasFix: false };
+//       intervalId = $interval(function() { updated = false; }, _intervalMilli || 5000);
+
+//       watchId = window.navigator.geolocation.watchPosition(function(position) {
+//         update(position.coords);
+//       }, function(err) {
+//         alert(err);
+//       }, {
+//         maximumAge: 10,
+//         timeout: 90000,
+//         enableHighAccuracy: true
+//       });
+//       console.log('GPS started', watchId);
+//     }
+
+//     function stopGps() {
+//       console.log('Stopping GPS');
+//       if (!watchId) return;
+//       window.navigator.geolocation.clearWatch(watchId);
+//       watchId = undefined;
+//       $interval.cancel(intervalId);
+//       intervalId = undefined;
+//     }
+
+//     function update(coords) {
+//       if (updated || (oldCoords && oldCoords.latitude == coords.latitude && oldCoords.longitude == coords.longitude)) return;
+//       console.log('Updated', coords);
+//       angular.extend($rootScope[_rootScopeName], coords, { hasFix: true });
+//       $rootScope.$apply();
+//       updated = true;
+//       oldCoords = coords;
+//     }
+
+//     function reset() {
+//       updated = false;
+//     }
+
+//     return {
+//       startGps: startGps,
+//       stopGps: stopGps,
+//       reset: reset
+//     };
+//   }];
+// });
+
 // Config
-module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider) {
+module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', 'GPSProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider, GPSProvider) {
   $routeProvider.when('/', {
       templateUrl: "/html/_index.html",
       resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
@@ -62,6 +196,9 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
   L.Icon.Default.imagePath = "/css/images/";
 
+  // GPSProvider.rootScopeVariable('position');
+  // GPSProvider.intervalVariable(10000);
+
 
   // $provide.factory('403', ['$q', function($q) {
   //     return {
@@ -85,16 +222,20 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
 }]);
 
-module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService',
-  function ( $window, $rootScope, $templateCache, GlobalService, LocationService ) {
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService', 'GPS',
+  function ( $window, $rootScope, $templateCache, GlobalService, LocationService, GPS ) {
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
 
   $rootScope.$on('$destroy', function() {
-    LocationService.stop();
-});
+    // LocationService.stop();
+    GPS.stop();
+  });
 
-  LocationService.start();
+  GPS.reset();
+  GPS.start();
+
+  // LocationService.start();
 
   socket.on('news', function (data) {
   });
@@ -212,22 +353,25 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$rout
   });
 }]);
 
-module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'LocationService',
-  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, LocationService ) {
+module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'GazService', 'GPS',
+  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, GazService, GPS ) {
     var id,
-        type;
-    $scope.meta = { };
+        type,
+        watcher;
+    $scope.meta = {
+      coords: GPS.coords
+    };
     $scope.form = { };
     $scope.$watch('meta.type', function(val) {
       scopeType(TypeService.getType(val));
-      if ( LocationService.coords.hasFix && val === 'place' && !$scope.form.input ) {
-        $scope.form.input = LocationService.coords.lat.toFixed(4) + ',' + LocationService.coords.lon.toFixed(4);
+      if ( GPS.coords.hasFix && val === 'place' && !$scope.form.input ) {
+        $scope.form.input = GPS.coords.lat.toFixed(4) + ',' + GPS.coords.lon.toFixed(4);
       }
     });
 
     $scope.submit = function() {
       var f = $scope.form;
-      console.log('$scope.form', f);
+      // console.log('$scope.form', f);
       var save = angular.extend(type.storeFn.call(f, $scope.meta), {
         id: id,
         type: type.name,
@@ -254,6 +398,7 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       $scope.meta.type = obj.name;
       $scope.template = obj.template;
       $scope.preview = obj.preview;
+      $scope.disable = false;
       if (angular.isFunction(obj.initFn)) {
         obj.initFn.call($scope.meta, $scope);
       }
@@ -539,12 +684,13 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     scope: {
       context: '=',
       header: '=',
-      content: '='
+      content: '=',
+      disable: '='
     },
     require: 'ngModel',
     replace: true,
     template:
-      '<div ng-form="formQ">' +
+      '<div ng-form="formQ" ng-if="!disable">' +
         '<div class="form-group" ng-class="{\'has-error\': formQ.q.$invalid }">' +
           '<input type="text" class="form-control" placeholder="Enter something..." name="q" ng-model="form.q" ng-required="!edit">' +
         '</div>' +
@@ -754,7 +900,53 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
       }
     }
   };
+}])
+.directive('zStations', [function() {
+  return {
+    restrict: 'A',
+    template: '<div>' +
+      '<label for="idStation"><a href="javascript:;" ng-click="toggle()">Station</a></label>' +
+      '<div ng-if="!bToggle">' +
+        '<select class="form-control" ng-model="$parent.station" ng-options="station.id as station.source.name for station in stations"></select>' +
+      '</div>' +
+      '<div ng-if="bToggle">' +
+        '<div z-map z-map-marker="location" z-map-marker-icon="tint" style="height: 300px"></div>' +
+      '</div>' +
+    '</div>',
+    scope: {
+      station: '=zStations'
+    },
+    controller: ['$scope', 'GazService', 'GPS', function($scope, GazService, GPS) {
+      $scope.bToggle = false;
+      $scope.f = 'buu';
+      $scope.station = {};
+      $scope.toggle = function() {
+        $scope.bToggle = !$scope.bToggle;
+      };
+
+      var watcher = $scope.$watch(function() { return GPS.coords; }, function(val) {
+        if (!val || !val.hasFix) return;
+        $scope.location = val.lat + ', ' + val.lon;
+        GazService.stationsNear(val).success(function(es) {
+          $scope.stations = es.hits.hits;
+          $scope.station = $scope.stations[0].id;
+          $scope.stations.push({ id: 'new', sort: [0], source: { name: 'new' } });
+
+
+
+        });
+      }, true);
+
+      $scope.$on('$destroy', function() {
+        watcher();
+      });
+
+    }]
+    // link: function(scope, element, attrs) {
+    // }
+  };
 }]);
+
 module.directive('zMap', ['$parse', '$location', 'PlaceService', function ($parse, $location, PlaceService) {
   return {
     restrict: 'A',
@@ -1705,6 +1897,16 @@ module.service('DocumentService', ['$http', 'MessageService', function ($http, M
   };
 }]);
 
+module.service('GazService', ['$http', 'MessageService', function ($http, MessageService) {
+  this.stationsNear = function(coords) {
+    return $http.post('/api/stations_near', coords);
+  };
+
+  this.vehicles = function() {
+    return $http.post('/api/vehicle/list');
+  };
+}]);
+
 module.service('GlobalService', ['$http', function ($http) {
 
 
@@ -1821,6 +2023,7 @@ module.service('PlaceService', [function () {
       { name: 'shopping-cart', type: 'shopping-cart', color: 'darkgreen', title: 'Shopping' },
       { name: 'eye', type: 'eye', color: 'blue', title: 'Viewpoint' },
       { name: 'camera', type: 'camera', color: 'orange', title: 'Photography' },
+      { name: 'tint', type: 'tint', color: 'red', title: 'Droplet' },
       { name: 'home', type: 'home', color: 'red', title: 'Hotel' }
     ],
   getPoi = function (name) {
@@ -1840,8 +2043,8 @@ module.service('PlaceService', [function () {
   };
 }]);
 
-module.service('TypeService', [ 'PlaceService',
-  function ( PlaceService ) {
+module.service('TypeService', [ 'GPS', 'PlaceService', 'GazService', '$filter',
+  function ( GPS, PlaceService, GazService, $filter ) {
   var _types = [
     {
       parser: /undefined/,
@@ -1866,6 +2069,33 @@ module.service('TypeService', [ 'PlaceService',
           content: this.content,
           date: this.date,
           airports: _airports
+        };
+      },
+      fetchFn: function(data) {
+        
+      }
+    },
+    {
+      name: 'gaz',
+      template: 'html/_new_gaz.html',
+      preview: true,
+      initFn: function(scope) {
+        var _t = this;
+        scope.form.purchaseDate = $filter("date")(Date.now(), 'yyyy-MM-dd');
+        scope.disable = true;
+        GazService.vehicles().then(function(resp) { _t.vehicles = resp.data.hits.hits; scope.form.vehicle = _t.vehicles[0].id; });
+      },
+      storeFn: function(meta) {
+        console.log(this);
+        var location = GPS.coords.hasFix ? { lat: GPS.coords.lat, lon: GPS.coords.lon } : { lat: 0, lon: 0 };
+        return {
+          vehicle: this.vehicle,
+          purchaseDateUtc: new Date(this.purchaseDate),
+          odometer: this.odometer,
+          units: this.units,
+          price: this.price,
+          station: this.station,
+          location: location
         };
       },
       fetchFn: function(data) {

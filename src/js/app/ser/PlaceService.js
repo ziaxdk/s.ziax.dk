@@ -12,6 +12,7 @@ module.service('PlaceService', [function () {
       { name: 'shopping-cart', type: 'shopping-cart', color: 'darkgreen', title: 'Shopping' },
       { name: 'eye', type: 'eye', color: 'blue', title: 'Viewpoint' },
       { name: 'camera', type: 'camera', color: 'orange', title: 'Photography' },
+      { name: 'tint', type: 'tint', color: 'red', title: 'Droplet' },
       { name: 'home', type: 'home', color: 'red', title: 'Hotel' }
     ],
   getPoi = function (name) {

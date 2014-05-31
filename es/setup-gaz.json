@@ -41,6 +41,31 @@
           "type": "integer"
         }
       }
+    },
+
+    "vehicle" : {
+      "dynamic": "strict",
+
+      "properties" : {
+        "vendor": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "fuelType": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer"
+        },
+        "usedBy": {
+          "type": "integer"
+        },
+        "createdutc": {
+          "type": "date"
+        }
+      }
     }
 
   }

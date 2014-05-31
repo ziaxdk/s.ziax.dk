@@ -89,7 +89,7 @@
   };
 
   function routes(app) {
-    app.get('/api/scrape', scrape);
+    app.get('/api/scrape', Utils.ensureAuthenticated, scrape);
   }
 
   module.exports = {

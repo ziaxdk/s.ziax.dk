@@ -2,7 +2,8 @@ var es = require('./es.js'),
   // sio = require('./socketio.js'),
   _ = require('lodash'),
   utils = require('./utils'),
-  Q = require('q');
+  Q = require('q'),
+  Gaz = require('./es-gaz.js');
 
 function count() {
   return es.client.count({
@@ -125,7 +126,7 @@ function routes(app) {
   //   }, es.callback(arguments));
   // });
 
-  app.post('/api/document2', utils.ensureAuthenticated, function(req, res) {
+  app.post('/api/document2', utils.ensureAuthenticated, function(req, res, next) {
     var save = req.body,
         type = save.type;
     
@@ -139,12 +140,22 @@ function routes(app) {
       var id = save.id;
       delete save.id;
       save.updatedutc = new Date();
-      es.client.update({ index: es.index, type: type, id: id, body: { doc: save } }, es.callback(arguments));
+      if (type === 'gaz') {
+        Gaz.store(req, res);
+      }
+      else {
+        es.client.update({ index: es.index, type: type, id: id, body: { doc: save } }, es.callback(arguments));
+      }
     }
     else {
       save.clicks = 0;
       save.createdutc = new Date();
-      es.client.index({ index: es.index, type: type, body: save }, es.callback(arguments));
+      if (type === 'gaz') {
+        Gaz.store(req, res, next);
+      }
+      else {
+        es.client.index({ index: es.index, type: type, body: save }, es.callback(arguments));
+      }
     }
   });
 }

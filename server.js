@@ -31,6 +31,7 @@ app.configure('development', function () {
   require('./server/es-q.js').routes(app);
   require('./server/es-aviation.js').routes(app);
   require('./server/es-document.js').routes(app);
+  require('./server/es-gaz.js').routes(app);
   require('./server/scrape-prod.js').routes(app);
   require('./server/socketio.js');
 });
@@ -49,6 +50,7 @@ app.configure('production', function () {
   require('./server/es-q.js').routes(app);
   require('./server/es-aviation.js').routes(app);
   require('./server/es-document.js').routes(app);
+  require('./server/es-gaz.js').routes(app);
   require('./server/scrape-prod.js').routes(app);
   require('./server/socketio.js');
 });

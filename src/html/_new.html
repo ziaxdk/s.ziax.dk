@@ -5,7 +5,7 @@
   <div ng-if="MainCtrl.me.isAuth">
     <form role="form" ng-submit="submit()" novalidate name="formInput">
 
-      <div z-input-new ng-model="form.input" context="meta.type" header="form.header" content="form.content"></div>
+      <div z-input-new ng-model="form.input" context="meta.type" header="form.header" content="form.content" disable="disable"></div>
       <!--<pre>{{form}}
 {{meta}}</pre>-->
 
@@ -19,10 +19,6 @@
           <!-- <div z-select2="NewCtrl.tags.data.facets.tags.terms" ng-model="NewCtrl.form.tags"></div> -->
         </div>
 
-<!--         <div class="checkbox pull-right">
-          <input type="checkbox" name="authOnly" ng-model="form.onlyAuth" /> Auth only?
-        </div>
- -->
         <div class="btn-group pull-right">
           <button type="button" class="btn" ng-class="{'btn-success': !form.onlyAuth, 'btn-default': form.onlyAuth}" ng-model="form.onlyAuth" ng-click="form.onlyAuth=false">Anonymous</button>
           <button type="button" class="btn" ng-class="{'btn-success': form.onlyAuth, 'btn-default': !form.onlyAuth}" ng-model="form.onlyAuth" ng-click="form.onlyAuth=true">Authenticated</button>

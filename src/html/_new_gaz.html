@@ -1,0 +1,28 @@
+<div class="form-group">
+  <label for="idVehicle">Vehicle</label>
+  <select class="form-control" ng-model="form.vehicle" ng-options="vehicle.id as (vehicle.source.vendor + ' ' + vehicle.source.model) for vehicle in meta.vehicles"></select>
+</div>
+
+<div class="form-group" ng-class="{'has-error': formInput.date.$invalid }">
+  <label for="idDate">Purchase date</label>
+  <input type="date" name="date" class="form-control" id="idDate" ng-model="form.purchaseDate" required />
+</div>
+
+<div class="form-group" ng-class="{'has-error': formInput.odometer.$invalid }">
+  <label for="idOdometer">Odometer</label>
+  <input type="number" name="odometer" class="form-control" id="idOdometer" ng-model="form.odometer" ng-pattern="/([0-9])/" required />
+</div>
+
+<div class="form-group" ng-class="{'has-error': formInput.price.$invalid }">
+  <label for="idPrice">Price</label>
+  <input type="number" name="price" class="form-control" id="idPrice" ng-model="form.price"  required />
+</div>
+
+<div class="form-group" ng-class="{'has-error': formInput.units.$invalid }">
+  <label for="idUnits">Units</label>
+  <input type="number" name="units" class="form-control" id="idUnits" ng-model="form.units" ng-pattern="/([0-9])/" required />
+</div>
+
+<div class="form-group" ng-class="">
+  <div z-stations="form.station"></div>
+</div>

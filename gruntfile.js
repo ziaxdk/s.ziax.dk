@@ -39,6 +39,26 @@ module.exports = function (grunt) {
 
   grunt.registerTask('smoke', ['express:prod', 'protractor:prod']);
 
+  grunt.registerTask('setupall', [
+    'http:deleteAll',
+    'elasticsearch:play:aviation',
+    'elasticsearch:play:gaz',
+    'elasticsearch:backup:prod2dev',
+    'http:iss',
+    'http:airport',
+    'http:gazStation',
+    'http:gazVehicle',
+    'http:gaz'
+    ]);
+
+  grunt.registerTask('setupgaz', [
+    'http:deleteGaz',
+    'http:deleteGazStations',
+    'elasticsearch:play:gaz',
+    'http:gazStation',
+    'http:gazVehicle',
+    'http:gaz'
+    ]);
 
   grunt.registerTask('gitrev', function () {
     buildno = shelljs.exec('git rev-parse --short HEAD', { silent: true }).output.replace('\n', '');

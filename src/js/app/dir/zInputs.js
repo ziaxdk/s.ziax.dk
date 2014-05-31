@@ -5,12 +5,13 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     scope: {
       context: '=',
       header: '=',
-      content: '='
+      content: '=',
+      disable: '='
     },
     require: 'ngModel',
     replace: true,
     template:
-      '<div ng-form="formQ">' +
+      '<div ng-form="formQ" ng-if="!disable">' +
         '<div class="form-group" ng-class="{\'has-error\': formQ.q.$invalid }">' +
           '<input type="text" class="form-control" placeholder="Enter something..." name="q" ng-model="form.q" ng-required="!edit">' +
         '</div>' +
@@ -219,5 +220,50 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
         });
       }
     }
+  };
+}])
+.directive('zStations', [function() {
+  return {
+    restrict: 'A',
+    template: '<div>' +
+      '<label for="idStation"><a href="javascript:;" ng-click="toggle()">Station</a></label>' +
+      '<div ng-if="!bToggle">' +
+        '<select class="form-control" ng-model="$parent.station" ng-options="station.id as station.source.name for station in stations"></select>' +
+      '</div>' +
+      '<div ng-if="bToggle">' +
+        '<div z-map z-map-marker="location" z-map-marker-icon="tint" style="height: 300px"></div>' +
+      '</div>' +
+    '</div>',
+    scope: {
+      station: '=zStations'
+    },
+    controller: ['$scope', 'GazService', 'GPS', function($scope, GazService, GPS) {
+      $scope.bToggle = false;
+      $scope.f = 'buu';
+      $scope.station = {};
+      $scope.toggle = function() {
+        $scope.bToggle = !$scope.bToggle;
+      };
+
+      var watcher = $scope.$watch(function() { return GPS.coords; }, function(val) {
+        if (!val || !val.hasFix) return;
+        $scope.location = val.lat + ', ' + val.lon;
+        GazService.stationsNear(val).success(function(es) {
+          $scope.stations = es.hits.hits;
+          $scope.station = $scope.stations[0].id;
+          $scope.stations.push({ id: 'new', sort: [0], source: { name: 'new' } });
+
+
+
+        });
+      }, true);
+
+      $scope.$on('$destroy', function() {
+        watcher();
+      });
+
+    }]
+    // link: function(scope, element, attrs) {
+    // }
   };
 }]);

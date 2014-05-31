@@ -1,5 +1,139 @@
+module.provider('GPS', function() {
+  var _intervalMilli;
+  
+  this.intervalVariable = function(value) {
+    _intervalMilli = value;
+  },
+
+  this.$get = ['$interval', '$rootScope', function ($interval, $rootScope) {
+    var watchId,
+        intervalId,
+        updated = false,
+        oldCoords,
+        coords = {
+          hasFix: false,
+          lat: 0,
+          lon: 0
+        };
+  
+  function whenLocated (position) {
+    if (updated || (oldCoords && oldCoords.latitude == position.latitude && oldCoords.longitude == position.longitude)) return;
+    console.log('Updated', position);
+    // angular.extend($rootScope[_rootScopeName], coords, { hasFix: true });
+    // angular.extend(coords, position, { hasFix: true });
+    coords.lat = position.coords.latitude;
+    coords.lon = position.coords.longitude;
+    coords.hasFix = true;
+    $rootScope.$apply();
+    updated = true;
+    oldCoords = coords;
+  }
+
+  function start() {
+    if (watchId) return;
+    if (navigator.geolocation) {
+      // navigator.geolocation.getCurrentPosition(whenLocated);
+      intervalId = $interval(function() { updated = false; }, _intervalMilli || 5000);
+      watchId = navigator.geolocation.watchPosition(whenLocated);
+      console.log('GPS start');
+    }
+    else {
+      console.log('location not supported');
+    }
+  }
+
+  function stop() {
+    if (!watchId) return;
+    navigator.geolocation.clearWatch(watchId);
+    watchId = undefined;
+    $interval.cancel(intervalId);
+    intervalId = undefined;
+      console.log('GPS stop');
+  }
+
+  function reset() {
+    updated = false;
+  }
+
+
+
+  return {
+    coords: coords,
+    start: start,
+    stop: stop,
+    reset: reset
+  };
+}]});
+
+
+
+// module.provider('GPS123', function() {
+//   var _rootScopeName, _intervalMilli;
+  
+//   this.rootScopeVariable = function(name) {
+//     _rootScopeName = name;
+//   },
+//   this.intervalVariable = function(value) {
+//     _intervalMilli = value;
+//   },
+
+//   this.$get = ['$rootScope', '$interval', function($rootScope, $interval) {
+//     var watchId,
+//         intervalId,
+//         updated = false,
+//         oldCoords;
+
+
+//     function startGps() {
+//       console.log('Starting GPS');
+//       if (watchId) return;
+//       $rootScope[_rootScopeName] = { hasFix: false };
+//       intervalId = $interval(function() { updated = false; }, _intervalMilli || 5000);
+
+//       watchId = window.navigator.geolocation.watchPosition(function(position) {
+//         update(position.coords);
+//       }, function(err) {
+//         alert(err);
+//       }, {
+//         maximumAge: 10,
+//         timeout: 90000,
+//         enableHighAccuracy: true
+//       });
+//       console.log('GPS started', watchId);
+//     }
+
+//     function stopGps() {
+//       console.log('Stopping GPS');
+//       if (!watchId) return;
+//       window.navigator.geolocation.clearWatch(watchId);
+//       watchId = undefined;
+//       $interval.cancel(intervalId);
+//       intervalId = undefined;
+//     }
+
+//     function update(coords) {
+//       if (updated || (oldCoords && oldCoords.latitude == coords.latitude && oldCoords.longitude == coords.longitude)) return;
+//       console.log('Updated', coords);
+//       angular.extend($rootScope[_rootScopeName], coords, { hasFix: true });
+//       $rootScope.$apply();
+//       updated = true;
+//       oldCoords = coords;
+//     }
+
+//     function reset() {
+//       updated = false;
+//     }
+
+//     return {
+//       startGps: startGps,
+//       stopGps: stopGps,
+//       reset: reset
+//     };
+//   }];
+// });
+
 // Config
-module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider) {
+module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', 'GPSProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider, GPSProvider) {
   $routeProvider.when('/', {
       templateUrl: "/html/_index.html",
       resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
@@ -60,6 +194,9 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
   L.Icon.Default.imagePath = "/css/images/";
 
+  // GPSProvider.rootScopeVariable('position');
+  // GPSProvider.intervalVariable(10000);
+
 
   // $provide.factory('403', ['$q', function($q) {
   //     return {
@@ -83,16 +220,20 @@ module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvi
 
 }]);
 
-module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService',
-  function ( $window, $rootScope, $templateCache, GlobalService, LocationService ) {
+module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService', 'GPS',
+  function ( $window, $rootScope, $templateCache, GlobalService, LocationService, GPS ) {
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
 
   $rootScope.$on('$destroy', function() {
-    LocationService.stop();
-});
+    // LocationService.stop();
+    GPS.stop();
+  });
 
-  LocationService.start();
+  GPS.reset();
+  GPS.start();
+
+  // LocationService.start();
 
   socket.on('news', function (data) {
   });
