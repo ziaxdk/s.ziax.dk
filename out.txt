@@ -1,0 +1,415 @@
+ziax-dash@0.0.1 D:\Ziax\Desktop\s.ziax.dk
+├── async@0.2.10
+├─┬ bunyan@0.22.3
+│ ├── dtrace-provider@0.2.8
+│ └─┬ mv@2.0.0
+│   ├── mkdirp@0.3.5
+│   ├── ncp@0.4.2
+│   └── rimraf@2.2.6
+├─┬ cheerio@0.13.1
+│ ├─┬ CSSselect@0.4.1
+│ │ ├── CSSwhat@0.4.5
+│ │ └─┬ domutils@1.4.3
+│ │   └── domelementtype@1.1.1
+│ ├── entities@0.5.0
+│ ├─┬ htmlparser2@3.4.0
+│ │ ├── domelementtype@1.1.1
+│ │ ├── domhandler@2.2.0
+│ │ ├── domutils@1.3.0
+│ │ └─┬ readable-stream@1.1.13-1
+│ │   ├── core-util-is@1.0.1
+│ │   ├── inherits@2.0.1
+│ │   ├── isarray@0.0.1
+│ │   └── string_decoder@0.10.25-1
+│ └── underscore@1.5.2
+├─┬ csv-streamify@0.9.1
+│ └─┬ readable-stream@1.1.13-1
+│   ├── core-util-is@1.0.1
+│   ├── inherits@2.0.1
+│   ├── isarray@0.0.1
+│   └── string_decoder@0.10.25-1
+├── deep-extend@0.2.8
+├─┬ elasticsearch@1.5.14
+│ ├─┬ chalk@0.4.0
+│ │ ├── ansi-styles@1.0.0
+│ │ ├── has-color@0.1.7
+│ │ └── strip-ansi@0.1.1
+│ ├── forever-agent@0.5.2
+│ ├── lodash-node@2.4.1
+│ └── when@2.8.0
+├─┬ grunt@0.4.4
+│ ├── async@0.1.22
+│ ├── coffee-script@1.3.3
+│ ├── colors@0.6.2
+│ ├── dateformat@1.0.2-1.2.3
+│ ├── eventemitter2@0.4.13
+│ ├── exit@0.1.2
+│ ├─┬ findup-sync@0.1.3
+│ │ ├─┬ glob@3.2.9
+│ │ │ └── inherits@2.0.1
+│ │ └── lodash@2.4.1
+│ ├── getobject@0.1.0
+│ ├─┬ glob@3.1.21
+│ │ ├── graceful-fs@1.2.3
+│ │ └── inherits@1.0.0
+│ ├── grunt-legacy-util@0.1.2
+│ ├── hooker@0.2.3
+│ ├── iconv-lite@0.2.11
+│ ├─┬ js-yaml@2.0.5
+│ │ ├─┬ argparse@0.1.15
+│ │ │ ├── underscore@1.4.4
+│ │ │ └── underscore.string@2.3.3
+│ │ └── esprima@1.0.4
+│ ├── lodash@0.9.2
+│ ├─┬ minimatch@0.2.14
+│ │ ├── lru-cache@2.5.0
+│ │ └── sigmund@1.0.0
+│ ├─┬ nopt@1.0.10
+│ │ └── abbrev@1.0.4
+│ ├── rimraf@2.2.6
+│ ├── underscore.string@2.2.1
+│ └── which@1.0.5
+├─┬ grunt-contrib-clean@0.5.0
+│ └── rimraf@2.2.6
+├─┬ grunt-contrib-compress@0.5.3
+│ ├─┬ archiver@0.4.10
+│ │ ├── iconv-lite@0.2.11
+│ │ └─┬ readable-stream@1.0.27-1
+│ │   ├── core-util-is@1.0.1
+│ │   ├── inherits@2.0.1
+│ │   ├── isarray@0.0.1
+│ │   └── string_decoder@0.10.25-1
+│ ├─┬ lazystream@0.1.0
+│ │ └─┬ readable-stream@1.0.27-1
+│ │   ├── core-util-is@1.0.1
+│ │   ├── inherits@2.0.1
+│ │   ├── isarray@0.0.1
+│ │   └── string_decoder@0.10.25-1
+│ └── prettysize@0.0.3
+├── grunt-contrib-concat@0.3.0
+├── grunt-contrib-copy@0.4.1
+├─┬ grunt-contrib-cssmin@0.6.2
+│ ├─┬ clean-css@1.1.7
+│ │ └── commander@2.0.0
+│ └─┬ grunt-lib-contrib@0.6.1
+│   └── zlib-browserify@0.0.1
+├─┬ grunt-contrib-htmlmin@0.1.3
+│ ├─┬ grunt-lib-contrib@0.6.1
+│ │ └── zlib-browserify@0.0.1
+│ └── html-minifier@0.5.6
+├─┬ grunt-contrib-less@0.8.3
+│ ├─┬ grunt-lib-contrib@0.6.1
+│ │ └── zlib-browserify@0.0.1
+│ └─┬ less@1.5.1
+│   ├─┬ clean-css@2.0.8
+│   │ └── commander@2.0.0
+│   ├── mime@1.2.11
+│   ├── mkdirp@0.3.5
+│   └─┬ source-map@0.1.33
+│     └── amdefine@0.1.0
+├─┬ grunt-contrib-uglify@0.2.7
+│ ├─┬ grunt-lib-contrib@0.6.1
+│ │ └── zlib-browserify@0.0.1
+│ └─┬ uglify-js@2.4.13
+│   ├─┬ optimist@0.3.7
+│   │ └── wordwrap@0.0.2
+│   ├─┬ source-map@0.1.33
+│   │ └── amdefine@0.1.0
+│   └── uglify-to-browserify@1.0.2
+├─┬ grunt-contrib-watch@0.5.3
+│ ├─┬ gaze@0.4.3
+│ │ └─┬ globule@0.1.0
+│ │   ├─┬ glob@3.1.21
+│ │   │ ├── graceful-fs@1.2.3
+│ │   │ └── inherits@1.0.0
+│ │   ├── lodash@1.0.1
+│ │   └─┬ minimatch@0.2.14
+│ │     ├── lru-cache@2.5.0
+│ │     └── sigmund@1.0.0
+│ └─┬ tiny-lr@0.0.4
+│   ├── debug@0.7.4
+│   ├── faye-websocket@0.4.4
+│   ├─┬ noptify@0.0.3
+│   │ └─┬ nopt@2.0.0
+│   │   └── abbrev@1.0.4
+│   └── qs@0.5.6
+├── grunt-express-server@0.4.17
+├─┬ grunt-ftp-deploy@0.0.10
+│ ├─┬ jsftp@0.6.0
+│ │ └── streamer@0.2.1
+│ └─┬ prompt@0.2.12
+│   ├── pkginfo@0.3.0
+│   ├─┬ read@1.0.5
+│   │ └── mute-stream@0.0.4
+│   ├── revalidator@0.1.7
+│   ├─┬ utile@0.2.1
+│   │ ├── deep-equal@0.2.1
+│   │ ├── i@0.3.2
+│   │ ├── mkdirp@0.4.0
+│   │ ├── ncp@0.4.2
+│   │ └── rimraf@2.2.6
+│   └─┬ winston@0.6.2
+│     ├── async@0.1.22
+│     ├── colors@0.6.2
+│     ├── cycle@1.0.3
+│     ├── eyes@0.1.8
+│     ├── pkginfo@0.2.3
+│     ├── request@2.9.203
+│     └── stack-trace@0.0.9
+├── grunt-htmlrefs@0.4.2
+├─┬ grunt-http@1.4.0
+│ ├── async@0.6.2
+│ ├── aws-sign2@0.5.0
+│ ├─┬ form-data@0.1.2
+│ │ ├── async@0.2.10
+│ │ ├─┬ combined-stream@0.0.4
+│ │ │ └── delayed-stream@0.0.5
+│ │ └── mime@1.2.11
+│ ├─┬ hawk@1.0.0
+│ │ ├── boom@0.4.2
+│ │ ├── cryptiles@0.2.2
+│ │ ├── hoek@0.9.1
+│ │ └── sntp@0.2.4
+│ ├─┬ http-signature@0.10.0
+│ │ ├── asn1@0.1.11
+│ │ ├── assert-plus@0.1.2
+│ │ └── ctype@0.5.2
+│ ├── oauth-sign@0.3.0
+│ ├─┬ request@2.34.0
+│ │ ├── forever-agent@0.5.2
+│ │ ├── json-stringify-safe@5.0.0
+│ │ ├── mime@1.2.11
+│ │ ├── node-uuid@1.4.1
+│ │ └── qs@0.6.6
+│ ├─┬ tough-cookie@0.12.1
+│ │ └── punycode@1.2.4
+│ └── tunnel-agent@0.3.0
+├─┬ grunt-karma@0.6.2
+│ └─┬ optimist@0.6.1
+│   ├── minimist@0.0.8
+│   └── wordwrap@0.0.2
+├── grunt-protractor-runner@0.2.4
+├── grunt-remove-logging@0.2.0
+├── grunt-template@0.2.3
+├─┬ gulp@3.6.2
+│ ├── archy@0.0.2
+│ ├─┬ chalk@0.4.0
+│ │ ├── ansi-styles@1.0.0
+│ │ ├── has-color@0.1.7
+│ │ └── strip-ansi@0.1.1
+│ ├── deprecated@0.0.1
+│ ├─┬ gulp-util@2.2.14
+│ │ ├── dateformat@1.0.8-1.2.3
+│ │ ├── lodash._reinterpolate@2.4.1
+│ │ ├─┬ lodash.template@2.4.1
+│ │ │ ├── lodash._escapestringchar@2.4.1
+│ │ │ ├─┬ lodash.defaults@2.4.1
+│ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ ├─┬ lodash.escape@2.4.1
+│ │ │ │ ├─┬ lodash._escapehtmlchar@2.4.1
+│ │ │ │ │ └── lodash._htmlescapes@2.4.1
+│ │ │ │ └─┬ lodash._reunescapedhtml@2.4.1
+│ │ │ │   └── lodash._htmlescapes@2.4.1
+│ │ │ ├─┬ lodash.keys@2.4.1
+│ │ │ │ ├── lodash._isnative@2.4.1
+│ │ │ │ ├─┬ lodash._shimkeys@2.4.1
+│ │ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ │ └─┬ lodash.isobject@2.4.1
+│ │ │ │   └── lodash._objecttypes@2.4.1
+│ │ │ ├── lodash.templatesettings@2.4.1
+│ │ │ └── lodash.values@2.4.1
+│ │ ├── minimist@0.0.10
+│ │ ├─┬ multipipe@0.0.2
+│ │ │ └── duplexer2@0.0.1
+│ │ ├─┬ through2@0.4.2
+│ │ │ ├─┬ readable-stream@1.0.27-1
+│ │ │ │ ├── core-util-is@1.0.1
+│ │ │ │ ├── inherits@2.0.1
+│ │ │ │ ├── isarray@0.0.1
+│ │ │ │ └── string_decoder@0.10.25-1
+│ │ │ └─┬ xtend@2.1.2
+│ │ │   └── object-keys@0.4.0
+│ │ └─┬ vinyl@0.2.3
+│ │   └── clone-stats@0.0.1
+│ ├─┬ liftoff@0.9.8
+│ │ ├── extend@1.2.1
+│ │ ├─┬ findup-sync@0.1.3
+│ │ │ └─┬ glob@3.2.11
+│ │ │   ├── inherits@2.0.1
+│ │ │   └─┬ minimatch@0.3.0
+│ │ │     ├── lru-cache@2.5.0
+│ │ │     └── sigmund@1.0.0
+│ │ ├── minimist@0.0.10
+│ │ └── resolve@0.6.3
+│ ├─┬ orchestrator@0.3.3
+│ │ └── sequencify@0.0.7
+│ ├── pretty-hrtime@0.2.1
+│ ├── semver@2.3.0
+│ ├── tildify@0.2.0
+│ └─┬ vinyl-fs@0.1.4
+│   ├─┬ glob-stream@3.1.9
+│   │ ├─┬ glob@3.2.11
+│   │ │ ├── inherits@2.0.1
+│   │ │ └─┬ minimatch@0.3.0
+│   │ │   ├── lru-cache@2.5.0
+│   │ │   └── sigmund@1.0.0
+│   │ ├── glob2base@0.0.8
+│   │ ├─┬ minimatch@0.2.14
+│   │ │ ├── lru-cache@2.5.0
+│   │ │ └── sigmund@1.0.0
+│   │ ├── ordered-read-streams@0.0.7
+│   │ ├── through@2.3.4
+│   │ └── unique-stream@0.0.5
+│   ├─┬ glob-watcher@0.0.6
+│   │ └─┬ gaze@0.5.1
+│   │   └─┬ globule@0.1.0
+│   │     ├─┬ glob@3.1.21
+│   │     │ ├── graceful-fs@1.2.3
+│   │     │ └── inherits@1.0.0
+│   │     ├── lodash@1.0.1
+│   │     └─┬ minimatch@0.2.14
+│   │       ├── lru-cache@2.5.0
+│   │       └── sigmund@1.0.0
+│   ├── graceful-fs@2.0.3
+│   ├── map-stream@0.1.0
+│   ├── mkdirp@0.3.5
+│   └─┬ vinyl@0.2.3
+│     └── clone-stats@0.0.1
+├─┬ karma@0.10.10
+│ ├─┬ chokidar@0.8.2
+│ │ └── recursive-readdir@0.0.2
+│ ├── coffee-script@1.6.3
+│ ├── colors@0.6.0-1
+│ ├─┬ connect@2.8.8
+│ │ ├── buffer-crc32@0.2.1
+│ │ ├── bytes@0.2.0
+│ │ ├── cookie@0.1.0
+│ │ ├── cookie-signature@1.0.1
+│ │ ├── debug@0.8.0
+│ │ ├── formidable@1.0.14
+│ │ ├── fresh@0.2.0
+│ │ ├── methods@0.0.1
+│ │ ├── pause@0.0.1
+│ │ ├── qs@0.6.5
+│ │ ├─┬ send@0.1.4
+│ │ │ └── range-parser@0.0.4
+│ │ └── uid2@0.0.2
+│ ├── di@0.0.1
+│ ├─┬ glob@3.1.21
+│ │ └── inherits@1.0.0
+│ ├── graceful-fs@1.2.3
+│ ├─┬ http-proxy@0.10.4
+│ │ ├─┬ optimist@0.6.1
+│ │ │ ├── minimist@0.0.8
+│ │ │ └── wordwrap@0.0.2
+│ │ ├── pkginfo@0.3.0
+│ │ └─┬ utile@0.2.1
+│ │   ├── deep-equal@0.2.1
+│ │   ├── i@0.3.2
+│ │   ├── mkdirp@0.4.0
+│ │   └── ncp@0.4.2
+│ ├── lodash@1.1.1
+│ ├─┬ log4js@0.6.14
+│ │ ├── async@0.1.15
+│ │ ├─┬ readable-stream@1.0.27-1
+│ │ │ ├── core-util-is@1.0.1
+│ │ │ ├── inherits@2.0.1
+│ │ │ ├── isarray@0.0.1
+│ │ │ └── string_decoder@0.10.25-1
+│ │ └── semver@1.1.4
+│ ├── mime@1.2.11
+│ ├─┬ minimatch@0.2.14
+│ │ ├── lru-cache@2.5.0
+│ │ └── sigmund@1.0.0
+│ ├─┬ optimist@0.3.7
+│ │ └── wordwrap@0.0.2
+│ ├── q@0.9.7
+│ ├── rimraf@2.1.4
+│ ├── UNMET DEPENDENCY socket.io ~0.9.13
+│ └─┬ useragent@2.0.8
+│   └── lru-cache@2.2.4
+├── karma-chrome-launcher@0.1.3
+├─┬ karma-coffee-preprocessor@0.1.3
+│ └─┬ coffee-script@1.7.1
+│   └── mkdirp@0.3.5
+├── karma-commonjs@0.0.2
+├── karma-firefox-launcher@0.1.3
+├── karma-html2js-preprocessor@0.1.0
+├── karma-jasmine@0.1.5
+├─┬ karma-phantomjs-launcher@0.1.4
+│ └─┬ phantomjs@1.9.7-4
+│   ├── adm-zip@0.2.1
+│   ├── kew@0.1.7
+│   ├── mkdirp@0.3.5
+│   ├── ncp@0.4.2
+│   ├─┬ npmconf@0.0.24
+│   │ ├─┬ config-chain@1.1.8
+│   │ │ └── proto-list@1.2.2
+│   │ ├── inherits@1.0.0
+│   │ ├── ini@1.1.0
+│   │ ├─┬ nopt@2.2.0
+│   │ │ └── abbrev@1.0.4
+│   │ ├── once@1.1.1
+│   │ ├── osenv@0.0.3
+│   │ └── semver@1.1.4
+│   ├── rimraf@2.2.6
+│   └── which@1.0.5
+├── karma-requirejs@0.2.1
+├── karma-script-launcher@0.1.0
+├── lodash@2.4.1
+├─┬ passport@0.1.18
+│ ├── pause@0.0.1
+│ └── pkginfo@0.2.3
+├─┬ passport-github@0.1.5
+│ ├─┬ passport-oauth@0.1.15
+│ │ └── oauth@0.9.11
+│ └── pkginfo@0.2.3
+├─┬ passport-google-oauth@0.1.5
+│ ├─┬ passport-oauth@0.1.15
+│ │ └── oauth@0.9.11
+│ └── pkginfo@0.2.3
+├─┬ passport-remember-me@0.0.1
+│ └── pkginfo@0.2.3
+├── promise@3.2.0
+├─┬ protractor@0.19.0
+│ ├── adm-zip@0.4.4
+│ ├─┬ glob@3.2.9
+│ │ ├── inherits@2.0.1
+│ │ └─┬ minimatch@0.2.14
+│ │   ├── lru-cache@2.5.0
+│ │   └── sigmund@1.0.0
+│ ├── minijasminenode@0.4.0
+│ ├─┬ optimist@0.6.1
+│ │ ├── minimist@0.0.8
+│ │ └── wordwrap@0.0.2
+│ ├── q@1.0.0
+│ ├── saucelabs@0.1.1
+│ └── selenium-webdriver@2.39.0
+├── q@1.0.1
+├─┬ request@2.33.0
+│ ├── aws-sign2@0.5.0
+│ ├── forever-agent@0.5.2
+│ ├─┬ form-data@0.1.2
+│ │ └─┬ combined-stream@0.0.4
+│ │   └── delayed-stream@0.0.5
+│ ├─┬ hawk@1.0.0
+│ │ ├── boom@0.4.2
+│ │ ├── cryptiles@0.2.2
+│ │ ├── hoek@0.9.1
+│ │ └── sntp@0.2.4
+│ ├─┬ http-signature@0.10.0
+│ │ ├── asn1@0.1.11
+│ │ ├── assert-plus@0.1.2
+│ │ └── ctype@0.5.2
+│ ├── json-stringify-safe@5.0.0
+│ ├── mime@1.2.11
+│ ├── node-uuid@1.4.1
+│ ├── oauth-sign@0.3.0
+│ ├── qs@0.6.6
+│ ├─┬ tough-cookie@0.12.1
+│ │ └── punycode@1.2.4
+│ └── tunnel-agent@0.3.0
+├── requirejs@2.1.11
+├── selenium-webdriver@2.32.1
+└── shelljs@0.2.6
+

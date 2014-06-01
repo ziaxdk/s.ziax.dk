@@ -20,7 +20,7 @@ function routes(app) {
   //   // es.client.count({ _index: es.index, _type: es.types.join() }, undefined, es.callback(arguments));
   // });
 
-  app.post('/api/star', function(req) {
+  app.post('/api/star', utils.ensureAuthenticated, function(req) {
     es.client.update({
       index: es.index,
       type: req.body.type,

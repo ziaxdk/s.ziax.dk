@@ -226,6 +226,7 @@ module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'Locatio
   function ( $window, $rootScope, $templateCache, GlobalService, LocationService, GPS ) {
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
+      // socket = io();
 
   $rootScope.$on('$destroy', function() {
     // LocationService.stop();
@@ -237,14 +238,13 @@ module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'Locatio
 
   // LocationService.start();
 
-  socket.on('news', function (data) {
-  });
+  // socket.on('news', function (data) {
+  // });
 
   socket.on('connect', function (data) {
+    // console.log( 'connect', data);
     $rootScope.$evalAsync(function () {
-      // console.log(data);
-      if (!data) return;
-      GlobalService.count = data.count;
+      GlobalService.count = data ? data.count : 'n/a';
     });
   });
 }]);

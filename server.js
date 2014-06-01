@@ -1,31 +1,37 @@
 var express = require('express'),
-  http = require('http'),
-  io = require('socket.io'),
-  app = express(),
-  server = http.createServer(app),
-  passport = require('passport'),
-  sio = io.listen(server),
-  Config = require('./_config.json'),
-  utils = require('./server/utils.js'),
-  port = process.env.PORT || 8081;
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+
+    http = require('http'),
+    app = express(),
+    server = http.createServer(app),
+    passport = require('passport'),
+
+    io = require('socket.io'),
+    sio = io.listen(server),
+    Config = require('./_config.json'),
+    utils = require('./server/utils.js'),
+    port = process.env.PORT || 8081,
+    env = process.env.NODE_ENV || 'development';
 
 module.exports = {
   app: app,
   sio: sio
 };
 
-
-app.use(express.cookieParser());
-app.use(express.urlencoded());
-app.use(express.json());
-app.use(express.session({ secret: 'keyboard like ziax dash', key: 'dash.ziax.dk' }));
+app.use(cookieParser());
+app.use(bodyParser());
 app.use(express.static(__dirname + "/src"));
+app.use(session({ secret: 'keyboard like ziax dash', key: 'dash.ziax.dk' }));
 
-app.configure('development', function () {
+if ('development' === env) {
   console.log("configure development");
-  Config.me = 'http://localhost:' + process.env.PORT + '/';
+  app.enable('trust proxy');
   sio.set('transports', ['websocket']);
   sio.set('log level', 1);
+
+  Config.me = 'http://localhost:' + port + '/';
   require('./server/auth.js');
   require('./server/es.js').routes(app);
   require('./server/es-q.js').routes(app);
@@ -34,10 +40,10 @@ app.configure('development', function () {
   require('./server/es-gaz.js').routes(app);
   require('./server/scrape-prod.js').routes(app);
   require('./server/socketio.js');
-});
-
-app.configure('production', function () {
+}
+else if ('production' == env) {
   console.log("configure production");
+  app.enable('trust proxy');
   port = 8081;
   Config.me = Config.host + '/';
   sio.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
@@ -45,6 +51,7 @@ app.configure('production', function () {
   sio.enable('browser client minification');
   sio.enable('browser client etag');
   sio.enable('browser client gzip');
+
   require('./server/auth.js');
   require('./server/es.js').routes(app);
   require('./server/es-q.js').routes(app);
@@ -53,7 +60,7 @@ app.configure('production', function () {
   require('./server/es-gaz.js').routes(app);
   require('./server/scrape-prod.js').routes(app);
   require('./server/socketio.js');
-});
+}
 
 
 server.listen(port, function () {
