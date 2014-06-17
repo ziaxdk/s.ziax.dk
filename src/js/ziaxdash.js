@@ -2084,7 +2084,7 @@ module.service('TypeService', [ 'GPS', 'PlaceService', 'GazService', '$filter',
     {
       name: 'gaz',
       template: 'html/_new_gaz.html',
-      preview: true,
+      preview: false,
       initFn: function(scope) {
         var _t = this;
         scope.form.purchaseDate = $filter("date")(Date.now(), 'yyyy-MM-dd');

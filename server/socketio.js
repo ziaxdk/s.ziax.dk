@@ -10,7 +10,7 @@ SIO.sockets.on('connection', function (socket) {
 });
 
 function status() {
-  console.log(SIO);
+  // console.log(SIO);
 }
 
 function plusOne() {

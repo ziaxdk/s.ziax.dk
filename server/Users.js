@@ -1,26 +1,22 @@
-(function () {
-  var _ = require('lodash');
+var _ = require('lodash'),
+    _users = require('../_config.json').users;
 
-  var _users = [
-      { id: '1001', email: 'kenneth@ziax.dk', name: 'Kenneth Olsen' }
-    ];
+function getByEmail(email) {
+  return _.find(_users, function (user) { return email === user.email; });
+}
 
-  function getByEmail(email) {
-    return _.find(_users, function (user) { return email === user.email; });
-  }
+function getById(id) {
+  if (!id) return;
+  return _.find(_users, function (user) { return id.toString() === user.id; });
+}
 
-  function getById(id) {
-    return _.find(_users, function (user) { return id === user.id; });
-  }
+function existsByEmail(email) {
+  return !!getByEmail(email);
+}
 
-  function existsByEmail(email) {
-    return !!getByEmail(email);
-  }
-
-  module.exports = {
-    existsByEmail: existsByEmail,
-    getByEmail: getByEmail,
-    getById: getById,
-    users: _users
-  };
-}());
+module.exports = {
+  existsByEmail: existsByEmail,
+  getByEmail: getByEmail,
+  getById: getById,
+  users: _users
+};

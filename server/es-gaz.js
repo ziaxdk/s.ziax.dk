@@ -1,4 +1,6 @@
 var deepExtend = require('deep-extend'),
+    Q = require('q'),
+    gazValidator = require('amanda')('json'),
     async = require('async'),
     _ = require('lodash'),
     utils = require('./utils.js'),
@@ -70,12 +72,63 @@ function routes(app) {
   });
 }
 
+function schema() {
+  return {
+    type: 'object',
+    properties: {
+      odometer: {
+        required: true,
+        type: 'number'
+      },
+      onlyAuth: {
+        required: true,
+        type: 'boolean'
+      },
+      price: {
+        required: true,
+        type: 'number'
+      },
+      purchaseDateUtc: {
+        required: true,
+        type: 'string'
+      },
+      station: {
+        required: true,
+        type: 'string'
+      },
+      tags: {
+        // required: true,
+        type: 'array'
+      },
+      units: {
+        required: true,
+        type: 'number'
+      },
+      vehicle: {
+        required: true,
+        type: 'string'
+      }
+    }
+  };
+}
+// odometer: 1
+// onlyAuth: false
+// price: 2
+// purchaseDateUtc: "2014-06-09"
+// station: "r3ExBGGQSkCe0G4Jp82DFg"
+// tags: []
+// units: 3
+// vehicle: "st1100"
+// 
 
 function store(req, res, next) {
   var save = req.body;
-
   async.waterfall(
     [
+      // Validate the Gaz object
+      function(cb) {
+        gazValidator.validate(save, schema(), { singleError: false }, cb);
+      },
       // Get station if any
       function(cb) {
         // return cb(null, null, null);
@@ -107,7 +160,9 @@ function store(req, res, next) {
 
     ],
     function(err, results) {
-      if (err) return next(err);
+      if (err) {
+        return res.set('Content-Type', 'application/json').status(412).send(utils.ngSafe({errors: err}));
+      }
       // console.log(results);
       res.send(results);
   });

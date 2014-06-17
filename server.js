@@ -6,7 +6,6 @@ var express = require('express'),
     http = require('http'),
     app = express(),
     server = http.createServer(app),
-    passport = require('passport'),
 
     io = require('socket.io'),
     sio = io.listen(server),
@@ -28,6 +27,13 @@ app.use(session({ secret: 'keyboard like ziax dash', key: 'dash.ziax.dk' }));
 if ('development' === env) {
   console.log("configure development");
   app.enable('trust proxy');
+  app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Accept, Content-Type, Authorization');
+    next();
+   });
   sio.set('transports', ['websocket']);
   sio.set('log level', 1);
 
@@ -39,9 +45,10 @@ if ('development' === env) {
   require('./server/es-document.js').routes(app);
   require('./server/es-gaz.js').routes(app);
   require('./server/scrape-prod.js').routes(app);
+  require('./server/testv4.js').route(app);
   require('./server/socketio.js');
 }
-else if ('production' == env) {
+else if ('production' === env) {
   console.log("configure production");
   app.enable('trust proxy');
   port = 8081;
