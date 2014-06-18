@@ -57,6 +57,12 @@ function routes(app) {
     }, es.callback(arguments));
   });
 
+  /**
+   * Gets the vehicle list on the authenticated user
+   * @param  {[type]} req [description]
+   * @param  {[type]} res [description]
+   * @return {[type]}     [description]
+   */
   app.post('/api/vehicle/list', utils.ensureAuthenticated, function(req, res) {
     es.client.search({
       index: 'gaz',
