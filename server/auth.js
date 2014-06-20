@@ -6,7 +6,10 @@ var passport = require('passport'),
     Users = require('./Users.js'),
     Hash = require('./hash.js'),
     Config = require('./../_config.json'),
-    app = require('./../server.js').app;
+    app = require('./../server.js').app,
+    es = require('./es.js'),
+    utils = require('./utils.js');
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -65,14 +68,34 @@ app.get('/api/auth/leave', function (req, res) {
   res.redirect('/');
 });
 
-app.post('/api/appauth', function(req, res) {
+app.post('/api/appauth', function(req, res, next) {
   var id = req.body.uid,
       lastname = req.body.lastname,
       user = Users.getById(id);
   if (!id || !lastname || !user || user.name.split(' ')[1] !== lastname) {
     res.status(401);
   }
-  res.send({ id: user.id, name: user.name, hid: Hash(user.id, user.salt) });
+  es.client.search({
+    index: 'gaz',
+    type: 'vehicle',
+    body: {
+          "filter": {
+              "term": {
+                 "usedBy": user.id
+              }
+          }
+      }
+    }, function(err, resp) {
+      if (err) return next(err);
+
+      res.send(utils.ngSafe({
+        id: user.id,
+        hid: Hash(user.id, user.salt),
+        name: user.name,
+        vehicles: resp.hits.hits,
+        vehicleDefault: user.vehicleDefault
+      }));
+    });
 });
 
 module.exports = {

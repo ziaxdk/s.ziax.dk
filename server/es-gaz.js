@@ -76,6 +76,23 @@ function routes(app) {
         }
       }, es.callback(arguments));
   });
+
+  app.get('/api/gaz/list', utils.ensureAuthenticated, function(req, res) {
+    es.client.search({
+      index: 'ziax',
+      type: 'gaz',
+      body: {
+              "from": req.query.offset || 0,
+              "sort": [
+                 {
+                    "purchaseDateUtc": {
+                       "order": "desc"
+                    }
+                 }
+              ]
+      }
+      }, es.callback(arguments));
+  });
 }
 
 function schema() {
