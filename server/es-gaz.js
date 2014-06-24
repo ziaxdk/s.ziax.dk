@@ -93,6 +93,14 @@ function routes(app) {
       }
       }, es.callback(arguments));
   });
+
+  app.delete('/api/gaz', utils.ensureAuthenticated, function(req, res) {
+    es.client.delete({
+      index: 'ziax',
+      type: 'gaz',
+      id: req.query.id
+    }, es.callback(arguments));
+  });
 }
 
 function schema() {

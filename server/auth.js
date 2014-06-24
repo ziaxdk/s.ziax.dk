@@ -92,6 +92,7 @@ app.post('/api/appauth', function(req, res, next) {
         id: user.id,
         hid: Hash(user.id, user.salt),
         name: user.name,
+        isAdmin: user.isAdmin || false,
         vehicles: resp.hits.hits,
         vehicleDefault: user.vehicleDefault
       }));
