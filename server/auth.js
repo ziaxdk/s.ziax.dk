@@ -56,7 +56,8 @@ passport.deserializeUser(function(user, done) {
 
 app.get('/api/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
 app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function(req, res) {
-  res.cookie('remember_me', req.user.id , { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
+  var env = process.env.NODE_ENV || 'development';
+  res.cookie('remember_me', req.user.id , { path: '/', httpOnly: true, maxAge: 604800000, secure: env == 'development' ? false : true }); // 7 days
   // console.log('req.user', req.user);
   res.redirect('/');
 });
