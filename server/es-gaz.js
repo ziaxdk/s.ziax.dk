@@ -94,7 +94,7 @@ function routes(app) {
       }, es.callback(arguments));
   });
 
-  app.delete('/api/gaz', utils.ensureAuthenticated, function(req, res) {
+  app.delete('/api/gaz', utils.ensureAdminAuthenticated, function(req, res) {
     es.client.delete({
       index: 'ziax',
       type: 'gaz',

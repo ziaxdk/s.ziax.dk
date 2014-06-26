@@ -3,6 +3,24 @@
       request = require('request'),
       Q = require('q');
 
+  var isProd = function () {
+    return (process.env.NODE_ENV || 'development') == 'production';
+  };
+
+  var ensureAdminAuthenticated = function(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    if (req.user.isAdmin) { return next(); }
+    res.status(403);
+    res.send();
+  };
+
+  var ensureAuthenticated = function(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    // res.redirect('/loginerr');
+    res.status(403);
+    res.send();
+  };
+
   function log(obj) {
     util.log(util.inspect(obj, { depth: null, colors: true }));
   }
@@ -41,13 +59,6 @@
   //   return val === code;
   // }
 
-  function ensureAuthenticated (req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    // res.redirect('/loginerr');
-    res.status(403);
-    res.send();
-  }
-
   function fetchUri(url) {
     var q = Q.defer();
 
@@ -67,7 +78,9 @@
     ngSafe: ngSafe,
     // validateCode: validateCode,
     ensureAuthenticated: ensureAuthenticated,
-    fetchUri: fetchUri
+    ensureAdminAuthenticated: ensureAdminAuthenticated,
+    fetchUri: fetchUri,
+    isProd: isProd
   };
 
   if (typeof module !== 'undefined' && module.exports) {
