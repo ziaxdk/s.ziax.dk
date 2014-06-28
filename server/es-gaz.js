@@ -7,7 +7,7 @@ var deepExtend = require('deep-extend'),
     es = require('./es.js');
 
 function routes(app) {
-  app.post('/api/stations_near', function(req) {
+  app.post('/api/stations_near', utils.ensureAuthenticated, function(req) {
     es.client.search({
       index: 'gaz',
       type: 'station',
@@ -75,6 +75,10 @@ function routes(app) {
             }
         }
       }, es.callback(arguments));
+  });
+
+  app.get('/api/gaz', utils.ensureAuthenticated, function(req, res) {
+    es.client.get({ index: 'ziax', type: 'gaz', id: req.query.id }, es.callback(arguments));
   });
 
   app.get('/api/gaz/list', utils.ensureAuthenticated, function(req, res) {
