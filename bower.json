@@ -13,6 +13,7 @@
     "angular-resource": "~1.2.19",
     "angular-animate": "~1.2.19",
     "leaflet": "~0.7.3",
-    "textile-js": "*"
+    "textile-js": "*",
+    "moment": "~2.7.0"
   }
 }
