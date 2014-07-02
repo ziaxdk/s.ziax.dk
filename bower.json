@@ -11,6 +11,7 @@
     "angular": "~1.2.19",
     "angular-route": "~1.2.19",
     "angular-resource": "~1.2.19",
-    "angular-animate": "~1.2.19"
+    "angular-animate": "~1.2.19",
+    "leaflet": "~0.7.3"
   }
 }
