@@ -28,6 +28,7 @@ module.exports = function (grunt) {
   // grunt.registerTask('build', ['clean:build', 'copy:build', 'uglify:build', 'concat:build_js', 'less:production', 'concat:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
   // grunt.registerTask('build', ['clean:build', 'uglify:build', 'concat:build_js', 'copy:build_js', 'less:production', 'concat:build_css', 'copy:build_css', 'htmlrefs:build', 'htmlmin:build' ]);
 
+  grunt.registerTask('build_bs3', [  ]);
   grunt.registerTask('build_css', [ 'less:build', 'cssmin:build', 'concat:build_css' ]);
   grunt.registerTask('build_js', [ 'uglify:build', 'concat:build_js' ]);
   grunt.registerTask('build', ['clean:build', 'gitrev', 'copy:build', 'concat:build_dev', 'removelogging:build', 'build_js', 'build_css', 'htmlrefs:build', 'htmlmin:build', 'clean:build_post', 'conftransform:build' ]);

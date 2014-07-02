@@ -1,0 +1,16 @@
+{
+  "name": "s.ziax.dk",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ziaxdk/s.ziax.dk",
+  "authors": [
+    "ziax <ziaxdk@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.2.19",
+    "angular-route": "~1.2.19",
+    "angular-resource": "~1.2.19",
+    "angular-animate": "~1.2.19"
+  }
+}

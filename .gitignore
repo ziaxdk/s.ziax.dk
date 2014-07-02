@@ -3,6 +3,7 @@ es/server/
 es/bat/
 zip/
 build/
+src/bower_components/
 _config.json
 .ftppass
 es_log.json
