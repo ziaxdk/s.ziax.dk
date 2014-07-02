@@ -100,26 +100,28 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     '</div>' +
     '<div class="form-group">' +
       '<div class="list-group" style="position: absolute; z-index: 50000; border: 1px solid black; background-color: white" ng-show="results">' +
-        '<table class="table table-striped table-hover">' +
+        '<table class="table table-striped table-hover scroll-table">' +
           '<thead>' +
             '<tr>' +
-              '<th>#</th>' +
-              '<th>IATA</th>' +
-              '<th>ICAO</th>' +
-              '<th>Name</th>' +
+              '<th style="width: 80px">#</th>' +
+              '<th style="width: 80px">IATA</th>' +
+              '<th style="width: 80px">ICAO</th>' +
+              '<th style="width: 280px">Name</th>' +
             '</tr>' +
           '</thead>' +
-          '<tbody>' +
+          '<tbody style="">' +
             '<tr ng-repeat="a in results track by a.id" ng-click="select(a)" ng-class="{active: $index === index}" ng-mouseenter="preview(a)">' +
-              '<td>{{$index+1}}</td>' +
-              '<td>{{a.source.airport_iata}}</td>' +
-              '<td>{{a.id}}</td>' +
-              '<td>{{a.source.header}}</td>' +
-            '</tr>' +
-            '<tr ng-show="total > 10">' +
-              '<td colspan="4">Total {{total}}</td>' +
+              '<td style="width: 80px">{{$index+1}}</td>' +
+              '<td style="width: 80px">{{a.source.airport_iata}}</td>' +
+              '<td style="width: 80px">{{a.id}}</td>' +
+              '<td style="width: 280px">{{a.source.header}}</td>' +
             '</tr>' +
           '</tbody>' +
+          '<tfoot>' +
+            '<tr ng-show="total > 10">' +
+              '<td style="width: 520px; text-align: center">Total {{total}}</td>' +
+            '</tr>' +
+          '</tfoot>' +
         '</table>' +
       '</div>' +
     '</div>' +
@@ -131,7 +133,9 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     link: function(scope, iElm, iAttrs, controller) {
       var delayScraper = new DelayerFactory(700),
           delayPreview = new DelayerFactory(1000),
-          uri = ApiTypeFactory('search').uri;
+          uri = ApiTypeFactory('search').uri,
+          q = '',
+          offset = 0;
 
       scope.results = [];
       reset();
@@ -181,7 +185,16 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
           scope.results = [];
           return;
         }
-        if ((scope.index + count) === -1 || (scope.index + count) === scope.results.length) return;
+        // if ((scope.index + count) === -1 || (scope.index + count) === scope.results.length) return;
+        if ((scope.index + count) === -1) return;
+        if ((scope.index + count) === scope.results.length) {
+          // console.log('get', offset, offset+=10);
+          offset += 10;
+          if (offset > scope.total) return;
+          getAirports(q);
+        }
+
+        
         scope.index = scope.index + count;
       }
 
@@ -204,6 +217,16 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
         reset();
       }
 
+      function getAirports(input) {
+        return $http.post('/api/airport', { q: input, offset: offset }).success(function(data) {
+            q = input;
+            scope.index = -1;
+            scope.total = 0;
+            scope.results = scope.results.concat(data.hits.hits);
+            scope.total = data.hits.total;
+          });
+      }
+
       function updateModel(n) {
         if (!n) {
           scope.results = [];
@@ -213,10 +236,8 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
         delayScraper.run(function () {
           //TODO: Refactor this (with ResultController) into factory....
           // $http.post(uri, { q: n, facets: { tags: { terms: [], operator: 'or' } }, types: 'airport', pager: { idx: 0 } }).success(function (data) {
-          $http.post('/api/airport', { q: n}).success(function(data) {
-            scope.results = data.hits.hits;
-            scope.total = data.hits.total;
-          });
+          offset = 0;
+          getAirports(n);
         });
       }
     }

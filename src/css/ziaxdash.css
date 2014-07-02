@@ -173,3 +173,15 @@ body {
 .z-suggest ul li.selected {
   background-color: blue;
 }
+table.scroll-table {
+  margin-bottom: 0px;
+}
+table.scroll-table thead,
+table.scroll-table tbody,
+table.scroll-table tfoot {
+  display: block;
+}
+table.scroll-table tbody {
+  max-height: 370px;
+  overflow-y: auto;
+}

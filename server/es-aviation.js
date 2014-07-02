@@ -124,36 +124,49 @@
         index: 'aviation',
         type: 'airport',
         body: {
-          "query": {
-              "match_all": {}
+          "query": { 
+            "multi_match" : {
+              "query":    q.toUpperCase(),
+              "operator": "or",
+              "fields": [ "airport_iata", "airport_icao", "country", "header" ]
+            }
           },
-          "filter": {
-              "or": {
-                 "filters": [
-                      {
-                          "prefix": {
-                              "airport_iata": q.toUpperCase()
-                          }
-                      },
-                      {
-                          "prefix": {
-                              "airport_ident": q.toUpperCase()
-                          }
-                      },
-                      {
-                          "term": {
-                             "country": q
-                          }
-                      },
-                      {
-                          "term": {
-                             "header": q
-                          }
-                      }
-                 ]
-              }
-          }
+          "size": 10,
+          "from": req.body.offset || 0
         }
+        // body: {
+        //   "query": {
+        //       "match_all": {}
+        //   },
+        //   "filter": {
+        //       "or": {
+        //          "filters": [
+        //               {
+        //                   "prefix": {
+        //                       "airport_iata": q.toUpperCase()
+        //                   }
+        //               },
+        //               {
+        //                   "prefix": {
+        //                       "airport_ident": q.toUpperCase()
+        //                   }
+        //               },
+        //               {
+        //                   "term": {
+        //                      "country": q
+        //                   }
+        //               },
+        //               {
+        //                   "term": {
+        //                      "header": q
+        //                   }
+        //               }
+        //          ]
+        //       }
+        //   },
+        // "size": 10,
+        // "from": req.body.offset || 0
+        // }
       }, es.callback(arguments));
     });
 
