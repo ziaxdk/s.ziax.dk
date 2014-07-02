@@ -16,6 +16,7 @@
     "textile-js": "*",
     "moment": "~2.7.0",
     "Leaflet.awesome-markers": "~2.0.2",
-    "fontawesome": "~4.1.0"
+    "fontawesome": "~4.1.0",
+    "animate-css": "~3.1.1"
   }
 }
