@@ -8,6 +8,10 @@ function route(app) {
     res.send('ok');
   });
 
+  app.get('/v4-1', function(req, res) {
+    res.send("v4-1");
+  });
+
   // app.use(function(req, res, next) {
   //   // return next();
   //   function send403() {
