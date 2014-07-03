@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     header = require('gulp-header'),
     footer = require('gulp-footer'),
-    less = require('gulp-less');
+    less = require('gulp-less'),
+    livereload = require('gulp-livereload');
 
 gulp.task('server', function() {
   gulpexpress.serve({
@@ -18,7 +19,7 @@ gulp.task('concat:build_dev', function() {
     .pipe(concat('ziaxdash.js'))
     .pipe(header("(function () {\r\nvar module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);\r\n"))
     .pipe(footer('}());'))
-    .pipe(gulp.dest('./src/js/'));
+    .pipe(gulp.dest('./src/js'));
 });
 
 gulp.task('less:development', function() {
@@ -30,28 +31,12 @@ gulp.task('less:development', function() {
 });
 
 gulp.task('watch', function() {
-  // var server = livereload();
-  // gulp.watch('src/**').on('change', function(file) {
-  //     server.changed(file.path);
-  // });
-  // 
+  livereload.listen();
+  gulp.watch([ 'src/**/*.html', './src/css/ziaxdash.css', './src/js/ziaxdash.js' ]).on('change', livereload.changed);
+ 
   gulp.watch([ 'server.js', 'server/**/*.js' ], ['server']);
   gulp.watch('src/js/app/**/*.js', ['concat:build_dev']);
   gulp.watch('src/css/*.less', ['less:development']);
 });
 
 gulp.task( 'dev', [ 'server', 'watch' ] );
-
-
-      // development: {
-      //   options: {
-      //     path: ['src/css']
-      //   },
-      //   files: [
-      //     {
-      //       expand: true,
-      //       src: ['src/css/*.less'],
-      //       ext: '.css'
-      //     }
-      //   ]
-      // },
