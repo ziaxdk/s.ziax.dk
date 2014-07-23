@@ -105,6 +105,78 @@ function routes(app) {
       id: req.query.id
     }, es.callback(arguments));
   });
+
+
+  app.get('/api/gaz/stat', function(req, res) {
+    var vehicle = req.query.vehicle || 'st1100';
+
+    es.client.search({
+      index: 'ziax',
+      type: 'gaz',
+      searchType: 'count',
+      body: {
+        "query": {
+          "filtered": {
+            "query": {
+              "match_all": {}
+            },
+            "filter": {
+              "bool": {
+                "must": [
+                  {
+                    "term": {
+                      "vehicle._id": vehicle
+                    }
+                  },
+                  {
+                    "range": {
+                      "purchaseDateUtc": {
+                        "from": "now-10y",
+                        "to": "now"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "aggs": {
+          "vehicle": {
+            "terms": {
+              "field": "vehicle._id"
+            },
+            "aggs": {
+              "per_month": {
+                "date_histogram": {
+                  "field": "purchaseDateUtc",
+                  "interval": "month"
+                },
+                "aggs": {
+                  "units": {
+                    "sum": {
+                      "field": "units"
+                    }
+                  },
+                  "total_price": {
+                    "sum": {
+                      "script": "doc['units'].value * doc['price'].value"
+                    }
+                  },
+                  "avg_dist": {
+                    "avg": {
+                      "script": "((doc['nextOdometer'].value - doc['odometer'].value) / doc['units'].value)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, es.callback(arguments));
+  });
+
 }
 
 function schema() {

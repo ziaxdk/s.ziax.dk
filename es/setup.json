@@ -195,6 +195,9 @@
         "odometer": {
           "type": "integer"
         },
+        "nextOdometer": {
+          "type": "integer"
+        },
         "tags": {
           "type": "string"
         },
@@ -234,6 +237,9 @@
         "vehicle": {
           "dynamic": "strict",
           "properties" : {
+            "_id": {
+                "type": "string"
+            },
             "vendor": {
               "type": "string"
             },
