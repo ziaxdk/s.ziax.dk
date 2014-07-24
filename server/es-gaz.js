@@ -232,33 +232,93 @@ function store(req, res, next) {
   var save = req.body;
   async.waterfall(
     [
-      // Validate the Gaz object
+      /**
+       * Validate the Gaz object
+       * @param  {Function} cb async callback
+       * @return {void}
+       */
       function(cb) {
         gazValidator.validate(save, schema(), { singleError: false }, cb);
       },
-      // Get station if any
+
+      /**
+       * Get the station (if any) and the full vehicle 
+       */
       function(cb) {
-        // return cb(null, null, null);
-        if (!save.station) return cb(null, null, null);
-        es.client.get({ index: 'gaz', type: 'station', id: save.station }, cb);
+        var mgetDocs = [
+          { _index: 'gaz', _type: 'vehicle', _id: save.vehicle }
+        ];
+        if (save.station) {
+          mgetDocs.push({ _index: 'gaz', _type: 'station', _id: save.station });
+        }
+        es.client.mget({ body: { docs: mgetDocs } }, cb);
       },
-      function(station, num, cb) {
+      function(mget, num, cb) {
+        var vehicleId = save.vehicle,
+            vehicle = mget.docs[0], // vehicle
+            station = mget.docs[1]; // station
+
+        save.vehicle = vehicle._source;
+        save.vehicle._id = vehicleId;
+        delete save.vehicle.usedBy;
+
         if (station) {
           save.station = station._source;
         }
         cb(null);
       },
-      // Get the full vehicle object
+
+      /**
+       * Gets the previous odometer
+       */
       function(cb) {
-        es.client.get({ index: 'gaz', type: 'vehicle', id: save.vehicle }, cb);
+        es.client.search({ index: 'ziax', type: 'gaz', body: {
+          "query": {
+            "filtered": {
+              "query": {
+                "match_all": {}
+              },
+              "filter": {
+                "term": {
+                  "vehicle._id": save.vehicle._id
+                }
+              }
+            }
+          },
+          "sort": [
+            {
+              "odometer": {
+                "order": "desc"
+              }
+            }
+          ],
+          "size": 1,
+          "fields": ["id"]
+        }}, cb);
       },
-      function(vehicle, num, cb) {
-        save.vehicle = vehicle._source;
-        delete save.vehicle.usedBy;
-        cb(null);
+      function(hits, num, cb) {
+        var len = hits.hits.hits.length;
+        if(len === 1) {
+          es.client.update({ index: 'ziax', type: 'gaz', id: hits.hits.hits[0]._id, body: {
+            doc: {
+              nextOdometer: save.odometer
+            }
+          }}, cb);
+        } else {
+          cb('previous fetch was length ' + len);
+        }
       },
-      function(cb) {
+
+      /**
+       * Save the new gaz type
+       */
+      function(hits, num, cb) {
+        save.nextOdometer = 999999;
+        /**
+         * Enable for debugging
+         */
         // console.log(save);
+        // return cb(null, null, null);
         es.client.index({ index: es.index, type: 'gaz', body: save }, cb);
       },
       function(res, num, cb) {
