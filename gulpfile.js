@@ -17,7 +17,7 @@ gulp.task('server', function() {
 gulp.task('concat:build_dev', function() {
   gulp.src('src/js/app/**/*.js')
     .pipe(concat('ziaxdash.js'))
-    .pipe(header("(function () {\r\nvar module = angular.module('ziaxdash', ['ngRoute', 'ngResource', 'ngAnimate']);\r\n"))
+    .pipe(header("(function () {\r\nvar module = angular.module('ziaxdash', ['ngResource', 'ngAnimate', 'ui.router']);\r\n"))
     .pipe(footer('}());'))
     .pipe(gulp.dest('./src/js'));
 });

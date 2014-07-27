@@ -132,93 +132,99 @@ module.provider('GPS', function() {
 //   }];
 // });
 
-// Config
-module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', 'GPSProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider, GPSProvider) {
-  $routeProvider.when('/', {
-      templateUrl: "/html/_index.html",
-      resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
-      controller: "IndexController",
-      controllerAs: "IndexCtrl"
-  });
-  $routeProvider.when('/new', {
-      templateUrl: "/html/_new.html",
-      resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
-      controller: "NewController",
-      controllerAs: "NewCtrl"
-  });
-  $routeProvider.when('/edit/:type/:id', {
-      templateUrl: "/html/_new.html",
-      resolve: {// TODO: Create mulitple GET
-        Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }],
-        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
-      },
-      controller: "NewController",
-      controllerAs: "NewCtrl"
-  });
-  $routeProvider.when('/show/:type/:id', {
-      templateUrl: "/html/_show.html",
-      // resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
-      resolve: { Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }] },
-      controller: "ShowController",
-      controllerAs: "ShowCtrl"
-  });
-  $routeProvider.when('/res/:q', {
-      templateUrl: "/html/_result.html",
-      // resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
-      resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('search'); }], ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
-      controller: "ResultController",
-      controllerAs: "ResultCtrl"
-  });
-  $routeProvider.when('/places', {
-      templateUrl: "/html/_result.html",
-      controller: "ResultController",
-      controllerAs: "ResultCtrl",
-      resolve: {
-        ApiType: ['ApiTypeFactory', function(f) { return f('places'); }],
-        ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }],
-        EnsureSatelliteJs: ['AsyncJsFactory', function(AsyncJsFactory) {
-          return AsyncJsFactory('/js/lib/satellite.min.js', window.satellite);
-        }]
-      }
-  });
-  $routeProvider.when('/flights', {
-      templateUrl: "/html/_flights.html",
-      controller: "FlightController",
-      controllerAs: "FlightCtrl"
-  });
-  $routeProvider.otherwise({
-      redirectTo: "/"
-  });
+// Config - with Angular route module
+// module.config(['$routeProvider', '$sceDelegateProvider', '$provide', '$httpProvider', 'GPSProvider', function ($routeProvider, $sceDelegateProvider, $provide, $httpProvider, GPSProvider) {
+//   $routeProvider.when('/', {
+//       templateUrl: "/html/_index.html",
+//       resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
+//       controller: "IndexController",
+//       controllerAs: "IndexCtrl"
+//   });
+//   $routeProvider.when('/new', {
+//       templateUrl: "/html/_new.html",
+//       resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
+//       controller: "NewController",
+//       controllerAs: "NewCtrl"
+//   });
+//   $routeProvider.when('/edit/:type/:id', {
+//       templateUrl: "/html/_new.html",
+//       resolve: {// TODO: Create mulitple GET
+//         Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }],
+//         NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
+//       },
+//       controller: "NewController",
+//       controllerAs: "NewCtrl"
+//   });
+//   $routeProvider.when('/show/:type/:id', {
+//       templateUrl: "/html/_show.html",
+//       // resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
+//       resolve: { Result: ['$route', '$http', function($route, $http) { return $http.post('/api/q', { id: $route.current.params.id, type: $route.current.params.type }); }] },
+//       controller: "ShowController",
+//       controllerAs: "ShowCtrl"
+//   });
+//   $routeProvider.when('/res/:q', {
+//       templateUrl: "/html/_result.html",
+//       // resolve: { Drives: ['$route', 'RestQ', function($route, RestQ) { return RestQ.get({ q: $route.current.params.q }); }] },
+//       resolve: { ApiType: ['ApiTypeFactory', function(f) { return f('search'); }], ApiSearchResult: ['$route', '$http', function($route, $http) { return $http.get('/api/q', { params: { q: $route.current.params.q } }); }] },
+//       controller: "ResultController",
+//       controllerAs: "ResultCtrl"
+//   });
+//   $routeProvider.when('/places', {
+//       templateUrl: "/html/_result.html",
+//       controller: "ResultController",
+//       controllerAs: "ResultCtrl",
+//       resolve: {
+//         ApiType: ['ApiTypeFactory', function(f) { return f('places'); }],
+//         ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }],
+//         EnsureSatelliteJs: ['AsyncJsFactory', function(AsyncJsFactory) {
+//           return AsyncJsFactory('/js/lib/satellite.min.js', window.satellite);
+//         }]
+//       }
+//   });
+//   $routeProvider.when('/flights', {
+//       templateUrl: "/html/_flights.html",
+//       controller: "FlightController",
+//       controllerAs: "FlightCtrl"
+//   });
+//   $routeProvider.otherwise({
+//       redirectTo: "/"
+//   });
 
-  $sceDelegateProvider.resourceUrlWhitelist([ 'self', '**']);
+//   $sceDelegateProvider.resourceUrlWhitelist([ 'self', '**']);
 
-  L.Icon.Default.imagePath = "/css/images/";
+//   L.Icon.Default.imagePath = "/css/images/";
 
-  // GPSProvider.rootScopeVariable('position');
-  // GPSProvider.intervalVariable(10000);
-
-
-  // $provide.factory('403', ['$q', function($q) {
-  //     return {
-  //       'responseError': function(rejection) {
-  //         console.log('responseError', rejection);
-  //         if (rejection.status === 403) {
-  //           console.log('not auth')
-  //         }
-
-  //         // // do something on error
-  //         // if (canRecover(rejection)) {
-  //         //   return responseOrNewPromise
-  //         // }
-  //         return $q.reject(rejection);
-  //       }
-  //     };
-  //   }]);
-  // $httpProvider.interceptors.push('403');
+//   // GPSProvider.rootScopeVariable('position');
+//   // GPSProvider.intervalVariable(10000);
 
 
+//   // $provide.factory('403', ['$q', function($q) {
+//   //     return {
+//   //       'responseError': function(rejection) {
+//   //         console.log('responseError', rejection);
+//   //         if (rejection.status === 403) {
+//   //           console.log('not auth')
+//   //         }
 
+//   //         // // do something on error
+//   //         // if (canRecover(rejection)) {
+//   //         //   return responseOrNewPromise
+//   //         // }
+//   //         return $q.reject(rejection);
+//   //       }
+//   //     };
+//   //   }]);
+//   // $httpProvider.interceptors.push('403');
+
+
+
+// }]);
+
+
+module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '$provide', '$httpProvider', 'GPSProvider',
+  function ($stateProvider, $urlRouterProvider, $sceDelegateProvider, $provide, $httpProvider, GPSProvider) {
 }]);
+
 
 module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService', 'GPS',
   function ( $window, $rootScope, $templateCache, GlobalService, LocationService, GPS ) {
