@@ -1,5 +1,5 @@
-module.controller('MainController', ['$scope', '$rootScope', '$location', '$window', 'UserService', 'GlobalService', 'RestDrive', 
-  function ($scope, $rootScope, $location, $window, UserService, GlobalService, RestDrive) {
+module.controller('MainController', ['$scope', '$rootScope', '$location', '$window', /*'$state',*/ 'UserService', 'GlobalService', 'RestDrive', 
+  function ($scope, $rootScope, $location, $window, /*$state,*/ UserService, GlobalService, RestDrive) {
   var _t = this;
   _t.global = GlobalService;
   _t.me = UserService.me;
@@ -9,8 +9,10 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$wind
 
   _t.search = function () {
     if (!_t.form.q) return;
+    console.log('_search');
     $scope.searchForm.q.$setPristine();
     $location.path('/res/' + encodeURIComponent(_t.form.q));
+    // $state.go('searchresult', { q: encodeURIComponent(_t.form.q) });
   };
 
   _t.new = function () {

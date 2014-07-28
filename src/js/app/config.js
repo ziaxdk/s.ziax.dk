@@ -223,6 +223,91 @@ module.provider('GPS', function() {
 
 module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '$provide', '$httpProvider', 'GPSProvider',
   function ($stateProvider, $urlRouterProvider, $sceDelegateProvider, $provide, $httpProvider, GPSProvider) {
+
+
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: "/html/_index.html",
+      resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
+      controller: "IndexController",
+      controllerAs: "IndexCtrl"
+    })
+    .state('new', {
+      url: '/new',
+      templateUrl: "/html/_new.html",
+      resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      controller: 'NewController',
+      controllerAs: 'NewCtrl'
+    })
+    .state('new.article', {
+      url: '/article',
+      templateUrl: "/html/_new_article.html",
+      // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      controller: 'NewArticleController',
+      controllerAs: 'NewArticleCtrl',
+      data: {
+        type: 'article'
+      }
+    })
+    .state('new.link', {
+      url: '/link',
+      templateUrl: "/html/_new_link.html",
+      // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      controller: 'NewLinkController',
+      controllerAs: 'NewLinkCtrl'
+    })
+    .state('new.place', {
+      url: '/place',
+      templateUrl: "/html/_new_place.html",
+      // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      controller: 'NewPlaceController',
+      controllerAs: 'NewPlaceCtrl'
+    })
+    .state('new.gaz', {
+      url: '/gaz',
+      templateUrl: "/html/_new_gaz.html",
+      // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      controller: 'NewGazController',
+      controllerAs: 'NewGazCtrl'
+    })
+    .state('new.flight', {
+      url: '/flight',
+      templateUrl: "/html/_new_flight.html",
+      // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      controller: 'NewFlightController',
+      controllerAs: 'NewFlightCtrl'
+    })
+    .state('searchresult', {
+      url: '/res/:q',
+      templateUrl: "/html/_result.html",
+      resolve: {
+        ApiType: ['ApiTypeFactory', function(f) { return f('search'); }],
+        ApiSearchResult: ['$stateParams', '$http', function($stateParams, $http) {
+          return $http.get('/api/q', { params: { q: $stateParams.q } });
+        }]
+      },
+      controller: "ResultController",
+      controllerAs: "ResultCtrl"
+    })
+    .state('show', {
+      url: '/show/:type/:id',
+      templateUrl: "/html/_show.html",
+      // resolve: { Drive: ['$route', 'RestQ', function($route, RestQ) { return RestQ.save({ id: $route.current.params.id, type: $route.current.params.type }); }] },
+      resolve: { Result: ['$stateParams', '$http', function($stateParams, $http) { return $http.post('/api/q', { id: $stateParams.id, type: $stateParams.type }); }] },
+      controller: "ShowController",
+      controllerAs: "ShowCtrl"
+    })
+    .state('edit', {
+      url: '/edit/:type/:id',
+      templateUrl: "/html/_new.html",
+      resolve: {// TODO: Create mulitple GET
+        Result: ['$stateParams', '$http', function($stateParams, $http) { return $http.post('/api/q', { id: $stateParams.id, type: $stateParams.type }); }],
+        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
+      },
+      controller: "NewController",
+      controllerAs: "NewCtrl"
+    });
 }]);
 
 

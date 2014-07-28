@@ -26,7 +26,7 @@
         <div class="col-md-12">
  -->          <ul class="nav navbar-nav">
             <li class="hidden-xs">
-              <a href="/"><span class="glyphicon glyphicon-home"></span></a>
+              <a ui-sref="home"><span class="glyphicon glyphicon-home"></span></a>
             </li>
             <li>
               <form class="navbar-form navbar-left" role="search" name="searchForm" ng-submit="MainCtrl.search()">
@@ -39,7 +39,8 @@
               </form>
             </li>
             <li class="hidden-xs">
-              <a href="javascript:;" ng-click="MainCtrl.new()"><span class="glyphicon glyphicon-plus"></span></a>
+              <!-- <a href="javascript:;" ng-click="MainCtrl.new()"><span class="glyphicon glyphicon-plus"></span></a> -->
+              <a ui-sref="new"><span class="glyphicon glyphicon-plus"></span></a>
             </li>
           </ul>
 <!--         </div>
@@ -47,11 +48,11 @@
  -->    </div>
   </nav>
   <div class="container">
-    <div class="row zdview" ng-view style="padding-bottom: 20px"></div>  
+    <div class="row zdview" ui-view style="padding-bottom: 20px"></div>  
     <div class="visible-xs">
       <div class="list-group">
-        <a href="/" class="list-group-item">Home</a>
-        <a href="javascript:;" ng-click="MainCtrl.new()" class="list-group-item">New</a>
+        <a ui-sref="home" class="list-group-item">Home</a>
+        <a ui-sref="new" class="list-group-item">New</a>
       </div>
     </div>  
   </div>

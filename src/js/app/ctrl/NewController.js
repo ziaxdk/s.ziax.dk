@@ -1,6 +1,29 @@
-module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'GazService', 'GPS',
-  function ( $scope, $route, $http, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, GazService, GPS ) {
-    var id,
+module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'GazService', 'GPS',
+  function ( $scope, $http, $state, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, GazService, GPS ) {
+    $scope.form = { };
+    $scope.meta = {
+      coords: GPS.coords
+    };
+
+    $scope.submit = function() {
+      var f = $scope.form;
+      var save = angular.extend(f, {
+        type: $state.current.data.type,
+        tags: !f.tags ? [] : f.tags.split(','),
+        onlyAuth: !!f.onlyAuth
+
+      });
+
+      console.log('submit', save);
+      // DocumentService.store(save);
+    };
+
+
+
+
+
+    return;
+    /*var id,
         type,
         watcher;
     $scope.meta = {
@@ -47,6 +70,21 @@ module.controller('NewController', ['$scope', '$route', '$http', 'NewApiResult',
       if (angular.isFunction(obj.initFn)) {
         obj.initFn.call($scope.meta, $scope);
       }
-    }
+    }*/
+
+}])
+.controller('NewArticleController', ['$scope', function($scope) {
+
+}])
+.controller('NewLinkController', ['$scope', function($scope) {
+
+}])
+.controller('NewPlaceController', ['$scope', function($scope) {
+
+}])
+.controller('NewGazController', ['$scope', function($scope) {
+
+}])
+.controller('NewFlightController', ['$scope', function($scope) {
 
 }]);

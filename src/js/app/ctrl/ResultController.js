@@ -1,5 +1,5 @@
-module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', 'DelayerFactory', '$scope', '$http', '$location', '$route', '$timeout',
-  function (ApiType, ApiSearchResult, RestXQ, DelayerFactory, $scope, $http, $location, $route, $timeout) {
+module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', 'DelayerFactory', '$scope', '$http', '$location', '$stateParams', '$timeout',
+  function (ApiType, ApiSearchResult, RestXQ, DelayerFactory, $scope, $http, $location, $stateParams, $timeout) {
   var _t = this,
       facetSearch = DelayerFactory(500),
       first = true,
@@ -66,7 +66,7 @@ module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', '
   };
 
   function execute() {
-    $http.post(ApiType.uri, { q: $route.current.params.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
+    $http.post(ApiType.uri, { q: $stateParams.q, facets: { tags: { terms: getSelectedFacet(facetTerms), operator: _t.facetTermsOperator } }, types: getSelectedFacet(facetTypes), pager: { idx: _t.idx } }).success(function (data) {
       _t.result.hits = data.hits;
       filterFacet(facetTerms, data.facets.tags.terms);
     });
