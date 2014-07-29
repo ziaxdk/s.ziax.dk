@@ -1,5 +1,7 @@
 module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'GazService', 'GPS',
   function ( $scope, $http, $state, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, GazService, GPS ) {
+    var id;
+    
     $scope.form = { };
     $scope.meta = {
       coords: GPS.coords
@@ -18,7 +20,14 @@ module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult',
       // DocumentService.store(save);
     };
 
-
+    if (Result && Result.data) {
+      var _d = Result.data;
+      // $scope.meta.type = _d.type;
+      id = _d.id;
+      // TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
+      $scope.form.onlyAuth = _d.source.onlyAuth;
+      $scope.form.tags = angular.isArray(_d.source.tags) ? _d.source.tags.join() : _d.source.tags;
+    }
 
 
 
@@ -73,8 +82,18 @@ module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult',
     }*/
 
 }])
-.controller('NewArticleController', ['$scope', function($scope) {
+.controller('NewArticleController', ['$scope', 'Result', function($scope, Result) {
+  if (Result && Result.data) {
+    var _d = Result.data;
+    $scope.form.content = _d.source.content;
+    $scope.form.input = _d.source.header;
 
+    // console.log($scope.formInput, $scope.form, Result);
+    // $scope.meta.type = _d.type;
+    // id = _d.id;
+    // TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
+
+  }
 }])
 .controller('NewLinkController', ['$scope', function($scope) {
 

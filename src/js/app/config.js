@@ -240,7 +240,7 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       controller: 'NewController',
       controllerAs: 'NewCtrl'
     })
-    .state('new.article', {
+/*    .state('new.article', {
       url: '/article',
       templateUrl: "/html/_new_article.html",
       // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
@@ -277,7 +277,7 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
       controller: 'NewFlightController',
       controllerAs: 'NewFlightCtrl'
-    })
+    })*/
     .state('searchresult', {
       url: '/res/:q',
       templateUrl: "/html/_result.html",
@@ -298,16 +298,6 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       controller: "ShowController",
       controllerAs: "ShowCtrl"
     })
-    .state('edit', {
-      url: '/edit/:type/:id',
-      templateUrl: "/html/_new.html",
-      resolve: {// TODO: Create mulitple GET
-        Result: ['$stateParams', '$http', function($stateParams, $http) { return $http.post('/api/q', { id: $stateParams.id, type: $stateParams.type }); }],
-        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
-      },
-      controller: "NewController",
-      controllerAs: "NewCtrl"
-    });
 }]);
 
 

@@ -242,7 +242,7 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       controller: 'NewController',
       controllerAs: 'NewCtrl'
     })
-    .state('new.article', {
+/*    .state('new.article', {
       url: '/article',
       templateUrl: "/html/_new_article.html",
       // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
@@ -279,7 +279,7 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       // resolve: { Result: angular.noop, NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }] },
       controller: 'NewFlightController',
       controllerAs: 'NewFlightCtrl'
-    })
+    })*/
     .state('searchresult', {
       url: '/res/:q',
       templateUrl: "/html/_result.html",
@@ -300,16 +300,6 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       controller: "ShowController",
       controllerAs: "ShowCtrl"
     })
-    .state('edit', {
-      url: '/edit/:type/:id',
-      templateUrl: "/html/_new.html",
-      resolve: {// TODO: Create mulitple GET
-        Result: ['$stateParams', '$http', function($stateParams, $http) { return $http.post('/api/q', { id: $stateParams.id, type: $stateParams.type }); }],
-        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
-      },
-      controller: "NewController",
-      controllerAs: "NewCtrl"
-    });
 }]);
 
 
@@ -448,6 +438,8 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$wind
 
 module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'GazService', 'GPS',
   function ( $scope, $http, $state, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, GazService, GPS ) {
+    var id;
+    
     $scope.form = { };
     $scope.meta = {
       coords: GPS.coords
@@ -466,7 +458,14 @@ module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult',
       // DocumentService.store(save);
     };
 
-
+    if (Result && Result.data) {
+      var _d = Result.data;
+      // $scope.meta.type = _d.type;
+      id = _d.id;
+      // TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
+      $scope.form.onlyAuth = _d.source.onlyAuth;
+      $scope.form.tags = angular.isArray(_d.source.tags) ? _d.source.tags.join() : _d.source.tags;
+    }
 
 
 
@@ -521,8 +520,18 @@ module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult',
     }*/
 
 }])
-.controller('NewArticleController', ['$scope', function($scope) {
+.controller('NewArticleController', ['$scope', 'Result', function($scope, Result) {
+  if (Result && Result.data) {
+    var _d = Result.data;
+    $scope.form.content = _d.source.content;
+    $scope.form.input = _d.source.header;
 
+    // console.log($scope.formInput, $scope.form, Result);
+    // $scope.meta.type = _d.type;
+    // id = _d.id;
+    // TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
+
+  }
 }])
 .controller('NewLinkController', ['$scope', function($scope) {
 
@@ -827,15 +836,15 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
-            '<button ui-sref-active="btn-primary" ui-sref="new.{{type}}" class="btn btn-sm btn-default" ng-disabled="edit">{{type}}</button>' +
-            // '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': context === type, \'btn-default\': context !== type}" ng-click="setContext(type)" ng-disabled="edit">{{type}}</button>' +
+            // '<button ui-sref-active="btn-primary" ui-sref="new.{{type}}" class="btn btn-sm btn-default" ng-disabled="edit">{{type}}</button>' +
+            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': context === type, \'btn-default\': context !== type}" ng-click="setContext(type)" ng-disabled="edit">{{type}}</button>' +
           '</li>' +
         '</ul>' +
       '</div>',
     link: function(scope, element, attrs, ngModelCtrl) {
       var delayScraper = new DelayerFactory(2000);
 
-      scope.edit = !!scope.context;
+      // scope.edit = !!scope.context;
       scope.form = { };
       scope.types = TypeService.types();
       // console.log( scope.types.indexOf('flight') !== -1 );
