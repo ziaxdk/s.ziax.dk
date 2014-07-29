@@ -1,38 +1,6 @@
 module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'GazService', 'GPS',
   function ( $scope, $http, $state, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, GazService, GPS ) {
-    var id;
-    
-    $scope.form = { };
-    $scope.meta = {
-      coords: GPS.coords
-    };
-
-    $scope.submit = function() {
-      var f = $scope.form;
-      var save = angular.extend(f, {
-        type: $state.current.data.type,
-        tags: !f.tags ? [] : f.tags.split(','),
-        onlyAuth: !!f.onlyAuth
-
-      });
-
-      console.log('submit', save);
-      // DocumentService.store(save);
-    };
-
-    if (Result && Result.data) {
-      var _d = Result.data;
-      // $scope.meta.type = _d.type;
-      id = _d.id;
-      // TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
-      $scope.form.onlyAuth = _d.source.onlyAuth;
-      $scope.form.tags = angular.isArray(_d.source.tags) ? _d.source.tags.join() : _d.source.tags;
-    }
-
-
-
-    return;
-    /*var id,
+    var id,
         type,
         watcher;
     $scope.meta = {
@@ -79,7 +47,7 @@ module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult',
       if (angular.isFunction(obj.initFn)) {
         obj.initFn.call($scope.meta, $scope);
       }
-    }*/
+    }
 
 }])
 .controller('NewArticleController', ['$scope', 'Result', function($scope, Result) {

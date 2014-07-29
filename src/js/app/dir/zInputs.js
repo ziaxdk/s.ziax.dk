@@ -17,8 +17,7 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
-            '<button ui-sref-active="btn-primary" ui-sref="new.{{type}}" class="btn btn-sm btn-default" ng-disabled="edit">{{type}}</button>' +
-            // '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': context === type, \'btn-default\': context !== type}" ng-click="setContext(type)" ng-disabled="edit">{{type}}</button>' +
+            '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': context === type, \'btn-default\': context !== type}" ng-click="setContext(type)" ng-disabled="edit">{{type}}</button>' +
           '</li>' +
         '</ul>' +
       '</div>',
@@ -28,19 +27,18 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
       scope.edit = !!scope.context;
       scope.form = { };
       scope.types = TypeService.types();
-      // console.log( scope.types.indexOf('flight') !== -1 );
       scope.$watch('form.q', updateModel);
       
-      // scope.setContext = function(ctx) {
-      //   if (ctx === scope.clickType) {
-      //     scope.context = scope.clickType = undefined;
-      //     parseContext(scope.form.q);
-      //   }
-      //   else {
-      //     scope.context = scope.clickType = ctx;
-      //     // console.log('click', LocationService.coords);
-      //   }
-      // };
+      scope.setContext = function(ctx) {
+        if (ctx === scope.clickType) {
+          scope.context = scope.clickType = undefined;
+          parseContext(scope.form.q);
+        }
+        else {
+          scope.context = scope.clickType = ctx;
+          // console.log('click', LocationService.coords);
+        }
+      };
 
       ngModelCtrl.$render = function() {
         scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? undefined : ngModelCtrl.$viewValue;

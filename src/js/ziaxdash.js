@@ -438,39 +438,7 @@ module.controller('MainController', ['$scope', '$rootScope', '$location', '$wind
 
 module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult', 'Result', 'PlaceService', 'DelayerFactory', 'DocumentService', 'TypeService', 'GazService', 'GPS',
   function ( $scope, $http, $state, NewApiResult, Result, PlaceService, DelayerFactory, DocumentService, TypeService, GazService, GPS ) {
-    var id;
-    
-    $scope.form = { };
-    $scope.meta = {
-      coords: GPS.coords
-    };
-
-    $scope.submit = function() {
-      var f = $scope.form;
-      var save = angular.extend(f, {
-        type: $state.current.data.type,
-        tags: !f.tags ? [] : f.tags.split(','),
-        onlyAuth: !!f.onlyAuth
-
-      });
-
-      console.log('submit', save);
-      // DocumentService.store(save);
-    };
-
-    if (Result && Result.data) {
-      var _d = Result.data;
-      // $scope.meta.type = _d.type;
-      id = _d.id;
-      // TypeService.getType(_d.type).fetchFn.call($scope.form, _d.source);
-      $scope.form.onlyAuth = _d.source.onlyAuth;
-      $scope.form.tags = angular.isArray(_d.source.tags) ? _d.source.tags.join() : _d.source.tags;
-    }
-
-
-
-    return;
-    /*var id,
+    var id,
         type,
         watcher;
     $scope.meta = {
@@ -517,7 +485,7 @@ module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult',
       if (angular.isFunction(obj.initFn)) {
         obj.initFn.call($scope.meta, $scope);
       }
-    }*/
+    }
 
 }])
 .controller('NewArticleController', ['$scope', 'Result', function($scope, Result) {
@@ -836,7 +804,6 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
         '</div>' +
         '<ul class="list-group facets clearfix">' +
           '<li ng-repeat="type in types">' +
-            // '<button ui-sref-active="btn-primary" ui-sref="new.{{type}}" class="btn btn-sm btn-default" ng-disabled="edit">{{type}}</button>' +
             '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': context === type, \'btn-default\': context !== type}" ng-click="setContext(type)" ng-disabled="edit">{{type}}</button>' +
           '</li>' +
         '</ul>' +
@@ -844,22 +811,21 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     link: function(scope, element, attrs, ngModelCtrl) {
       var delayScraper = new DelayerFactory(2000);
 
-      // scope.edit = !!scope.context;
+      scope.edit = !!scope.context;
       scope.form = { };
       scope.types = TypeService.types();
-      // console.log( scope.types.indexOf('flight') !== -1 );
       scope.$watch('form.q', updateModel);
       
-      // scope.setContext = function(ctx) {
-      //   if (ctx === scope.clickType) {
-      //     scope.context = scope.clickType = undefined;
-      //     parseContext(scope.form.q);
-      //   }
-      //   else {
-      //     scope.context = scope.clickType = ctx;
-      //     // console.log('click', LocationService.coords);
-      //   }
-      // };
+      scope.setContext = function(ctx) {
+        if (ctx === scope.clickType) {
+          scope.context = scope.clickType = undefined;
+          parseContext(scope.form.q);
+        }
+        else {
+          scope.context = scope.clickType = ctx;
+          // console.log('click', LocationService.coords);
+        }
+      };
 
       ngModelCtrl.$render = function() {
         scope.form.q = ngModelCtrl.$isEmpty(ngModelCtrl.$viewValue) ? undefined : ngModelCtrl.$viewValue;
