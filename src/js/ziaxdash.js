@@ -300,6 +300,16 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       controller: "ShowController",
       controllerAs: "ShowCtrl"
     })
+    .state('edit', {
+      url: '/edit/:type/:id',
+      templateUrl: "/html/_new.html",
+      resolve: {// TODO: Create mulitple GET
+        Result: ['$stateParams', '$http', function($stateParams, $http) { return $http.post('/api/q', { id: $stateParams.id, type: $stateParams.type }); }],
+        NewApiResult: ['$http', function($http) { return $http.get('/api/tags'); }]
+      },
+      controller: "NewController",
+      controllerAs: "NewCtrl"
+    });
 }]);
 
 
