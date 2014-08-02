@@ -233,6 +233,14 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       controller: "IndexController",
       controllerAs: "IndexCtrl"
     })
+    .state('advsearch', {
+      url: '/search',
+      templateUrl: "/html/_search.html",
+      resolve: { Tags: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      // resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
+      controller: "SearchController",
+      controllerAs: "SearchCtrl"
+    })
     .state('new', {
       url: '/new',
       templateUrl: "/html/_new.html",
@@ -313,6 +321,18 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
 
 module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService', 'GPS',
   function ( $window, $rootScope, $templateCache, GlobalService, LocationService, GPS ) {
+    if (typeof(Array.prototype.remove) !== "function") {
+      Array.prototype.remove = function(cb) {
+        var _new = this;
+        for (var i = this.length - 1; i >= 0; i--) {
+          var elm = this[i];
+          if (cb.call(elm)) {
+            Array.prototype.splice.call(_new, i, 1);
+          }
+        }
+      };
+    }
+
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
       // socket = io();

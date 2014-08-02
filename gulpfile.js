@@ -5,7 +5,8 @@ var gulp = require('gulp'),
     header = require('gulp-header'),
     footer = require('gulp-footer'),
     less = require('gulp-less'),
-    livereload = require('gulp-livereload');
+    livereload = require('gulp-livereload'),
+    karma = require('gulp-karma');
 
 gulp.task('server', function() {
   gulpexpress.serve({
@@ -30,6 +31,14 @@ gulp.task('less:development', function() {
 
 });
 
+gulp.task('test', function() {
+  return gulp.src([ '__dummy__'])
+    .pipe(karma({
+      configFile: './test/karma.conf.js',
+      action: 'watch'
+    }));
+});
+
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch([ 'src/**/*.html', './src/css/ziaxdash.css', './src/js/ziaxdash.js' ]).on('change', livereload.changed);
@@ -39,4 +48,4 @@ gulp.task('watch', function() {
   gulp.watch('src/css/*.less', ['less:development']);
 });
 
-gulp.task( 'dev', [ 'server', 'watch' ] );
+gulp.task( 'dev', [ 'server', 'test', 'watch' ] );

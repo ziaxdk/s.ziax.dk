@@ -235,6 +235,14 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       controller: "IndexController",
       controllerAs: "IndexCtrl"
     })
+    .state('advsearch', {
+      url: '/search',
+      templateUrl: "/html/_search.html",
+      resolve: { Tags: ['$http', function($http) { return $http.get('/api/tags'); }] },
+      // resolve: { History: ['$http', function($http) { return $http.get('/api/history'); }] },
+      controller: "SearchController",
+      controllerAs: "SearchCtrl"
+    })
     .state('new', {
       url: '/new',
       templateUrl: "/html/_new.html",
@@ -315,6 +323,18 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
 
 module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'LocationService', 'GPS',
   function ( $window, $rootScope, $templateCache, GlobalService, LocationService, GPS ) {
+    if (typeof(Array.prototype.remove) !== "function") {
+      Array.prototype.remove = function(cb) {
+        var _new = this;
+        for (var i = this.length - 1; i >= 0; i--) {
+          var elm = this[i];
+          if (cb.call(elm)) {
+            Array.prototype.splice.call(_new, i, 1);
+          }
+        }
+      };
+    }
+
   var location = $window.location,
       socket = io.connect('//' + location.hostname);
       // socket = io();
@@ -340,6 +360,13 @@ module.run(['$window', '$rootScope', '$templateCache', 'GlobalService', 'Locatio
   });
 }]);
 
+module.constant('SEARCH', {
+  TYPES: [
+    { id: 'article', canSearch: true, canNew: true },
+    { id: 'link', canSearch: true, canNew: true },
+    { id: 'place', canSearch: true, canNew: true }
+  ]
+});
 module.controller('FlightController', [
   function () {
   var _t = this;
@@ -651,6 +678,15 @@ module.controller('ResultController', ['ApiType', 'ApiSearchResult', 'RestXQ', '
   }
 }]);
 
+
+module.controller('SearchController', ['SEARCH', 'Tags', function (SEARCH, Tags) {
+  this.esTags = Tags.data.facets.tags.terms;
+  this.esTypes = SEARCH.TYPES;
+
+  this.search = function() {
+    console.log('search', this.types, this.tags);
+  };
+}]);
 
 module.controller('ShowController', ['Result', '$http', '$location', function (Result, $http, $location) {
   this.Result = Result.data;
@@ -1089,6 +1125,49 @@ module.directive('zInputNew', [ 'TypeService', 'LocationService', 'DelayerFactor
     }]
     // link: function(scope, element, attrs) {
     // }
+  };
+}])
+.directive('zInputButton', ['SEARCH', function() {
+  return {
+    restrict: 'A',
+    template: '<ul class="list-group facets">' +
+      '<li ng-repeat="type in data">' +
+        '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': isSelected(type), \'btn-default\': context !== type}" ng-click="setType(type)">{{type[id]}}</button>' +
+      '</li>' +
+    '</ul>',
+    scope: {
+      selected: '=zInputButton',
+      types: '@zInputButtonData',
+      selector: '@zInputButtonSelector',
+      selectAll: '@zInputButtonSelectAll'
+    },
+    link: function(scope, element, attrs) {
+      var selector = scope.$eval(scope.selector),
+          selectAll = scope.$eval(scope.selectAll);
+      
+      scope.data = scope.$eval(scope.types);
+      scope.id = (selector && selector.key) || 'id';
+      scope.value = (selector && selector.value) || scope.id;
+      // console.log('selectAll', selectAll, 'scope.id', scope.id, 'scope.value', scope.value);
+      
+      scope.selected = scope.selected || [];
+      if (selectAll) {
+        angular.forEach(scope.data, function(data) { scope.selected.push(data[scope.value]); });
+      }
+
+       scope.isSelected = function(type) {
+        return scope.selected.indexOf(type[scope.value]) !== -1;
+      };
+
+      scope.setType = function(type) {
+        if (scope.selected.indexOf(type[scope.value]) !== -1) {
+          scope.selected.remove(function() { return this == type[scope.value]; });
+        }
+        else {
+          scope.selected.push(type[scope.value]);
+        }
+      };
+    }
   };
 }]);
 
