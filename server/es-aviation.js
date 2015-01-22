@@ -178,7 +178,7 @@
           type: 'iss',
           id: 'iss'
         }, function(err, resp) {
-          if (err) throw err;
+          if (err) return; //TODO: Instead of throw err, when index not exists
           res.send(utils.ngSafe(resp._source));
         });
     });

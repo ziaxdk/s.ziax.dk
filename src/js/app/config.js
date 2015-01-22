@@ -315,6 +315,19 @@ module.config(['$stateProvider', '$urlRouterProvider', '$sceDelegateProvider', '
       },
       controller: "NewController",
       controllerAs: "NewCtrl"
+    })
+    .state('places', {
+        url: '/places',
+        templateUrl: "/html/_result.html",
+        controller: "ResultController",
+        controllerAs: "ResultCtrl",
+        resolve: {
+          ApiType: ['ApiTypeFactory', function(f) { return f('places'); }],
+          ApiSearchResult: ['$http', function($http) { return $http.get('/api/places', { cache: false }); }],
+          EnsureSatelliteJs: ['AsyncJsFactory', function(AsyncJsFactory) {
+            return AsyncJsFactory('/js/lib/satellite.min.js', window.satellite);
+          }]
+        }
     });
 }]);
 

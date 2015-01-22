@@ -20,7 +20,7 @@ function routes(app) {
                   },
                   "filter" : {
                       "geo_distance" : {
-                          "distance" : "20km",
+                          "distance" : "500km",
                           "location" : {
                               "lat" : req.body.lat,
                               "lon" : req.body.lon

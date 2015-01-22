@@ -294,13 +294,14 @@
 //     // }
 //   };
 // }])
-ziaxmodule
+module
 .directive('zInputButton', [function() {
   return {
     restrict: 'A',
     template: '<ul class="list-group facets">' +
       '<li ng-repeat="type in data">' +
-        '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': isSelected(type), \'btn-default\': context !== type}" ng-click="setType(type)">{{type[id]}}</button>' +
+        // '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': isSelected(type), \'btn-default\': context !== type}" ng-click="setType(type)">{{type[id]}}</button>' +
+        '<button type="button" class="btn btn-sm" ng-class="{\'btn-primary\': isSelected(type), \'btn-default\': context !== type}" ng-click="setType(type)">{{getDisplay(type)}}</button>' +
       '</li>' +
     '</ul>',
     scope: {
@@ -310,31 +311,58 @@ ziaxmodule
       selectAll: '@zInputButtonSelectAll'
     },
     link: function(scope, element, attrs) {
-      var selector = scope.$eval(scope.selector),
-          selectAll = scope.$eval(scope.selectAll);
-      
-      scope.data = scope.$eval(scope.types);
-      scope.id = (selector && selector.key) || 'id';
-      scope.value = (selector && selector.value) || scope.id;
-      // console.log('selectAll', selectAll, 'scope.id', scope.id, 'scope.value', scope.value);
-      
-      scope.selected = scope.selected || [];
-      if (selectAll) {
-        angular.forEach(scope.data, function(data) { scope.selected.push(data[scope.value]); });
-      }
-
-       scope.isSelected = function(type) {
-        return scope.selected.indexOf(type[scope.value]) !== -1;
+      // scope.data = scope.$eval(scope.types);
+      scope.$watch('types', function(values) {
+        var data = scope.$eval(values);
+        if (angular.isObject(data)) {
+          scope.data = [data];
+          return;
+        }
+        scope.data = data;
+      });
+      scope.getDisplay = function(type) {
+        console.log( angular.isObject(type), type );
       };
 
-      scope.setType = function(type) {
-        if (scope.selected.indexOf(type[scope.value]) !== -1) {
-          scope.selected.remove(function() { return this == type[scope.value]; });
-        }
-        else {
-          scope.selected.push(type[scope.value]);
-        }
-      };
+      console.log(typeof scope.data);
+
+
+      // var selector = scope.$eval(scope.selector),
+      //     selectAll = scope.$eval(scope.selectAll);
+      
+      // scope.data = scope.$eval(scope.types);
+      // scope.id = (selector && selector.key) || 'id';
+      // scope.value = (selector && selector.value) || scope.id;
+      // // console.log('selectAll', selectAll, 'scope.id', scope.id, 'scope.value', scope.value);
+      
+      // scope.selected = scope.selected || [];
+      // scope.isSelected = function(type) {
+      //   return scope.selected.indexOf(type[scope.value]) !== -1;
+      // };
+
+      // scope.setType = function(type) {
+      //     console.log(type);
+      //   if (angular.isObject(type)) {
+
+      //   }
+      //   else {
+      //     // if (scope.selected.indexOf(type[scope.value]) !== -1) {
+      //     //   scope.selected.remove(function() { return this == type[scope.value]; });
+      //     // }
+      //     // else {
+      //     //   scope.selected.push(type[scope.value]);
+      //     // }
+      //   }
+      // };
+
+
+      // if (selectAll) {
+      //   angular.forEach(scope.data, function(data) {
+      //     // console.log(Object.keys(data), data)
+      //    // scope.selected.push( angular.isObject( data) ?  : data[scope.value]);
+      //    scope.setType(data);
+      //  });
+      // }
     }
   };
 }]);

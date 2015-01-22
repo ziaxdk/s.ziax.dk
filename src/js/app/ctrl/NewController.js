@@ -64,6 +64,7 @@ module.controller('NewController', ['$scope', '$http', '$state', 'NewApiResult',
   }
 }])
 .controller('NewLinkController', ['$scope', function($scope) {
+  console.log('are we human???')
 
 }])
 .controller('NewPlaceController', ['$scope', function($scope) {

@@ -1,0 +1,41 @@
+<div class="col-md-12">
+
+  <div class="alert alert-danger" ng-if="!MainCtrl.me.isAuth"><strong>Ohh!</strong> Cannot add new when unauthorized, sooo ....</div>
+  <div ng-if="MainCtrl.me.isAuth">
+    <form role="form" ng-submit="submit()" novalidate name="formInput">
+
+      <div z-input-new ng-model="form.input" context="meta.type" header="form.header" content="form.content" disable="disable"></div>
+
+      <!-- <div class="zdview" ui-view></div> -->
+
+      <div ng-show="meta.type">
+
+        <div ng-if="template" ng-include="template"></div>
+
+        <div class="form-group">
+          <label for="idTags">Tags</label>
+          <input type="text" name="tags" class="form-control" id="idTags" ng-model="form.tags" />
+        </div>
+
+        <div class="btn-group pull-right">
+          <button type="button" class="btn" ng-class="{'btn-success': !form.onlyAuth, 'btn-default': form.onlyAuth}" ng-model="form.onlyAuth" ng-click="form.onlyAuth=false">Anonymous</button>
+          <button type="button" class="btn" ng-class="{'btn-success': form.onlyAuth, 'btn-default': !form.onlyAuth}" ng-model="form.onlyAuth" ng-click="form.onlyAuth=true">Authenticated</button>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" ng-disabled="formInput.$invalid||!MainCtrl.me.isAuth">Save <span class="glyphicon glyphicon-plus"></span></button>
+        </div>
+      </form>
+
+      <div ng-show="preview">
+        <p>Preview:</p>
+        <div class="panel panel-default">
+          <div class="panel-body" style="min-height: 200px" ng-bind-html="form.content|textile"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>  
+
+</div>
